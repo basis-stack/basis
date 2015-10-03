@@ -1,2 +1,2 @@
 # basis
-A Node.js + Express + TypeScript + Gulp project setup that forms the *basis* of website development on that stack
+A Node.js + Express + ES6 project setup that forms the *basis* of production-ready web site & app development on that stack

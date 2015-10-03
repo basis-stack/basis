@@ -1,0 +1,29 @@
+{
+  "name": "basis",
+  "version": "0.0.1",
+  "description": "Complete project template & setup for production ready Node / ES6 web sites & apps",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/warebrained/basis.git"
+  },
+  "keywords": [
+    "Node",
+    "ES6",
+    "Template",
+    "Production"
+  ],
+  "author": "Justin Ware",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/warebrained/basis/issues"
+  },
+  "homepage": "https://github.com/warebrained/basis",
+  "devDependencies": {
+    "bower": "^1.5.3",
+    "gulp": "^3.9.0"
+  }
+}
