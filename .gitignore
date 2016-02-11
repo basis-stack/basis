@@ -28,3 +28,8 @@ node_modules
 
 # IDEs / Editors
 .idea
+.vscode
+
+# Temporary build artefacts
+build
+temp

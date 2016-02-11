@@ -4,9 +4,6 @@
   "description": "Complete project template & setup for production ready Node / ES6 web sites & apps",
   "main": "index.js",
   "scripts": {
-    "postinstall": "export PATH=$PATH:$PWD/node_modules/.bin/",
-    "test": "gulp test",
-    "start": "node ./app/bin/www"
   },
   "repository": {
     "type": "git",
@@ -25,18 +22,12 @@
   },
   "homepage": "https://github.com/warebrained/basis",
   "dependencies": {
-    "body-parser": "~1.14.1",
-    "cookie-parser": "~1.4.0",
-    "debug": "~2.2.0",
-    "express": "~4.13.3",
-    "hbs": "~3.1.1",
-    "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
-    "bower": "^1.5.3",
     "colors": "^1.1.2",
     "del": "^2.0.2",
-    "gulp": "^3.9.0"
+    "gulp": "^3.9.0",
+    "npm-check-updates": "^2.5.8",
+    "pm2": "^1.0.0"
   }
 }
