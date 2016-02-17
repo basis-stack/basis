@@ -2,9 +2,7 @@
   "name": "basis",
   "version": "0.0.1",
   "description": "Complete project template & setup for production ready Node / ES6 web sites & apps",
-  "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/warebrained/basis.git"
@@ -21,13 +19,17 @@
     "url": "https://github.com/warebrained/basis/issues"
   },
   "homepage": "https://github.com/warebrained/basis",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "colors": "^1.1.2",
-    "del": "^2.0.2",
-    "gulp": "^3.9.0",
+    "del": "^2.2.0",
+    "extend": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-print": "^2.0.1",
+    "gulp-replace": "^0.5.4",
+    "minimist": "^1.2.0",
     "npm-check-updates": "^2.5.8",
-    "pm2": "^1.0.0"
+    "pm2": "^1.0.0",
+    "run-sequence": "^1.1.5"
   }
 }

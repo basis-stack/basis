@@ -16,6 +16,8 @@ module.exports = {
    },
    server: {
       scripts: [
+         './scripts/set_runtime_dir.sh',
+         './scripts/install_deps.sh',
          './scripts/startup.sh',
          './scripts/shutdown.sh',
          './scripts/deploy.sh'
