@@ -25,7 +25,6 @@
     "del": "^2.2.0",
     "extend": "^3.0.0",
     "gulp": "^3.9.1",
-    "gulp-print": "^2.0.1",
     "gulp-replace": "^0.5.4",
     "minimist": "^1.2.0",
     "npm-check-updates": "^2.5.8",
