@@ -4,14 +4,14 @@ var gulp = require('gulp');
 var del = require('del');
 var colors = require('colors');
 var replace = require('gulp-replace');
-var print = require('gulp-print');
 var runSequence = require('run-sequence');
 var fs = require('fs');
+var zip = require('gulp-zip');
 
 var config = require('./config/gulp.config');
 var envSettings = require('./config/settings');
 
-/* Clean Build Artifacts */
+/* Clean build artifacts */
 gulp.task('clean', function (cb) {
 
    del([config.paths.build, config.paths.temp]).then(function (paths) {
@@ -21,7 +21,18 @@ gulp.task('clean', function (cb) {
    });
 });
 
-/* Copy Server Scripts */
+/* Prepare build directory */
+gulp.task('prepare-build', ['clean'], function (cb) {
+
+   fs.mkdir(config.paths.build, function (err) {
+
+      if (err) { throw err; }
+      cb();
+   });
+});
+
+
+/* Copy server scripts */
 gulp.task('server-scripts', function() {
 
    gulp.src(config.server.scripts)
@@ -36,24 +47,32 @@ gulp.task('server-scripts', function() {
 /* Prepare Environment settings */
 gulp.task('environment-settings', function (cb) {
 
-	//   var settingsContent = 'module.exports = {};';
+   var settingsContent = JSON.stringify(envSettings, null, '  ');
 
-   //   fs.writeFile(config.paths.build + '/settings.js', settingsContent, function (err) {
+   fs.writeFile(config.paths.build + '/settings.json', settingsContent, function (err) {
 
-   //      cb();
-   //   });
-   cb();
+      if (err) { throw err; }
+      cb();
+   });
 });
 
 /* Build entire solution */
 gulp.task('build', function (cb) {
 
-   runSequence('clean',
+   runSequence('prepare-build',
                ['server-scripts', 'environment-settings'],
                cb);
 });
 
+/* Package build artifacts */
+gulp.task('package', function () {
 
+   return gulp.src(config.paths.build + '/**/*', { dot: true })
+              .pipe(zip(envSettings.appName + '.package.' + envSettings.envName + '.zip'))
+              .pipe(gulp.dest('./package'));
+});
+
+/* Default gulp task */
 gulp.task('default', function (cb) {
 
 });

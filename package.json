@@ -19,16 +19,18 @@
     "url": "https://github.com/warebrained/basis/issues"
   },
   "homepage": "https://github.com/warebrained/basis",
-  "dependencies": {},
+  "dependencies": {
+    "pm2": "^1.0.1"
+  },
   "devDependencies": {
     "colors": "^1.1.2",
     "del": "^2.2.0",
     "extend": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-replace": "^0.5.4",
+    "gulp-zip": "^3.2.0",
     "minimist": "^1.2.0",
     "npm-check-updates": "^2.5.8",
-    "pm2": "^1.0.0",
     "run-sequence": "^1.1.5"
   }
 }

@@ -29,7 +29,9 @@ node_modules
 # IDEs / Editors
 .idea
 .vscode
+.c9
 
 # Temporary build artefacts
 build
 temp
+package

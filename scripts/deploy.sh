@@ -13,8 +13,8 @@ source scripts/set_runtime_dir.sh
 # Deploy app package to %DEPLOY_HOST%
 DEST="%DEPLOY_USER%@%DEPLOY_HOST%:/tmp"
 echo $ORIG_MSG_PREFIX"Deploying to "$DEST
-#scp -c blowfish $RUNTIME/package/package.%ENVIRONMENT%.zip $DEST
+#scp -c blowfish $RUNTIME/package/%APPNAME%.package.%ENVIRONMENT%.zip $DEST
 echo $ORIG_MSG_PREFIX"Unzipping package"
-#ssh %DEPLOY_USER%@%DEPLOY_HOST% "unzip -a /tmp/package.%ENVIRONMENT%.zip -d %DEPLOY_LOCATION%"
+#ssh %DEPLOY_USER%@%DEPLOY_HOST% "unzip -a /tmp/%APPNAME%.package.%ENVIRONMENT%.zip -d %DEPLOY_LOCATION%"
 echo $ORIG_MSG_PREFIX"Done."
 echo $ORIG_MSG_PREFIX"------------------------"
