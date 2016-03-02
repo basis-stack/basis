@@ -35,3 +35,4 @@ node_modules
 build
 temp
 package
+.DS_Store

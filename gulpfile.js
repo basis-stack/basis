@@ -8,16 +8,23 @@ var runSequence = require('run-sequence');
 var fs = require('fs');
 var zip = require('gulp-zip');
 var rename = require('gulp-rename');
+var babel = require("gulp-babel");
 
 var config = require('./config/gulp.config');
 var envSettings = require('./config/settings');
+var logMessagePrefix = "         + ";
+
+function logMessage(action, context) {
+
+   console.log(logMessagePrefix + action + context.magenta);
+}
 
 /* Clean build artifacts */
 gulp.task('clean', function (cb) {
 
    del([config.paths.build, config.paths.temp, config.paths.package]).then(function (paths) {
-      var pathsText = paths.length === 0 ? 'NONE' : paths.join('; ');
-      console.log('[clean   ]'.yellow + ' Deleted  ' + pathsText.magenta);
+      var pathsText = paths.length === 0 ? 'NONE' : paths.join(';\n                    ');
+      logMessage('Deleted  ', pathsText);
       cb();
    });
 });
@@ -54,8 +61,10 @@ gulp.task('environment-settings', function (cb) {
    // TODO: Could this be done with JsonFile instead ???
 
    var settingsContent = JSON.stringify(envSettings, null, '  ');
+   var pathName = config.paths.build + '/settings.json';
+   logMessage('Creating ', pathName);
 
-   fs.writeFile(config.paths.build + '/settings.json', settingsContent, function (err) {
+   fs.writeFile(pathName, settingsContent, function (err) {
 
       if (err) { throw err; }
       cb();
@@ -82,7 +91,10 @@ gulp.task('package-json', function (cb) {
       packageJson.repository = undefined;
       packageJson.description = undefined;
 
-      fs.writeFile(config.paths.build + '/package.json', JSON.stringify(packageJson, null, '  '), function (err) {
+      var pathName = config.paths.build + '/package.json';
+      logMessage('Creating ', pathName);
+
+      fs.writeFile(pathName, JSON.stringify(packageJson, null, '  '), function (err) {
 
          if (err) { throw err; }
          cb();
@@ -95,19 +107,26 @@ gulp.task('binaries', function () {
 
    var destFileName = envSettings.appName + '_' + envSettings.envName;
    var destDir = config.paths.build + '/app/bin/';
-
-   console.log('[binaries]'.yellow + ' Creating ' + (destDir + destFileName).magenta);
+   logMessage('Creating ', destDir + destFileName);
 
    return gulp.src(config.paths.app + '/bin/startup.js')
               .pipe(rename(destFileName))
               .pipe(gulp.dest(destDir));
 });
 
+/* Compile server-side express app */
+gulp.task('compile-app', function () {
+
+  return gulp.src(config.paths.app + '/app.js')
+             .pipe(babel())
+             .pipe(gulp.dest(config.paths.build + '/app'));
+});
+
 /* Build entire solution */
 gulp.task('build', function (cb) {
 
    runSequence('prepare-build',
-               ['server-scripts', 'environment-settings', 'package-json', 'binaries'],
+               ['server-scripts', 'environment-settings', 'package-json', 'binaries', 'compile-app'],
                cb);
 });
 
@@ -115,8 +134,7 @@ gulp.task('build', function (cb) {
 gulp.task('package', function () {
 
    var packageFileName = envSettings.appName + '.package.' + envSettings.envName + '.zip';
-
-   console.log('[package ]'.yellow + ' Creating ' + (config.paths.package + '/' + packageFileName).magenta);
+   logMessage('Creating ', config.paths.package + '/' + packageFileName);
 
    return gulp.src(config.paths.build + '/**/*', { dot: true })
               .pipe(zip(packageFileName))
