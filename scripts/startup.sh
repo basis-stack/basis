@@ -13,6 +13,6 @@ source scripts/set_runtime_dir.sh
 # Set web server as background process
 echo $ORIG_MSG_PREFIX"Starting server..."
 chmod +x $RUNTIME/node_modules/.bin/pm2
-$RUNTIME/node_modules/.bin/pm2 start app/boot/%APPNAME%_%ENVIRONMENT% --env %ENVIRONMENT%
+$RUNTIME/node_modules/.bin/pm2 start app/bin/%APPNAME%_%ENVIRONMENT% --env %ENVIRONMENT%
 echo $ORIG_MSG_PREFIX"Done."
 echo $ORIG_MSG_PREFIX"--------------------"

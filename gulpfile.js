@@ -7,6 +7,7 @@ var replace = require('gulp-replace');
 var runSequence = require('run-sequence');
 var fs = require('fs');
 var zip = require('gulp-zip');
+var rename = require('gulp-rename');
 
 var config = require('./config/gulp.config');
 var envSettings = require('./config/settings');
@@ -16,7 +17,7 @@ gulp.task('clean', function (cb) {
 
    del([config.paths.build, config.paths.temp, config.paths.package]).then(function (paths) {
       var pathsText = paths.length === 0 ? 'NONE' : paths.join('; ');
-      console.log('[clean   ]'.yellow + ' Deleted: ' + pathsText.magenta);
+      console.log('[clean   ]'.yellow + ' Deleted  ' + pathsText.magenta);
       cb();
    });
 });
@@ -41,6 +42,9 @@ gulp.task('server-scripts', function() {
       //  }))
        .pipe(replace('%APPNAME%', envSettings.appName))
        .pipe(replace('%ENVIRONMENT%', envSettings.envName))
+       .pipe(replace('%DEPLOY_USER%', envSettings.deployUser))
+       .pipe(replace('%DEPLOY_HOST%', envSettings.deployHost))
+       .pipe(replace('%DEPLOY_LOCATION%', envSettings.deployDirectory))
        .pipe(gulp.dest(config.paths.build + '/scripts'));
 });
 
@@ -86,11 +90,24 @@ gulp.task('package-json', function (cb) {
    });
 });
 
+/* Copy and environmentalise the bootup module */
+gulp.task('binaries', function () {
+
+   var destFileName = envSettings.appName + '_' + envSettings.envName;
+   var destDir = config.paths.build + '/app/bin/';
+
+   console.log('[binaries]'.yellow + ' Creating ' + (destDir + destFileName).magenta);
+
+   return gulp.src(config.paths.app + '/bin/startup.js')
+              .pipe(rename(destFileName))
+              .pipe(gulp.dest(destDir));
+});
+
 /* Build entire solution */
 gulp.task('build', function (cb) {
 
    runSequence('prepare-build',
-               ['server-scripts', 'environment-settings', 'package-json'],
+               ['server-scripts', 'environment-settings', 'package-json', 'binaries'],
                cb);
 });
 
@@ -98,7 +115,8 @@ gulp.task('build', function (cb) {
 gulp.task('package', function () {
 
    var packageFileName = envSettings.appName + '.package.' + envSettings.envName + '.zip';
-   console.log('[package ]'.yellow + ' Creating: ' + config.paths.package.magenta + '/'.magenta + packageFileName.magenta);
+
+   console.log('[package ]'.yellow + ' Creating ' + (config.paths.package + '/' + packageFileName).magenta);
 
    return gulp.src(config.paths.build + '/**/*', { dot: true })
               .pipe(zip(packageFileName))

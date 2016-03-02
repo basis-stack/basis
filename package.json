@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/warebrained/basis",
   "dependencies": {
+    "express": "^4.13.4",
     "pm2": "^1.0.1"
   },
   "devDependencies": {
@@ -27,6 +28,7 @@
     "del": "^2.2.0",
     "extend": "^3.0.0",
     "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-zip": "^3.2.0",
     "minimist": "^1.2.0",
