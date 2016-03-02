@@ -14,7 +14,7 @@ var envSettings = require('./config/settings');
 /* Clean build artifacts */
 gulp.task('clean', function (cb) {
 
-   del([config.paths.build, config.paths.temp]).then(function (paths) {
+   del([config.paths.build, config.paths.temp, config.paths.package]).then(function (paths) {
       var pathsText = paths.length === 0 ? 'NONE' : paths.join('; ');
       console.log('[clean   ]'.yellow + ' Deleted: ' + pathsText.magenta);
       cb();
@@ -44,8 +44,10 @@ gulp.task('server-scripts', function() {
        .pipe(gulp.dest(config.paths.build + '/scripts'));
 });
 
-/* Prepare Environment settings */
+/* Prepare Environment settings file */
 gulp.task('environment-settings', function (cb) {
+
+   // TODO: Could this be done with JsonFile instead ???
 
    var settingsContent = JSON.stringify(envSettings, null, '  ');
 
@@ -56,20 +58,51 @@ gulp.task('environment-settings', function (cb) {
    });
 });
 
+/* Prepare package.json for the server / runtime */
+gulp.task('package-json', function (cb) {
+
+    // TODO: Replace all this crap with jsonfile package !!!
+
+   fs.readFile('./package.json', function (err, data) {
+
+      if (err) { throw err; }
+
+      var packageJson = JSON.parse(data);
+      packageJson.devDependencies = undefined;
+      packageJson.scripts = undefined;
+      packageJson.homepage = undefined;
+      packageJson.bugs = undefined;
+      packageJson.license = undefined;
+      packageJson.author = undefined;
+      packageJson.keywords = undefined;
+      packageJson.repository = undefined;
+      packageJson.description = undefined;
+
+      fs.writeFile(config.paths.build + '/package.json', JSON.stringify(packageJson, null, '  '), function (err) {
+
+         if (err) { throw err; }
+         cb();
+      });
+   });
+});
+
 /* Build entire solution */
 gulp.task('build', function (cb) {
 
    runSequence('prepare-build',
-               ['server-scripts', 'environment-settings'],
+               ['server-scripts', 'environment-settings', 'package-json'],
                cb);
 });
 
 /* Package build artifacts */
 gulp.task('package', function () {
 
+   var packageFileName = envSettings.appName + '.package.' + envSettings.envName + '.zip';
+   console.log('[package ]'.yellow + ' Creating: ' + config.paths.package.magenta + '/'.magenta + packageFileName.magenta);
+
    return gulp.src(config.paths.build + '/**/*', { dot: true })
-              .pipe(zip(envSettings.appName + '.package.' + envSettings.envName + '.zip'))
-              .pipe(gulp.dest('./package'));
+              .pipe(zip(packageFileName))
+              .pipe(gulp.dest(config.paths.package));
 });
 
 /* Default gulp task */
