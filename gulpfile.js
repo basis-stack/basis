@@ -11,6 +11,7 @@ var rename = require('gulp-rename');
 var babel = require("gulp-babel");
 var merge = require('merge-stream');
 var filter = require('gulp-filter');
+var print = require('gulp-print');
 
 var config = require('./config/gulp.config');
 var envSettings = require('./config/settings');
@@ -19,6 +20,11 @@ var logMessagePrefix = "         + ";
 function logMessage(action, context) {
 
    console.log(logMessagePrefix + action + context.magenta);
+}
+
+function getFilePathLogMessage(filepath) {
+
+   return 'Writing  ' + filepath;
 }
 
 /* Clean existing build & package artifacts */
@@ -56,9 +62,7 @@ gulp.task('prepare-build', ['clean'], function (cb) {
 gulp.task('server-scripts', function() {
 
    gulp.src(config.server.scripts)
-      //  .pipe(print(function(filepath) {
-      //     return '[server-scripts]'.yellow + ' Prepared & copied: ' + filepath;
-      //  }))
+       .pipe(print(getFilePathLogMessage))
        .pipe(replace('%APPNAME%', envSettings.appName))
        .pipe(replace('%ENVIRONMENT%', envSettings.envName))
        .pipe(replace('%DEPLOY_USER%', envSettings.deployUser))
@@ -135,7 +139,8 @@ gulp.task('copy-app', ['compile-app'], function () {
 
    var appFilesStream = gulp.src(config.paths.temp + '/app/**/*.js')
                             .pipe(filter(['**/*.js', '!**/startup.js']))
-                            .pipe(gulp.dest(config.paths.build + '/app'));
+                            .pipe(gulp.dest(config.paths.build + '/app'))
+                            .pipe(print(getFilePathLogMessage));
 
    return merge(startupFileStream, appFilesStream);
 });

@@ -21,6 +21,7 @@
   "homepage": "https://github.com/warebrained/basis",
   "dependencies": {
     "express": "^4.13.4",
+    "jsonfile": "^2.2.3",
     "pm2": "^1.0.1"
   },
   "devDependencies": {
@@ -31,6 +32,7 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-filter": "^4.0.0",
+    "gulp-print": "^2.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-zip": "^3.2.0",
