@@ -8,7 +8,7 @@ echo $MSG_PREFIX"#   Deploy Artifacts   #"
 echo $MSG_PREFIX"------------------------"
 
 # Change to root dir
-source scripts/set_runtime_dir.sh
+. scripts/set_runtime_dir.sh
 
 # Deploy app package to %DEPLOY_HOST%
 DEST="%DEPLOY_USER%@%DEPLOY_HOST%:/tmp"

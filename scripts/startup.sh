@@ -8,7 +8,7 @@ echo $MSG_PREFIX"#   Start Server   #"
 echo $MSG_PREFIX"--------------------"
 
 # Change to root dir
-source scripts/set_runtime_dir.sh
+. scripts/set_runtime_dir.sh
 
 # Set web server as background process
 echo $ORIG_MSG_PREFIX"Starting server..."
