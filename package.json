@@ -30,9 +30,11 @@
     "extend": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
+    "gulp-filter": "^4.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-zip": "^3.2.0",
+    "merge-stream": "^1.0.0",
     "minimist": "^1.2.0",
     "npm-check-updates": "^2.5.8",
     "run-sequence": "^1.1.5"

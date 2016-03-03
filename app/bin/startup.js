@@ -1,1 +1,3 @@
-// This is the boot file !!!
+import app from '../app';
+
+console.log(app);

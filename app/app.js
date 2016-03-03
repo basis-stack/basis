@@ -1,4 +1,5 @@
-() => {
+let app = { isApp: true };
 
-   // Hello World !!!
-}
+// TODO: Setup express middleware here
+
+export default app;
