@@ -1,5 +1,15 @@
 import jsonfile from 'jsonfile';
-import app from '../app';
+import logger from './../controllers/loggingController';
+import app from './../app';
 
 const settings = jsonfile.readFileSync(__dirname + '/../../settings.json');
-console.log(settings);
+
+function onError(error) {
+
+   // Handle errors here
+}
+
+function onListening() {
+
+   // Handle onListening status here
+}
