@@ -97,6 +97,7 @@ gulp.task('package-json', function (cb) {
       if (err) { throw err; }
 
       var packageJson = JSON.parse(data);
+      packageJson.name = envSettings.appName;
       packageJson.devDependencies = undefined;
       packageJson.scripts = undefined;
       packageJson.homepage = undefined;
