@@ -12,6 +12,7 @@ var babel = require("gulp-babel");
 var merge = require('merge-stream');
 var filter = require('gulp-filter');
 var print = require('gulp-print');
+var mocha = require('gulp-mocha');
 
 var config = require('./config/gulp.config');
 var envSettings = require('./config/settings');
@@ -144,6 +145,14 @@ gulp.task('copy-app', ['compile-app'], function () {
                             .pipe(print(getFilePathLogMessage));
 
    return merge(startupFileStream, appFilesStream);
+});
+
+/* Run unit tests */
+gulp.task('test', ['compile-app'], function () {
+
+   return gulp.src(config.paths.temp + '/**/*Spec.js')
+	           .pipe(mocha());
+
 });
 
 /* Build entire solution */
