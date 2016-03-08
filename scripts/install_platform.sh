@@ -9,7 +9,7 @@ echo $MSG_PREFIX"------------------------"
 
 NVM_VERSION=0.31.0
 
-# Install / Update NVM
+# Install / Update node version manager
 echo $MSG_PREFIX"Installing nvm version "$NVM_VERSION
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash
 

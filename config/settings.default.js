@@ -4,5 +4,6 @@ module.exports = {
    webServerPort: '3000',
    appName: 'basis',
    deployUser: 'deploy_user',
-   frontWithNginx: false
+   frontWithNginx: false,
+   nodeRuntimeVersion: 4.3
 };
