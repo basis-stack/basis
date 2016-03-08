@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-## Uninstall all existing node packages
-npm uninstall `ls -1 node_modules | tr '/\n' ' '`
+. scripts/nuke_packages.sh
 
 ## Update all packages to the latest stable version
 npm install npm-check-updates

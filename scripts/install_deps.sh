@@ -10,6 +10,8 @@ echo $MSG_PREFIX"----------------------------"
 # Change to root dir
 . scripts/set_runtime_dir.sh
 
+## TODO: Need to decide if we invoke nuke_packages here first, in order to ensure a fresh clean install of new packages ???
+
 # Install NPM dependencies
 echo $ORIG_MSG_PREFIX"Installing npm dependencies..."
 npm install
