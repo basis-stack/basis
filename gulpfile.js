@@ -13,6 +13,7 @@ var merge = require('merge-stream');
 var filter = require('gulp-filter');
 var print = require('gulp-print');
 var mocha = require('gulp-mocha');
+var eslint = require('gulp-eslint');
 
 var config = require('./config/gulp.config');
 var envSettings = require('./config/settings');
@@ -148,6 +149,15 @@ gulp.task('copy-app', ['compile-app'], function () {
    return merge(startupFileStream, appFilesStream);
 });
 
+/* Lint */
+gulp.task('lint', function () {
+
+   return gulp.src(config.paths.app + '/**/*.js')
+              .pipe(eslint())
+              .pipe(eslint.format())
+              .pipe(eslint.failOnError());
+});
+
 /* Run unit tests */
 gulp.task('test', function () {
 
@@ -160,6 +170,7 @@ gulp.task('test', function () {
 gulp.task('build', function (cb) {
 
    runSequence('prepare-build',
+               'lint',
                ['server-scripts', 'environment-settings', 'package-json', 'copy-app'],
                //'clean-temp',
                cb);

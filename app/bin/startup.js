@@ -4,8 +4,6 @@ import app from './../app';
 
 const settings = jsonfile.readFileSync(__dirname + '/../../settings.json');
 
-app.listen(settings.webServerPort, onListening);
-
 function onError(error) {
 
    // Handle errors here
@@ -17,3 +15,5 @@ function onListening() {
 
    console.log('listening on port ' + settings.webServerPort);
 }
+
+app.listen(settings.webServerPort, onListening);

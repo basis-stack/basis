@@ -1,0 +1,28 @@
+{
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "blockBindings": true
+    }
+  },
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "plugins": [
+  ],
+  "rules": {
+    "no-console": [0],
+    "no-unused-vars": [0],
+    "no-var": [2],
+    "no-use-before-define": [2],
+    "no-trailing-spaces": [2, { "skipBlankLines": true }],
+    "no-mixed-spaces-and-tabs": [2],
+    "camelcase": [2],
+    "sort-vars": [2, { "ignoreCase": true }],
+    "no-this-before-super": [2],
+    "quotes": [2, "single"]
+  }
+}
