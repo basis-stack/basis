@@ -149,7 +149,7 @@ gulp.task('copy-app', ['compile-app'], function () {
 });
 
 /* Run unit tests */
-gulp.task('test', ['compile-app'], function () {
+gulp.task('test', function () {
 
    return gulp.src(config.paths.temp + '/**/*Spec.js')
 	           .pipe(mocha());
