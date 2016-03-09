@@ -10,6 +10,9 @@ echo $MSG_PREFIX"-----------------------"
 # Change to root dir
 . scripts/set_runtime_dir.sh
 
+# Set node runtime
+. scripts/set_node_env.sh
+
 # Shutdown the existing web server process
 echo $ORIG_MSG_PREFIX"Stopping existing process..."
 chmod +x $RUNTIME/node_modules/.bin/pm2
