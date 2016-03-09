@@ -1,5 +1,7 @@
 'use strict';
 
 module.exports = {
-   deployDirectory: '/temp'
+   deployUser: 'justin',
+   deployHost: 'dev.local',
+   deployDirectory: '/home/justin/basis'
 };
