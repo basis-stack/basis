@@ -19,6 +19,8 @@ var config = require('./config/gulp.config');
 var envSettings = require('./config/settings');
 var logMessagePrefix = "         + ";
 
+console.log('[initiate]'.yellow + ' Creating artifacts for app name: ' + envSettings.appName.magenta);
+
 function logMessage(action, context) {
 
    console.log(logMessagePrefix + action + context.magenta);
@@ -172,7 +174,6 @@ gulp.task('build', function (cb) {
    runSequence('prepare-build',
                'lint',
                ['server-scripts', 'environment-settings', 'package-json', 'copy-app'],
-               //'clean-temp',
                cb);
 });
 

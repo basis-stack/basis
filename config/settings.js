@@ -23,7 +23,7 @@ function loadEnvironmentSettings(envName) {
 module.exports = (function () {
 
    var envName = getEnvironment();
-   console.log('[settings]'.yellow + ' Generating environment settings for ' + envName.magenta);
+   console.log('[settings]'.yellow + ' Generating environment settings for: ' + envName.magenta);
 
    var envSettings = loadEnvironmentSettings(envName);
 

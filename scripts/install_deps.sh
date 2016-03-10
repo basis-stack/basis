@@ -12,8 +12,9 @@ echo $MSG_PREFIX"----------------------------"
 
 # Install specific node runtime version
 NODE_VERSION=%NODE_RUNTIME_ENV%
+echo $ORIG_MSG_PREFIX"Enabling node version manager"
+. ~/.nvm/nvm.sh
 echo $ORIG_MSG_PREFIX"Installing node version "$NODE_VERSION
-. ~/.set_nvm_env
 nvm install $NODE_VERSION
 
 ## TODO: Need to decide if we invoke nuke_packages here first, in order to ensure a fresh clean install of new packages ???
