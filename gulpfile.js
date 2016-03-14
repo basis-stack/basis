@@ -178,7 +178,7 @@ gulp.task('build', function (cb) {
 });
 
 /* Package build artifacts */
-gulp.task('package', ['build'], function () {
+gulp.task('package', function () {
 
    var packageFileName = envSettings.appName + '.package.' + envSettings.envName + '.zip';
    logMessage('Creating ', config.paths.package + '/' + packageFileName);
