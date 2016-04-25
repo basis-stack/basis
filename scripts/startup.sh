@@ -14,8 +14,18 @@ echo $MSG_PREFIX"--------------------"
 . scripts/set_node_env.sh
 
 # Set web server as background process
-echo $ORIG_MSG_PREFIX"Starting server..."
+echo $ORIG_MSG_PREFIX"Starting node app as background process"
+export NODE_ENV=%ENVIRONMENT%
 chmod +x $RUNTIME/node_modules/.bin/pm2
 $RUNTIME/node_modules/.bin/pm2 start app/bin/%APPNAME%_%ENVIRONMENT% --env %ENVIRONMENT%
+
+# Start nginx if we need to
+FRONT_WITH_NGINX=%FRONT_WITH_NGINX%
+if [ "$FRONT_WITH_NGINX" = true ]
+then
+   echo $MSG_PREFIX"Starting nginx as reverse proxy"
+   # TODO: Start nginx
+fi
+
 echo $ORIG_MSG_PREFIX"Done."
 echo $ORIG_MSG_PREFIX"--------------------"

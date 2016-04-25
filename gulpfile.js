@@ -73,6 +73,7 @@ gulp.task('server-scripts', function() {
        .pipe(replace('%DEPLOY_HOST%', envSettings.deployHost))
        .pipe(replace('%DEPLOY_LOCATION%', envSettings.deployDirectory))
        .pipe(replace('%NODE_RUNTIME_ENV%', envSettings.nodeRuntimeVersion))
+       .pipe(replace('%FRONT_WITH_NGINX%', envSettings.frontWithNginx))
        .pipe(gulp.dest(config.paths.build + '/scripts'));
 });
 
