@@ -2,9 +2,12 @@ class HomeController {
 
     initialise(router) {
 
-        router.get('/', (req, res, next) => {
-            res.send('Hello World!');
-        });
+        router.get('/', this._handleRoot);
+    }
+
+    _handleRoot(req, res, next) {
+
+        res.send('Hello World!');
     }
 }
 
