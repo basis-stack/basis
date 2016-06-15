@@ -1,9 +1,15 @@
-class ErrorsController {
+export class ErrorsController {
 
-    initialise(router) {
+    static handle404(req, res, next) {
 
-        // TODO: Plug in all the error condition handlers from express app.js (from the generator)
+        const err = new Error('Not Found');
+        err.status = 404;
+        next(err);
+    }
+
+    static handleServerError(err, req, res, next) {
+
+        res.status(err.status || 500);
+        res.send(err.message);
     }
 }
-
-export default new ErrorsController();
