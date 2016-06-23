@@ -4,28 +4,45 @@ import routes from './../routes';
 
 export class MiddlewareInitializer {
 
-   static setViewEngine(app) {
+   constructor(app, appSettings) {
 
-      app.set('views', path.join(__dirname, 'views'));
-      app.set('view engine', 'hbs');
+      this._app = app;
+      this._app.settings = appSettings;
    }
 
-   static addVendorHandlers(app) {
+   get result() {
+
+      return this._app;
+   }
+
+   setViewEngine() {
+
+      this._app.set('views', path.join(__dirname, 'views'));
+      this._app.set('view engine', 'hbs');
+
+      return this;
+   }
+
+   addVendorHandlers() {
 
       // TODO: Add app.use() constructs here for all 3rd party handlers
       // (e.g. bodyParser, cookieParser, logging, helmet, etc)
+
+      return this;
    }
 
-   static addAppRouteHandlers(app) {
+   addAppRouteHandlers() {
 
-      app.use(routes);
+      this._app.use(routes);
+
+      return this;
    }
 
-   static addErrorHandlers(app) {
+   addErrorHandlers() {
 
-      app.use(ErrorsController.handle404);
-      app.use(ErrorsController.handleServerError);
+      this._app.use(ErrorsController.handle404);
+      this._app.use(ErrorsController.handleServerError);
+
+      return this;
    }
-
-   // TODO: Add more methods for initialising the static files dir & core routes & errors
 }
