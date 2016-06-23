@@ -1,16 +1,15 @@
 import express from 'express';
 import jsonfile from 'jsonfile';
 
-import routes from './routes';
-import { ErrorsController } from './controllers/errorsController';
+import { MiddlewareInitializer } from './middleware/middlewareInitializer';
 
 const settings = jsonfile.readFileSync(__dirname + '/../settings.json');
 const app = express();
 
 app.settings = settings;
 
-app.use(routes);
-app.use(ErrorsController.handle404);
-app.use(ErrorsController.handleServerError);
+MiddlewareInitializer.setViewEngine(app);
+MiddlewareInitializer.addAppRouteHandlers(app);
+MiddlewareInitializer.addErrorHandlers(app);
 
 export default app;
