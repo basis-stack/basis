@@ -23,6 +23,10 @@
     "camelcase": [2],
     "sort-vars": [2, { "ignoreCase": true }],
     "no-this-before-super": [2],
-    "quotes": [2, "single"]
+    "quotes": [2, "single"],
+    "vars-on-top": [2],
+    "no-duplicate-imports": [2],
+    "no-constant-condition": [2],
+    "array-bracket-spacing": [2]
   }
 }

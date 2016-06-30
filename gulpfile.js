@@ -12,7 +12,6 @@ var babel = require("gulp-babel");
 var merge = require('merge-stream');
 var filter = require('gulp-filter');
 var print = require('gulp-print');
-var mocha = require('gulp-mocha');
 var eslint = require('gulp-eslint');
 
 var config = require('./config/gulp.config');
@@ -128,6 +127,8 @@ gulp.task('package-json', function (cb) {
 /* Compile server-side app + specs */
 gulp.task('compile-app', function () {
 
+  // TODO: Exclude Spec files, as now being tested directly with mocha and babel pre-processor
+  //       and also testing helpers
   return gulp.src(config.paths.app + '/**/*.js')
              .pipe(babel())
              .pipe(gulp.dest(config.paths.temp + '/app'));
@@ -159,14 +160,6 @@ gulp.task('lint', function () {
               .pipe(eslint())
               .pipe(eslint.format())
               .pipe(eslint.failOnError());
-});
-
-/* Run unit tests */
-gulp.task('test', function () {
-
-   return gulp.src(config.paths.temp + '/**/*Spec.js')
-	           .pipe(mocha());
-
 });
 
 /* Build entire solution */

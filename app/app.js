@@ -1,15 +1,14 @@
 import express from 'express';
 import jsonfile from 'jsonfile';
-
-import { MiddlewareInitializer } from './middleware/middlewareInitializer';
+import { AppBuilder } from './appBuilder';
 
 const settings = jsonfile.readFileSync(__dirname + '/../settings.json');
-const initializer = new MiddlewareInitializer(express(), settings);
+const appBuilder = new AppBuilder(express());
 
-const app = initializer.setViewEngine()
-                       .addVendorHandlers()
-                       .addAppRouteHandlers()
-                       .addErrorHandlers()
-                       .result;
+const app = appBuilder.useHandlebars()
+                      .useRoutes()
+                      .handleErrors()
+                      .useSettings(settings)
+                      .result;
 
 export default app;

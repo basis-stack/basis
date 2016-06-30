@@ -1,25 +1,40 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import { forThe, given, when, then, and } from './../testing/specConstructs';
 
 import { ErrorsController } from './../controllers/errorsController';
 
-describe('errorsController', () => {
+forThe('errorsController', () => {
 
-   describe('should', () => {
+   given('404', () => {
 
-      it('handle 404 errors', () => {
+      when('handled', () => {
 
          const stubNextCallback = sinon.spy();
 
          ErrorsController.handle404({}, {}, stubNextCallback);
          const result = stubNextCallback.args[0][0];
 
-         expect(stubNextCallback.calledOnce).to.equal(true);
-         expect(result.status).to.equal(404);
-         expect(result.message).to.equal('Not Found');
-      });
+         then('error status should equal 404', () => {
 
-      it('handle errors with a HTTP status code', () => {
+            expect(result.status).to.equal(404);
+         });
+
+         and('error message should equal Not Found', () => {
+
+            expect(result.message).to.equal('Not Found');
+         });
+
+         and('error should be forwarded on to next handler', () => {
+
+            expect(stubNextCallback.calledOnce).to.equal(true);
+         });
+      });
+   });
+
+   given('HTTP Error', () => {
+
+      when('error handled', () => {
 
          const stubResponse = { status: () => {}, send: () => {} };
          const statusSpy = sinon.spy(stubResponse, 'status');
@@ -28,11 +43,22 @@ describe('errorsController', () => {
 
          ErrorsController.handleServerError(stubError, {}, stubResponse, {});
 
-         expect(statusSpy.calledWithExactly(403)).to.equal(true);
-         expect(sendSpy.calledWithExactly('Some HTTP Error')).to.equal(true);
-      });
+         then('response status should equal HTTP error code', () => {
 
-      it('handle generic errors as HTTP 500', () => {
+            expect(statusSpy.calledWithExactly(403)).to.equal(true);
+
+         });
+
+         and('response body should equal error message', () => {
+
+            expect(sendSpy.calledWithExactly('Some HTTP Error')).to.equal(true);
+         });
+      });
+   });
+
+   given('General Error', () => {
+
+      when('error handled', () => {
 
          const stubResponse = { status: () => {}, send: () => {} };
          const statusSpy = sinon.spy(stubResponse, 'status');
@@ -41,8 +67,15 @@ describe('errorsController', () => {
 
          ErrorsController.handleServerError(stubError, {}, stubResponse, {});
 
-         expect(statusSpy.calledWithExactly(500)).to.equal(true);
-         expect(sendSpy.calledWithExactly('Some General Error')).to.equal(true);
+         then('response status should equal 500', () => {
+
+            expect(statusSpy.calledWithExactly(500)).to.equal(true);
+         });
+
+         and('response body should equal error message', () => {
+
+            expect(sendSpy.calledWithExactly('Some General Error')).to.equal(true);
+         });
       });
    });
 });
