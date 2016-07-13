@@ -34,11 +34,11 @@
     "chai": "^3.5.0",
     "colors": "^1.1.2",
     "del": "^2.2.1",
-    "eslint": "^2.13.1",
+    "eslint": "^3.0.1",
     "extend": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
-    "gulp-eslint": "^2.0.0",
+    "gulp-eslint": "^3.0.1",
     "gulp-filter": "^4.0.0",
     "gulp-print": "^2.0.1",
     "gulp-rename": "^1.2.2",
@@ -47,8 +47,8 @@
     "merge-stream": "^1.0.0",
     "minimist": "^1.2.0",
     "mocha": "^2.5.3",
-    "npm-check-updates": "^2.6.7",
-    "run-sequence": "^1.2.1",
+    "npm-check-updates": "^2.7.0",
+    "run-sequence": "^1.2.2",
     "sinon": "^1.17.4"
   }
 }
