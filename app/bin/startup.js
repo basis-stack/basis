@@ -1,3 +1,4 @@
+import logger from './../services/logger';
 import app from './../app';
 
 function onError(error) {
@@ -9,7 +10,7 @@ function onListening() {
 
    // Handle onListening status here
 
-   console.log('listening on port ' + app.settings.webServerPort);
+   logger.info('[SERVER ] STARTED: listening on port ' + app.settings.webServerPort);
 }
 
 app.listen(app.settings.webServerPort, onListening);

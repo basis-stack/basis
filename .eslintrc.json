@@ -14,7 +14,7 @@
   "plugins": [
   ],
   "rules": {
-    "no-console": [0],
+    "no-console": [2],
     "no-unused-vars": [0],
     "no-var": [2],
     "no-use-before-define": [2],

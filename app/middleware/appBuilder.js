@@ -3,15 +3,13 @@ import path from 'path';
 import requestLogger from './requestLogger';
 import { ErrorsController } from './../controllers/errorsController';
 import routes from './../routes';
+import logger from './../services/logger';
 
 export class AppBuilder {
 
    constructor(app) {
 
       this._app = app;
-
-      // TODO: Where should this trust proxy flag be set (i.e. where here in AppBuilder) and is it env specific (only for local) ?
-      this._app.enable('trust proxy');
    }
 
    get result() {
@@ -29,7 +27,14 @@ export class AppBuilder {
 
    logRequests() {
 
-      this._app.use(requestLogger());
+      this._app.use(requestLogger(logger.logStream));
+
+      return this;
+   }
+
+   trustProxy() {
+
+      this._app.enable('trust proxy');
 
       return this;
    }

@@ -20,6 +20,7 @@
   "homepage": "https://github.com/warebrained/basis",
   "scripts": {
     "build": "node_modules/.bin/gulp build",
+    "start": "node build/app/bin/basis_local",
     "test": "node node_modules/mocha/bin/mocha --require babel-core/register --require babel-polyfill app/**/*Spec.js"
   },
   "dependencies": {

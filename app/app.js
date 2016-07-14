@@ -10,6 +10,7 @@ const app = appBuilder.useHandlebars()
                       .useRoutes()
                       .handleErrors()
                       .useSettings(settings)
+                      .trustProxy()
                       .result;
 
 export default app;
