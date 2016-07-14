@@ -9,6 +9,9 @@ export class AppBuilder {
    constructor(app) {
 
       this._app = app;
+
+      // TODO: Where should this trust proxy flag be set (i.e. where here in AppBuilder) and is it env specific (only for local) ?
+      this._app.enable('trust proxy');
    }
 
    get result() {

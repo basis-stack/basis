@@ -1,4 +1,3 @@
-import logger from './../controllers/loggingController';
 import app from './../app';
 
 function onError(error) {
