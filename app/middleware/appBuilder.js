@@ -1,6 +1,8 @@
 import path from 'path';
-import { ErrorsController } from './controllers/errorsController';
-import routes from './routes';
+
+import requestLogger from './requestLogger';
+import { ErrorsController } from './../controllers/errorsController';
+import routes from './../routes';
 
 export class AppBuilder {
 
@@ -18,6 +20,13 @@ export class AppBuilder {
 
       this._app.use(ErrorsController.handle404);
       this._app.use(ErrorsController.handleServerError);
+
+      return this;
+   }
+
+   logRequests() {
+
+      this._app.use(requestLogger());
 
       return this;
    }
