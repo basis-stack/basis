@@ -51,12 +51,12 @@ export class AppBuilder {
       return this;
    }
 
-   useSettings(appSettings) {
+   // useSettings(appSettings) {
 
-      this._app.settings = appSettings;
+   //    this._app.settings = appSettings;
 
-      return this;
-   }
+   //    return this;
+   // }
 
    // addVendorHandlers() {
 
