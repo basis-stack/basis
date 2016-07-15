@@ -4,5 +4,6 @@ module.exports = {
    webServerPort: '3000',
    appName: 'basis',
    frontWithNginx: false,
-   nodeRuntimeVersion: 5.7
+   nodeRuntimeVersion: 5.7,
+   logPath: '~/logs/'
 };
