@@ -127,9 +127,8 @@ gulp.task('package-json', function (cb) {
 /* Compile server-side app + specs */
 gulp.task('compile-app', function () {
 
-  // TODO: Exclude Spec files, as now being tested directly with mocha and babel pre-processor
-  //       and also testing helpers
   return gulp.src(config.paths.app + '/**/*.js')
+             .pipe(filter(['**/*.js', '!**/*Spec.js', '!**/specConstructs.js']))
              .pipe(babel())
              .pipe(gulp.dest(config.paths.temp + '/app'));
 });
@@ -146,7 +145,7 @@ gulp.task('copy-app', ['compile-app'], function () {
                                .pipe(gulp.dest(startupDestDir));
 
    var appFilesStream = gulp.src(config.paths.temp + '/app/**/*.js')
-                            .pipe(filter(['**/*.js', '!**/startup.js', '!**/*Spec.js']))
+                            .pipe(filter(['**/*.js', '!**/startup.js']))
                             .pipe(gulp.dest(config.paths.build + '/app'))
                             .pipe(print(getFilePathLogMessage));
 
