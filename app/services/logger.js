@@ -14,8 +14,7 @@ class Logger {
 
       return {
          write: (message, encoding) => {
-            // TODO: Template string this !!!
-            this.info('[REQUEST] ' + message.replace('\n', ''));
+            this.info(`[REQUEST] ${message.replace('\n', '')}`);
          }
       };
    }

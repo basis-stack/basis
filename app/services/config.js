@@ -4,7 +4,7 @@ class Config {
 
    constructor() {
 
-      this._settings = jsonfile.readFileSync(__dirname + '/../../settings.json');
+      this._settings = jsonfile.readFileSync(`${__dirname}/../../settings.json`);
    }
 
    // TODO: Make these getter props generic using js [] gear

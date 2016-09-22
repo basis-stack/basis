@@ -27,6 +27,10 @@
     "vars-on-top": [2],
     "no-duplicate-imports": [2],
     "no-constant-condition": [2],
-    "array-bracket-spacing": [2]
+    "array-bracket-spacing": [2],
+    "prefer-const": [2],
+    "prefer-arrow-callback": [2],
+    "prefer-template": [2],
+    "no-useless-constructor": [2]
   }
 }

@@ -11,7 +11,7 @@ function onListening() {
 
    // Handle onListening status here
 
-   logger.info('[SERVER ] STARTED: listening on port ' + config.webServerPort);
+   logger.info(`[SERVER ] STARTED: listening on port ${config.webServerPort}`);
 }
 
 app.listen(config.webServerPort, onListening);
