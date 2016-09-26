@@ -3,7 +3,7 @@ import path from 'path';
 import requestLogger from './requestLogger';
 import { ErrorsController } from './../controllers/errorsController';
 import routes from './../routes';
-import logger from './../services/logger';
+import container from './../services/container';
 
 export class AppBuilder {
 
@@ -27,6 +27,7 @@ export class AppBuilder {
 
    logRequests() {
 
+      const logger = container.resolve('logger');
       this._app.use(requestLogger(logger.logStream));
 
       return this;

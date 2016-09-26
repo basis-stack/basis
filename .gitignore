@@ -36,3 +36,6 @@ build
 temp
 package
 .DS_Store
+
+# Local scripts
+runspec

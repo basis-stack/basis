@@ -1,8 +1,12 @@
-import config from './../services/config';
-import logger from './../services/logger';
-import app from './../app';
 import http from 'http';
+
+import './../registrar';
+import container from './../services/container';
+import app from './../app';
 import handleListenError from './errorHandler';
+
+const config = container.resolve('config');
+const logger = container.resolve('logger');
 
 function onError(error) {
 
@@ -10,7 +14,7 @@ function onError(error) {
       throw error;
    }
 
-   handleListenError(error, config, () => { process.exit(1); });
+   handleListenError(error, config, logger, () => { process.exit(1); });
 }
 
 function onListening() {

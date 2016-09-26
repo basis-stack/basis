@@ -1,3 +1,5 @@
+//import logger from './../services/logger';
+
 export class ErrorsController {
 
    static handle404(req, res, next) {
@@ -9,7 +11,11 @@ export class ErrorsController {
 
    static handleServerError(err, req, res, next) {
 
-      res.status(err.status || 500);
+      //const messagePrefix = '[EXPRESS] SERVER_ERROR: ';
+      const status = err.status || 500;
+      //logger.error(`${messagePrefix}${status} - ${err.message}`);
+
+      res.status(status);
       res.send(err.message);
    }
 }

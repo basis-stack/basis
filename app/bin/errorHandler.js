@@ -1,6 +1,4 @@
-import logger from './../services/logger';
-
-export default (error, config, handledCallback) => {
+export default (error, config, logger, handledCallback) => {
 
    const messagePrefix = '[SERVER ] LISTEN_ERROR:';
 

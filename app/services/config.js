@@ -1,10 +1,8 @@
-import jsonfile from 'jsonfile';
+export class Config {
 
-class Config {
+   constructor(settings) {
 
-   constructor() {
-
-      this._settings = jsonfile.readFileSync(`${__dirname}/../../settings.json`);
+      this._settings = settings;
    }
 
    // TODO: Make these getter props generic using js [] gear
@@ -28,5 +26,3 @@ class Config {
       return this._settings.webServerPort;
    }
 }
-
-export default new Config();
