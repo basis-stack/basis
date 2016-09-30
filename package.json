@@ -24,6 +24,8 @@
     "test": "node node_modules/mocha/bin/mocha --require babel-core/register --require babel-polyfill app/**/*Spec.js"
   },
   "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "hbs": "^4.0.1",
     "jsonfile": "^2.4.0",
