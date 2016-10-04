@@ -64,16 +64,19 @@ gulp.task('prepare-build', ['clean'], function (cb) {
 /* Copy server scripts */
 gulp.task('server-scripts', function() {
 
-   gulp.src('./scripts/*.sh')
-       .pipe(print(getFilePathLogMessage))
-       .pipe(replace('%APPNAME%', envSettings.appName))
-       .pipe(replace('%ENVIRONMENT%', envSettings.envName))
-       .pipe(replace('%DEPLOY_USER%', envSettings.deployUser))
-       .pipe(replace('%DEPLOY_HOST%', envSettings.deployHost))
-       .pipe(replace('%DEPLOY_LOCATION%', envSettings.deployDirectory))
-       .pipe(replace('%NODE_RUNTIME_ENV%', envSettings.nodeRuntimeVersion))
-       .pipe(replace('%FRONT_WITH_NGINX%', envSettings.frontWithNginx))
-       .pipe(gulp.dest(config.paths.build + '/scripts'));
+   if (envSettings.envName !== 'local') {
+
+      gulp.src('./scripts/*.sh')
+          .pipe(print(getFilePathLogMessage))
+          .pipe(replace('%APPNAME%', envSettings.appName))
+          .pipe(replace('%ENVIRONMENT%', envSettings.envName))
+          .pipe(replace('%DEPLOY_USER%', envSettings.deployUser))
+          .pipe(replace('%DEPLOY_HOST%', envSettings.deployHost))
+          .pipe(replace('%DEPLOY_LOCATION%', envSettings.deployDirectory))
+          .pipe(replace('%NODE_RUNTIME_ENV%', envSettings.nodeRuntimeVersion))
+          .pipe(replace('%FRONT_WITH_NGINX%', envSettings.frontWithNginx))
+          .pipe(gulp.dest(config.paths.build + '/scripts'));
+   }
 });
 
 /* Prepare Environment settings file */
