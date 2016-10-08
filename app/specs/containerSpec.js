@@ -6,7 +6,7 @@ import container from './../services/container';
 
 forThe('Container', () => {
 
-   container.initialise();
+   //container.initialise();
 
    given('A key and an instance', () => {
 
@@ -50,6 +50,6 @@ forThe('Container', () => {
 
    after(() => {
 
-      container.initialise();
+      //container.initialise();
    });
 });

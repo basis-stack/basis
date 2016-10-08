@@ -1,21 +1,30 @@
-//import logger from './../services/logger';
+
 
 export class ErrorsController {
 
-   static handle404(req, res, next) {
+   constructor(logger) {
+
+      this._logger = logger;
+   }
+
+   handle404(req, res, next) {
 
       const err = new Error('Not Found');
       err.status = 404;
       next(err);
    }
 
-   static handleServerError(err, req, res, next) {
+   handleServerError(err, req, res, next) {
 
-      //const messagePrefix = '[EXPRESS] SERVER_ERROR: ';
       const status = err.status || 500;
-      //logger.error(`${messagePrefix}${status} - ${err.message}`);
 
+      if (status !== 404) {
+         this._logger.error(`[EXPRESS] SERVER_ERROR: ${status} - ${err.message}`);
+      }
+      
       res.status(status);
+      
+      // TODO: In non-prod envs, need to also log the stack stace as per express generator template
       res.send(err.message);
    }
 }

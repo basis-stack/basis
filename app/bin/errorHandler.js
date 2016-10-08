@@ -1,5 +1,9 @@
 export default (error, config, logger, handledCallback) => {
 
+   if (error.syscall !== 'listen') {
+      throw error;
+   }
+
    const messagePrefix = '[SERVER ] LISTEN_ERROR:';
 
    switch (error.code) {
@@ -11,7 +15,7 @@ export default (error, config, logger, handledCallback) => {
          break;
       default:
          throw error;
-  }
+   }
 
    if (handledCallback !== undefined) {
       handledCallback();

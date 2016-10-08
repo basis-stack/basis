@@ -12,7 +12,7 @@ forThe('errorsController', () => {
 
          const stubNextCallback = sinon.spy();
 
-         ErrorsController.handle404({}, {}, stubNextCallback);
+         new ErrorsController({}).handle404({}, {}, stubNextCallback);
          const result = stubNextCallback.args[0][0];
 
          then('error status should equal 404', () => {
@@ -40,18 +40,23 @@ forThe('errorsController', () => {
          const statusSpy = sinon.spy(stubResponse, 'status');
          const sendSpy = sinon.spy(stubResponse, 'send');
          const stubError = { status: 403, message: 'Some HTTP Error'};
+         const stubLogger = { error: () => {} };
 
-         ErrorsController.handleServerError(stubError, {}, stubResponse, {});
+         new ErrorsController(stubLogger).handleServerError(stubError, {}, stubResponse, {});
 
          then('response status should equal HTTP error code', () => {
 
             expect(statusSpy.calledWithExactly(403)).to.equal(true);
-
          });
 
          and('response body should equal error message', () => {
 
             expect(sendSpy.calledWithExactly('Some HTTP Error')).to.equal(true);
+         });
+
+         and('error should be logged', () => {
+
+            // TODO: Do this !!
          });
       });
    });
@@ -64,8 +69,9 @@ forThe('errorsController', () => {
          const statusSpy = sinon.spy(stubResponse, 'status');
          const sendSpy = sinon.spy(stubResponse, 'send');
          const stubError = { message: 'Some General Error' };
+         const stubLogger = { error: () => {} };
 
-         ErrorsController.handleServerError(stubError, {}, stubResponse, {});
+         new ErrorsController(stubLogger).handleServerError(stubError, {}, stubResponse, {});
 
          then('response status should equal 500', () => {
 
@@ -75,6 +81,11 @@ forThe('errorsController', () => {
          and('response body should equal error message', () => {
 
             expect(sendSpy.calledWithExactly('Some General Error')).to.equal(true);
+         });
+
+         and('error should be logged', () => {
+
+            // TODO: Do this !!
          });
       });
    });

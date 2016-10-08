@@ -6,7 +6,7 @@ class HomeController {
    }
 
    _handleRoot(req, res, next) {
-      
+
       res.send('Hello World!');
    }
 }

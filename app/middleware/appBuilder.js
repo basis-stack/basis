@@ -7,9 +7,13 @@ import container from './../services/container';
 
 export class AppBuilder {
 
-   constructor(app) {
+   constructor(app, config, logger) {
 
       this._app = app;
+      this._config = config;
+      this._logger = logger;
+
+      this._errorController = new ErrorsController(this._logger);
    }
 
    get result() {
@@ -19,16 +23,17 @@ export class AppBuilder {
 
    handleErrors() {
 
-      this._app.use(ErrorsController.handle404);
-      this._app.use(ErrorsController.handleServerError);
+
+
+      this._app.use(this._errorController.handle404);
+      this._app.use((err, req, res, next) => { this._errorController.handleServerError(err, req, res, next); });
 
       return this;
    }
 
    logRequests() {
 
-      const logger = container.resolve('logger');
-      this._app.use(requestLogger(logger.logStream));
+      this._app.use(requestLogger(this._logger.logStream));
 
       return this;
    }

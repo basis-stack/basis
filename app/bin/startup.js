@@ -1,20 +1,12 @@
 import http from 'http';
 
-import './../registrar';
-import container from './../services/container';
+import { config, logger } from './../registrar';
 import app from './../app';
-import handleListenError from './errorHandler';
-
-const config = container.resolve('config');
-const logger = container.resolve('logger');
+import handleError from './errorHandler';
 
 function onError(error) {
 
-   if (error.syscall !== 'listen') {
-      throw error;
-   }
-
-   handleListenError(error, config, logger, () => { process.exit(1); });
+   handleError(error, config, logger, () => { process.exit(1); });
 }
 
 function onListening() {
