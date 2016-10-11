@@ -1,18 +1,16 @@
-'use strict';
-
-var gulp = require('gulp');
-var del = require('del');
-var colors = require('colors');
-var replace = require('gulp-replace');
-var runSequence = require('run-sequence');
-var fs = require('fs');
-var zip = require('gulp-zip');
-var rename = require('gulp-rename');
-var babel = require("gulp-babel");
-var merge = require('merge-stream');
-var filter = require('gulp-filter');
-var print = require('gulp-print');
-var eslint = require('gulp-eslint');
+import gulp from 'gulp';
+import del from 'del';
+import colors from 'colors';
+import replace from 'gulp-replace';
+import runSequence from 'run-sequence';
+import fs from 'fs';
+import zip from 'gulp-zip';
+import rename from 'gulp-rename';
+import babel from "gulp-babel";
+import merge from 'merge-stream';
+import filter from 'gulp-filter';
+import print from 'gulp-print';
+import eslint from 'gulp-eslint';
 
 var config = require('./config/gulp.config');
 var envSettings = require('./config/settings');
