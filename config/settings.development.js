@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
    deployUser: 'justin',
    deployHost: 'dev.local',
    deployDirectory: '/home/justin/basis'

@@ -1,11 +1,9 @@
-'use strict';
+const buildPath = './build';
+const tempPath = './temp';
+const appPath = './app';
+const packagePath = './package';
 
-var buildPath = './build';
-var tempPath = './temp';
-var appPath = './app';
-var packagePath = './package';
-
-module.exports = {
+export default {
    paths: {
       build: buildPath,
       temp: tempPath,

@@ -6,17 +6,18 @@ import runSequence from 'run-sequence';
 import fs from 'fs';
 import zip from 'gulp-zip';
 import rename from 'gulp-rename';
-import babel from "gulp-babel";
+import babel from 'gulp-babel';
 import merge from 'merge-stream';
 import filter from 'gulp-filter';
 import print from 'gulp-print';
 import eslint from 'gulp-eslint';
 
-var config = require('./config/gulp.config');
-var envSettings = require('./config/settings');
-var logMessagePrefix = "         + ";
+import { default as config } from './config/gulp.config';
+import { default as envSettings } from './config/settings';
 
-console.log('[initiate]'.yellow + ' Creating artifacts for app name: ' + envSettings.appName.magenta);
+const logMessagePrefix = '         + ';
+
+console.log(`${'[initiate]'.yellow} Creating artifacts for app name: ${envSettings.appName.magenta}`);
 
 function logMessage(action, context) {
 
@@ -25,33 +26,33 @@ function logMessage(action, context) {
 
 function getFilePathLogMessage(filepath) {
 
-   return 'Writing  ' + filepath;
+   return `Writing   ${filepath}`;
 }
 
 /* Clean existing build & package artifacts */
-gulp.task('clean', function (cb) {
+gulp.task('clean', (cb) => {
 
-   del([config.paths.build, config.paths.temp, config.paths.package]).then(function (paths) {
-      var pathsText = paths.length === 0 ? 'NONE' : paths.join(';\n                    ');
+   del([config.paths.build, config.paths.temp, config.paths.package]).then((paths) => {
+      const pathsText = paths.length === 0 ? 'NONE' : paths.join(';\n                    ');
       logMessage('Deleted  ', pathsText);
       cb();
    });
 });
 
 /* Clean temporary build artifacts (from babel compile and test specs) */
-gulp.task('clean-temp', function (cb) {
+gulp.task('clean-temp', (cb) => {
 
-   del([config.paths.temp]).then(function (paths) {
-      var pathsText = paths.join(';');
+   del([config.paths.temp]).then((paths) => {
+      const pathsText = paths.join(';');
       logMessage('Deleted  ', pathsText);
       cb();
    });
 });
 
 /* Prepare build directory */
-gulp.task('prepare-build', ['clean'], function (cb) {
+gulp.task('prepare-build', ['clean'], (cb) => {
 
-   fs.mkdir(config.paths.build, function (err) {
+   fs.mkdir(config.paths.build, (err) => {
 
       if (err) { throw err; }
       cb();
@@ -60,7 +61,7 @@ gulp.task('prepare-build', ['clean'], function (cb) {
 
 
 /* Copy server scripts */
-gulp.task('server-scripts', function() {
+gulp.task('server-scripts', () => {
 
    if (envSettings.envName !== 'local') {
 
@@ -73,20 +74,20 @@ gulp.task('server-scripts', function() {
           .pipe(replace('%DEPLOY_LOCATION%', envSettings.deployDirectory))
           .pipe(replace('%NODE_RUNTIME_ENV%', envSettings.nodeRuntimeVersion))
           .pipe(replace('%FRONT_WITH_NGINX%', envSettings.frontWithNginx))
-          .pipe(gulp.dest(config.paths.build + '/scripts'));
+          .pipe(gulp.dest(`${config.paths.build}/scripts`));
    }
 });
 
 /* Prepare Environment settings file */
-gulp.task('environment-settings', function (cb) {
+gulp.task('environment-settings', (cb) => {
 
    // TODO: Could this be done with JsonFile instead ???
 
-   var settingsContent = JSON.stringify(envSettings, null, '  ');
-   var pathName = config.paths.build + '/settings.json';
+   const settingsContent = JSON.stringify(envSettings, null, '  ');
+   const pathName = `${config.paths.build}/settings.json`;
    logMessage('Creating ', pathName);
 
-   fs.writeFile(pathName, settingsContent, function (err) {
+   fs.writeFile(pathName, settingsContent, (err) => {
 
       if (err) { throw err; }
       cb();
@@ -94,15 +95,15 @@ gulp.task('environment-settings', function (cb) {
 });
 
 /* Prepare package.json for the server / runtime */
-gulp.task('package-json', function (cb) {
+gulp.task('package-json', (cb) => {
 
     // TODO: Replace all this crap with jsonfile package !!!
 
-   fs.readFile('./package.json', function (err, data) {
+   fs.readFile('./package.json', (err, data) => {
 
       if (err) { throw err; }
 
-      var packageJson = JSON.parse(data);
+      const packageJson = JSON.parse(data);
       packageJson.name = envSettings.appName;
       packageJson.devDependencies = undefined;
       packageJson.scripts = undefined;
@@ -114,10 +115,10 @@ gulp.task('package-json', function (cb) {
       packageJson.repository = undefined;
       packageJson.description = undefined;
 
-      var pathName = config.paths.build + '/package.json';
+      const pathName = `${config.paths.build}/package.json`;
       logMessage('Creating ', pathName);
 
-      fs.writeFile(pathName, JSON.stringify(packageJson, null, '  '), function (err) {
+      fs.writeFile(pathName, JSON.stringify(packageJson, null, '  '), (err) => {
 
          if (err) { throw err; }
          cb();
@@ -126,44 +127,44 @@ gulp.task('package-json', function (cb) {
 });
 
 /* Compile server-side app + specs */
-gulp.task('compile-app', function () {
+gulp.task('compile-app', () => {
 
-  return gulp.src(config.paths.app + '/**/*.js')
+  return gulp.src(`${config.paths.app}/**/*.js`)
              .pipe(filter(['**/*.js', '!**/*Spec.js', '!**/specConstructs.js']))
              .pipe(babel())
-             .pipe(gulp.dest(config.paths.temp + '/app'));
+             .pipe(gulp.dest(`${config.paths.temp}/app`));
 });
 
 /* Copy app files and environmentalise the bootup module */
-gulp.task('copy-app', ['compile-app'], function () {
+gulp.task('copy-app', ['compile-app'], () => {
 
-   var startupDestFileName = envSettings.appName + '_' + envSettings.envName;
-   var startupDestDir = config.paths.build + '/app/bin/';
-   logMessage('Creating ', startupDestDir + startupDestFileName);
+   const startupDestFileName = `${envSettings.appName}_${envSettings.envName}`;
+   const startupDestDir = `${config.paths.build}/app/bin/`;
+   logMessage('Creating ', `${startupDestDir}${startupDestFileName}`);
 
-   var startupFileStream = gulp.src(config.paths.temp + '/app/bin/startup.js')
-                               .pipe(rename(startupDestFileName))
-                               .pipe(gulp.dest(startupDestDir));
+   const startupFileStream = gulp.src(`${config.paths.temp}/app/bin/startup.js`)
+                                 .pipe(rename(startupDestFileName))
+                                 .pipe(gulp.dest(startupDestDir));
 
-   var appFilesStream = gulp.src(config.paths.temp + '/app/**/*.js')
-                            .pipe(filter(['**/*.js', '!**/startup.js']))
-                            .pipe(gulp.dest(config.paths.build + '/app'))
-                            .pipe(print(getFilePathLogMessage));
+   const appFilesStream = gulp.src(`${config.paths.temp}/app/**/*.js`)
+                              .pipe(filter(['**/*.js', '!**/startup.js']))
+                              .pipe(gulp.dest(`${config.paths.build}/app`))
+                              .pipe(print(getFilePathLogMessage));
 
    return merge(startupFileStream, appFilesStream);
 });
 
 /* Lint */
-gulp.task('lint', function () {
+gulp.task('lint', () => {
 
-   return gulp.src(config.paths.app + '/**/*.js')
+   return gulp.src(`${config.paths.app}/**/*.js`)
               .pipe(eslint())
               .pipe(eslint.format())
               .pipe(eslint.failOnError());
 });
 
 /* Build entire solution */
-gulp.task('build', function (cb) {
+gulp.task('build', (cb) => {
 
    runSequence('prepare-build',
                'lint',
@@ -172,17 +173,17 @@ gulp.task('build', function (cb) {
 });
 
 /* Package build artifacts */
-gulp.task('package', function () {
+gulp.task('package', () => {
 
-   var packageFileName = envSettings.appName + '.package.' + envSettings.envName + '.zip';
-   logMessage('Creating ', config.paths.package + '/' + packageFileName);
+   const packageFileName = `${envSettings.appName}.package.${envSettings.envName}.zip`;
+   logMessage('Creating ', `${config.paths.package}/${packageFileName}`);
 
-   return gulp.src(config.paths.build + '/**/*', { dot: true })
+   return gulp.src(`${config.paths.build}/**/*`, { dot: true })
               .pipe(zip(packageFileName))
               .pipe(gulp.dest(config.paths.package));
 });
 
 /* Default gulp task */
-gulp.task('default', function (cb) {
+gulp.task('default', ['build'], (cb) => {
 
 });

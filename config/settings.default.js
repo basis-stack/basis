@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
    webServerPort: '3000',
    appName: 'basis',
    frontWithNginx: false,

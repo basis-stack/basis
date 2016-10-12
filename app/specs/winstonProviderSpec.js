@@ -10,7 +10,7 @@ const assertInstance = (result) => {
    expect(typeof result.info).to.equal('function');
 }
 
-forThe('winstonProvider', () => {
+forThe('WinstonProvider', () => {
 
    const config = { appName: 'testapp' };
 

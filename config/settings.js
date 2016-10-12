@@ -1,31 +1,29 @@
-'use strict';
+import 'colors';
+import { default as parseArgs } from 'minimist';
+import { default as extend } from 'extend';
+import { default as defaultSettings } from './settings.default';
 
-var parseArgs = require('minimist');
-var extend = require('extend');
-var defaultSettings = require('./settings.default');
-require('colors');
-
-var defaultBuildEnv = 'local';
+const defaultBuildEnv = 'local';
 
 function getEnvironment() {
 
-   var parseOptions = { default: { env: defaultBuildEnv } };
-   var processArgs = parseArgs(process.argv.slice(2), parseOptions);
+   const parseOptions = { default: { env: defaultBuildEnv } };
+   const processArgs = parseArgs(process.argv.slice(2), parseOptions);
 
    return processArgs.env;
 }
 
 function loadEnvironmentSettings(envName) {
 
-   return require('./settings.' + envName);
+   return require(`./settings.${envName}`);
 }
 
-module.exports = (function () {
+export default (function () {
 
-   var envName = getEnvironment();
-   console.log('[settings]'.yellow + ' Generating environment settings for: ' + envName.magenta);
+   const envName = getEnvironment();
+   console.log(`${'[settings]'.yellow} Generating environment settings for: ${envName.magenta}`);
 
-   var envSettings = loadEnvironmentSettings(envName);
+   const envSettings = loadEnvironmentSettings(envName);
 
    return extend(defaultSettings, envSettings, { envName: envName });
 }());

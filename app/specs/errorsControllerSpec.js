@@ -4,7 +4,7 @@ import { forThe, given, when, then, and } from './../testing/specConstructs';
 
 import { ErrorsController } from './../controllers/errorsController';
 
-forThe('errorsController', () => {
+forThe('ErrorsController', () => {
 
    given('404', () => {
 
@@ -41,6 +41,7 @@ forThe('errorsController', () => {
          const sendSpy = sinon.spy(stubResponse, 'send');
          const stubError = { status: 403, message: 'Some HTTP Error'};
          const stubLogger = { error: () => {} };
+         const loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
          new ErrorsController(stubLogger).handleServerError(stubError, {}, stubResponse, {});
 
@@ -56,7 +57,8 @@ forThe('errorsController', () => {
 
          and('error should be logged', () => {
 
-            // TODO: Do this !!
+            const expectedMessage = '[EXPRESS] SERVER_ERROR: 403 - Some HTTP Error';
+            expect(loggerErrorSpy.calledWithExactly(expectedMessage)).to.equal(true);
          });
       });
    });
@@ -70,6 +72,7 @@ forThe('errorsController', () => {
          const sendSpy = sinon.spy(stubResponse, 'send');
          const stubError = { message: 'Some General Error' };
          const stubLogger = { error: () => {} };
+         const loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
          new ErrorsController(stubLogger).handleServerError(stubError, {}, stubResponse, {});
 
@@ -85,7 +88,8 @@ forThe('errorsController', () => {
 
          and('error should be logged', () => {
 
-            // TODO: Do this !!
+            const expectedMessage = '[EXPRESS] SERVER_ERROR: 500 - Some General Error';
+            expect(loggerErrorSpy.calledWithExactly(expectedMessage)).to.equal(true);
          });
       });
    });
