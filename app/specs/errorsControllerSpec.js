@@ -12,7 +12,7 @@ forThe('ErrorsController', () => {
 
          const stubNextCallback = sinon.spy();
 
-         new ErrorsController({}).handle404({}, {}, stubNextCallback);
+         new ErrorsController({}, {}).handle404({}, {}, stubNextCallback);
          const result = stubNextCallback.args[0][0];
 
          then('error status should equal 404', () => {
@@ -20,9 +20,9 @@ forThe('ErrorsController', () => {
             expect(result.status).to.equal(404);
          });
 
-         and('error message should equal Not Found', () => {
+         and('error message should equal Resource Not Found', () => {
 
-            expect(result.message).to.equal('Not Found');
+            expect(result.message).to.equal('Resource Not Found');
          });
 
          and('error should be forwarded on to next handler', () => {
@@ -39,20 +39,21 @@ forThe('ErrorsController', () => {
          const stubResponse = { status: () => {}, send: () => {} };
          const statusSpy = sinon.spy(stubResponse, 'status');
          const sendSpy = sinon.spy(stubResponse, 'send');
-         const stubError = { status: 403, message: 'Some HTTP Error'};
+         const stubError = { status: 403, message: 'Some HTTP Error' };
          const stubLogger = { error: () => {} };
+         const stubConfig = { envName: 'local' };
          const loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
-         new ErrorsController(stubLogger).handleServerError(stubError, {}, stubResponse, {});
+         new ErrorsController(stubLogger, stubConfig).handleServerError(stubError, {}, stubResponse, {});
 
          then('response status should equal HTTP error code', () => {
 
             expect(statusSpy.calledWithExactly(403)).to.equal(true);
          });
 
-         and('response body should equal error message', () => {
+         and('response body should contain error message', () => {
 
-            expect(sendSpy.calledWithExactly('Some HTTP Error')).to.equal(true);
+            expect(sendSpy.args[0][0].message).to.equal('Some HTTP Error');
          });
 
          and('error should be logged', () => {
@@ -72,18 +73,19 @@ forThe('ErrorsController', () => {
          const sendSpy = sinon.spy(stubResponse, 'send');
          const stubError = { message: 'Some General Error' };
          const stubLogger = { error: () => {} };
+         const stubConfig = { envName: 'local' };
          const loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
-         new ErrorsController(stubLogger).handleServerError(stubError, {}, stubResponse, {});
+         new ErrorsController(stubLogger, stubConfig).handleServerError(stubError, {}, stubResponse, {});
 
          then('response status should equal 500', () => {
 
             expect(statusSpy.calledWithExactly(500)).to.equal(true);
          });
 
-         and('response body should equal error message', () => {
+         and('response body should contain error message', () => {
 
-            expect(sendSpy.calledWithExactly('Some General Error')).to.equal(true);
+            expect(sendSpy.args[0][0].message).to.equal('Some General Error');
          });
 
          and('error should be logged', () => {
@@ -93,4 +95,6 @@ forThe('ErrorsController', () => {
          });
       });
    });
+
+   // TOOD: Add tests for production env (i.e. no stack trace)
 });

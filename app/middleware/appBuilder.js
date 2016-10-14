@@ -13,7 +13,7 @@ export class AppBuilder {
       this._config = config;
       this._logger = logger;
 
-      this._errorController = new ErrorsController(this._logger);
+      this._errorController = new ErrorsController(this._logger, this._config);
    }
 
    get result() {
