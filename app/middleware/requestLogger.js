@@ -1,10 +1,8 @@
 import morgan from 'morgan';
 
-export default (logStream) => {
+export default (config, logStream) => {
 
-   // TODO: Tweak appropriate output format
+   const format = config.env !== 'production' ? 'dev' : 'combined';
 
-   // TODO: Make the output format env specific (based on env config)
-
-   return morgan('dev', { 'stream': logStream });
+   return morgan(format, { 'stream': logStream });
 }

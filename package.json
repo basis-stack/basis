@@ -21,7 +21,7 @@
   "scripts": {
     "build": "node_modules/.bin/eslint config/*.* gulpfile.babel.js && node_modules/.bin/gulp build",
     "start": "node build/app/bin/basis_local",
-    "test": "node node_modules/mocha/bin/mocha --require babel-core/register --require babel-polyfill app/**/*Spec.js"
+    "test": "node_modules/.bin/eslint app/**/*Spec.js && node_modules/mocha/bin/mocha --require babel-core/register app/**/*Spec.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
+    "babel-plugin-rewire": "^1.0.0",
     "babel-polyfill": "^6.16.0",
     "babel-preset-es2015": "^6.16.0",
     "chai": "^3.5.0",
