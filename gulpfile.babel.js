@@ -21,7 +21,7 @@ console.log(`${'[initiate]'.yellow} Creating artifacts for app name: ${envSettin
 
 function logMessage(action, context) {
 
-   console.log(logMessagePrefix + action + context.magenta);
+   console.log(`${logMessagePrefix}${action}${context.magenta}`);
 }
 
 function getFilePathLogMessage(filepath) {
@@ -32,18 +32,8 @@ function getFilePathLogMessage(filepath) {
 /* Clean existing build & package artifacts */
 gulp.task('clean', (cb) => {
 
-   del([config.paths.build, config.paths.temp, config.paths.package]).then((paths) => {
+   del([config.paths.build, config.paths.package]).then((paths) => {
       const pathsText = paths.length === 0 ? 'NONE' : paths.join(';\n                    ');
-      logMessage('Deleted  ', pathsText);
-      cb();
-   });
-});
-
-/* Clean temporary build artifacts (from babel compile and test specs) */
-gulp.task('clean-temp', (cb) => {
-
-   del([config.paths.temp]).then((paths) => {
-      const pathsText = paths.join(';');
       logMessage('Deleted  ', pathsText);
       cb();
    });
@@ -82,7 +72,6 @@ gulp.task('server-scripts', () => {
 gulp.task('environment-settings', (cb) => {
 
    // TODO: Could this be done with JsonFile instead ???
-
    const settingsContent = JSON.stringify(envSettings, null, '  ');
    const pathName = `${config.paths.build}/settings.json`;
    logMessage('Creating ', pathName);
@@ -126,28 +115,21 @@ gulp.task('package-json', (cb) => {
    });
 });
 
-/* Compile server-side app + specs */
+/* Compile server-side app and environmentalise the bootup module */
 gulp.task('compile-app', () => {
-
-  return gulp.src(`${config.paths.app}/**/*.js`)
-             .pipe(filter(['**/*.js', '!**/*Spec.js', '!**/specConstructs.js']))
-             .pipe(babel())
-             .pipe(gulp.dest(`${config.paths.temp}/app`));
-});
-
-/* Copy app files and environmentalise the bootup module */
-gulp.task('copy-app', ['compile-app'], () => {
 
    const startupDestFileName = `${envSettings.appName}_${envSettings.envName}`;
    const startupDestDir = `${config.paths.build}/app/bin/`;
    logMessage('Creating ', `${startupDestDir}${startupDestFileName}`);
 
-   const startupFileStream = gulp.src(`${config.paths.temp}/app/bin/startup.js`)
+   const startupFileStream = gulp.src(`${config.paths.app}/bin/startup.js`)
                                  .pipe(rename(startupDestFileName))
-                                 .pipe(gulp.dest(startupDestDir));
+                                 .pipe(babel())
+                                 .pipe(gulp.dest(`${startupDestDir}`));
 
-   const appFilesStream = gulp.src(`${config.paths.temp}/app/**/*.js`)
-                              .pipe(filter(['**/*.js', '!**/startup.js']))
+   const appFilesStream = gulp.src(`${config.paths.app}/**/*.js`)
+                              .pipe(filter(['**/*.js', '!**/startup.js', '!**/*Spec.js', '!**/specConstructs.js']))
+                              .pipe(babel())
                               .pipe(gulp.dest(`${config.paths.build}/app`))
                               .pipe(print(getFilePathLogMessage));
 
@@ -168,7 +150,7 @@ gulp.task('build', (cb) => {
 
    runSequence('prepare-build',
                'lint',
-               ['server-scripts', 'environment-settings', 'package-json', 'copy-app'],
+               ['server-scripts', 'environment-settings', 'package-json', 'compile-app'],
                cb);
 });
 
