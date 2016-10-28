@@ -11,6 +11,7 @@ import merge from 'merge-stream';
 import filter from 'gulp-filter';
 import print from 'gulp-print';
 import eslint from 'gulp-eslint';
+import jsonfile from 'jsonfile';
 
 import { default as config } from './config/gulp.config';
 import { default as envSettings } from './config/settings';
@@ -71,12 +72,17 @@ gulp.task('server-scripts', () => {
 /* Prepare Environment settings file */
 gulp.task('environment-settings', (cb) => {
 
-   // TODO: Could this be done with JsonFile instead ???
-   const settingsContent = JSON.stringify(envSettings, null, '  ');
+   const outputSettings = Object.assign(envSettings);
+   delete outputSettings.frontWithNginx;
+   delete outputSettings.nodeRuntimeVersion;
+   delete outputSettings.deployUser;
+   delete outputSettings.deployHost;
+   delete outputSettings.deployDirectory;
+
    const pathName = `${config.paths.build}/settings.json`;
    logMessage('Creating ', pathName);
 
-   fs.writeFile(pathName, settingsContent, (err) => {
+   jsonfile.writeFile(pathName, outputSettings, { spaces: 2 }, (err) => {
 
       if (err) { throw err; }
       cb();
