@@ -92,28 +92,27 @@ gulp.task('environment-settings', (cb) => {
 /* Prepare package.json for the server / runtime */
 gulp.task('package-json', (cb) => {
 
-    // TODO: Replace all this crap with jsonfile package !!!
+   const fileName = 'package.json';
 
-   fs.readFile('./package.json', (err, data) => {
+   jsonfile.readFile(`./${fileName}`, (err, packageJson) => {
 
       if (err) { throw err; }
 
-      const packageJson = JSON.parse(data);
       packageJson.name = envSettings.appName;
-      packageJson.devDependencies = undefined;
-      packageJson.scripts = undefined;
-      packageJson.homepage = undefined;
-      packageJson.bugs = undefined;
-      packageJson.license = undefined;
-      packageJson.author = undefined;
-      packageJson.keywords = undefined;
-      packageJson.repository = undefined;
-      packageJson.description = undefined;
+      delete packageJson.devDependencies;
+      delete packageJson.scripts;
+      delete packageJson.homepage;
+      delete packageJson.bugs;
+      delete packageJson.license;
+      delete packageJson.author;
+      delete packageJson.keywords;
+      delete packageJson.repository;
+      delete packageJson.description;
 
-      const pathName = `${config.paths.build}/package.json`;
+      const pathName = `${config.paths.build}/${fileName}`;
       logMessage('Creating ', pathName);
 
-      fs.writeFile(pathName, JSON.stringify(packageJson, null, '  '), (err) => {
+      jsonfile.writeFile(pathName, packageJson, { spaces: 2 }, (err) => {
 
          if (err) { throw err; }
          cb();
