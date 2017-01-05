@@ -13,7 +13,7 @@ echo $MSG_PREFIX"------------------------"
 # Deploy app package to %DEPLOY_HOST%
 DEST="%DEPLOY_USER%@%DEPLOY_HOST%:/tmp"
 echo $ORIG_MSG_PREFIX"Deploying to "$DEST
-scp -c blowfish $RUNTIME../package/%APPNAME%.package.%ENVIRONMENT%.zip $DEST
+scp $RUNTIME../package/%APPNAME%.package.%ENVIRONMENT%.zip $DEST
 echo $ORIG_MSG_PREFIX"Unzipping package"
 ssh %DEPLOY_USER%@%DEPLOY_HOST% "unzip -o -a /tmp/%APPNAME%.package.%ENVIRONMENT%.zip -d %DEPLOY_LOCATION%"
 echo $ORIG_MSG_PREFIX"Done."
