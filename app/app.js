@@ -6,6 +6,8 @@ const appBuilder = new AppBuilder(express(), config, logger);
 
 export default appBuilder.useHandlebars()
                          .logRequests()
+                         .useBodyParser()
+                         .useCookieParser()
                          .useRoutes()
                          .handleErrors()
                          .trustProxy()
