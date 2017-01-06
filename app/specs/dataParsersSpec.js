@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { the, should, and, aliasTypes } from './../testing/specConstructs';
+import { the, should, and, aliasTypes } from './../testing/specAliases';
 
 import { getJsonParser, getUrlencodedParser, getCookieParser, __RewireAPI__ as dataParsersAPI } from './../middleware/dataParsers';
 

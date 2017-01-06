@@ -1,8 +1,10 @@
 import http from 'http';
 
-import { config, logger } from './../registrar';
-import app from './../app';
+import config from './../core/config';
+import logger from './../core/logger';
 import handleError from './errorHandler';
+
+import app from './../app';
 
 function onError(error) {
 

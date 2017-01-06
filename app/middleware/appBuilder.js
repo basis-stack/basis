@@ -1,9 +1,14 @@
 import path from 'path';
 
+// Core modules
+import config from './../core/config';
+import logger from './../core/logger';
+
+// Routes
 import { ErrorsController } from './../controllers/errorsController';
 import routes from './../routes';
-import container from './../services/container';
 
+// Middleware
 import { getRequestLogger } from './logging';
 import { getJsonParser, getUrlencodedParser, getCookieParser } from './dataParsers';
 
@@ -14,7 +19,7 @@ import { getJsonParser, getUrlencodedParser, getCookieParser } from './dataParse
 
 export class AppBuilder {
 
-   constructor(app, config, logger) {
+   constructor(app) {
 
       this._app = app;
       this._config = config;
@@ -82,21 +87,6 @@ export class AppBuilder {
 
       return this;
    }
-
-   // useSettings(appSettings) {
-
-   //    this._app.settings = appSettings;
-
-   //    return this;
-   // }
-
-   // addVendorHandlers() {
-
-   //    // TODO: Add app.use() constructs here for all 3rd party handlers
-   //    // (e.g. bodyParser, cookieParser, logging, helmet, etc)
-
-   //    return this;
-   // }
 
    _setViewEngine(engineKey) {
 

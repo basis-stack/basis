@@ -1,3 +1,6 @@
+import jsonfile from 'jsonfile';
+
+// TODO: Do we even need this class...or do we just export the settings json as is ?
 export class Config {
 
    constructor(settings) {
@@ -26,3 +29,6 @@ export class Config {
       return this._settings.webServerPort;
    }
 }
+
+// TODO: Need to check if settings file exists, otherwise throw startuup error !!
+export default new Config(jsonfile.readFileSync(`${__dirname}/../../settings.json`));

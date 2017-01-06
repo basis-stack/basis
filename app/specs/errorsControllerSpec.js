@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { forThe, given, when, then, and } from './../testing/specConstructs';
+import { forThe, given, when, then, and } from './../testing/specAliases';
 
 import { ErrorsController } from './../controllers/errorsController';
 

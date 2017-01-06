@@ -1,8 +1,8 @@
 import express from 'express';
-import { config, logger } from './registrar';
+
 import { AppBuilder } from './middleware/appBuilder';
 
-const appBuilder = new AppBuilder(express(), config, logger);
+const appBuilder = new AppBuilder(express());
 
 export default appBuilder.useHandlebars()
                          .logRequests()

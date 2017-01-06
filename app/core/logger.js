@@ -1,4 +1,5 @@
-import path from 'path';
+import config from './config';
+import { WinstonProvider } from './winstonProvider';
 
 export class Logger {
 
@@ -26,3 +27,5 @@ export class Logger {
       this._winston.error(message);
    }
 }
+
+export default new Logger(WinstonProvider.getInstance(config));

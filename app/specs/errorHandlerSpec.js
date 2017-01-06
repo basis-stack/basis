@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { forThe, given, when, then, and } from './../testing/specConstructs';
+import { forThe, given, when, then, and } from './../testing/specAliases';
 
 import handleError from './../bin/errorHandler';
 
@@ -44,7 +44,7 @@ forThe('errorHandler', () => {
          handleError(stubError, stubConfig, stubLogger, stubCallback);
 
          then('friendly error message should be logged', () => {
-            
+
             const expectedMessage = '[SERVER ] LISTEN_ERROR: Port 666 requires elevated privileges';
             expect(loggerErrorSpy.calledWithExactly(expectedMessage)).to.equal(true);
          });
@@ -64,7 +64,7 @@ forThe('errorHandler', () => {
          handleError(stubError, stubConfig, stubLogger, stubCallback);
 
          then('friendly error message should be logged', () => {
-            
+
             //TODO: Fix this !!!
             //const expectedMessage = '[SERVER ] LISTEN_ERROR: Port 666 is already in use';
             //expect(loggerErrorSpy.calledWithExactly(expectedMessage)).to.equal(true);
@@ -79,7 +79,7 @@ forThe('errorHandler', () => {
       when('Generic handled', () => {
 
          stubError.code = 'SOME_GENERIC_ERROR';
-         
+
          let result;
          try {
             handleError(stubError, undefined, undefined, undefined);
