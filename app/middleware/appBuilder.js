@@ -5,7 +5,7 @@ import { ErrorsController } from './../controllers/errorsController';
 import routes from './../routes';
 import container from './../services/container';
 
-import { bodyParserJson, bodyParserUrlencoded, cookieParser } from './dataParsing';
+import { getJsonParser, getUrlencodedParser, getCookieParser } from './dataParsers';
 
 // TODO: Need to decide if this app builder pattern (borrowed from ASP.NET MVC Core) is the most effective way of hooking up all the various middleware and what a specific app actually wants.
 //       Could get a bit gnarly with lots of middleware, and so the chain calls might get a bit verbose. Not sure, need to play with it and see how feels.
@@ -70,15 +70,15 @@ export class AppBuilder {
 
    useCookieParser() {
 
-      this._app.use(cookieParser);
+      this._app.use(getCookieParser());
 
       return this;
    }
 
    useBodyParser() {
 
-      this._app.use(bodyParserJson);
-      this._app.use(bodyParserUrlencoded);
+      this._app.use(getJsonParser());
+      this._app.use(getUrlencodedParser());
 
       return this;
    }
