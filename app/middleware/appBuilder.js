@@ -1,10 +1,10 @@
 import path from 'path';
 
-import requestLogger from './requestLogger';
 import { ErrorsController } from './../controllers/errorsController';
 import routes from './../routes';
 import container from './../services/container';
 
+import { getRequestLogger } from './logging';
 import { getJsonParser, getUrlencodedParser, getCookieParser } from './dataParsers';
 
 // TODO: Need to decide if this app builder pattern (borrowed from ASP.NET MVC Core) is the most effective way of hooking up all the various middleware and what a specific app actually wants.
@@ -42,7 +42,7 @@ export class AppBuilder {
 
       // TODO: Need to ensure that this is first middleware include called.
 
-      this._app.use(requestLogger(this._logger.logStream));
+      this._app.use(getRequestLogger(this._logger.logStream));
 
       return this;
    }

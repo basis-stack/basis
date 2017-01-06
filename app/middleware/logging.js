@@ -1,6 +1,6 @@
 import morgan from 'morgan';
 
-export default (config, logStream) => {
+export const getRequestLogger = (config, logStream) => {
 
    const format = config.env !== 'production' ? 'dev' : 'combined';
 

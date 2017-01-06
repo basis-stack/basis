@@ -2,9 +2,9 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { forThe, given, when, then, and } from './../testing/specConstructs';
 
-import requestLogger from './../middleware/requestLogger';
+import { getRequestLogger, __RewireAPI__ as loggingAPI } from './../middleware/logging';
 
-forThe('requestLogger', () => {
+forThe('logging middleware initialiser', () => {
 
    let stubMorgan;
    const stubMorganResult = { dummyMorgan: true };
@@ -14,12 +14,12 @@ forThe('requestLogger', () => {
 
       stubMorgan = sinon.stub();
       stubMorgan.returns(stubMorganResult);
-      requestLogger.__Rewire__('morgan', stubMorgan);
+      loggingAPI.__Rewire__('morgan', stubMorgan);
    });
 
    after(() => {
 
-      requestLogger.__ResetDependency__('morgan');
+      loggingAPI.__ResetDependency__('morgan');
    });
 
    const assertResult = (result, expectedResult) => {
@@ -41,14 +41,14 @@ forThe('requestLogger', () => {
    const invoke = (config) => {
 
       stubMorgan.reset();
-      return requestLogger(config, stubLogStream);
+      return getRequestLogger(config, stubLogStream);
    }
 
    given('non-production env config', () => {
 
       const stubConfig = { env: 'development' };
 
-      when('module invoked', () => {
+      when('getRequestLogger invoked', () => {
 
          let result;
 
@@ -61,12 +61,12 @@ forThe('requestLogger', () => {
             assertResult(result, stubMorganResult);
          });
 
-         and('should use morgan \'dev\' format', () => {
+         and('use morgan \'dev\' format', () => {
 
             assertFormat('dev');
          });
 
-         and('should set the output stream', () => {
+         and('set the output stream', () => {
 
             assertStream();
          });
@@ -77,7 +77,7 @@ forThe('requestLogger', () => {
 
       const stubConfig = { env: 'production' };
 
-      when('module invoked', () => {
+      when('getRequestLogger invoked', () => {
 
          let result;
 
@@ -90,12 +90,12 @@ forThe('requestLogger', () => {
             assertResult(result, stubMorganResult);
          });
 
-         and('should use morgan \'combined\' format', () => {
+         and('use morgan \'combined\' format', () => {
 
             assertFormat('combined');
          });
 
-         and('should set the output stream', () => {
+         and('set the output stream', () => {
 
             assertStream();
          });
