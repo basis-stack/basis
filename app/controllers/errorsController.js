@@ -31,7 +31,7 @@ export class ErrorsController {
       return {
          status: status,
          message: err.message,
-         error: this._config.envName !== 'production' ? err : {}
+         error: this._config.env !== 'production' ? err : {}
       };
    }
 }

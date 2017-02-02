@@ -1,28 +1,21 @@
-const delimiter = ':';
-
-function decorateAlias(alias) {
-
-   return `${alias.toUpperCase()}${delimiter} `;
-}
-
 function mochaDescribe(prefix, title, contents) {
 
-   // TODO: Cater for async scenarios !!
-   return describe(decorateAlias(prefix) + title, contents);
+   return describe(`${prefix} ${title}`, contents);
 }
 
 function mochaIt(prefix, title, contents) {
 
-   // TODO: Cater for async scenarios !!
-   return it(decorateAlias(prefix) + title, contents);
+   const prefixText = prefix !== '' ? `${prefix} ` : '';
+
+   return it(`${prefixText}${title}`, contents);
 }
 
 export const aliasTypes = {
-   a: 'a',
+   a: 'A',
    and: 'and',
+   for: 'For',
    given: 'given',
-   for: 'for',
-   the: 'the',
+   the: 'The',
    should: 'should',
    then: 'then',
    when: 'when'
@@ -65,17 +58,21 @@ export function when(title, contents) {
 
 export function then(title, contents) {
 
-   return mochaIt(aliasTypes.then, title, contents);
+   return mochaIt('', title, contents);
 }
 
-export function should(title, contents) {
+export function should(...args) {
 
-   return mochaIt(aliasTypes.should, title, contents);
+   if (args.length === 1) {
+      return mochaDescribe(aliasTypes.should, '', args[0]);
+   } else {
+      return mochaIt(aliasTypes.should, args[0], args[1]);
+   }
 }
 
 export function and(title, contents, leadingAlias = aliasTypes.then) {
 
-   const padding = leadingAlias === aliasTypes.should ? '   ' : ' ';
+   //const padding = leadingAlias === aliasTypes.should ? '   ' : ' ';
 
-   return mochaIt(`${padding}${aliasTypes.and}`, title, contents);
+   return mochaIt('', title, contents);
 }

@@ -41,7 +41,7 @@ forThe('ErrorsController', () => {
          const sendSpy = sinon.spy(stubResponse, 'send');
          const stubError = { status: 403, message: 'Some HTTP Error' };
          const stubLogger = { error: () => {} };
-         const stubConfig = { envName: 'local' };
+         const stubConfig = { env: 'local' };
          const loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
          new ErrorsController(stubLogger, stubConfig).handleServerError(stubError, {}, stubResponse, {});
@@ -73,7 +73,7 @@ forThe('ErrorsController', () => {
          const sendSpy = sinon.spy(stubResponse, 'send');
          const stubError = { message: 'Some General Error' };
          const stubLogger = { error: () => {} };
-         const stubConfig = { envName: 'local' };
+         const stubConfig = { env: 'local' };
          const loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
          new ErrorsController(stubLogger, stubConfig).handleServerError(stubError, {}, stubResponse, {});

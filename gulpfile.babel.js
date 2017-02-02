@@ -54,12 +54,12 @@ gulp.task('prepare-build', ['clean'], (cb) => {
 /* Copy server scripts */
 gulp.task('server-scripts', () => {
 
-   if (envSettings.envName !== 'local') {
+   if (envSettings.env !== 'local') {
 
       gulp.src('./scripts/*.sh')
           .pipe(print(getFilePathLogMessage))
           .pipe(replace('%APPNAME%', envSettings.appName))
-          .pipe(replace('%ENVIRONMENT%', envSettings.envName))
+          .pipe(replace('%ENVIRONMENT%', envSettings.env))
           .pipe(replace('%DEPLOY_USER%', envSettings.deployUser))
           .pipe(replace('%DEPLOY_HOST%', envSettings.deployHost))
           .pipe(replace('%DEPLOY_LOCATION%', envSettings.deployDirectory))
@@ -123,7 +123,7 @@ gulp.task('package-json', (cb) => {
 /* Compile server-side app and environmentalise the bootup module */
 gulp.task('compile-app', () => {
 
-   const startupDestFileName = `${envSettings.appName}_${envSettings.envName}`;
+   const startupDestFileName = `${envSettings.appName}_${envSettings.env}`;
    const startupDestDir = `${config.paths.build}/app/bin/`;
    logMessage('Creating ', `${startupDestDir}${startupDestFileName}`);
 
@@ -162,7 +162,7 @@ gulp.task('build', (cb) => {
 /* Package build artifacts */
 gulp.task('package', () => {
 
-   const packageFileName = `${envSettings.appName}.package.${envSettings.envName}.zip`;
+   const packageFileName = `${envSettings.appName}.package.${envSettings.env}.zip`;
    logMessage('Creating ', `${config.paths.package}/${packageFileName}`);
 
    return gulp.src(`${config.paths.build}/**/*`, { dot: true })

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { the, should, and, aliasTypes } from './../testing/specAliases';
+import { the, should, and, then, aliasTypes } from './../testing/specAliases';
 
 import { getJsonParser, getUrlencodedParser, getCookieParser, __RewireAPI__ as dataParsersAPI } from './../middleware/dataParsers';
 
@@ -26,26 +26,29 @@ the('dataParsers middleware initialiser', () => {
       dataParsersAPI.__ResetDependency__('cookieParser');
    });
 
-   should('export the body-parser json middleware', () => {
+   should(() => {
 
-      const result = getJsonParser();
+      then('export the body-parser json middleware', () => {
 
-      expect(result).to.equal(stubJsonParser);
+         const result = getJsonParser();
+
+         expect(result).to.equal(stubJsonParser);
+      });
+
+      and('export the body-parser urlencoded middleware', () => {
+
+         const result = getUrlencodedParser();
+
+         expect(result).to.equal(stubUrlencodedParser);
+
+      }, aliasTypes.should);
+
+      and('export the cookie-parser middleware', () => {
+
+         const result = getCookieParser();
+
+         expect(result).to.equal(stubCookieParser);
+
+      }, aliasTypes.should);
    });
-
-   and('export the body-parser urlencoded middleware', () => {
-
-      const result = getUrlencodedParser();
-
-      expect(result).to.equal(stubUrlencodedParser);
-
-   }, aliasTypes.should);
-
-   and('export the cookie-parser middleware', () => {
-
-      const result = getCookieParser();
-
-      expect(result).to.equal(stubCookieParser);
-
-   }, aliasTypes.should);
 });

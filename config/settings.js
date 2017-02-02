@@ -36,5 +36,5 @@ export default (function () {
    const envSettings = loadEnvironmentSettings(envName);
 
    // TODO: Use native Object.Assign here instead !!
-   return extend(defaultSettings, envSettings, { envName: envName });
+   return extend(defaultSettings, envSettings, { env: envName });
 }());

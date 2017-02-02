@@ -1,8 +1,9 @@
 import path from 'path';
 
 // Core modules
-import config from './../core/config';
-import logger from './../core/logger';
+// import config from './../core/config';
+// import logger from './../core/logger';
+import container from './../core/container';
 
 // Routes
 import { ErrorsController } from './../controllers/errorsController';
@@ -22,8 +23,8 @@ export class AppBuilder {
    constructor(app) {
 
       this._app = app;
-      this._config = config;
-      this._logger = logger;
+      this._config = container.resolve(container.keys.config);
+      this._logger = container.resolve(container.keys.logger);
 
       this._errorController = new ErrorsController(this._logger, this._config);
    }

@@ -1,10 +1,12 @@
 import http from 'http';
 
-import config from './../core/config';
-import logger from './../core/logger';
 import handleError from './errorHandler';
+import container from './../core/container';
 
 import app from './../app';
+
+const config = container.resolve(container.keys.config);
+const logger = container.resolve(container.keys.logger);
 
 function onError(error) {
 
