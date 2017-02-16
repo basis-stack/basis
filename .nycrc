@@ -1,0 +1,18 @@
+{
+  "reporter": [
+    "text"
+  ],
+  "include": [
+    "app/**/*.js"
+  ],
+  "exclude": [
+    "**/*Spec.js",
+    "**/specAliases.js"
+  ],
+  "require": [
+    "babel-register"
+  ],
+  "all": true,
+  "sourceMap": false,
+  "instrument": false
+}
