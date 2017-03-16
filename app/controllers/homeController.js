@@ -1,14 +1,14 @@
 class HomeController {
 
-   initialise(router) {
+  initialise(router) {
 
-      router.get('/', this._handleRoot);
-   }
+    router.get('/', this._handleRoot);
+  }
 
-   _handleRoot(req, res, next) {
+  _handleRoot(req, res, next) {
 
-      res.send('Hello World!');
-   }
+    res.send('Hello World!');
+  }
 }
 
 export default new HomeController();

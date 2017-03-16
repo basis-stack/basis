@@ -16,25 +16,25 @@ settingsMap.set('production', productionSettings);
 
 function getEnvironment() {
 
-   const parseOptions = { default: { env: defaultBuildEnv } };
-   const processArgs = parseArgs(process.argv.slice(2), parseOptions);
+  const parseOptions = { default: { env: defaultBuildEnv } };
+  const processArgs = parseArgs(process.argv.slice(2), parseOptions);
 
-   return processArgs.env;
+  return processArgs.env;
 }
 
 function loadEnvironmentSettings(envName) {
 
-   // TODO: Need to check we actually settings for input env and fail if not
-   return settingsMap.get(envName);
+  // TODO: Need to check we actually settings for input env and fail if not
+  return settingsMap.get(envName);
 }
 
 export default (function () {
 
-   const envName = getEnvironment();
-   console.log(`${'[settings]'.yellow} Generating environment settings for: ${envName.magenta}`);
+  const envName = getEnvironment();
+  console.log(`${'[settings]'.yellow} Generating environment settings for: ${envName.magenta}`);
 
-   const envSettings = loadEnvironmentSettings(envName);
+  const envSettings = loadEnvironmentSettings(envName);
 
-   // TODO: Use native Object.Assign here instead !!
-   return extend(defaultSettings, envSettings, { env: envName });
+  // TODO: Use native Object.Assign here instead !!
+  return extend(defaultSettings, envSettings, { env: envName });
 }());

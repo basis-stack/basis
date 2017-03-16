@@ -6,91 +6,91 @@ import { getRequestLogger, __RewireAPI__ as loggingAPI } from './../middleware/l
 
 the('logging middleware initialiser', () => {
 
-   let stubMorgan;
-   const stubMorganResult = { dummyMorgan: true };
-   const stubLogStream = {};
+  let stubMorgan;
+  const stubMorganResult = { dummyMorgan: true };
+  const stubLogStream = {};
 
-   before(() => {
+  before(() => {
 
-      stubMorgan = sinon.stub();
-      stubMorgan.returns(stubMorganResult);
-      loggingAPI.__Rewire__('morgan', stubMorgan);
-   });
+    stubMorgan = sinon.stub();
+    stubMorgan.returns(stubMorganResult);
+    loggingAPI.__Rewire__('morgan', stubMorgan);
+  });
 
-   after(() => {
+  after(() => {
 
-      loggingAPI.__ResetDependency__('morgan');
-   });
+    loggingAPI.__ResetDependency__('morgan');
+  });
 
-   const assertResult = (result, expectedResult) => {
+  const assertResult = (result, expectedResult) => {
 
-      expect(result).to.not.be.undefined;
-      expect(result).to.equal(expectedResult);
-   };
+    expect(result).to.not.be.undefined;
+    expect(result).to.equal(expectedResult);
+  };
 
-   const assertFormat = (expectedFormat) => {
+  const assertFormat = (expectedFormat) => {
 
-      expect(stubMorgan.args[0][0]).to.be.equal(expectedFormat);
-   }
+    expect(stubMorgan.args[0][0]).to.be.equal(expectedFormat);
+  }
 
-   const assertStream = () => {
+  const assertStream = () => {
 
-      expect(stubMorgan.args[0][1].stream).to.be.equal(stubLogStream);
-   }
+    expect(stubMorgan.args[0][1].stream).to.be.equal(stubLogStream);
+  }
 
-   const invoke = (config) => {
+  const invoke = (config) => {
 
-      stubMorgan.reset();
-      return getRequestLogger(config, stubLogStream);
-   }
+    stubMorgan.reset();
+    return getRequestLogger(config, stubLogStream);
+  }
 
-   when('non-production env config', () => {
+  when('non-production env config', () => {
 
-      const stubConfig = { env: 'development' };
-      let result;
+    const stubConfig = { env: 'development' };
+    let result;
 
-      before(() => {
-         result = invoke(stubConfig);
-      });
+    before(() => {
+      result = invoke(stubConfig);
+    });
 
-      should('return a valid morgan instance', () => {
+    should('return a valid morgan instance', () => {
 
-         assertResult(result, stubMorganResult);
-      });
+      assertResult(result, stubMorganResult);
+    });
 
-      should('use morgan \'dev\' format', () => {
+    should('use morgan \'dev\' format', () => {
 
-         assertFormat('dev');
-      });
+      assertFormat('dev');
+    });
 
-      should('should set the output stream', () => {
+    should('should set the output stream', () => {
 
-         assertStream();
-      });
-   });
+      assertStream();
+    });
+  });
 
-   when('production env config', () => {
+  when('production env config', () => {
 
-      const stubConfig = { env: 'production' };
-      let result;
+    const stubConfig = { env: 'production' };
+    let result;
 
-      before(() => {
-         result = invoke(stubConfig);
-      });
+    before(() => {
+      result = invoke(stubConfig);
+    });
 
-      should('return a valid morgan instance', () => {
+    should('return a valid morgan instance', () => {
 
-         assertResult(result, stubMorganResult);
-      });
+      assertResult(result, stubMorganResult);
+    });
 
-      should('use morgan \'combined\' format', () => {
+    should('use morgan \'combined\' format', () => {
 
-         assertFormat('combined');
-      });
+      assertFormat('combined');
+    });
 
-      should('set the output stream', () => {
+    should('set the output stream', () => {
 
-         assertStream();
-      });
-   });
+      assertStream();
+    });
+  });
 });
