@@ -47,8 +47,7 @@ export class AppBuilder {
    logRequests() {
 
       // TODO: Need to ensure that this is first middleware include called.
-
-      this._app.use(getRequestLogger(this._logger.logStream));
+      this._app.use(getRequestLogger(this._config, this._logger.logStream));
 
       return this;
    }

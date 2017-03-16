@@ -17,6 +17,7 @@ echo $MSG_PREFIX"--------------------"
 echo $ORIG_MSG_PREFIX"Starting node app as background process"
 export NODE_ENV=%ENVIRONMENT%
 chmod +x $RUNTIME/node_modules/.bin/pm2
+# TODO: Need to update pm2 in memory if is present
 $RUNTIME/node_modules/.bin/pm2 start app/bin/%APPNAME%_%ENVIRONMENT% --env %ENVIRONMENT%
 
 # Start nginx if we need to
