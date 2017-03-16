@@ -1,3 +1,3 @@
 export default {
-   frontWithNginx: true
+  frontWithNginx: true
 };

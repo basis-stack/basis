@@ -1,61 +1,58 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { forThe, given, when, then, and } from './../testing/specAliases';
+import { the, when, withScenario, should } from './../testing/specAliases';
 
 import { WinstonProvider } from './../core/winstonProvider';
 
 const assertInstance = (result) => {
 
-   expect(result).to.not.be.undefined;
-   expect(typeof result.info).to.equal('function');
+  expect(result).to.not.be.undefined;
+  expect(typeof result.info).to.equal('function');
 }
 
-forThe('WinstonProvider', () => {
+the('WinstonProvider', () => {
 
-   const config = { appName: 'testapp' };
+  const config = { appName: 'testapp' };
 
-   given('local env config', () => {
+  when('instance requested', () => {
 
-      when('winston instance requested', () => {
+    withScenario('local env config', () => {
 
-         const result = WinstonProvider.getInstance(Object.assign(config, { env: 'local' }));
+      const result = WinstonProvider.getInstance(Object.assign(config, { env: 'local' }));
 
-         then('an instance should be returned', () => {
+      should('return a valid Winston instance', () => {
 
-            assertInstance(result);
-         });
-
-         and('console transport should be set', () => {
-
-            expect(result.transports.console).to.not.be.undefined;
-            expect(result.transports.file).to.be.undefined;
-         });
+        assertInstance(result);
       });
-   });
 
-   given('non-local env config', () => {
+      should('initialise console transport', () => {
 
-      when('winston instance requested', () => {
-
-         const result = WinstonProvider.getInstance(Object.assign(config, { env: 'some_other_env' }));
-
-         then('an instance should be returned', () => {
-
-            assertInstance(result);
-         });
-
-         and('file transport should be set', () => {
-
-            expect(result.transports.console).to.be.undefined;
-            expect(result.transports.file).to.not.be.undefined;
-         });
-
-         and('logfile name should include both app name & env', () => {
-
-            expect(result.transports.file.filename.length).to.be.above(0);
-            expect(result.transports.file.filename.includes('testapp')).to.equal(true);
-            expect(result.transports.file.filename.includes('some_other_env')).to.equal(true);
-         });
+        expect(result.transports.console).to.not.be.undefined;
+        expect(result.transports.file).to.be.undefined;
       });
-   });
+    });
+
+    withScenario('non-local env config', () => {
+
+      const result = WinstonProvider.getInstance(Object.assign(config, { env: 'some_other_env' }));
+
+      should('return a valid Winston instance', () => {
+
+        assertInstance(result);
+      });
+
+      should('initialise file transport', () => {
+
+        expect(result.transports.console).to.be.undefined;
+        expect(result.transports.file).to.not.be.undefined;
+      });
+
+      should('include app name & env in logfile name', () => {
+
+        expect(result.transports.file.filename.length).to.be.above(0);
+        expect(result.transports.file.filename.includes('testapp')).to.equal(true);
+        expect(result.transports.file.filename.includes('some_other_env')).to.equal(true);
+      });
+    });
+  });
 });

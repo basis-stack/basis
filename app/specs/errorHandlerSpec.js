@@ -1,97 +1,94 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { forThe, given, when, then, and } from './../testing/specAliases';
+import { the, when, withScenario, should } from './../testing/specAliases';
 
 import handleError from './../bin/errorHandler';
 
-forThe('errorHandler', () => {
+the('(startup) errorHandler', () => {
 
-   given('A non-listen error', () => {
+  when('non-listen error handled', () => {
 
-      const stubError = { syscall: 'someNonListenCall' };
+    const stubError = { syscall: 'someNonListenCall' };
+    let result;
 
-      when('handled', () => {
+    try {
+      handleError(stubError, undefined, undefined, undefined);
+    }
+    catch(error) {
+      result = error;
+    }
 
-         let result;
-         try {
-            handleError(stubError, undefined, undefined, undefined);
-         }
-         catch(error) {
-            result = error;
-         }
+    should('throw the error', () => {
 
-         then('error should be thrown', () => {
+      expect(result).to.equal(stubError);
+    });
+  });
 
-            expect(result).to.equal(stubError);
-         });
-      });
-   });
+  when('listen error handled', () => {
 
-   given('A listen error', () => {
+    let callbackInvoked;
+    const stubError = { syscall: 'listen' };
+    const stubLogger = { error: () => {} };
+    const stubConfig = { webServerPort: '666' };
+    const stubCallback = () => { callbackInvoked = true; };
 
-      let callbackInvoked;
-      const stubError = { syscall: 'listen' };
-      const stubLogger = { error: () => {} };
-      const stubConfig = { webServerPort: '666' };
-      const stubCallback = () => { callbackInvoked = true; };
+    withScenario('EACCES', () => {
 
-      when('EACCES handled', () => {
+      stubError.code = 'EACCES';
+      callbackInvoked = false;
+      const loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
-         stubError.code = 'EACCES';
-         callbackInvoked = false;
-         const loggerErrorSpy = sinon.spy(stubLogger, 'error');
+      handleError(stubError, stubConfig, stubLogger, stubCallback);
 
-         handleError(stubError, stubConfig, stubLogger, stubCallback);
+      should('log friendly \'elevated privileges\' error message', () => {
 
-         then('friendly error message should be logged', () => {
-
-            const expectedMessage = '[SERVER ] LISTEN_ERROR: Port 666 requires elevated privileges';
-            expect(loggerErrorSpy.calledWithExactly(expectedMessage)).to.equal(true);
-         });
-
-         and('handled callback should be invoked', () => {
-
-            expect(callbackInvoked).to.equal(true);
-         });
+        const expectedMessage = '[SERVER ] LISTEN_ERROR: Port 666 requires elevated privileges';
+        expect(loggerErrorSpy.calledWithExactly(expectedMessage)).to.equal(true);
       });
 
-      when('EADDRINUSE handled', () => {
+      should('invoke callback', () => {
 
-         stubError.code = 'EADDRINUSE';
-         callbackInvoked = false;
-         //const loggerErrorSpy = sinon.spy(stubLogger, 'error');
+        expect(callbackInvoked).to.equal(true);
+      });
+    });
 
-         handleError(stubError, stubConfig, stubLogger, stubCallback);
+    withScenario('EADDRINUSE', () => {
 
-         then('friendly error message should be logged', () => {
+      stubError.code = 'EADDRINUSE';
+      callbackInvoked = false;
+      //const loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
-            //TODO: Fix this !!!
-            //const expectedMessage = '[SERVER ] LISTEN_ERROR: Port 666 is already in use';
-            //expect(loggerErrorSpy.calledWithExactly(expectedMessage)).to.equal(true);
-         });
+      handleError(stubError, stubConfig, stubLogger, stubCallback);
 
-         and('handled callback should be invoked', () => {
+      should('log friendly \'port in use\' error message', () => {
 
-            expect(callbackInvoked).to.equal(true);
-         });
+        //TODO: Fix this !!!
+        //const expectedMessage = '[SERVER ] LISTEN_ERROR: Port 666 is already in use';
+        //expect(loggerErrorSpy.calledWithExactly(expectedMessage)).to.equal(true);
       });
 
-      when('Generic handled', () => {
+      should('invoke callback', () => {
 
-         stubError.code = 'SOME_GENERIC_ERROR';
-
-         let result;
-         try {
-            handleError(stubError, undefined, undefined, undefined);
-         }
-         catch(error) {
-            result = error;
-         }
-
-         then('error should be thrown', () => {
-
-            expect(result).to.equal(stubError);
-         });
+        expect(callbackInvoked).to.equal(true);
       });
-   });
+    });
+
+    withScenario('Generic Error', () => {
+
+      stubError.code = 'SOME_GENERIC_ERROR';
+
+      let result;
+      try {
+        handleError(stubError, undefined, undefined, undefined);
+      }
+      catch(error) {
+        result = error;
+      }
+
+      should('throw the error', () => {
+
+        expect(result).to.equal(stubError);
+      });
+    });
+  });
 });

@@ -5,8 +5,8 @@ import { the, should, and, aliasTypes } from './../testing/specAliases';
 
 the('logger', () => {
 
-   should(() => {
+  should(() => {
 
 
-   });
+  });
 });

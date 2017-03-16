@@ -1,55 +1,51 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { forThe, given, when, then, and } from './../testing/specAliases';
+import { the, when, withScenario, should } from './../testing/specAliases';
 
 import container from './../core/container';
 
-forThe('Container', () => {
+the('Container', () => {
 
-   //container.initialise();
+  //container.initialise();
 
-   given('A key and an instance', () => {
+  when('register called', () => {
 
-      const stubKey = 'SomeKey';
-      const stubInstance = {};
+    const stubKey = 'SomeKey';
+    const stubInstance = {};
 
-      when('register called', () => {
+    container.register(stubKey, stubInstance);
 
-         container.register(stubKey, stubInstance);
+    should('store instance against the given key', () => {
 
-         then('instance should be stored against that key', () => {
+      const result = container.resolve(stubKey);
+      expect(result).to.equal(stubInstance);
+    });
+  });
 
-            const result = container.resolve(stubKey);
-            expect(result).to.equal(stubInstance);
-         });
-      });
-   });
+  when('resolve called', () => {
 
-   given('An unknown key', () => {
+    withScenario('unknown key', () => {
 
       const stubKey = 'SomeUnknownKey';
+      let result;
 
-      when('resolve called with that unknown key', () => {
+      try {
+        container.resolve(stubKey);
+      }
+      catch(error) {
+        result = error;
+      }
 
-         let result;
+      should('throw an error indicating missing key', () => {
 
-         try {
-            container.resolve(stubKey);
-         }
-         catch(error) {
-            result = error;
-         }
-
-         then('an error should be thown indicating missing key', () => {
-
-            const expectedErrorMessage = `[CONTAINER]: Unable to resolve instance. Key '${stubKey}' not found.`;
-            expect(result.message).to.equal(expectedErrorMessage);
-         });
+        const expectedErrorMessage = `[CONTAINER]: Unable to resolve instance. Key '${stubKey}' not found.`;
+        expect(result.message).to.equal(expectedErrorMessage);
       });
-   });
+    });
+  });
 
-   after(() => {
+  // after(() => {
 
-      //container.initialise();
-   });
+  //   //container.initialise();
+  // });
 });
