@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { the, when, should, and } from './../testing/specAliases';
+import { the, when, withScenario, should } from './../testing/specAliases';
 
 import { getRequestLogger, __RewireAPI__ as loggingAPI } from './../middleware/logging';
 
@@ -44,53 +44,56 @@ the('logging middleware initialiser', () => {
     return getRequestLogger(config, stubLogStream);
   }
 
-  when('non-production env config', () => {
+  when('getRequestLogger called', () => {
 
-    const stubConfig = { env: 'development' };
-    let result;
+    withScenario('non-production env config', () => {
 
-    before(() => {
-      result = invoke(stubConfig);
+      const stubConfig = { env: 'development' };
+      let result;
+
+      before(() => {
+        result = invoke(stubConfig);
+      });
+
+      should('return a valid morgan instance', () => {
+
+        assertResult(result, stubMorganResult);
+      });
+
+      should('use morgan \'dev\' format', () => {
+
+        assertFormat('dev');
+      });
+
+      should('set the output stream', () => {
+
+        assertStream();
+      });
     });
 
-    should('return a valid morgan instance', () => {
+    withScenario('production env config', () => {
 
-      assertResult(result, stubMorganResult);
-    });
+      const stubConfig = { env: 'production' };
+      let result;
 
-    should('use morgan \'dev\' format', () => {
+      before(() => {
+        result = invoke(stubConfig);
+      });
 
-      assertFormat('dev');
-    });
+      should('return a valid morgan instance', () => {
 
-    should('should set the output stream', () => {
+        assertResult(result, stubMorganResult);
+      });
 
-      assertStream();
-    });
-  });
+      should('use morgan \'combined\' format', () => {
 
-  when('production env config', () => {
+        assertFormat('combined');
+      });
 
-    const stubConfig = { env: 'production' };
-    let result;
+      should('set the output stream', () => {
 
-    before(() => {
-      result = invoke(stubConfig);
-    });
-
-    should('return a valid morgan instance', () => {
-
-      assertResult(result, stubMorganResult);
-    });
-
-    should('use morgan \'combined\' format', () => {
-
-      assertFormat('combined');
-    });
-
-    should('set the output stream', () => {
-
-      assertStream();
+        assertStream();
+      });
     });
   });
 });

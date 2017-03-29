@@ -7,8 +7,9 @@ import container from './../core/container';
 //       Consider making App a class with a static initialise / create factory method that returns the app instance,
 //       which could then be both mocked out (for testing this startup code) and also wrapped in a try/catch to
 //       gracefully handle any bootstrap errors, and then forward them to handleError.
-import app from './../app';
+import getApp from './../app';
 
+const app = getApp();
 const config = container.resolve(container.keys.config);
 const logger = container.resolve(container.keys.logger);
 
@@ -22,7 +23,7 @@ function onListening() {
   logger.info(`[SERVER ] STARTED: listening on port ${config.webServerPort}`);
 }
 
-const server = http.createServer(app);
+const server = http.createServer(getApp());
 server.listen(config.webServerPort);
 server.on('error', onError);
 server.on('listening', onListening);
