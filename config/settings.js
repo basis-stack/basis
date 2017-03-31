@@ -1,8 +1,7 @@
 import 'colors';
 import { default as parseArgs } from 'minimist';
-import { default as extend } from 'extend';
 
-// TODO: Importing all settings and storing in a Map is pretty daft !!! Need to fix this pattern so is more dynamic as per old require('./settings.blah') model.
+// TODO: Importing all settings and storing in a Map is pretty damn daft !!! Need to fix this pattern so is more dynamic as per old require('./settings.blah') model.
 import { default as defaultSettings } from './settings.default';
 import { default as localSettings } from './settings.local';
 import { default as developmentSettings } from './settings.development';
@@ -28,13 +27,12 @@ function loadEnvironmentSettings(envName) {
   return settingsMap.get(envName);
 }
 
-export default (function () {
+export default (function() {
 
   const envName = getEnvironment();
   console.log(`${'[settings]'.yellow} Generating environment settings for: ${envName.magenta}`);
 
   const envSettings = loadEnvironmentSettings(envName);
 
-  // TODO: Use native Object.Assign here instead !!
-  return extend(defaultSettings, envSettings, { env: envName });
+  return Object.assign(defaultSettings, envSettings, { env: envName });
 }());

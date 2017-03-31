@@ -29,6 +29,11 @@ export class AppBuilder {
     this._errorController = new ErrorsController(this._logger, this._config);
   }
 
+  static create(app) {
+
+    return new AppBuilder(app);
+  }
+
   get result() {
 
     return this._app;

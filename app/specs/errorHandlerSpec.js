@@ -26,19 +26,34 @@ the('(startup) errorHandler', () => {
 
   when('listen error handled', () => {
 
+    let loggerErrorSpy;
     let callbackInvoked;
     const stubError = { syscall: 'listen' };
     const stubLogger = { error: () => {} };
     const stubConfig = { webServerPort: '666' };
     const stubCallback = () => { callbackInvoked = true; };
 
+    const resetStubs = () => {
+
+      stubError.code = undefined;
+      callbackInvoked = false;
+      loggerErrorSpy.restore();
+    };
+
     withScenario('EACCES', () => {
 
-      stubError.code = 'EACCES';
-      callbackInvoked = false;
-      const loggerErrorSpy = sinon.spy(stubLogger, 'error');
+      before(() => {
 
-      handleError(stubError, stubConfig, stubLogger, stubCallback);
+        stubError.code = 'EACCES';
+        loggerErrorSpy = sinon.spy(stubLogger, 'error');
+
+        handleError(stubError, stubConfig, stubLogger, stubCallback);
+      });
+
+      after(() => {
+
+        resetStubs();
+      });
 
       should('log friendly \'elevated privileges\' error message', () => {
 
@@ -54,17 +69,23 @@ the('(startup) errorHandler', () => {
 
     withScenario('EADDRINUSE', () => {
 
-      stubError.code = 'EADDRINUSE';
-      callbackInvoked = false;
-      //const loggerErrorSpy = sinon.spy(stubLogger, 'error');
+      before(() => {
 
-      handleError(stubError, stubConfig, stubLogger, stubCallback);
+        stubError.code = 'EADDRINUSE';
+        loggerErrorSpy = sinon.spy(stubLogger, 'error');
+
+        handleError(stubError, stubConfig, stubLogger, stubCallback);
+      });
+
+      after(() => {
+
+        resetStubs();
+      });
 
       should('log friendly \'port in use\' error message', () => {
 
-        //TODO: Fix this !!!
-        //const expectedMessage = '[SERVER ] LISTEN_ERROR: Port 666 is already in use';
-        //expect(loggerErrorSpy.calledWithExactly(expectedMessage)).to.equal(true);
+        const expectedMessage = '[SERVER ] LISTEN_ERROR: Port 666 is already in use';
+        expect(loggerErrorSpy.calledWithExactly(expectedMessage)).to.equal(true);
       });
 
       should('invoke callback', () => {
@@ -75,15 +96,24 @@ the('(startup) errorHandler', () => {
 
     withScenario('Generic Error', () => {
 
-      stubError.code = 'SOME_GENERIC_ERROR';
-
       let result;
-      try {
-        handleError(stubError, undefined, undefined, undefined);
-      }
-      catch(error) {
-        result = error;
-      }
+
+      before(() => {
+
+        stubError.code = 'SOME_GENERIC_ERROR';
+
+        try {
+          handleError(stubError, undefined, undefined, undefined);
+        }
+        catch(error) {
+          result = error;
+        }
+      });
+
+      after(() => {
+
+        resetStubs();
+      });
 
       should('throw the error', () => {
 

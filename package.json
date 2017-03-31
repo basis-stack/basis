@@ -19,10 +19,10 @@
   },
   "homepage": "https://github.com/warebrained/basis",
   "scripts": {
-    "build": "node_modules/.bin/eslint config/*.* gulpfile.babel.js && node_modules/.bin/gulp build",
+    "build": "eslint config/*.* gulpfile.babel.js && gulp build",
     "start": "node build/app/bin/basis_local",
-    "test": "node_modules/.bin/eslint app/**/*Spec.js && node_modules/mocha/bin/mocha --require babel-core/register app/**/*Spec.js",
-    "coverage" : "export BABEL_ENV=test && node_modules/.bin/nyc npm test"
+    "test": "eslint app/**/*Spec.js && mocha --require babel-core/register app/**/*Spec.js",
+    "coverage" : "export BABEL_ENV=test && nyc npm test"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
@@ -44,7 +44,6 @@
     "colors": "^1.1.2",
     "del": "^2.2.2",
     "eslint": "^3.18.0",
-    "extend": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-eslint": "^3.0.1",
