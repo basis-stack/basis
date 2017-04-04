@@ -31,7 +31,7 @@
     "hbs": "^4.0.1",
     "jsonfile": "^2.4.0",
     "morgan": "^1.8.1",
-    "pm2": "^2.4.2",
+    "pm2": "^2.4.3",
     "winston": "^2.3.1"
   },
   "devDependencies": {
@@ -43,7 +43,7 @@
     "chai": "^3.5.0",
     "colors": "^1.1.2",
     "del": "^2.2.2",
-    "eslint": "^3.18.0",
+    "eslint": "^3.19.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-eslint": "^3.0.1",
@@ -59,6 +59,6 @@
     "npm-check-updates": "^2.10.4",
     "nyc": "^10.2.0",
     "run-sequence": "^1.2.2",
-    "sinon": "^1.17.7"
+    "sinon": "^2.1.0"
   }
 }

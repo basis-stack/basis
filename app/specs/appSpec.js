@@ -41,40 +41,116 @@ the('app', () => {
 
     let stubContainerInitialise;
     let stubAppBuilderCreate;
+
+    let stubAppBuilderUseHandlebars;
+    let stubAppBuilderLogRequests;
+    let stubAppBuilderUseBodyParser;
+    let stubAppBuilderUseCookieParser;
+    let stubAppBuilderUseRoutes;
+    let stubAppBuilderHandleErrors;
+    let stubAppBuilderTrustProxy;
+    let stubAppBuilderResult;
+
     let result;
+
+    const assertWasCalled = (spy) => {
+
+      expect(spy.calledOnce).to.equal(true);
+    }
+
+    const assertCalledBefore = (spyA, spyB, methodA, methodB) => {
+
+      const message = `Expected ${methodA} to be called before ${methodB}`;
+
+      expect(spyA.calledBefore(spyB)).to.equal(true, message);
+    }
+
+    const appBuilderMethods = {
+      useHandlebars: 'useHandlebars',
+      logRequests: 'logRequests',
+      useBodyParser: 'useBodyParser',
+      useCookieParser: 'useCookieParser',
+      useRoutes: 'useRoutes',
+      handleErrors: 'handleErrors',
+      trustProxy: 'trustProxy',
+      result: 'result'
+    };
 
     before(() => {
 
       stubContainerInitialise = sinon.spy(stubContainer, 'initialise');
       stubAppBuilderCreate = sinon.stub(stubAppBuilderClass, 'create').returns(stubAppBuilderInstance);
 
-      sinon.stub(stubAppBuilderInstance, 'useHandlebars').returns(stubAppBuilderInstance);
-      sinon.stub(stubAppBuilderInstance, 'logRequests').returns(stubAppBuilderInstance);
-      sinon.stub(stubAppBuilderInstance, 'useBodyParser').returns(stubAppBuilderInstance);
-      sinon.stub(stubAppBuilderInstance, 'useCookieParser').returns(stubAppBuilderInstance);
-      sinon.stub(stubAppBuilderInstance, 'useRoutes').returns(stubAppBuilderInstance);
-      sinon.stub(stubAppBuilderInstance, 'handleErrors').returns(stubAppBuilderInstance);
-      sinon.stub(stubAppBuilderInstance, 'trustProxy').returns(stubAppBuilderInstance);
-      //sinon.stub(stubAppBuilderInstance, 'result').returns(stubAppBuilderInstance);
+      stubAppBuilderUseHandlebars = sinon.stub(stubAppBuilderInstance, appBuilderMethods.useHandlebars).returns(stubAppBuilderInstance);
+      stubAppBuilderLogRequests = sinon.stub(stubAppBuilderInstance, appBuilderMethods.logRequests).returns(stubAppBuilderInstance);
+      stubAppBuilderUseBodyParser = sinon.stub(stubAppBuilderInstance, appBuilderMethods.useBodyParser).returns(stubAppBuilderInstance);
+      stubAppBuilderUseCookieParser = sinon.stub(stubAppBuilderInstance, appBuilderMethods.useCookieParser).returns(stubAppBuilderInstance);
+      stubAppBuilderUseRoutes = sinon.stub(stubAppBuilderInstance, appBuilderMethods.useRoutes).returns(stubAppBuilderInstance);
+      stubAppBuilderHandleErrors = sinon.stub(stubAppBuilderInstance, appBuilderMethods.handleErrors).returns(stubAppBuilderInstance);
+      stubAppBuilderTrustProxy = sinon.stub(stubAppBuilderInstance, appBuilderMethods.trustProxy).returns(stubAppBuilderInstance);
+      stubAppBuilderResult = sinon.stub(stubAppBuilderInstance, appBuilderMethods.result).get(() => stubExpressInstance);
 
       result = getApp();
     });
 
-    after(() => {
+    should('initialise the (dependency) container', () => {
 
-      stubContainerInitialise.restore();
-    });
-
-    should('initialise the container', () => {
-
-      expect(stubContainerInitialise.calledOnce).to.be.equal(true);
+      assertWasCalled(stubContainerInitialise);
+      assertCalledBefore(stubContainerInitialise, stubAppBuilderCreate, 'container.initialise()', 'AppBuilder.create()');
     });
 
     should('pass an express instance to the AppBuilder', () => {
 
-      const result = stubAppBuilderCreate.args[0][0];
+      const expressInstance = stubAppBuilderCreate.args[0][0];
 
-      expect(result).to.be.equal(stubExpressInstance);
+      expect(expressInstance).to.equal(stubExpressInstance);
+    });
+
+    should('set handlebars as view engine', () => {
+
+      assertWasCalled(stubAppBuilderUseHandlebars);
+      assertCalledBefore(stubAppBuilderUseHandlebars, stubAppBuilderLogRequests, appBuilderMethods.useHandlebars, appBuilderMethods.logRequests);
+    });
+
+    should('log HTTP requests (using morgan or similar)', () => {
+
+      assertWasCalled(stubAppBuilderLogRequests);
+      assertCalledBefore(stubAppBuilderLogRequests, stubAppBuilderUseBodyParser, appBuilderMethods.logRequests, appBuilderMethods.useBodyParser);
+    });
+
+    should('use the body parser', () => {
+
+      assertWasCalled(stubAppBuilderUseBodyParser);
+      assertCalledBefore(stubAppBuilderUseBodyParser, stubAppBuilderUseCookieParser, appBuilderMethods.useBodyParser, appBuilderMethods.useCookieParser);
+    });
+
+    should('use the cookie parser', () => {
+
+      assertWasCalled(stubAppBuilderUseCookieParser);
+      assertCalledBefore(stubAppBuilderUseCookieParser, stubAppBuilderUseRoutes, appBuilderMethods.useCookieParser, appBuilderMethods.useRoutes);
+    });
+
+    should('initialise app routes', () => {
+
+      assertWasCalled(stubAppBuilderUseRoutes);
+      assertCalledBefore(stubAppBuilderUseRoutes, stubAppBuilderHandleErrors, appBuilderMethods.useRoutes, appBuilderMethods.handleErrors);
+    });
+
+    should('handle errors (and 404s)', () => {
+
+      assertWasCalled(stubAppBuilderHandleErrors);
+      assertCalledBefore(stubAppBuilderHandleErrors, stubAppBuilderTrustProxy, appBuilderMethods.handleErrors, appBuilderMethods.trustProxy);
+    });
+
+    should('enable \'trust proxy\' setting', () => {
+
+      assertWasCalled(stubAppBuilderTrustProxy);
+      assertCalledBefore(stubAppBuilderTrustProxy, stubAppBuilderResult, appBuilderMethods.trustProxy, appBuilderMethods.result);
+    });
+
+    should('return the express instance', () => {
+
+      expect(result).to.equal(stubExpressInstance);
     });
   });
 });

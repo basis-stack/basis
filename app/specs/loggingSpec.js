@@ -40,7 +40,6 @@ the('logging middleware initialiser', () => {
 
   const invoke = (config) => {
 
-    stubMorgan.reset();
     return getRequestLogger(config, stubLogStream);
   }
 
@@ -53,6 +52,11 @@ the('logging middleware initialiser', () => {
 
       before(() => {
         result = invoke(stubConfig);
+      });
+
+      after(() => {
+
+        stubMorgan.resetHistory();
       });
 
       should('return a valid morgan instance', () => {
@@ -78,6 +82,11 @@ the('logging middleware initialiser', () => {
 
       before(() => {
         result = invoke(stubConfig);
+      });
+
+      after(() => {
+
+        stubMorgan.resetHistory();
       });
 
       should('return a valid morgan instance', () => {
