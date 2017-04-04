@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { the, should, and, then } from './../testing/specAliases';
+import { the, should, when } from './../testing/specAliases';
 
 import { getJsonParser, getUrlencodedParser, getCookieParser, __RewireAPI__ as dataParsersAPI } from './../middleware/dataParsers';
 
@@ -27,30 +27,33 @@ the('dataParsers middleware initialiser', () => {
   });
 
 
-  // TODO: Change this to use when() and should() so is line with everything else
-  should(() => {
+  when('getJsonParser invoked', () => {
 
-    then('export the body-parser json middleware', () => {
+    should('return the body-parser json middleware', () => {
 
       const result = getJsonParser();
 
       expect(result).to.equal(stubJsonParser);
     });
+  });
 
-    and('export the body-parser urlencoded middleware', () => {
+  when('getUrlencodedParser invoked', () => {
+
+    should('return the body-parser urlencoded middleware', () => {
 
       const result = getUrlencodedParser();
 
       expect(result).to.equal(stubUrlencodedParser);
-
     });
+  });
 
-    and('export the cookie-parser middleware', () => {
+  when('getCookieParser', () => {
+
+    should('return the cookie-parser middleware', () => {
 
       const result = getCookieParser();
 
       expect(result).to.equal(stubCookieParser);
-
     });
   });
 });
