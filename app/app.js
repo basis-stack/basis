@@ -1,12 +1,10 @@
 import express from 'express';
 
-import container from './core/container';
 import { AppBuilder } from './middleware/appBuilder';
 
-export const getApp = () => {
+export const createApp = (container) => {
 
-  container.initialise();
-  const appBuilder = AppBuilder.create(express());
+  const appBuilder = AppBuilder.create(container, express());
 
   return appBuilder.useHandlebars()
                    .logRequests()

@@ -1,10 +1,5 @@
 import path from 'path';
 
-// Core modules
-// import config from './../core/config';
-// import logger from './../core/logger';
-import container from './../core/container';
-
 // Routes
 import { ErrorsController } from './../controllers/errorsController';
 import routes from './../routes';
@@ -20,7 +15,7 @@ import { getJsonParser, getUrlencodedParser, getCookieParser } from './dataParse
 
 export class AppBuilder {
 
-  constructor(app) {
+  constructor(container, app) {
 
     this._app = app;
     this._config = container.resolve(container.keys.config);
@@ -29,9 +24,9 @@ export class AppBuilder {
     this._errorController = new ErrorsController(this._logger, this._config);
   }
 
-  static create(app) {
+  static create(container, app) {
 
-    return new AppBuilder(app);
+    return new AppBuilder(container, app);
   }
 
   get result() {

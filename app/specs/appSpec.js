@@ -2,13 +2,13 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { the, should, when } from './../testing/specAliases';
 
-import { getApp, __RewireAPI__ } from './../app';
+import { createApp, __RewireAPI__ } from './../app';
 
 the('app', () => {
 
   const stubExpressInstance = { stubExpress: true };
   const stubExpress = sinon.stub().returns(stubExpressInstance);
-  const stubContainer = { initialise: () => {} };
+  const stubContainer = { stubContainer: true };
   const stubAppBuilderClass = { create: () => {} };
 
   const stubAppBuilderInstance = {
@@ -26,20 +26,17 @@ the('app', () => {
   before(() => {
 
     __RewireAPI__.__Rewire__('express', stubExpress);
-    __RewireAPI__.__Rewire__('container', stubContainer);
     __RewireAPI__.__Rewire__('AppBuilder', stubAppBuilderClass);
   });
 
   after(() => {
 
     __RewireAPI__.__ResetDependency__('express');
-    __RewireAPI__.__ResetDependency__('container');
     __RewireAPI__.__ResetDependency__('AppBuilder');
   });
 
-  when('requested', () => {
+  when('created', () => {
 
-    let stubContainerInitialise;
     let stubAppBuilderCreate;
 
     let stubAppBuilderUseHandlebars;
@@ -78,7 +75,6 @@ the('app', () => {
 
     before(() => {
 
-      stubContainerInitialise = sinon.spy(stubContainer, 'initialise');
       stubAppBuilderCreate = sinon.stub(stubAppBuilderClass, 'create').returns(stubAppBuilderInstance);
 
       stubAppBuilderUseHandlebars = sinon.stub(stubAppBuilderInstance, appBuilderMethods.useHandlebars).returns(stubAppBuilderInstance);
@@ -90,19 +86,15 @@ the('app', () => {
       stubAppBuilderTrustProxy = sinon.stub(stubAppBuilderInstance, appBuilderMethods.trustProxy).returns(stubAppBuilderInstance);
       stubAppBuilderResult = sinon.stub(stubAppBuilderInstance, appBuilderMethods.result).get(() => stubExpressInstance);
 
-      result = getApp();
+      result = createApp(stubContainer);
     });
 
-    should('initialise the (dependency) container', () => {
+    should('pass the container and an express instance to the AppBuilder', () => {
 
-      assertWasCalled(stubContainerInitialise);
-      assertCalledBefore(stubContainerInitialise, stubAppBuilderCreate, 'container.initialise()', 'AppBuilder.create()');
-    });
+      const containerInstance = stubAppBuilderCreate.args[0][0];
+      const expressInstance = stubAppBuilderCreate.args[0][1];
 
-    should('pass an express instance to the AppBuilder', () => {
-
-      const expressInstance = stubAppBuilderCreate.args[0][0];
-
+      expect(containerInstance).to.equal(stubContainer);
       expect(expressInstance).to.equal(stubExpressInstance);
     });
 

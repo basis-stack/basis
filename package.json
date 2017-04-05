@@ -21,7 +21,7 @@
   "scripts": {
     "build": "eslint config/*.* gulpfile.babel.js && gulp build",
     "start": "node build/app/bin/basis_local",
-    "test": "eslint app/**/*Spec.js && mocha --require babel-core/register app/**/*Spec.js",
+    "test": "export BABEL_ENV=test && eslint app/**/*Spec.js && mocha --require babel-core/register app/**/*Spec.js",
     "coverage" : "export BABEL_ENV=test && nyc npm test"
   },
   "dependencies": {

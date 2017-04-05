@@ -20,6 +20,8 @@ class Container {
       this.register('config', config);
       this.register('logger', new Logger(config));
     }
+
+    return this;
   }
 
   register(key, instance) {
