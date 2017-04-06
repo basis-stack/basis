@@ -1,8 +1,9 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { the, should, when } from './../testing/specAliases';
 
-import { createApp, __RewireAPI__ } from './../app';
+import { the, should, when } from './../testing/specAliases';
+import { assertWasCalled, assertParameter, assertCalledBefore } from './../testing/specAssertions';
+import { default as createApp, __RewireAPI__ as CreateAppAPI } from './../app';
 
 the('app', () => {
 
@@ -25,14 +26,14 @@ the('app', () => {
 
   before(() => {
 
-    __RewireAPI__.__Rewire__('express', stubExpress);
-    __RewireAPI__.__Rewire__('AppBuilder', stubAppBuilderClass);
+    CreateAppAPI.__Rewire__('express', stubExpress);
+    CreateAppAPI.__Rewire__('AppBuilder', stubAppBuilderClass);
   });
 
   after(() => {
 
-    __RewireAPI__.__ResetDependency__('express');
-    __RewireAPI__.__ResetDependency__('AppBuilder');
+    CreateAppAPI.__ResetDependency__('express');
+    CreateAppAPI.__ResetDependency__('AppBuilder');
   });
 
   when('created', () => {
@@ -49,18 +50,6 @@ the('app', () => {
     let stubAppBuilderResult;
 
     let result;
-
-    const assertWasCalled = (spy) => {
-
-      expect(spy.calledOnce).to.equal(true);
-    }
-
-    const assertCalledBefore = (spyA, spyB, methodA, methodB) => {
-
-      const message = `Expected ${methodA} to be called before ${methodB}`;
-
-      expect(spyA.calledBefore(spyB)).to.equal(true, message);
-    }
 
     const appBuilderMethods = {
       useHandlebars: 'useHandlebars',
@@ -91,11 +80,8 @@ the('app', () => {
 
     should('pass the container and an express instance to the AppBuilder', () => {
 
-      const containerInstance = stubAppBuilderCreate.args[0][0];
-      const expressInstance = stubAppBuilderCreate.args[0][1];
-
-      expect(containerInstance).to.equal(stubContainer);
-      expect(expressInstance).to.equal(stubExpressInstance);
+      assertParameter(stubAppBuilderCreate, 0, stubContainer);
+      assertParameter(stubAppBuilderCreate, 1, stubExpressInstance);
     });
 
     should('set handlebars as view engine', () => {

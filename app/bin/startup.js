@@ -1,5 +1,5 @@
 import container from './../core/container';
-import { createServer as startServer } from './server';
+import { default as startServer } from './server';
 
 function main() {
 

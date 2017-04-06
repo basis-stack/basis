@@ -2,7 +2,7 @@ import express from 'express';
 
 import { AppBuilder } from './middleware/appBuilder';
 
-export const createApp = (container) => {
+export default (container) => {
 
   const appBuilder = AppBuilder.create(container, express());
 

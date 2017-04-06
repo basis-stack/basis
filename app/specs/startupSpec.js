@@ -1,13 +1,14 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { the, should, when } from './../testing/specAliases';
 
+import { the, should, when } from './../testing/specAliases';
+import { assertWasCalled, assertParameter } from './../testing/specAssertions';
 import { main, __RewireAPI__ as StartupAPI } from './../bin/startup';
 
 the('startup module', () => {
 
   const stubContainer = { initialise: () => {} };
-  const stubCreateServer = sinon.stub();
+  const stubCreateServer = sinon.spy();
   const stubContainerInitialise = sinon.stub(stubContainer, 'initialise').returns(stubContainer);
 
   before(() => {
@@ -30,19 +31,17 @@ the('startup module', () => {
 
     should('initialise the (dependency) container ', () => {
 
-      expect(stubContainerInitialise.calledOnce).to.equal(true);
+      assertWasCalled(stubContainerInitialise);
     });
 
     should('pass the initialised container to startServer', () => {
 
-      const result = stubCreateServer.args[0][0];
-
-      expect(result).to.equal(stubContainer);
+      assertParameter(stubCreateServer, 0, stubContainer);
     });
 
     should('start the server', () => {
 
-      expect(stubCreateServer.calledOnce).to.equal(true);
+      assertWasCalled(stubCreateServer);
     });
   });
 });
