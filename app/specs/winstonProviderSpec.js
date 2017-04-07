@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { the, when, withScenario, should } from './../testing/specAliases';
 
-import { WinstonProvider } from './../core/winstonProvider';
+import { default as getWinston} from './../core/winstonProvider';
 
 const assertInstance = (result) => {
 
@@ -10,7 +10,7 @@ const assertInstance = (result) => {
   expect(typeof result.info).to.equal('function');
 }
 
-the('WinstonProvider', () => {
+the('winstonProvider', () => {
 
   const config = { appName: 'testapp' };
 
@@ -18,9 +18,9 @@ the('WinstonProvider', () => {
 
     withScenario('local env config', () => {
 
-      const result = WinstonProvider.getInstance(Object.assign(config, { env: 'local' }));
+      const result = getWinston(Object.assign(config, { env: 'local' }));
 
-      should('return a valid Winston instance', () => {
+      should('return a valid winston instance', () => {
 
         assertInstance(result);
       });
@@ -34,9 +34,9 @@ the('WinstonProvider', () => {
 
     withScenario('non-local env config', () => {
 
-      const result = WinstonProvider.getInstance(Object.assign(config, { env: 'some_other_env' }));
+      const result = getWinston(Object.assign(config, { env: 'some_other_env' }));
 
-      should('return a valid Winston instance', () => {
+      should('return a valid winston instance', () => {
 
         assertInstance(result);
       });

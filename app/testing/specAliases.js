@@ -8,7 +8,7 @@ function mochaIt(prefix, title, contents) {
   return it(`${prefix} ${title}`, contents);
 }
 
-export const aliasTypes = {
+const aliasTypes = {
   the: 'The',
   should: 'should',
   when: 'when',

@@ -68,7 +68,7 @@ export class AppBuilder {
 
     // TODO: Need to ensure that this is called inbetween 'base' middleware (parsers and such) and error handlers. How best to do this ?
 
-    this._app.use(routes);
+    this._app.use(routes());
 
     return this;
   }

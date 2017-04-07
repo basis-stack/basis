@@ -1,8 +1,13 @@
 import express from 'express';
-import homeController from './../controllers/homeController';
+import { HomeController } from './../controllers/homeController';
 
-const router = express.Router();
+let homeController;
 
-homeController.initialise(router);
+export default () => {
 
-export default router;
+  const router = express.Router();
+  homeController = new HomeController();
+  homeController.initialise(router);
+
+  return router;
+}

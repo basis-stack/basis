@@ -1,4 +1,4 @@
-class HomeController {
+export class HomeController {
 
   initialise(router) {
 
@@ -10,5 +10,3 @@ class HomeController {
     res.send('Hello World!');
   }
 }
-
-export default new HomeController();

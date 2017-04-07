@@ -2,40 +2,34 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { the, should, when } from './../testing/specAliases';
 
-import { Logger, __RewireAPI__ } from './../core/logger';
+import { assertParameter } from './../testing/specAssertions';
+import { Logger, __RewireAPI__ as LoggerApi } from './../core/logger';
 
 the('logger', () => {
 
   let inputConfig;
   const stubConfig = {};
   const stubWinston = { info: () => {}, error: () => {} };
-  const stubWinstonProvider = {
-
-    getInstance: (config) => {
-
-      inputConfig = config;
-      return stubWinston;
-    }
-  };
+  const stubGetWinston = sinon.stub().returns(stubWinston);
 
   let logger;
 
   before(() => {
 
-    __RewireAPI__.__Rewire__('WinstonProvider', stubWinstonProvider);
+    LoggerApi.__Rewire__('getWinston', stubGetWinston);
     logger = new Logger(stubConfig);
   });
 
   after(() => {
 
-    __RewireAPI__.__ResetDependency__('WinstonProvider');
+    LoggerApi.__ResetDependency__('getWinston');
   });
 
   when('instantiated', () => {
 
     should('initialise winston instance from input config', () => {
 
-      expect(inputConfig).to.be.equal(stubConfig);
+      assertParameter(stubGetWinston, 0, stubConfig);
       expect(logger._winston).to.be.equal(stubWinston);
     });
   });

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { the, should, when } from './../testing/specAliases';
 
-import { getJsonParser, getUrlencodedParser, getCookieParser, __RewireAPI__ as dataParsersAPI } from './../middleware/dataParsers';
+import { getJsonParser, getUrlencodedParser, getCookieParser, __RewireAPI__ as DataParsersAPI } from './../middleware/dataParsers';
 
 the('dataParsers middleware initialiser', () => {
 
@@ -16,14 +16,14 @@ the('dataParsers middleware initialiser', () => {
 
   before(() => {
 
-    dataParsersAPI.__Rewire__('bodyParser', stubBodyParser);
-    dataParsersAPI.__Rewire__('cookieParser', () => { return stubCookieParser; });
+    DataParsersAPI.__Rewire__('bodyParser', stubBodyParser);
+    DataParsersAPI.__Rewire__('cookieParser', () => { return stubCookieParser; });
   });
 
   after(() => {
 
-    dataParsersAPI.__ResetDependency__('bodyParser');
-    dataParsersAPI.__ResetDependency__('cookieParser');
+    DataParsersAPI.__ResetDependency__('bodyParser');
+    DataParsersAPI.__ResetDependency__('cookieParser');
   });
 
 

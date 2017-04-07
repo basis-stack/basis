@@ -7,7 +7,8 @@
   ],
   "exclude": [
     "**/*Spec.js",
-    "**/specAliases.js"
+    "**/specAliases.js",
+    "**/specAssertions.js"
   ],
   "require": [
     "babel-register"

@@ -1,8 +1,8 @@
-import { WinstonProvider } from './winstonProvider';
+import { default as getWinston} from './../core/winstonProvider';
 
 export class Logger {
 
-  constructor(config, winston = WinstonProvider.getInstance(config)) {
+  constructor(config, winston = getWinston(config)) {
 
     this._winston = winston;
   }

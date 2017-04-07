@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { the, when, withScenario, should } from './../testing/specAliases';
 
-import { getRequestLogger, __RewireAPI__ as loggingAPI } from './../middleware/logging';
+import { getRequestLogger, __RewireAPI__ as LoggingAPI } from './../middleware/logging';
 
 the('logging middleware initialiser', () => {
 
@@ -14,12 +14,12 @@ the('logging middleware initialiser', () => {
 
     stubMorgan = sinon.stub();
     stubMorgan.returns(stubMorganResult);
-    loggingAPI.__Rewire__('morgan', stubMorgan);
+    LoggingAPI.__Rewire__('morgan', stubMorgan);
   });
 
   after(() => {
 
-    loggingAPI.__ResetDependency__('morgan');
+    LoggingAPI.__ResetDependency__('morgan');
   });
 
   const assertResult = (result, expectedResult) => {
