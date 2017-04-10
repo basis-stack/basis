@@ -17,7 +17,7 @@ the('logger', () => {
   before(() => {
 
     LoggerApi.__Rewire__('getWinston', stubGetWinston);
-    logger = new Logger(stubConfig);
+    logger = Logger.createFromConfig(stubConfig);
   });
 
   after(() => {

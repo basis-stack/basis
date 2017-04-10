@@ -2,9 +2,14 @@ import { default as getWinston} from './../core/winstonProvider';
 
 export class Logger {
 
-  constructor(config, winston = getWinston(config)) {
+  constructor(winston) {
 
     this._winston = winston;
+  }
+
+  static createFromConfig(config) {
+
+    return new Logger(getWinston(config));
   }
 
   get logStream() {

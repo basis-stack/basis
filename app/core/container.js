@@ -6,20 +6,20 @@ class Container {
   constructor() {
 
     this._instanceMap = new Map();
+    this._settingsFilePath = `${__dirname}/../../settings.json`;
+
+    // TODO: Rename this to instanceKeys so as to not confuse with native keys()
     this.keys = {};
   }
 
-  initialise(initialiseCoreServices = true) {
+  initialise() {
 
     this._instanceMap.clear();
 
-    if (initialiseCoreServices) {
+    const config = Config.createFromSettingsFile(this._settingsFilePath);
 
-      const config = new Config();
-
-      this.register('config', config);
-      this.register('logger', new Logger(config));
-    }
+    this.register('config', config);
+    this.register('logger', Logger.createFromConfig(config));
 
     return this;
   }
@@ -40,4 +40,7 @@ class Container {
   }
 }
 
-export default new Container();
+export default () => {
+
+  return new Container();
+}

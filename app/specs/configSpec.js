@@ -1,39 +1,34 @@
 import { expect } from 'chai';
-import jsonfile from 'jsonfile';
-import del from 'del';
+import * as sinon from 'sinon';
 
 import { the, when, should } from './../testing/specAliases';
-import { Config } from './../core/config.js';
+import { Config, __RewireAPI__ as ConfigAPI } from './../core/config.js';
 
 the('Config class', () => {
 
-  when('instantiated', () => {
+  when('created (from settings file)', () => {
 
-    const settingsFilePath = `${__dirname}/../../settings.json`;
+    const stubJsonfile = { readFileSync: () => {} };
+    const settingsFilePath = 'SomeFilePath';
     const stubSettingsJson = { foo: 'FooProp', bar: 'BarProp' };
+
+    sinon.stub(stubJsonfile, 'readFileSync').returns(stubSettingsJson);
+
+    let config;
 
     before(() => {
 
-      jsonfile.writeFileSync(settingsFilePath, stubSettingsJson);
+      ConfigAPI.__Rewire__('jsonfile', stubJsonfile);
+
+      config = Config.createFromSettingsFile(settingsFilePath);
     });
 
     after(() => {
 
-      del.sync([settingsFilePath]);
+      ConfigAPI.__ResetDependency__('jsonfile');
     });
 
-    should('initialise properties from input settings', () => {
-
-      const stubSettings = { a: 'propA', b: 'propB' };
-      const config = new Config(stubSettings);
-
-      expect(config.a).to.equal(stubSettings.a);
-      expect(config.b).to.equal(stubSettings.b);
-    });
-
-    should('default input settings from settings file', () => {
-
-      const config = new Config();
+    should('initialise properties from settings in settings file', () => {
 
       expect(config.foo).to.equal(stubSettingsJson.foo);
       expect(config.bar).to.equal(stubSettingsJson.bar);

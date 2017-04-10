@@ -8,12 +8,13 @@ import { main, __RewireAPI__ as StartupAPI } from './../bin/startup';
 the('startup module', () => {
 
   const stubContainer = { initialise: () => {} };
-  const stubCreateServer = sinon.spy();
+  const stubGetContainer = sinon.stub().returns(stubContainer);
   const stubContainerInitialise = sinon.stub(stubContainer, 'initialise').returns(stubContainer);
+  const stubCreateServer = sinon.spy();
 
   before(() => {
 
-    StartupAPI.__Rewire__('container', stubContainer);
+    StartupAPI.__Rewire__('getContainer', stubGetContainer);
     StartupAPI.__Rewire__('startServer', stubCreateServer);
 
     main();
@@ -23,7 +24,7 @@ the('startup module', () => {
 
     stubContainerInitialise.restore();
 
-    StartupAPI.__ResetDependency__('container');
+    StartupAPI.__ResetDependency__('getContainer');
     StartupAPI.__ResetDependency__('startServer');
   });
 

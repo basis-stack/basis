@@ -2,15 +2,15 @@ import jsonfile from 'jsonfile';
 
 export class Config {
 
-  constructor(settings = Config._getSettingsFromFile()) {
+  constructor(settings) {
 
     for (const prop in settings) {
       this[prop] = settings[prop];
     }
   }
 
-  static _getSettingsFromFile() {
+  static createFromSettingsFile(filePath) {
 
-    return jsonfile.readFileSync(`${__dirname}/../../settings.json`);
+    return new Config(jsonfile.readFileSync(filePath));
   }
 }
