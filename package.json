@@ -21,8 +21,8 @@
   "scripts": {
     "build": "eslint config/*.* gulpfile.babel.js && gulp build",
     "start": "node build/app/bin/basis_local",
-    "test": "export BABEL_ENV=test && eslint app/**/*Spec.js && mocha --require babel-core/register app/**/*Spec.js",
-    "coverage" : "export BABEL_ENV=test && nyc npm test"
+    "test": "eslint app/**/*Spec.js && cross-env BABEL_ENV=test mocha --require babel-core/register app/**/*Spec.js",
+    "coverage": "cross-env BABEL_ENV=test nyc npm test"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
@@ -42,6 +42,7 @@
     "babel-preset-es2015": "^6.24.0",
     "chai": "^3.5.0",
     "colors": "^1.1.2",
+    "cross-env": "^4.0.0",
     "del": "^2.2.2",
     "eslint": "^3.19.0",
     "gulp": "^3.9.1",
