@@ -2,9 +2,14 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { the, when, withScenario, should } from './utils/specAliases';
 
-import handleError from './../bin/errorHandler';
+import { onError } from './../bin/handlers';
 
-the('(startup) errorHandler', () => {
+the('(server) handlers', () => {
+
+  when('listening handled', () => {
+
+    // TODO: Finish this !!
+  });
 
   when('non-listen error handled', () => {
 
@@ -12,7 +17,7 @@ the('(startup) errorHandler', () => {
     let result;
 
     try {
-      handleError(stubError, undefined, undefined, undefined);
+      onError(stubError, undefined, undefined, undefined);
     }
     catch(error) {
       result = error;
@@ -24,7 +29,7 @@ the('(startup) errorHandler', () => {
     });
   });
 
-  when('listen error handled', () => {
+  when('server error handled', () => {
 
     let loggerErrorSpy;
     let callbackInvoked;
@@ -47,7 +52,7 @@ the('(startup) errorHandler', () => {
         stubError.code = 'EACCES';
         loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
-        handleError(stubError, stubConfig, stubLogger, stubCallback);
+        onError(stubError, stubConfig, stubLogger, stubCallback);
       });
 
       after(() => {
@@ -74,7 +79,7 @@ the('(startup) errorHandler', () => {
         stubError.code = 'EADDRINUSE';
         loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
-        handleError(stubError, stubConfig, stubLogger, stubCallback);
+        onError(stubError, stubConfig, stubLogger, stubCallback);
       });
 
       after(() => {
@@ -103,7 +108,7 @@ the('(startup) errorHandler', () => {
         stubError.code = 'SOME_GENERIC_ERROR';
 
         try {
-          handleError(stubError, undefined, undefined, undefined);
+          onError(stubError, undefined, undefined, undefined);
         }
         catch(error) {
           result = error;

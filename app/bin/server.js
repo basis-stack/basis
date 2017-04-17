@@ -1,14 +1,10 @@
 import http from 'http';
 
-import handleError from './errorHandler';
+import { onListening, onError } from './handlers';
+import { terminate } from './processHelpers';
 import { default as createApp } from './../app';
 
-function onListening(config, logger) {
-
-  logger.info(`[SERVER ] STARTED: listening on port ${config.webServerPort}`);
-}
-
-export default (container, exit = process.exit) => {
+export default (container) => {
 
   const config = container.resolve(container.keys.config);
   const logger = container.resolve(container.keys.logger);
@@ -17,7 +13,7 @@ export default (container, exit = process.exit) => {
   const server = http.createServer(app);
 
   server.listen(config.webServerPort);
-  server.on('error', (error) => { handleError(error, config, logger, () => { exit(1); }); });
+  server.on('error', (error) => { onError(error, config, logger, () => { terminate(1); }) });
   server.on('listening', () => { onListening(config, logger); });
 
   return server;

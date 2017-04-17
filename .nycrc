@@ -6,8 +6,10 @@
     "app/**/*.js"
   ],
   "exclude": [
+    "**/processHelpers.js",
     "**/startup.js",
     "**/*Spec.js",
+    "**/fakes.js",
     "**/specAliases.js",
     "**/specAssertions.js"
   ],

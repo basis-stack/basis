@@ -2,20 +2,14 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { the, when, withScenario, should } from './utils/specAliases';
 
+import { getStubContainer } from './utils/fakes';
 import { AppBuilder } from './../middleware/appBuilder';
 
 the('appBuilder', () => {
 
   const stubConfig = {};
   const stubLogger = { logStream: {} };
-  const stubContainer = {
-    resolve: (key) => {
-      // TODO: Can this switching be done using sinon alone ? withArgs or similar ?
-      if (key === 'config') { return stubConfig; }
-      if (key === 'logger') { return stubLogger; }
-    },
-    keys: { config: 'config', logger: 'logger' }
-  };
+  const stubContainer = getStubContainer(stubConfig, stubLogger);
   const stubApp = { set: () => {}, use: () => {} };
 
   let builder;

@@ -3,47 +3,46 @@ import * as sinon from 'sinon';
 
 import { the, should, when } from './utils/specAliases';
 import { assertWasCalled, assertParameter, assertCalledBefore } from './utils/specAssertions';
+import { getStubContainer } from './utils/fakes';
 import { default as createServer, __RewireAPI__ as CreateServerAPI } from './../bin/server';
 
 the('server', () => {
 
   const stubServer = { listen: () => {}, on: () => {} }
   const stubHttp = { createServer: () => {} };
-  const stubHandleError = sinon.spy();
+  const stubOnErrorHandler = sinon.spy();
+  const stubOnListeningHandler = sinon.spy();
   const stubAppInstance = {};
   const stubCreateApp = sinon.stub().returns(stubAppInstance);
   const stubHttpCreateServer = sinon.stub(stubHttp, 'createServer').returns(stubServer);
   const stubConfig = { webServerPort: 'SomePort' };
   const stubLogger = { info: () => {} };
-  const stubContainer = {
-    resolve: (key) => {
-      // TODO: Can this switching be done using sinon alone ? withArgs or similar ?
-      if (key === 'config') { return stubConfig; }
-      if (key === 'logger') { return stubLogger; }
-    },
-    keys: { config: 'config', logger: 'logger' }
-  };
+  const stubContainer = getStubContainer(stubConfig, stubLogger);
   const stubServerListen = sinon.spy(stubServer, 'listen');
   const stubLoggerInfo = sinon.spy(stubLogger, 'info');
   const stubServerOn = sinon.spy(stubServer, 'on');
-  const stubProcessExit = sinon.spy();
+  const stubTerminate = sinon.spy();
 
   let result;
 
   before(() => {
 
     CreateServerAPI.__Rewire__('http', stubHttp);
-    CreateServerAPI.__Rewire__('handleError', stubHandleError);
+    CreateServerAPI.__Rewire__('onError', stubOnErrorHandler);
+    CreateServerAPI.__Rewire__('onListening', stubOnListeningHandler);
     CreateServerAPI.__Rewire__('createApp', stubCreateApp);
+    CreateServerAPI.__Rewire__('terminate', stubTerminate);
 
-    result = createServer(stubContainer, stubProcessExit);
+    result = createServer(stubContainer);
   });
 
   after(() => {
 
     CreateServerAPI.__ResetDependency__('http');
-    CreateServerAPI.__ResetDependency__('handleError');
+    CreateServerAPI.__ResetDependency__('onError');
+    CreateServerAPI.__ResetDependency__('onListening');
     CreateServerAPI.__ResetDependency__('createApp');
+    CreateServerAPI.__ResetDependency__('terminate');
   });
 
   when('created', () => {
@@ -80,10 +79,9 @@ the('server', () => {
       onlistening();
     });
 
-    should('log an info message indicating server start and port number', () => {
+    should('relay the listening event to onListening', () => {
 
-      const expectedMessage = '[SERVER ] STARTED: listening on port SomePort';
-      assertParameter(stubLoggerInfo, 0, expectedMessage);
+      assertWasCalled(stubOnListeningHandler);
     });
   });
 
@@ -98,19 +96,19 @@ the('server', () => {
       onError(stubError);
     });
 
-    should('relay the error to handleError', () => {
+    should('relay the error to onError', () => {
 
-      assertWasCalled(stubHandleError);
-      assertParameter(stubHandleError, 0, stubError);
+      assertWasCalled(stubOnErrorHandler);
+      assertParameter(stubOnErrorHandler, 0, stubError);
     });
 
     should('stop the process with exit code 1', () => {
 
-      const callback = stubHandleError.args[0][3];
+      const callback = stubOnErrorHandler.args[0][3];
       callback();
 
-      assertWasCalled(stubProcessExit);
-      assertParameter(stubProcessExit, 0, 1);
+      assertWasCalled(stubTerminate);
+      assertParameter(stubTerminate, 0, 1);
     });
   });
 });

@@ -1,6 +1,10 @@
-// TODO: Should rename this to startupErrorHandler (So as to not confuse with error controller or any other error handler) ?
 
-export default (error, config, logger, handledCallback) => {
+export const onListening = (config, logger) => {
+
+  logger.info(`[SERVER ] STARTED: listening on port ${config.webServerPort}`);
+}
+
+export const onError = (error, config, logger, handledCallback) => {
 
   if (error.syscall !== 'listen') {
     throw error;
