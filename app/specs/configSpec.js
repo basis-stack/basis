@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, when, should } from './../testing/specAliases';
+import { the, when, should } from './utils/specAliases';
 import { Config, __RewireAPI__ as ConfigAPI } from './../core/config.js';
 
 the('Config class', () => {

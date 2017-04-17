@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './../testing/specAliases';
-import { assertWasCalled, assertParameter, assertCalledBefore } from './../testing/specAssertions';
+import { the, should, when } from './utils/specAliases';
+import { assertWasCalled, assertParameter, assertCalledBefore } from './utils/specAssertions';
 import { default as createServer, __RewireAPI__ as CreateServerAPI } from './../bin/server';
 
 the('server', () => {
@@ -60,7 +60,7 @@ the('server', () => {
     });
 
     should('listen on the configured port', () => {
-      
+
       assertWasCalled(stubServerListen);
       assertParameter(stubServerListen, 0, stubConfig.webServerPort);
     });
@@ -76,7 +76,7 @@ the('server', () => {
     before(() => {
 
       const onlistening = stubServerOn.args[1][1];
-      
+
       onlistening();
     });
 
@@ -90,14 +90,14 @@ the('server', () => {
   when('error occurs', () => {
 
     const stubError = new Error('Stub Error');
-    
+
     before(() => {
 
       const onError = stubServerOn.args[0][1];
 
       onError(stubError);
     });
-    
+
     should('relay the error to handleError', () => {
 
       assertWasCalled(stubHandleError);

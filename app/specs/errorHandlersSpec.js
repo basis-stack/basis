@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { the, when, withScenario, should} from './../testing/specAliases';
+import { the, when, withScenario, should} from './utils/specAliases';
 
-import { ErrorsController } from './../controllers/errorsController';
+import { handle404, handleServerError } from './../middleware/errorHandlers';
 
-the('ErrorsController', () => {
+the('errorHandlers middleware', () => {
 
   when('error handled', () => {
 
@@ -12,7 +12,7 @@ the('ErrorsController', () => {
 
       const stubNextCallback = sinon.spy();
 
-      new ErrorsController({}, {}).handle404({}, {}, stubNextCallback);
+      handle404({}, {}, stubNextCallback);
       const result = stubNextCallback.args[0][0];
 
       should('set error status to 404', () => {
@@ -41,7 +41,7 @@ the('ErrorsController', () => {
       const stubConfig = { env: 'local' };
       const loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
-      new ErrorsController(stubLogger, stubConfig).handleServerError(stubError, {}, stubResponse, {});
+      handleServerError(stubConfig, stubLogger, stubError, {}, stubResponse, {});
 
       should('set response status code to HTTP error code', () => {
 
@@ -70,7 +70,7 @@ the('ErrorsController', () => {
       const stubConfig = { env: 'local' };
       const loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
-      new ErrorsController(stubLogger, stubConfig).handleServerError(stubError, {}, stubResponse, {});
+      handleServerError(stubConfig, stubLogger, stubError, {}, stubResponse, {});
 
       should('set response status code to 500', () => {
 

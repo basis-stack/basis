@@ -1,20 +1,30 @@
-// import path from 'path';
-// import { expect } from 'chai';
-// import * as sinon from 'sinon';
-// import { forThe, given, when, then, and } from './../testing/specConstructs';
+import { expect } from 'chai';
+import * as sinon from 'sinon';
+import { the, when, withScenario, should } from './utils/specAliases';
 
-// import { AppBuilder } from './../appBuilder';
+import { AppBuilder } from './../middleware/appBuilder';
 
-// forThe('appBuilder', () => {
+the('appBuilder', () => {
 
-//   let stubApp;
-//   let builder;
+  const stubConfig = {};
+  const stubLogger = { logStream: {} };
+  const stubContainer = {
+    resolve: (key) => {
+      // TODO: Can this switching be done using sinon alone ? withArgs or similar ?
+      if (key === 'config') { return stubConfig; }
+      if (key === 'logger') { return stubLogger; }
+    },
+    keys: { config: 'config', logger: 'logger' }
+  };
+  const stubApp = { set: () => {}, use: () => {} };
 
-//   beforeEach(() => {
+  let builder;
+
+  before(() => {
 
 //     stubApp = { set: () => {}, use: () => {} };
 //     builder = new AppBuilder(stubApp);
-//   });
+  });
 
 //   when('useHandlebars called', () => {
 
@@ -93,4 +103,4 @@
 //   //     });
 //   //   });
 //   // });
-// });
+});

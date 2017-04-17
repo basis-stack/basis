@@ -1,5 +1,5 @@
 import express from 'express';
-import { HomeController } from './../controllers/homeController';
+import { HomeController } from './home/homeController';
 
 let homeController;
 

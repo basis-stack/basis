@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { the, when, withScenario, should } from './../testing/specAliases';
+import { the, when, withScenario, should } from './utils/specAliases';
 
 import { getRequestLogger, __RewireAPI__ as LoggingAPI } from './../middleware/logging';
 

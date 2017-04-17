@@ -1,12 +1,13 @@
 import path from 'path';
 
 // Routes
-import { ErrorsController } from './../controllers/errorsController';
+//import { ErrorsController } from './../controllers/errorsController';
 import routes from './../routes';
 
 // Middleware
 import { getRequestLogger } from './logging';
 import { getJsonParser, getUrlencodedParser, getCookieParser } from './dataParsers';
+import { handle404, handleServerError } from './errorHandlers';
 
 // TODO: Need to decide if this app builder pattern (borrowed from ASP.NET MVC Core) is the most effective way of hooking up all the various middleware and what a specific app actually wants.
 //     Could get a bit gnarly with lots of middleware, and so the chain calls might get a bit verbose. Not sure, need to play with it and see how feels.
@@ -18,10 +19,11 @@ export class AppBuilder {
   constructor(container, app) {
 
     this._app = app;
+
     this._config = container.resolve(container.keys.config);
     this._logger = container.resolve(container.keys.logger);
 
-    this._errorController = new ErrorsController(this._logger, this._config);
+    // this._errorController = new ErrorsController(this._logger, this._config);
   }
 
   static create(container, app) {
@@ -38,8 +40,8 @@ export class AppBuilder {
 
     // TODO: Need to ensure that this is the last middleware include to be called.
 
-    this._app.use(this._errorController.handle404);
-    this._app.use((err, req, res, next) => { this._errorController.handleServerError(err, req, res, next); });
+    this._app.use(handle404);
+    this._app.use((err, req, res, next) => { handleServerError(this._config, this._logger, err, req, res, next); });
 
     return this;
   }

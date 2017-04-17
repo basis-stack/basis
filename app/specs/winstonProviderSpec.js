@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { the, when, withScenario, should } from './../testing/specAliases';
+import { the, when, withScenario, should } from './utils/specAliases';
 
 import { default as getWinston} from './../core/winstonProvider';
 

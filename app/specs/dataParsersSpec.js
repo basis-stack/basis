@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { the, should, when } from './../testing/specAliases';
+import { the, should, when } from './utils/specAliases';
 
 import { getJsonParser, getUrlencodedParser, getCookieParser, __RewireAPI__ as DataParsersAPI } from './../middleware/dataParsers';
 
