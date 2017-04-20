@@ -21,5 +21,6 @@ temp
 package
 .DS_Store
 
-# Local scripts
-runspec
+# Local bash scripts
+rs
+cover

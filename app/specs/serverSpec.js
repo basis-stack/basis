@@ -99,7 +99,7 @@ the('server', () => {
     should('relay the error to onError', () => {
 
       assertWasCalled(stubOnErrorHandler);
-      assertParameter(stubOnErrorHandler, 0, stubError);
+      assertParameter(stubOnErrorHandler, 2, stubError);
     });
 
     should('stop the process with exit code 1', () => {

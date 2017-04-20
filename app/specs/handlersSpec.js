@@ -1,14 +1,24 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { the, when, withScenario, should } from './utils/specAliases';
 
-import { onError } from './../bin/handlers';
+import { the, when, withScenario, should } from './utils/specAliases';
+import { onListening, onError } from './../bin/handlers';
 
 the('(server) handlers', () => {
 
   when('listening handled', () => {
 
-    // TODO: Finish this !!
+    const stubConfig = { webServerPort: 'SomePort' };
+    const stubLogger = { info: () => {} };
+    const stubLoggerInfo = sinon.spy(stubLogger, 'info');
+
+    onListening(stubConfig, stubLogger);
+
+    should('Log an info message to logger indicating server start and port number', () => {
+
+      const expectedMessage = '[SERVER ] STARTED: listening on port SomePort';
+      expect(stubLoggerInfo.calledWithExactly(expectedMessage)).to.equal(true);
+    });
   });
 
   when('non-listen error handled', () => {
@@ -17,7 +27,7 @@ the('(server) handlers', () => {
     let result;
 
     try {
-      onError(stubError, undefined, undefined, undefined);
+      onError(undefined, undefined, stubError, undefined);
     }
     catch(error) {
       result = error;
@@ -52,7 +62,7 @@ the('(server) handlers', () => {
         stubError.code = 'EACCES';
         loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
-        onError(stubError, stubConfig, stubLogger, stubCallback);
+        onError(stubConfig, stubLogger, stubError, stubCallback);
       });
 
       after(() => {
@@ -79,7 +89,7 @@ the('(server) handlers', () => {
         stubError.code = 'EADDRINUSE';
         loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
-        onError(stubError, stubConfig, stubLogger, stubCallback);
+        onError(stubConfig, stubLogger, stubError, stubCallback);
       });
 
       after(() => {
@@ -108,7 +118,7 @@ the('(server) handlers', () => {
         stubError.code = 'SOME_GENERIC_ERROR';
 
         try {
-          onError(stubError, undefined, undefined, undefined);
+          onError(undefined, undefined, stubError, undefined);
         }
         catch(error) {
           result = error;

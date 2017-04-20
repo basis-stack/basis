@@ -4,7 +4,7 @@ export const onListening = (config, logger) => {
   logger.info(`[SERVER ] STARTED: listening on port ${config.webServerPort}`);
 }
 
-export const onError = (error, config, logger, handledCallback) => {
+export const onError = (config, logger, error, handledCallback) => {
 
   if (error.syscall !== 'listen') {
     throw error;

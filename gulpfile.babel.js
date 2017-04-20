@@ -134,7 +134,7 @@ gulp.task('compile-app', () => {
                                 .pipe(gulp.dest(`${startupDestDir}`));
 
   const appFilesStream = gulp.src(`${config.paths.app}/**/*.js`)
-                             .pipe(filter(['**/*.js', '!**/startup.js', '!**/*Spec.js', '!**/specAliases.js']))
+                             .pipe(filter(['**/*.js', '!**/startup.js', '!**/*Spec.js', '!**/specAliases.js', '!**/specAssertions.js', '!**/fakes.js']))
                              .pipe(babel())
                              .pipe(gulp.dest(`${config.paths.build}/app`))
                              .pipe(print(getFilePathLogMessage));

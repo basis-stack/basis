@@ -1,8 +1,12 @@
 export class HomeController {
 
-  initialise(router) {
+  static initialise(router) {
 
-    router.get('/', this._handleRoot);
+    const instance = new HomeController();
+
+    router.get('/', instance._handleRoot);
+
+    return instance;
   }
 
   _handleRoot(req, res, next) {

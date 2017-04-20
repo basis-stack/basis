@@ -6,8 +6,7 @@ let homeController;
 export default () => {
 
   const router = express.Router();
-  homeController = new HomeController();
-  homeController.initialise(router);
+  homeController = HomeController.initialise(router);
 
   return router;
 }
