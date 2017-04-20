@@ -22,7 +22,7 @@
     "build": "eslint config/*.* gulpfile.babel.js && gulp build",
     "start": "node build/app/bin/basis_local",
     "test": "eslint app/**/*Spec.js && cross-env BABEL_ENV=test mocha --require babel-core/register app/**/*Spec.js",
-    "coverage": "cross-env BABEL_ENV=test nyc npm test",
+    "coverage": "eslint app/**/*Spec.js && cross-env BABEL_ENV=test nyc mocha --require babel-core/register app/**/*Spec.js",
     "publish-coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
