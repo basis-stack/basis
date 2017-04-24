@@ -25,5 +25,5 @@ export const handleServerError = (config, logger, err, req, res, next) => {
   }
 
   res.status(status);
-  res.send(errorDetail);
+  res.render('error', errorDetail);
 }

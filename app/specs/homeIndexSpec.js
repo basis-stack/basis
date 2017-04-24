@@ -9,8 +9,8 @@ import { default as routesIndex,  __RewireAPI__ as RoutesIndexAPI } from './../r
 the('routes index', () => {
 
   const stubRouter = {};
-  const stubExpress = createStubObject(['Router']);
-  const stubHomeController = createStubObject(['initialise']);
+  const stubExpress = createStubObject('Router');
+  const stubHomeController = createStubObject('initialise');
 
   before(() => {
 

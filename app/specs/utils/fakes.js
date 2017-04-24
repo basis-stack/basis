@@ -1,9 +1,11 @@
-// TODO: Turn methods into an array if only a single value
+import _ from 'lodash';
+
 export const createStubObject = (methods) => {
 
+  const targetMembers = _.isString(methods) ? [methods] : methods;
   const stubObject = {};
 
-  methods.forEach((m) => {
+  targetMembers.forEach((m) => {
     stubObject[m] = () => {};
   });
 
@@ -24,10 +26,10 @@ export const getStubContainer = (stubConfig, stubLogger) => {
 
 export const getStubRouter = () => {
 
-  return createStubObject(['get']);
+  return createStubObject('get');
 }
 
 export const getStubResponse = () => {
 
-  return createStubObject(['send']);
+  return createStubObject(['status', 'send', 'render']);
 }

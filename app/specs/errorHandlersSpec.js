@@ -1,6 +1,9 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+
 import { the, when, withScenario, should} from './utils/specAliases';
+import { createStubObject, getStubResponse } from './utils/fakes.js';
+import { assertWasCalled, assertParameter } from './utils/specAssertions';
 
 import { handle404, handleServerError } from './../middleware/errorHandlers';
 
@@ -33,11 +36,11 @@ the('errorHandlers middleware', () => {
 
     withScenario('HTTP Error', () => {
 
-      const stubResponse = { status: () => {}, send: () => {} };
+      const stubResponse = getStubResponse();
       const statusSpy = sinon.spy(stubResponse, 'status');
-      const sendSpy = sinon.spy(stubResponse, 'send');
+      const renderSpy = sinon.spy(stubResponse, 'render');
       const stubError = { status: 403, message: 'Some HTTP Error' };
-      const stubLogger = { error: () => {} };
+      const stubLogger = createStubObject('error');
       const stubConfig = { env: 'local' };
       const loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
@@ -45,28 +48,34 @@ the('errorHandlers middleware', () => {
 
       should('set response status code to HTTP error code', () => {
 
-        expect(statusSpy.calledWithExactly(403)).to.equal(true);
+        assertWasCalled(statusSpy, 403);
       });
 
-      should('set response body to error message', () => {
+      should('set render the error page with error details', () => {
 
-        expect(sendSpy.args[0][0].message).to.equal('Some HTTP Error');
+        const result = renderSpy.args[0][1];
+
+        assertParameter(renderSpy, 0, 'error');
+        expect(result.status).to.equal(stubError.status);
+        expect(result.message).to.equal(stubError.message);
+        expect(result.error).to.not.be.undefined;
       });
 
       should('log the error', () => {
 
         const expectedMessage = '[EXPRESS] SERVER_ERROR: 403 - Some HTTP Error';
-        expect(loggerErrorSpy.calledWithExactly(expectedMessage)).to.equal(true);
+
+        assertWasCalled(loggerErrorSpy, expectedMessage);
       });
     });
 
     withScenario('General Error', () => {
 
-      const stubResponse = { status: () => {}, send: () => {} };
+      const stubResponse = getStubResponse();
       const statusSpy = sinon.spy(stubResponse, 'status');
-      const sendSpy = sinon.spy(stubResponse, 'send');
+      const renderSpy = sinon.spy(stubResponse, 'render');
       const stubError = { message: 'Some General Error' };
-      const stubLogger = { error: () => {} };
+      const stubLogger = createStubObject('error');
       const stubConfig = { env: 'local' };
       const loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
@@ -74,21 +83,43 @@ the('errorHandlers middleware', () => {
 
       should('set response status code to 500', () => {
 
-        expect(statusSpy.calledWithExactly(500)).to.equal(true);
+        assertWasCalled(statusSpy, 500);
       });
 
-      should('set response body to error message', () => {
+      should('set render the error page with error details', () => {
 
-        expect(sendSpy.args[0][0].message).to.equal('Some General Error');
+        const result = renderSpy.args[0][1];
+
+        assertParameter(renderSpy, 0, 'error');
+        expect(result.status).to.equal(500);
+        expect(result.message).to.equal(stubError.message);
+        expect(result.error).to.not.be.undefined;
       });
 
       should('log the error', () => {
 
         const expectedMessage = '[EXPRESS] SERVER_ERROR: 500 - Some General Error';
-        expect(loggerErrorSpy.calledWithExactly(expectedMessage)).to.equal(true);
+
+        assertWasCalled(loggerErrorSpy, expectedMessage);
+      });
+    });
+
+    withScenario('Production config', () => {
+
+      const stubResponse = getStubResponse();
+      const renderSpy = sinon.spy(stubResponse, 'render');
+      const stubError = { message: 'Some General Error in Production' };
+      const stubLogger = createStubObject('error');
+      const stubConfig = { env: 'production' };
+
+      handleServerError(stubConfig, stubLogger, stubError, {}, stubResponse, {});
+
+      should('not include the Error object / details', () => {
+
+        const result = renderSpy.args[0][1];
+
+        expect(result.error).to.deep.equal({});
       });
     });
   });
-
-  // TOOD: Add tests for production env (i.e. no stack trace)
 });

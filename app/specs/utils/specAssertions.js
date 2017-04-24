@@ -9,11 +9,15 @@ export const assertWasCalled = (spy, parameter = undefined) => {
   }
 }
 
-export const assertParameter = (spy, parameterIndex, expectedValue) => {
+export const assertParameter = (spy, parameterIndex, expectedValue, deepCompare = false) => {
 
   const parameter = spy.args[0][parameterIndex];
 
-  expect(parameter).to.equal(expectedValue);
+  if (deepCompare) {
+    expect(parameter).to.deep.equal(expectedValue);
+  } else {
+    expect(parameter).to.equal(expectedValue);
+  }
 }
 
 export const assertCalledBefore = (spyA, spyB, methodA, methodB) => {

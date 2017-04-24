@@ -2,15 +2,15 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { the, when, withScenario, should } from './utils/specAliases';
 
-import { getStubContainer } from './utils/fakes';
-import { AppBuilder } from './../middleware/appBuilder';
+import { createStubObject, getStubContainer } from './utils/fakes';
+import { AppBuilder, __RewireAPI__ as AppBuilderAPI } from './../middleware/appBuilder';
 
 the('appBuilder', () => {
 
   const stubConfig = {};
   const stubLogger = { logStream: {} };
   const stubContainer = getStubContainer(stubConfig, stubLogger);
-  const stubApp = { set: () => {}, use: () => {} };
+  const stubApp = createStubObject(['set, use']);
 
   let builder;
 
