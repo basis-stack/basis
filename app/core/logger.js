@@ -1,6 +1,6 @@
-import { default as getWinston} from './../core/winstonProvider';
+import getWinston from './../core/winstonProvider';
 
-export class Logger {
+export default class Logger {
 
   constructor(winston) {
 
@@ -15,7 +15,7 @@ export class Logger {
   get logStream() {
 
     return {
-      write: (message, encoding) => {
+      write: (message) => {
         this.info(`[REQUEST] ${message.replace('\n', '')}`);
       }
     };

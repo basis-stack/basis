@@ -1,5 +1,5 @@
-import { default as getContainer } from './../core/container';
-import { default as startServer } from './server';
+import getContainer from './../core/container';
+import startServer from './server';
 
 function main() {
 

@@ -1,11 +1,10 @@
 import path from 'path';
 
 // Routes
-//import { ErrorsController } from './../controllers/errorsController';
 import routes from './../routes';
 
 // Middleware
-import { getRequestLogger } from './logging';
+import getRequestLogger from './logging';
 import { getJsonParser, getUrlencodedParser, getCookieParser } from './dataParsers';
 import { handle404, handleServerError } from './errorHandlers';
 
@@ -14,7 +13,7 @@ import { handle404, handleServerError } from './errorHandlers';
 //     Could always have config to drive each middleware option and have a wrapper 'useIf' call that checks the config. That way could be config driven if needs be, and app.js would remain
 //     consistent in each application.
 
-export class AppBuilder {
+export default class AppBuilder {
 
   constructor(container, app) {
 
@@ -22,8 +21,6 @@ export class AppBuilder {
 
     this._config = container.resolve(container.keys.config);
     this._logger = container.resolve(container.keys.logger);
-
-    // this._errorController = new ErrorsController(this._logger, this._config);
   }
 
   static create(container, app) {
@@ -41,7 +38,7 @@ export class AppBuilder {
     // TODO: Need to ensure that this is the last middleware include to be called.
 
     this._app.use(handle404);
-    this._app.use((err, req, res, next) => { handleServerError(this._config, this._logger, err, req, res, next); });
+    this._app.use((err, req, res, next) => { handleServerError(this._config, this._logger, err, req, res); });
 
     return this;
   }

@@ -1,12 +1,11 @@
 import jsonfile from 'jsonfile';
 
-export class Config {
+export default class Config {
 
   constructor(settings) {
 
-    for (const prop in settings) {
-      this[prop] = settings[prop];
-    }
+    Object.keys(settings)
+          .forEach((prop) => { this[prop] = settings[prop]; });
   }
 
   static createFromSettingsFile(filePath) {

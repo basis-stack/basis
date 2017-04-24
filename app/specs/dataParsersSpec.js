@@ -10,14 +10,14 @@ the('dataParsers middleware initialiser', () => {
   const stubCookieParser = {};
 
   const stubBodyParser = {
-    json: () => { return stubJsonParser },
-    urlencoded: () => { return stubUrlencodedParser }
+    json: () => stubJsonParser,
+    urlencoded: () => stubUrlencodedParser
   };
 
   before(() => {
 
     DataParsersAPI.__Rewire__('bodyParser', stubBodyParser);
-    DataParsersAPI.__Rewire__('cookieParser', () => { return stubCookieParser; });
+    DataParsersAPI.__Rewire__('cookieParser', () => stubCookieParser);
   });
 
   after(() => {

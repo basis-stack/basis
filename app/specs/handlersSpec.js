@@ -28,8 +28,7 @@ the('(server) handlers', () => {
 
     try {
       onError(undefined, undefined, stubError, undefined);
-    }
-    catch(error) {
+    } catch (error) {
       result = error;
     }
 
@@ -119,8 +118,7 @@ the('(server) handlers', () => {
 
         try {
           onError(undefined, undefined, stubError, undefined);
-        }
-        catch(error) {
+        } catch (error) {
           result = error;
         }
       });

@@ -3,7 +3,7 @@ import * as sinon from 'sinon';
 
 import { the, should, when } from './utils/specAliases';
 import { assertWasCalled, assertParameter, assertCalledBefore } from './utils/specAssertions';
-import { default as createApp, __RewireAPI__ as CreateAppAPI } from './../app';
+import createApp, { __RewireAPI__ as CreateAppAPI } from './../app';
 
 the('app', () => {
 

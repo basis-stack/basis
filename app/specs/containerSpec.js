@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { the, when, withScenario, should } from './utils/specAliases';
 
-import { default as getContainer, __RewireAPI__ as ContainerAPI } from './../core/container';
+import getContainer, { __RewireAPI__ as ContainerAPI } from './../core/container';
 
 the('container', () => {
 
@@ -33,7 +33,7 @@ the('container', () => {
   const reset = () => {
 
     container._instanceMap.clear();
-  }
+  };
 
   when('instantiated', () => {
 
@@ -82,7 +82,7 @@ the('container', () => {
     before(() => {
 
       container.register(stubKey, stubInstance);
-    })
+    });
 
     after(() => {
 
@@ -111,11 +111,8 @@ the('container', () => {
       before(() => {
 
         try {
-
           container.resolve(stubKey);
-        }
-        catch(error) {
-
+        } catch (error) {
           result = error;
         }
       });

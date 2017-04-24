@@ -5,7 +5,7 @@ import { the, should, when } from './utils/specAliases';
 import { assertWasCalled, assertParameter } from './utils/specAssertions';
 import { getStubRouter, getStubResponse } from './utils/fakes';
 
-import { HomeController } from './../routes/home/homeController';
+import HomeController from './../routes/home/homeController';
 
 the('HomeController', () => {
 

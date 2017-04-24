@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 
 import { the, should, when } from './utils/specAliases';
-import { terminate } from './../bin/processHelpers';
+import terminate from './../bin/processHelpers';
 
 the('processHelpers', () => {
 

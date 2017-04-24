@@ -1,5 +1,5 @@
-import { Config } from './config';
-import { Logger } from './logger';
+import Config from './config';
+import Logger from './logger';
 
 class Container {
 
@@ -40,7 +40,4 @@ class Container {
   }
 }
 
-export default () => {
-
-  return new Container();
-}
+export default () => new Container();

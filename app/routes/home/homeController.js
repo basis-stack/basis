@@ -1,12 +1,13 @@
-export class HomeController {
+export default class HomeController {
+
+  constructor(router) {
+
+    router.get('/', this._handleRoot);
+  }
 
   static initialise(router) {
 
-    const instance = new HomeController();
-
-    router.get('/', instance._handleRoot);
-
-    return instance;
+    return new HomeController(router);
   }
 
   _handleRoot(req, res, next) {

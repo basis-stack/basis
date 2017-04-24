@@ -5,31 +5,27 @@ export const createStubObject = (methods) => {
   const targetMembers = _.isString(methods) ? [methods] : methods;
   const stubObject = {};
 
-  targetMembers.forEach((m) => {
-    stubObject[m] = () => {};
-  });
+  targetMembers.forEach((m) => { stubObject[m] = () => {}; });
 
   return stubObject;
-}
+};
 
 export const getStubContainer = (stubConfig, stubLogger) => {
+
+  const configKey = 'config';
+  const loggerKey = 'logger';
 
   return {
     resolve: (key) => {
       // TODO: Can this switching be done using sinon alone ? withArgs or similar ?
-      if (key === 'config') { return stubConfig; }
-      if (key === 'logger') { return stubLogger; }
+      if (key === configKey) { return stubConfig; }
+      if (key === loggerKey) { return stubLogger; }
+
+      return undefined;
     },
-    keys: { config: 'config', logger: 'logger' }
+    keys: { config: configKey, logger: loggerKey }
   };
 };
 
-export const getStubRouter = () => {
-
-  return createStubObject('get');
-}
-
-export const getStubResponse = () => {
-
-  return createStubObject(['status', 'send', 'render']);
-}
+export const getStubRouter = () => createStubObject('get');
+export const getStubResponse = () => createStubObject(['status', 'send', 'render']);

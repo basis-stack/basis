@@ -4,11 +4,11 @@ import * as sinon from 'sinon';
 import { the, should, when } from './utils/specAliases';
 import { assertWasCalled, assertParameter, assertCalledBefore } from './utils/specAssertions';
 import { getStubContainer } from './utils/fakes';
-import { default as createServer, __RewireAPI__ as CreateServerAPI } from './../bin/server';
+import createServer, { __RewireAPI__ as CreateServerAPI } from './../bin/server';
 
 the('server', () => {
 
-  const stubServer = { listen: () => {}, on: () => {} }
+  const stubServer = { listen: () => {}, on: () => {} };
   const stubHttp = { createServer: () => {} };
   const stubOnErrorHandler = sinon.spy();
   const stubOnListeningHandler = sinon.spy();

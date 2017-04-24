@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, when, withScenario, should} from './utils/specAliases';
-import { createStubObject, getStubResponse } from './utils/fakes.js';
+import { the, when, withScenario, should } from './utils/specAliases';
+import { createStubObject, getStubResponse } from './utils/fakes';
 import { assertWasCalled, assertParameter } from './utils/specAssertions';
 
 import { handle404, handleServerError } from './../middleware/errorHandlers';

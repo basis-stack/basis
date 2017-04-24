@@ -3,7 +3,7 @@ import * as sinon from 'sinon';
 import { the, should, when } from './utils/specAliases';
 
 import { assertParameter } from './utils/specAssertions';
-import { Logger, __RewireAPI__ as LoggerApi } from './../core/logger';
+import Logger, { __RewireAPI__ as LoggerApi } from './../core/logger';
 
 the('logger', () => {
 

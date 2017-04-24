@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { the, when, withScenario, should } from './utils/specAliases';
 
-import { getRequestLogger, __RewireAPI__ as LoggingAPI } from './../middleware/logging';
+import getRequestLogger, { __RewireAPI__ as LoggingAPI } from './../middleware/logging';
 
 the('logging middleware initialiser', () => {
 
@@ -31,17 +31,14 @@ the('logging middleware initialiser', () => {
   const assertFormat = (expectedFormat) => {
 
     expect(stubMorgan.args[0][0]).to.be.equal(expectedFormat);
-  }
+  };
 
   const assertStream = () => {
 
     expect(stubMorgan.args[0][1].stream).to.be.equal(stubLogStream);
-  }
+  };
 
-  const invoke = (config) => {
-
-    return getRequestLogger(config, stubLogStream);
-  }
+  const invoke = config => getRequestLogger(config, stubLogStream);
 
   when('getRequestLogger called', () => {
 
@@ -81,6 +78,7 @@ the('logging middleware initialiser', () => {
       let result;
 
       before(() => {
+
         result = invoke(stubConfig);
       });
 

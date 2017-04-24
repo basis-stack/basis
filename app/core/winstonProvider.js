@@ -6,7 +6,6 @@ function getLogFilePath(config) {
 
   // TODO: Actually get logPath working and not erroring :/
 
-  //return path.join(config.logPath, `${config.appName}-${config.env}.log`);
   return `${config.appName}-${config.env}.log`;
 }
 
@@ -23,7 +22,4 @@ function getWinstonOptions(config) {
   return options;
 }
 
-export default (config) => {
-
-  return new (winston.Logger)(getWinstonOptions(config));
-}
+export default config => new (winston.Logger)(getWinstonOptions(config));

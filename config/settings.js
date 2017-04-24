@@ -1,11 +1,11 @@
 import 'colors';
-import { default as parseArgs } from 'minimist';
+import parseArgs from 'minimist';
 
 // TODO: Importing all settings and storing in a Map is pretty damn daft !!! Need to fix this pattern so is more dynamic as per old require('./settings.blah') model.
-import { default as defaultSettings } from './settings.default';
-import { default as localSettings } from './settings.local';
-import { default as developmentSettings } from './settings.development';
-import { default as productionSettings } from './settings.production';
+import defaultSettings from './settings.default';
+import localSettings from './settings.local';
+import developmentSettings from './settings.development';
+import productionSettings from './settings.production';
 
 const defaultBuildEnv = 'local';
 const settingsMap = new Map();
@@ -27,7 +27,7 @@ function loadEnvironmentSettings(envName) {
   return settingsMap.get(envName);
 }
 
-export default (function() {
+export default () => {
 
   const envName = getEnvironment();
   console.log(`${'[settings]'.yellow} Generating environment settings for: ${envName.magenta}`);
@@ -35,4 +35,4 @@ export default (function() {
   const envSettings = loadEnvironmentSettings(envName);
 
   return Object.assign(defaultSettings, envSettings, { env: envName });
-}());
+};

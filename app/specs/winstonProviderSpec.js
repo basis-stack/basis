@@ -2,13 +2,13 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { the, when, withScenario, should } from './utils/specAliases';
 
-import { default as getWinston} from './../core/winstonProvider';
+import getWinston from './../core/winstonProvider';
 
 const assertInstance = (result) => {
 
   expect(result).to.not.be.undefined;
   expect(typeof result.info).to.equal('function');
-}
+};
 
 the('winstonProvider', () => {
 

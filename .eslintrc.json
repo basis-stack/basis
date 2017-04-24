@@ -1,38 +1,24 @@
 {
-  "extends": "eslint:recommended",
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "blockBindings": true
-    }
-  },
+  "extends": "airbnb",
   "env": {
     "node": true,
-    "mocha": true,
-    "es6": true
+    "mocha": true
   },
   "plugins": [
+    "chai-friendly"
   ],
   "rules": {
-    "no-console": [0],
-    "no-unused-vars": [0],
-    "no-var": [2],
-    "indent": ["error", 2, { "SwitchCase": 1 }],
-    "no-use-before-define": [2],
-    "no-trailing-spaces": [2, { "skipBlankLines": true }],
-    "no-mixed-spaces-and-tabs": [2],
-    "camelcase": [2],
-    "sort-vars": [2, { "ignoreCase": true }],
-    "no-this-before-super": [2],
     "quotes": [2, "single"],
-    "vars-on-top": [2],
-    "no-duplicate-imports": [2],
-    "no-constant-condition": [2],
-    "array-bracket-spacing": [2],
-    "prefer-const": [2],
-    "prefer-arrow-callback": [2],
-    "prefer-template": [2],
-    "no-useless-constructor": [2]
+    "padded-blocks": [0],
+    "eol-last": [0],
+    "no-underscore-dangle": [0],
+    "max-len": [0],
+    "no-unused-vars": [0],
+    "import/no-extraneous-dependencies": [2, {"devDependencies": ["**/*Spec.js", "**/specAssertions.js", "**/settings.js", "gulpfile.babel.js"]}],
+    "class-methods-use-this": [0],
+    "no-console": [0],
+    "comma-dangle": [2, "never"],
+    "no-unused-expressions": 0,
+    "chai-friendly/no-unused-expressions": 2
   }
 }

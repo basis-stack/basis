@@ -4,7 +4,7 @@ import * as sinon from 'sinon';
 import { the, should, when } from './utils/specAliases';
 import { assertWasCalled } from './utils/specAssertions';
 import { createStubObject } from './utils/fakes';
-import { default as routesIndex,  __RewireAPI__ as RoutesIndexAPI } from './../routes';
+import routesIndex, { __RewireAPI__ as RoutesIndexAPI } from './../routes';
 
 the('routes index', () => {
 

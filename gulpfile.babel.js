@@ -13,10 +13,11 @@ import print from 'gulp-print';
 import eslint from 'gulp-eslint';
 import jsonfile from 'jsonfile';
 
-import { default as config } from './config/gulp.config';
-import { default as envSettings } from './config/settings';
+import config from './config/gulp.config';
+import getEnvSettings from './config/settings';
 
 const logMessagePrefix = '         + ';
+const envSettings = getEnvSettings();
 
 console.log(`${'[initiate]'.yellow} Creating artifacts for app name: ${envSettings.appName.magenta}`);
 
@@ -53,7 +54,7 @@ gulp.task('prepare-build', ['clean'], (cb) => {
 
 
 /* Copy server scripts */
-gulp.task('server-scripts', () => {
+gulp.task('server-scripts', (cb) => {
 
   if (envSettings.env !== 'local') {
 
@@ -67,6 +68,7 @@ gulp.task('server-scripts', () => {
         .pipe(replace('%NODE_RUNTIME_ENV%', envSettings.nodeRuntimeVersion))
         .pipe(replace('%FRONT_WITH_NGINX%', envSettings.frontWithNginx))
         .pipe(gulp.dest(`${config.paths.build}/scripts`));
+    cb();
   }
 });
 
@@ -95,27 +97,28 @@ gulp.task('package-json', (cb) => {
 
   const fileName = 'package.json';
 
-  jsonfile.readFile(`./${fileName}`, (err, packageJson) => {
+  jsonfile.readFile(`./${fileName}`, (readError, packageJson) => {
 
-    if (err) { throw err; }
+    if (readError) { throw readError; }
 
-    packageJson.name = envSettings.appName;
-    delete packageJson.devDependencies;
-    delete packageJson.scripts;
-    delete packageJson.homepage;
-    delete packageJson.bugs;
-    delete packageJson.license;
-    delete packageJson.author;
-    delete packageJson.keywords;
-    delete packageJson.repository;
-    delete packageJson.description;
+    const outputPackageJson = Object.assign(packageJson);
+    outputPackageJson.name = envSettings.appName;
+    delete outputPackageJson.devDependencies;
+    delete outputPackageJson.scripts;
+    delete outputPackageJson.homepage;
+    delete outputPackageJson.bugs;
+    delete outputPackageJson.license;
+    delete outputPackageJson.author;
+    delete outputPackageJson.keywords;
+    delete outputPackageJson.repository;
+    delete outputPackageJson.description;
 
     const pathName = `${config.paths.build}/${fileName}`;
     logMessage('Creating ', pathName);
 
-    jsonfile.writeFile(pathName, packageJson, { spaces: 2 }, (err) => {
+    jsonfile.writeFile(pathName, outputPackageJson, { spaces: 2 }, (writeError) => {
 
-      if (err) { throw err; }
+      if (writeError) { throw writeError; }
       cb();
     });
   });
@@ -145,7 +148,9 @@ gulp.task('compile-app', () => {
 /* Copy server-side views */
 gulp.task('views', () => {
 
-  return gulp.src(`${config.paths.app}/**/*.hbs`)
+  const viewsExtension = '*.hbs';
+
+  return gulp.src(`${config.paths.app}/**/${viewsExtension}`)
              .pipe(gulp.dest(`${config.paths.build}/app`))
              .pipe(print(getFilePathLogMessage));
 });
@@ -153,10 +158,12 @@ gulp.task('views', () => {
 /* Lint */
 gulp.task('lint', () => {
 
-  return gulp.src(`${config.paths.app}/**/*.js`)
-             .pipe(eslint())
-             .pipe(eslint.format())
-             .pipe(eslint.failOnError());
+  const lintStream = gulp.src(`${config.paths.app}/**/*.js`)
+                         .pipe(eslint())
+                         .pipe(eslint.format())
+                         .pipe(eslint.failOnError());
+
+  return lintStream;
 });
 
 /* Build entire solution */
