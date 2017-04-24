@@ -142,6 +142,14 @@ gulp.task('compile-app', () => {
   return merge(startupFileStream, appFilesStream);
 });
 
+/* Copy server-side views */
+gulp.task('views', () => {
+
+  return gulp.src(`${config.paths.app}/**/*.hbs`)
+             .pipe(gulp.dest(`${config.paths.build}/app`))
+             .pipe(print(getFilePathLogMessage));
+});
+
 /* Lint */
 gulp.task('lint', () => {
 
@@ -156,7 +164,7 @@ gulp.task('build', (cb) => {
 
   runSequence('prepare-build',
               'lint',
-              ['server-scripts', 'environment-settings', 'package-json', 'compile-app'],
+              ['server-scripts', 'environment-settings', 'package-json', 'compile-app', 'views'],
               cb);
 });
 

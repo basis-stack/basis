@@ -92,7 +92,7 @@ export class AppBuilder {
 
   _setViewEngine(engineKey) {
 
-    this._app.set('views', path.join(__dirname, 'views'));
+    this._app.set('views', path.join(__dirname, '../views'));
     this._app.set('view engine', engineKey);
 
     return this;
