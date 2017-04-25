@@ -30,4 +30,9 @@ export default class Logger {
 
     this._winston.error(message);
   }
+
+  warn(message) {
+
+    this._winston.warn(message);
+  }
 }

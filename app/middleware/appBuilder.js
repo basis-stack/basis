@@ -19,6 +19,7 @@ export default class AppBuilder {
 
     this._app = app;
 
+    this._container = container;
     this._config = container.resolve(container.keys.config);
     this._logger = container.resolve(container.keys.logger);
   }
@@ -67,7 +68,7 @@ export default class AppBuilder {
 
     // TODO: Need to ensure that this is called inbetween 'base' middleware (parsers and such) and error handlers. How best to do this ?
 
-    this._app.use(routes());
+    this._app.use(routes(this._container));
 
     return this;
   }

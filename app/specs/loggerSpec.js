@@ -3,13 +3,14 @@ import * as sinon from 'sinon';
 import { the, should, when } from './utils/specAliases';
 
 import { assertParameter } from './utils/specAssertions';
+import { createStubObject } from './utils/fakes';
 import Logger, { __RewireAPI__ as LoggerApi } from './../core/logger';
 
 the('logger', () => {
 
   let inputConfig;
   const stubConfig = {};
-  const stubWinston = { info: () => {}, error: () => {} };
+  const stubWinston = createStubObject(['info', 'error', 'warn']);
   const stubGetWinston = sinon.stub().returns(stubWinston);
 
   let logger;
@@ -115,6 +116,29 @@ the('logger', () => {
     should('log error message to winston', () => {
 
       expect(result).to.be.equal('Test error message');
+    });
+  });
+
+  when('warn called', () => {
+
+    let winstonWarnSpy;
+    let result;
+
+    before(() => {
+
+      winstonWarnSpy = sinon.spy(stubWinston, 'warn');
+      logger.warn('Test warn message');
+      result = winstonWarnSpy.args[0][0];
+    });
+
+    after(() => {
+
+      winstonWarnSpy.restore();
+    });
+
+    should('log warn message to winston', () => {
+
+      expect(result).to.be.equal('Test warn message');
     });
   });
 });

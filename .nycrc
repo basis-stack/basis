@@ -10,7 +10,9 @@
     "**/*Spec.js",
     "**/fakes.js",
     "**/specAliases.js",
-    "**/specAssertions.js"
+    "**/specAssertions.js",
+    "**/stubModule.js",
+    "**/routesIndexSpec.js"
   ],
   "require": [
     "babel-register"

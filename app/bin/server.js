@@ -1,7 +1,7 @@
 import http from 'http';
 
 import { onListening, onError } from './handlers';
-import terminate from './processHelpers';
+import terminate from './../core/utilities';
 import createApp from './../app';
 
 export default (container) => {

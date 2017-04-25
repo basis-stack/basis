@@ -8,20 +8,21 @@ import routesIndex, { __RewireAPI__ as RoutesIndexAPI } from './../routes';
 
 the('routes index', () => {
 
+  const stubFs = createStubObject('readdirSync');
   const stubRouter = {};
   const stubExpress = createStubObject('Router');
-  const stubHomeController = createStubObject('initialise');
+  sinon.stub(stubFs, 'readdirSync').returns([]);
 
   before(() => {
 
     RoutesIndexAPI.__Rewire__('express', stubExpress);
-    RoutesIndexAPI.__Rewire__('HomeController', stubHomeController);
+    RoutesIndexAPI.__Rewire__('fs', stubFs);
   });
 
   after(() => {
 
     RoutesIndexAPI.__ResetDependency__('express');
-    RoutesIndexAPI.__ResetDependency__('HomeController');
+    RoutesIndexAPI.__ResetDependency__('fs');
   });
 
   when('requested', () => {
@@ -33,7 +34,6 @@ the('routes index', () => {
     before(() => {
 
       stubExpressRouter = sinon.stub(stubExpress, 'Router').returns(stubRouter);
-      stubHomeControllerInitialise = sinon.spy(stubHomeController, 'initialise');
 
       result = routesIndex();
     });
@@ -41,11 +41,6 @@ the('routes index', () => {
     should('initialise the express router', () => {
 
       assertWasCalled(stubExpressRouter);
-    });
-
-    should('initialise the homeController', () => {
-
-      assertWasCalled(stubHomeControllerInitialise, stubRouter);
     });
 
     should('return the router instance', () => {

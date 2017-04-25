@@ -8,17 +8,18 @@
     "chai-friendly"
   ],
   "rules": {
+    "import/no-dynamic-require": [0],
+    "import/no-extraneous-dependencies": [2, {"devDependencies": ["**/*Spec.js", "**/specAssertions.js", "**/settings.js", "gulpfile.babel.js"]}],
+    "chai-friendly/no-unused-expressions": 2,
+    "no-unused-expressions": 0,
     "quotes": [2, "single"],
     "padded-blocks": [0],
     "eol-last": [0],
     "no-underscore-dangle": [0],
     "max-len": [0],
     "no-unused-vars": [0],
-    "import/no-extraneous-dependencies": [2, {"devDependencies": ["**/*Spec.js", "**/specAssertions.js", "**/settings.js", "gulpfile.babel.js"]}],
     "class-methods-use-this": [0],
     "no-console": [0],
-    "comma-dangle": [2, "never"],
-    "no-unused-expressions": 0,
-    "chai-friendly/no-unused-expressions": 2
+    "comma-dangle": [2, "never"]
   }
 }
