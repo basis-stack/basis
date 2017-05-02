@@ -1,8 +1,8 @@
 import morgan from 'morgan';
 
-export default (config, logStream) => {
+export default (app, config, logStream) => {
 
   const format = config.env !== 'production' ? 'dev' : 'combined';
 
-  return morgan(format, { stream: logStream });
+  app.use(morgan(format, { stream: logStream }));
 };

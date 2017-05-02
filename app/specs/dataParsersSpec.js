@@ -1,18 +1,22 @@
 import { expect } from 'chai';
+import * as sinon from 'sinon';
 import { the, should, when } from './utils/specAliases';
 
-import { getJsonParser, getUrlencodedParser, getCookieParser, __RewireAPI__ as DataParsersAPI } from './../middleware/dataParsers';
+import { createStubObject, getStubApp } from './utils/fakes';
+import { assertCall } from './utils/specAssertions';
+import initialiseDataParsers, { __RewireAPI__ as DataParsersAPI } from './../middleware/dataParsers';
 
 the('dataParsers middleware initialiser', () => {
 
   const stubJsonParser = {};
   const stubUrlencodedParser = {};
   const stubCookieParser = {};
+  const stubApp = getStubApp();
+  const stubBodyParser = createStubObject(['json', 'urlencoded']);
+  const stubAppUse = sinon.spy(stubApp, 'use');
 
-  const stubBodyParser = {
-    json: () => stubJsonParser,
-    urlencoded: () => stubUrlencodedParser
-  };
+  sinon.stub(stubBodyParser, 'json').returns(stubJsonParser);
+  sinon.stub(stubBodyParser, 'urlencoded').returns(stubUrlencodedParser);
 
   before(() => {
 
@@ -27,33 +31,26 @@ the('dataParsers middleware initialiser', () => {
   });
 
 
-  when('getJsonParser invoked', () => {
+  when('invoked with a valid app instance', () => {
 
-    should('return the body-parser json middleware', () => {
+    before(() => {
 
-      const result = getJsonParser();
-
-      expect(result).to.equal(stubJsonParser);
+      initialiseDataParsers(stubApp);
     });
-  });
 
-  when('getUrlencodedParser invoked', () => {
+    should('initialise the body-parser json middleware', () => {
 
-    should('return the body-parser urlencoded middleware', () => {
-
-      const result = getUrlencodedParser();
-
-      expect(result).to.equal(stubUrlencodedParser);
+      assertCall(stubAppUse, 0, stubJsonParser);
     });
-  });
 
-  when('getCookieParser', () => {
+    should('initialise the body-parser urlencoded middleware', () => {
 
-    should('return the cookie-parser middleware', () => {
+      assertCall(stubAppUse, 1, stubUrlencodedParser);
+    });
 
-      const result = getCookieParser();
+    should('initialise the cookie-parser middleware', () => {
 
-      expect(result).to.equal(stubCookieParser);
+      assertCall(stubAppUse, 2, stubCookieParser);
     });
   });
 });

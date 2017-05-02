@@ -70,6 +70,8 @@ gulp.task('server-scripts', (cb) => {
         .pipe(gulp.dest(`${config.paths.build}/scripts`));
     cb();
   }
+
+  cb();
 });
 
 /* Prepare Environment settings file */

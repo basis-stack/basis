@@ -29,6 +29,19 @@ function loadEnvironmentSettings(envName) {
 
 export default () => {
 
+  // TODO: Change this so that it exposts a single settings object as per below, so that the config at runtime can pick the right settings using the NODE_ENV varible.
+  /*
+
+  {
+    default: { default settings },
+    local: { local overrides },
+    development: { development overrides },
+    production: { production overrides }
+  }
+
+  */
+
+
   const envName = getEnvironment();
   console.log(`${'[settings]'.yellow} Generating environment settings for: ${envName.magenta}`);
 

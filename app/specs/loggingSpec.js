@@ -2,7 +2,8 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { the, when, withScenario, should } from './utils/specAliases';
 
-import getRequestLogger, { __RewireAPI__ as LoggingAPI } from './../middleware/logging';
+import { getStubApp } from './utils/fakes';
+import initialiseRequestLogger, { __RewireAPI__ as LoggingAPI } from './../middleware/logging';
 
 the('logging middleware initialiser', () => {
 
@@ -38,9 +39,17 @@ the('logging middleware initialiser', () => {
     expect(stubMorgan.args[0][1].stream).to.be.equal(stubLogStream);
   };
 
-  const invoke = config => getRequestLogger(config, stubLogStream);
+  const initialiseAndGetMorgan = (config) => {
 
-  when('getRequestLogger called', () => {
+    const stubApp = getStubApp();
+    const stubAppUse = sinon.spy(stubApp, 'use');
+
+    initialiseRequestLogger(stubApp, config, stubLogStream);
+
+    return stubAppUse.args[0][0];
+  };
+
+  when('invoked with a valid app instance', () => {
 
     withScenario('non-production env config', () => {
 
@@ -48,7 +57,7 @@ the('logging middleware initialiser', () => {
       let result;
 
       before(() => {
-        result = invoke(stubConfig);
+        result = initialiseAndGetMorgan(stubConfig);
       });
 
       after(() => {
@@ -79,7 +88,7 @@ the('logging middleware initialiser', () => {
 
       before(() => {
 
-        result = invoke(stubConfig);
+        result = initialiseAndGetMorgan(stubConfig);
       });
 
       after(() => {

@@ -4,9 +4,9 @@ import path from 'path';
 import routes from './../routes';
 
 // Middleware
-import getRequestLogger from './logging';
-import { getJsonParser, getUrlencodedParser, getCookieParser } from './dataParsers';
-import { handle404, handleServerError } from './errorHandlers';
+import initialiseRequestLogger from './logging';
+import initialiseDataParsers from './dataParsers';
+import initialiseErrorHandlers from './errorHandlers';
 
 // TODO: Need to decide if this app builder pattern (borrowed from ASP.NET MVC Core) is the most effective way of hooking up all the various middleware and what a specific app actually wants.
 //     Could get a bit gnarly with lots of middleware, and so the chain calls might get a bit verbose. Not sure, need to play with it and see how feels.
@@ -38,8 +38,7 @@ export default class AppBuilder {
 
     // TODO: Need to ensure that this is the last middleware include to be called.
 
-    this._app.use(handle404);
-    this._app.use((err, req, res, next) => { handleServerError(this._config, this._logger, err, req, res); });
+    initialiseErrorHandlers(this._app, this._config, this._logger);
 
     return this;
   }
@@ -47,7 +46,7 @@ export default class AppBuilder {
   logRequests() {
 
     // TODO: Need to ensure that this is first middleware include called.
-    this._app.use(getRequestLogger(this._config, this._logger.logStream));
+    initialiseRequestLogger(this._app, this._config, this._logger.logStream);
 
     return this;
   }
@@ -73,17 +72,9 @@ export default class AppBuilder {
     return this;
   }
 
-  useCookieParser() {
+  useDataParsers() {
 
-    this._app.use(getCookieParser());
-
-    return this;
-  }
-
-  useBodyParser() {
-
-    this._app.use(getJsonParser());
-    this._app.use(getUrlencodedParser());
+    initialiseDataParsers(this._app);
 
     return this;
   }

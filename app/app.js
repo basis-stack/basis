@@ -8,8 +8,7 @@ export default (container) => {
 
   return appBuilder.useHandlebars()
                    .logRequests()
-                   .useBodyParser()
-                   .useCookieParser()
+                   .useDataParsers()
                    .useRoutes()
                    .handleErrors()
                    .trustProxy()

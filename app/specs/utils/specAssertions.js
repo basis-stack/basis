@@ -20,6 +20,13 @@ export const assertParameter = (spy, parameterIndex, expectedValue, deepCompare 
   }
 };
 
+export const assertCall = (spy, callIndex, expectedValue) => {
+
+  const parameter = spy.args[callIndex][0];
+
+  expect(parameter).to.equal(expectedValue);
+};
+
 export const assertCalledBefore = (spyA, spyB, methodA, methodB) => {
 
   const message = `Expected ${methodA} to be called before ${methodB}`;
