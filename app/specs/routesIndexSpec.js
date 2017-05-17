@@ -3,7 +3,7 @@ import * as sinon from 'sinon';
 
 import { the, should, when } from './utils/specAliases';
 import { assertWasCalled } from './utils/specAssertions';
-import { createStubObject } from './utils/fakes';
+import { createStubObject, getStubApp } from './utils/fakes';
 import routesIndex, { __RewireAPI__ as RoutesIndexAPI } from './../routes';
 
 the('routes index', () => {
@@ -11,6 +11,8 @@ the('routes index', () => {
   const stubFs = createStubObject('readdirSync');
   const stubRouter = {};
   const stubExpress = createStubObject('Router');
+  const stubApp = getStubApp();
+
   sinon.stub(stubFs, 'readdirSync').returns([]);
 
   before(() => {
@@ -25,17 +27,19 @@ the('routes index', () => {
     RoutesIndexAPI.__ResetDependency__('fs');
   });
 
-  when('requested', () => {
+  when('invoked with a valid app instance', () => {
 
     let stubExpressRouter;
-    let stubHomeControllerInitialise;
+    let stubAppUse;
+
     let result;
 
     before(() => {
 
       stubExpressRouter = sinon.stub(stubExpress, 'Router').returns(stubRouter);
+      stubAppUse = sinon.spy(stubApp, 'use');
 
-      result = routesIndex();
+      result = routesIndex(stubApp);
     });
 
     should('initialise the express router', () => {
@@ -43,9 +47,9 @@ the('routes index', () => {
       assertWasCalled(stubExpressRouter);
     });
 
-    should('return the router instance', () => {
+    should('wire up the express router', () => {
 
-      expect(result).to.equal(stubRouter);
+      assertWasCalled(stubAppUse, stubRouter);
     });
   });
 });

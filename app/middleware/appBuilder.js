@@ -1,7 +1,7 @@
 import path from 'path';
 
 // Routes
-import routes from './../routes';
+import initialiseRoutes from './../routes';
 
 // Middleware
 import initialiseRequestLogger from './logging';
@@ -37,7 +37,6 @@ export default class AppBuilder {
   handleErrors() {
 
     // TODO: Need to ensure that this is the last middleware include to be called.
-
     initialiseErrorHandlers(this._app, this._config, this._logger);
 
     return this;
@@ -66,8 +65,7 @@ export default class AppBuilder {
   useRoutes() {
 
     // TODO: Need to ensure that this is called inbetween 'base' middleware (parsers and such) and error handlers. How best to do this ?
-
-    this._app.use(routes(this._container));
+    initialiseRoutes(this._app, this._container);
 
     return this;
   }

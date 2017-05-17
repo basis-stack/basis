@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 
 import { the, should, when } from './utils/specAliases';
-import { assertWasCalled, assertParameter } from './utils/specAssertions';
+import { assertWasCalled, assertParameter, assertInstance } from './utils/specAssertions';
 import { getStubRouter, getStubResponse } from './utils/fakes';
 
 import HomeController from './../routes/home/homeController';
@@ -18,8 +18,7 @@ the('HomeController', () => {
 
     should('return a new controller instance', () => {
 
-      expect(controller).to.not.be.undefined;
-      expect(controller instanceof HomeController).to.equal(true);
+      assertInstance(controller, HomeController);
     });
 
     should('hook up a GET handler for the root (\'/\') path', () => {

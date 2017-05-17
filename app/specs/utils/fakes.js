@@ -1,5 +1,6 @@
 import _ from 'lodash';
 
+// TODO: Add properties in here also
 export const createStubObject = (methods) => {
 
   const targetMembers = _.isString(methods) ? [methods] : methods;

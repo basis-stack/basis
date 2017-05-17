@@ -5,11 +5,11 @@ import { dynamicImport } from './../core/utilities';
 
 const controllers = [];
 
-export default (container) => {
+export default (app, container) => {
 
   const router = express.Router();
   const routes = fs.readdirSync(__dirname)
-                   .filter(item => !item.includes('.js') && item !== 'errors');
+                   .filter(item => !item.includes('.js'));
 
   routes.forEach((r) => {
 
@@ -27,5 +27,5 @@ export default (container) => {
     }
   });
 
-  return router;
+  app.use(router);
 };

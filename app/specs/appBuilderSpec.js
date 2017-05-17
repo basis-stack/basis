@@ -1,100 +1,212 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { the, when, withScenario, should } from './utils/specAliases';
+import path from 'path';
 
-import { createStubObject, getStubContainer } from './utils/fakes';
-import { AppBuilder, __RewireAPI__ as AppBuilderAPI } from './../middleware/appBuilder';
+import { the, when, withScenario, should } from './utils/specAliases';
+import { getStubApp, getStubContainer } from './utils/fakes';
+import { assertWasCalled, assertParameter, assertInstance } from './utils/specAssertions';
+import AppBuilder, { __RewireAPI__ as AppBuilderAPI } from './../middleware/appBuilder';
 
 the('appBuilder', () => {
 
   const stubConfig = {};
   const stubLogger = { logStream: {} };
   const stubContainer = getStubContainer(stubConfig, stubLogger);
-  const stubApp = createStubObject(['set, use']);
+  const stubApp = getStubApp();
+  const stubInitialiseRoutes = sinon.spy();
+  const stubInitialiseRequestLogger = sinon.spy();
+  const stubInitialiseDataParsers = sinon.spy();
+  const stubInitialiseErrorHandlers = sinon.spy();
 
   let builder;
 
   before(() => {
 
-//     stubApp = { set: () => {}, use: () => {} };
-//     builder = new AppBuilder(stubApp);
+    AppBuilderAPI.__Rewire__('initialiseRoutes', stubInitialiseRoutes);
+    AppBuilderAPI.__Rewire__('initialiseRequestLogger', stubInitialiseRequestLogger);
+    AppBuilderAPI.__Rewire__('initialiseDataParsers', stubInitialiseDataParsers);
+    AppBuilderAPI.__Rewire__('initialiseErrorHandlers', stubInitialiseErrorHandlers);
+
+    builder = AppBuilder.create(stubContainer, stubApp);
   });
 
-//   when('useHandlebars called', () => {
+  after(() => {
 
-//     let setMethodSpy;
-//     let result;
+    AppBuilderAPI.__ResetDependency__('initialiseRoutes');
+    AppBuilderAPI.__ResetDependency__('initialiseRequestLogger');
+    AppBuilderAPI.__ResetDependency__('initialiseDataParsers');
+    AppBuilderAPI.__ResetDependency__('initialiseErrorHandlers');
+  });
 
-//     beforeEach(() => {
+  when('created', () => {
 
-//       setMethodSpy = sinon.spy(stubApp, 'set');
-//       result = builder.useHandlebars();
-//     });
+    should('return a new AppBuilder instance', () => {
 
-//     then('views path should be set to app views directory', () => {
+      assertInstance(builder, AppBuilder);
+    });
 
-//       const firstSetCall = setMethodSpy.getCall(0);
+    should('store config and logger instances from the container', () => {
 
-//       expect(firstSetCall.args[0]).to.equal('views');
-//       expect(firstSetCall.args[1]).to.equal(path.join(__dirname, '/../views'));
-//     });
+      expect(builder._config).to.equal(stubConfig);
+      expect(builder._logger).to.equal(stubLogger);
+    });
+  });
 
-//     and('view engine should be set to hbs', () => {
+  when('useHandlebars called', () => {
 
-//       const secondSetCall = setMethodSpy.getCall(1);
+    let setMethodSpy;
+    let result;
 
-//       expect(secondSetCall.args[0]).to.equal('view engine');
-//       expect(secondSetCall.args[1]).to.equal('hbs');
-//     });
+    before(() => {
 
-//     and('should return the builder instance', () => {
+      setMethodSpy = sinon.spy(stubApp, 'set');
+      result = builder.useHandlebars();
+    });
 
-//       expect(result).to.equal(builder);
-//     });
-//   });
+    should('set views path to app views directory', () => {
 
-//   // when('handleErrors called', () => {
+      const firstSetCall = setMethodSpy.getCall(0);
 
-//   //   const useMethodSpy = sinon.spy(stubApp, 'use');
-//   //   const result = builder.handleErrors();
+      expect(firstSetCall.args[0]).to.equal('views');
+      expect(firstSetCall.args[1]).to.equal(path.join(__dirname, '/../views'));
+    });
 
-//   //   then('A', () => {
+    should('set view engine to hbs', () => {
 
-//   //     const firstUseCall = useMethodSpy.getCall(0);
+      const secondSetCall = setMethodSpy.getCall(1);
 
-//   //     expect(firstUseCall.args[0]).to.equal({});
-//   //   });
+      expect(secondSetCall.args[0]).to.equal('view engine');
+      expect(secondSetCall.args[1]).to.equal('hbs');
+    });
 
-//   //   then('B', () => {
+    should('return the builder instance', () => {
 
-//   //     const secondUseCall = useMethodSpy.getCall(1);
+      expect(result).to.equal(builder);
+    });
+  });
 
-//   //     expect(secondUseCall.args[0]).to.equal({});
-//   //   });
+  when('logRequests called', () => {
 
-//   //   and('should return the builder instance', () => {
+    let result;
 
-//   //     expect(result).to.equal(builder);
-//   //   });
-//   // });
+    before(() => {
 
-//   // given('app settings object', () => {
+      result = builder.logRequests();
+    });
 
-//   //   when('useSettings called', () => {
+    should('initialise the request logger', () => {
 
-//   //     const stubSettings = {};
-//   //     const result = builder.useSettings(stubSettings);
+      assertWasCalled(stubInitialiseRequestLogger);
+      assertParameter(stubInitialiseRequestLogger, 0, stubApp);
+      assertParameter(stubInitialiseRequestLogger, 1, stubConfig);
+      assertParameter(stubInitialiseRequestLogger, 2, stubLogger.logStream);
+    });
 
-//   //     then('settings object should be stored on the app', () => {
+    should('return the builder instance', () => {
 
-//   //       const buildResult = builder.result;
-//   //       expect(buildResult.settings).to.equal(stubSettings);
-//   //     });
+      expect(result).to.equal(builder);
+    });
+  });
 
-//   //     and('should return the builder instance', () => {
+  when('useDataParsers called', () => {
 
-//   //       expect(result).to.equal(builder);
-//   //     });
-//   //   });
-//   // });
+    let result;
+
+    before(() => {
+
+      result = builder.useDataParsers();
+    });
+
+    should('initialise the data parsers', () => {
+
+      assertWasCalled(stubInitialiseDataParsers, stubApp);
+    });
+
+    should('return the builder instance', () => {
+
+      expect(result).to.equal(builder);
+    });
+  });
+
+  when('useRoutes called', () => {
+
+    let result;
+
+    before(() => {
+
+      result = builder.useRoutes();
+    });
+
+    should('initialise the app routes', () => {
+
+      assertWasCalled(stubInitialiseRoutes);
+      assertParameter(stubInitialiseRoutes, 0, stubApp);
+      assertParameter(stubInitialiseRoutes, 1, stubContainer);
+    });
+
+    should('return the builder instance', () => {
+
+      expect(result).to.equal(builder);
+    });
+  });
+
+  when('handleErrors called', () => {
+
+    let result;
+
+    before(() => {
+
+      result = builder.handleErrors();
+    });
+
+    should('initialise the error handlers', () => {
+
+      assertWasCalled(stubInitialiseErrorHandlers);
+      assertParameter(stubInitialiseErrorHandlers, 0, stubApp);
+      assertParameter(stubInitialiseErrorHandlers, 1, stubConfig);
+      assertParameter(stubInitialiseErrorHandlers, 2, stubLogger);
+    });
+
+    should('return the builder instance', () => {
+
+      expect(result).to.equal(builder);
+    });
+  });
+
+  when('trustProxy called', () => {
+
+    let enableMethodSpy;
+    let result;
+
+    before(() => {
+
+      enableMethodSpy = sinon.spy(stubApp, 'enable');
+      result = builder.trustProxy();
+    });
+
+    should('enable \'trust proxy\' setting', () => {
+
+      assertWasCalled(enableMethodSpy, 'trust proxy');
+    });
+
+    should('return the builder instance', () => {
+
+      expect(result).to.equal(builder);
+    });
+  });
+
+  when('result requested', () => {
+
+    let result;
+
+    before(() => {
+
+      result = builder.result;
+    });
+
+    should('return the app (express) instance', () => {
+
+      expect(result).to.equal(stubApp);
+    });
+  });
 });
