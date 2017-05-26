@@ -11,8 +11,7 @@
     "**/fakes.js",
     "**/specAliases.js",
     "**/specAssertions.js",
-    "**/stubModule.js",
-    "**/routesIndexSpec.js"
+    "**/stubModule.js"
   ],
   "require": [
     "babel-register"

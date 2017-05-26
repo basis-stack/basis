@@ -26,13 +26,13 @@
     "publish-coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
-    "body-parser": "^1.17.1",
+    "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
-    "express": "^4.15.2",
+    "express": "^4.15.3",
     "hbs": "^4.0.1",
     "jsonfile": "^3.0.0",
     "lodash": "^4.17.4",
-    "morgan": "^1.8.1",
+    "morgan": "^1.8.2",
     "pm2": "^2.4.6",
     "winston": "^2.3.1"
   },
@@ -50,8 +50,8 @@
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-chai-friendly": "^0.3.6",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^5.0.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.0.1",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
@@ -64,10 +64,10 @@
     "merge-stream": "^1.0.1",
     "minimatch": "^3.0.4",
     "minimist": "^1.2.0",
-    "mocha": "^3.4.1",
-    "npm-check-updates": "^2.11.1",
+    "mocha": "^3.4.2",
+    "npm-check-updates": "^2.11.2",
     "nyc": "^10.3.2",
     "run-sequence": "^1.2.2",
-    "sinon": "^2.2.0"
+    "sinon": "^2.3.1"
   }
 }

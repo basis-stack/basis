@@ -1,7 +1,6 @@
 import 'colors';
 import parseArgs from 'minimist';
 
-// TODO: Importing all settings and storing in a Map is pretty damn daft !!! Need to fix this pattern so is more dynamic as per old require('./settings.blah') model.
 import defaultSettings from './settings.default';
 import localSettings from './settings.local';
 import developmentSettings from './settings.development';

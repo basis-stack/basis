@@ -31,3 +31,4 @@ export const getStubContainer = (stubConfig, stubLogger) => {
 export const getStubRouter = () => createStubObject('get');
 export const getStubResponse = () => createStubObject(['status', 'send', 'render']);
 export const getStubApp = () => createStubObject(['use', 'enable', 'set']);
+export const getStubLogger = () => createStubObject(['info', 'error', 'warn']);

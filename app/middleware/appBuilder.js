@@ -8,10 +8,10 @@ import initialiseRequestLogger from './logging';
 import initialiseDataParsers from './dataParsers';
 import initialiseErrorHandlers from './errorHandlers';
 
-// TODO: Need to decide if this app builder pattern (borrowed from ASP.NET MVC Core) is the most effective way of hooking up all the various middleware and what a specific app actually wants.
-//     Could get a bit gnarly with lots of middleware, and so the chain calls might get a bit verbose. Not sure, need to play with it and see how feels.
-//     Could always have config to drive each middleware option and have a wrapper 'useIf' call that checks the config. That way could be config driven if needs be, and app.js would remain
-//     consistent in each application.
+// TODO: Need to decide if this app builder pattern is the most effective way of hooking up all the various middleware, roputes, etc and what a specific app actually wants.
+//       Could get a bit gnarly with lots of middleware, and so the chain calls might get a bit verbose. Not sure, need to play with it and see how feels.
+//       Could always have config to drive each middleware option and have a wrapper 'useIf' call that checks the config. That way could be config driven if needs be, and app.js would remain
+//       consistent in each application.
 
 export default class AppBuilder {
 

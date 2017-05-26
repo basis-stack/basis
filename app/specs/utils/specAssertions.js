@@ -2,7 +2,6 @@ import { expect } from 'chai';
 
 // TODO: Get this to assert n numbers of parameters (in calledWithExactly) instead of just one.
 //       This will allow the more concise use of assertWasCalled(a, b, c) instad of the 4 line assertParameter(n) variant
-
 export const assertWasCalled = (spy, parameter = undefined) => {
 
   expect(spy.calledOnce).to.equal(true);

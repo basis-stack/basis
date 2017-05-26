@@ -3,7 +3,7 @@ import * as sinon from 'sinon';
 
 import { the, should, when } from './utils/specAliases';
 import { assertWasCalled } from './utils/specAssertions';
-import { createStubObject, getStubApp } from './utils/fakes';
+import { createStubObject, getStubApp, getStubContainer, getStubLogger } from './utils/fakes';
 import routesIndex, { __RewireAPI__ as RoutesIndexAPI } from './../routes';
 
 the('routes index', () => {
@@ -11,35 +11,45 @@ the('routes index', () => {
   const stubFs = createStubObject('readdirSync');
   const stubRouter = {};
   const stubExpress = createStubObject('Router');
+  const stubDynamicImport = sinon.stub();
   const stubApp = getStubApp();
-
-  sinon.stub(stubFs, 'readdirSync').returns([]);
+  const stubLogger = getStubLogger();
+  const stubRouteA = createStubObject('default');
 
   before(() => {
 
     RoutesIndexAPI.__Rewire__('express', stubExpress);
     RoutesIndexAPI.__Rewire__('fs', stubFs);
+    RoutesIndexAPI.__Rewire__('dynamicImport', stubDynamicImport);
   });
 
   after(() => {
 
     RoutesIndexAPI.__ResetDependency__('express');
     RoutesIndexAPI.__ResetDependency__('fs');
+    RoutesIndexAPI.__ResetDependency__('dynamicImport');
   });
 
   when('invoked with a valid app instance', () => {
 
     let stubExpressRouter;
+    let stubLoggerInfo;
+    let stubLoggerWarn;
+    let stubRouteADefault;
     let stubAppUse;
-
-    let result;
 
     before(() => {
 
+      sinon.stub(stubFs, 'readdirSync').returns(['folderA', 'folderB', 'something.js']);
       stubExpressRouter = sinon.stub(stubExpress, 'Router').returns(stubRouter);
+      stubDynamicImport.onFirstCall().returns(stubRouteA);
+      stubDynamicImport.onSecondCall().throws(new Error('Some route import error'));
+      stubLoggerInfo = sinon.stub(stubLogger, 'info');
+      stubLoggerWarn = sinon.stub(stubLogger, 'warn');
+      stubRouteADefault = sinon.stub(stubRouteA, 'default');
       stubAppUse = sinon.spy(stubApp, 'use');
 
-      result = routesIndex(stubApp);
+      routesIndex(stubApp, getStubContainer({}, stubLogger));
     });
 
     should('initialise the express router', () => {
@@ -47,7 +57,22 @@ the('routes index', () => {
       assertWasCalled(stubExpressRouter);
     });
 
-    should('wire up the express router', () => {
+    should('initialise valid routes', () => {
+
+      assertWasCalled(stubRouteADefault, stubRouter);
+    });
+
+    should('log an initialised info message for valid routes', () => {
+
+      assertWasCalled(stubLoggerInfo, '[STARTUP] INIT: Wired base route \'folderA\'');
+    });
+
+    should('log a warning message for invalid / errored routes', () => {
+
+      assertWasCalled(stubLoggerWarn, '[STARTUP] INVALID_ROUTE: Unable to initialise route \'folderB\'. Error: Some route import error');
+    });
+
+    should('wire up the express router to the app', () => {
 
       assertWasCalled(stubAppUse, stubRouter);
     });

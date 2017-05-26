@@ -173,7 +173,7 @@ gulp.task('build', (cb) => {
 
   runSequence('prepare-build',
               'lint',
-              ['server-scripts', 'environment-settings', 'package-json', 'compile-app', 'views'],
+              [/* 'server-scripts', */'environment-settings', 'package-json', 'compile-app', 'views'],
               cb);
 });
 
