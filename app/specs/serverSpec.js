@@ -5,6 +5,7 @@ import { the, should, when } from './utils/specAliases';
 import { assertWasCalled, assertParameter, assertCalledBefore } from './utils/specAssertions';
 import { getStubContainer } from './utils/fakes';
 import createServer, { __RewireAPI__ as CreateServerAPI } from './../bin/server';
+import constants from './../core/constants';
 
 the('server', () => {
 
@@ -15,7 +16,7 @@ the('server', () => {
   const stubAppInstance = {};
   const stubCreateApp = sinon.stub().returns(stubAppInstance);
   const stubHttpCreateServer = sinon.stub(stubHttp, 'createServer').returns(stubServer);
-  const stubConfig = { webServerPort: 'SomePort' };
+  const stubConfig = { webServerPort: 'SomePort', env: 'SomeEnv' };
   const stubLogger = { info: () => {} };
   const stubContainer = getStubContainer(stubConfig, stubLogger);
   const stubServerListen = sinon.spy(stubServer, 'listen');
@@ -46,6 +47,13 @@ the('server', () => {
   });
 
   when('created', () => {
+
+    should('log an info message indicating runtime environment', () => {
+
+      const expectedMessage = `${constants.text.logging.startupPrefix} INIT: Bootstrapped config for env: SOMEENV`;
+
+      assertWasCalled(stubLoggerInfo, expectedMessage);
+    });
 
     should('pass the container to createApp()', () => {
 

@@ -19,8 +19,6 @@ import getEnvSettings from './config/settings';
 const logMessagePrefix = '         + ';
 const envSettings = getEnvSettings();
 
-console.log(`${'[initiate]'.yellow} Creating artifacts for app name: ${envSettings.appName.magenta}`);
-
 function logMessage(action, context) {
 
   console.log(`${logMessagePrefix}${action}${context.magenta}`);
@@ -56,20 +54,22 @@ gulp.task('prepare-build', ['clean'], (cb) => {
 /* Copy server scripts */
 gulp.task('server-scripts', (cb) => {
 
-  if (envSettings.env !== 'local') {
+  // TODO: Rethink this stuff given new env settings mechanism
 
-    gulp.src('./scripts/*.sh')
-        .pipe(print(getFilePathLogMessage))
-        .pipe(replace('%APPNAME%', envSettings.appName))
-        .pipe(replace('%ENVIRONMENT%', envSettings.env))
-        .pipe(replace('%DEPLOY_USER%', envSettings.deployUser))
-        .pipe(replace('%DEPLOY_HOST%', envSettings.deployHost))
-        .pipe(replace('%DEPLOY_LOCATION%', envSettings.deployDirectory))
-        .pipe(replace('%NODE_RUNTIME_ENV%', envSettings.nodeRuntimeVersion))
-        .pipe(replace('%FRONT_WITH_NGINX%', envSettings.frontWithNginx))
-        .pipe(gulp.dest(`${config.paths.build}/scripts`));
-    cb();
-  }
+  // if (envSettings.env !== 'local') {
+
+  //   gulp.src('./scripts/*.sh')
+  //       .pipe(print(getFilePathLogMessage))
+  //       .pipe(replace('%APPNAME%', envSettings.appName))
+  //       .pipe(replace('%ENVIRONMENT%', envSettings.env))
+  //       .pipe(replace('%DEPLOY_USER%', envSettings.deployUser))
+  //       .pipe(replace('%DEPLOY_HOST%', envSettings.deployHost))
+  //       .pipe(replace('%DEPLOY_LOCATION%', envSettings.deployDirectory))
+  //       .pipe(replace('%NODE_RUNTIME_ENV%', envSettings.nodeRuntimeVersion))
+  //       .pipe(replace('%FRONT_WITH_NGINX%', envSettings.frontWithNginx))
+  //       .pipe(gulp.dest(`${config.paths.build}/scripts`));
+  //   cb();
+  // }
 
   cb();
 });
@@ -78,11 +78,16 @@ gulp.task('server-scripts', (cb) => {
 gulp.task('environment-settings', (cb) => {
 
   const outputSettings = Object.assign(envSettings);
-  delete outputSettings.frontWithNginx;
-  delete outputSettings.nodeRuntimeVersion;
-  delete outputSettings.deployUser;
-  delete outputSettings.deployHost;
-  delete outputSettings.deployDirectory;
+
+  Object.keys(envSettings)
+        .forEach((env) => {
+
+          delete outputSettings[env].frontWithNginx;
+          delete outputSettings[env].nodeRuntimeVersion;
+          delete outputSettings[env].deployUser;
+          delete outputSettings[env].deployHost;
+          delete outputSettings[env].deployDirectory;
+        });
 
   const pathName = `${config.paths.build}/settings.json`;
   logMessage('Creating ', pathName);
@@ -104,7 +109,7 @@ gulp.task('package-json', (cb) => {
     if (readError) { throw readError; }
 
     const outputPackageJson = Object.assign(packageJson);
-    outputPackageJson.name = envSettings.appName;
+    outputPackageJson.name = envSettings.default.appName;
     delete outputPackageJson.devDependencies;
     delete outputPackageJson.scripts;
     delete outputPackageJson.homepage;
@@ -129,7 +134,7 @@ gulp.task('package-json', (cb) => {
 /* Compile server-side app and environmentalise the bootup module */
 gulp.task('compile-app', () => {
 
-  const startupDestFileName = `${envSettings.appName}_${envSettings.env}`;
+  const startupDestFileName = `start_${envSettings.default.appName}`;
   const startupDestDir = `${config.paths.build}/app/bin/`;
   logMessage('Creating ', `${startupDestDir}${startupDestFileName}`);
 

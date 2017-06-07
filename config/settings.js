@@ -1,50 +1,27 @@
+// TODO: Replace with chalk
 import 'colors';
-import parseArgs from 'minimist';
-
-import defaultSettings from './settings.default';
-import localSettings from './settings.local';
-import developmentSettings from './settings.development';
-import productionSettings from './settings.production';
-
-const defaultBuildEnv = 'local';
-const settingsMap = new Map();
-settingsMap.set('local', localSettings);
-settingsMap.set('development', developmentSettings);
-settingsMap.set('production', productionSettings);
-
-function getEnvironment() {
-
-  const parseOptions = { default: { env: defaultBuildEnv } };
-  const processArgs = parseArgs(process.argv.slice(2), parseOptions);
-
-  return processArgs.env;
-}
-
-function loadEnvironmentSettings(envName) {
-
-  // TODO: Need to check we actually settings for input env and fail if not
-  return settingsMap.get(envName);
-}
+import fs from 'fs';
 
 export default () => {
 
-  // TODO: Change this so that it exposts a single settings object as per below, so that the config at runtime can pick the right settings using the NODE_ENV varible.
-  /*
+  const allSettings = {};
+  const knownEnvironments = fs.readdirSync(__dirname)
+                              .filter(item => item.includes('settings') && !item.includes('gulp.config.js') && !item.includes('settings.js'))
+                              .map(envFile => envFile.split('.')[1]);
 
-  {
-    default: { default settings },
-    local: { local overrides },
-    development: { development overrides },
-    production: { production overrides }
-  }
+  knownEnvironments.forEach((env) => {
 
-  */
+    try {
+      /* eslint-disable global-require */
+      const envSetting = require(`./settings.${env}.js`);
+      /* eslint-enable global-require */
 
+      allSettings[env] = envSetting.default;
+    } catch (e) {
 
-  const envName = getEnvironment();
-  console.log(`${'[settings]'.yellow} Generating environment settings for: ${envName.magenta}`);
+      console.log(`${'[settings]'.yellow} ${'INVALID_ENV'.red}: Unable to import environment settings for '${env}'. Error: ${e.message}`);
+    }
+  });
 
-  const envSettings = loadEnvironmentSettings(envName);
-
-  return Object.assign(defaultSettings, envSettings, { env: envName });
+  return allSettings;
 };

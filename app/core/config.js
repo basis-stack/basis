@@ -1,4 +1,8 @@
+import fs from 'fs';
 import jsonfile from 'jsonfile';
+
+import constants from './constants';
+import { getEnvVariable } from './utilities';
 
 export default class Config {
 
@@ -10,16 +14,15 @@ export default class Config {
 
   static createFromSettingsFile(filePath) {
 
-    // TODO: Align this with the new settings structure !!
-    //       Need to peak at NODE_ENV variable and see it is set.
-    //       If set, create a new config instance from settings for that env.
-    //
-    //       const env = getEnvironmentVariable('NODE_ENV', 'local');
-    //
-    //       const settings = jsonfile.readFileSync(filePath)[env];
+    const defaultEnv = 'local';
+    const runtimeEnv = getEnvVariable(constants.env.variables.node, defaultEnv);
+    const allSettings = jsonfile.readFileSync(filePath);
 
-    // TODO Also: Need to check if the settings file actually exists. And what if not ? Throw ? Start with some arbitary defaults (port, etc) ?
+    if (allSettings[runtimeEnv] === undefined) {
 
-    return new Config(jsonfile.readFileSync(filePath));
+      throw new Error(`Unable to bootstrap for environment: '${runtimeEnv}'. No settings found in settings file for this environment.`);
+    }
+
+    return new Config(Object.assign({}, allSettings.default, allSettings[runtimeEnv], { env: runtimeEnv }));
   }
 }

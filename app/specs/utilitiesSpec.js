@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './utils/specAliases';
-import { terminate, dynamicImport } from './../core/utilities';
+import { the, should, when, withScenario } from './utils/specAliases';
+import { terminate, dynamicImport, getEnvVariable } from './../core/utilities';
 
 the('utilities module', () => {
 
@@ -39,6 +39,69 @@ the('utilities module', () => {
     should('import and return the specified module', () => {
 
       expect(result.default.isStubModule).to.equal(true);
+    });
+  });
+
+  when('getEnvVariable invoked', () => {
+
+    const stubEnv = {
+      SOME_VARIABLE: 'SomeVariableValue'
+    };
+    let stubEnvGet;
+
+    before(() => {
+
+      stubEnvGet = sinon.stub(process, 'env').get(() => stubEnv);
+    });
+
+    after(() => {
+
+      stubEnvGet.restore();
+    });
+
+    withScenario('a valid env variable', () => {
+
+      let result;
+
+      before(() => {
+
+        result = getEnvVariable('SOME_VARIABLE');
+      });
+
+      should('return the value for that variable', () => {
+
+        expect(result).to.equal('SomeVariableValue');
+      });
+    });
+
+    withScenario('an unknown env variable AND a specified default value', () => {
+
+      let result;
+
+      before(() => {
+
+        result = getEnvVariable('SOME_OTHER_VARIABLE', 'SomeDefaultValue');
+      });
+
+      should('return the default value', () => {
+
+        expect(result).to.equal('SomeDefaultValue');
+      });
+    });
+
+    withScenario('an unknown env variable AND no default value', () => {
+
+      let result;
+
+      before(() => {
+
+        result = getEnvVariable('SOME_OTHER_VARIABLE');
+      });
+
+      should('return undefined', () => {
+
+        expect(result).to.be.undefined;
+      });
     });
   });
 });

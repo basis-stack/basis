@@ -1,37 +1,134 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, when, should } from './utils/specAliases';
+import { the, when, should, withScenario } from './utils/specAliases';
 import Config, { __RewireAPI__ as ConfigAPI } from './../core/config';
 
 the('Config class', () => {
 
   when('created (from settings file)', () => {
 
+    const stubGetEnvVariable = sinon.stub();
     const stubJsonfile = { readFileSync: () => {} };
     const settingsFilePath = 'SomeFilePath';
-    const stubSettingsJson = { foo: 'FooProp', bar: 'BarProp' };
-
-    sinon.stub(stubJsonfile, 'readFileSync').returns(stubSettingsJson);
-
-    let config;
+    const stubSettingsJson = {
+      default: {
+        someDefaultSetting: 'someDefaultValue'
+      },
+      local: {
+        foo: 'FooValue',
+        bar: 'BarValue'
+      },
+      someEnv: {
+        bla: 'BlaBlaValue'
+      }
+    };
 
     before(() => {
 
-      ConfigAPI.__Rewire__('jsonfile', stubJsonfile);
+      sinon.stub(stubJsonfile, 'readFileSync').returns(stubSettingsJson);
 
-      config = Config.createFromSettingsFile(settingsFilePath);
+      ConfigAPI.__Rewire__('getEnvVariable', stubGetEnvVariable);
+      ConfigAPI.__Rewire__('jsonfile', stubJsonfile);
     });
 
     after(() => {
 
+      ConfigAPI.__ResetDependency__('getEnvVariable');
       ConfigAPI.__ResetDependency__('jsonfile');
     });
 
-    should('initialise properties from settings in settings file', () => {
+    withScenario('no specified NODE_ENV', () => {
 
-      expect(config.foo).to.equal(stubSettingsJson.foo);
-      expect(config.bar).to.equal(stubSettingsJson.bar);
+      let result;
+
+      before(() => {
+
+        stubGetEnvVariable.returns('local');
+
+        result = Config.createFromSettingsFile(settingsFilePath);
+      });
+
+      after(() => {
+
+        stubGetEnvVariable.reset();
+      });
+
+      should('include default settings', () => {
+
+        expect(result.someDefaultSetting).to.equal('someDefaultValue');
+      });
+
+      should('include local env settings', () => {
+
+        expect(result.foo).to.equal(stubSettingsJson.local.foo);
+        expect(result.bar).to.equal(stubSettingsJson.local.bar);
+      });
+
+      should('include env name', () => {
+
+        expect(result.env).to.equal('local');
+      });
+    });
+
+    withScenario('a known (configured) NODE_ENV', () => {
+
+      let result;
+
+      before(() => {
+
+        stubGetEnvVariable.returns('someEnv');
+
+        result = Config.createFromSettingsFile(settingsFilePath);
+      });
+
+      after(() => {
+
+        stubGetEnvVariable.reset();
+      });
+
+      should('include default settings', () => {
+
+        expect(result.someDefaultSetting).to.equal('someDefaultValue');
+      });
+
+      should('include the specific env settings', () => {
+
+        expect(result.bla).to.equal(stubSettingsJson.someEnv.bla);
+      });
+
+      should('include env name', () => {
+
+        expect(result.env).to.equal('someEnv');
+      });
+    });
+
+    withScenario('an unknown (non-configured) NODE_ENV', () => {
+
+      let result;
+
+      before(() => {
+
+        stubGetEnvVariable.returns('someUnkownEnv');
+
+        try {
+
+          Config.createFromSettingsFile(settingsFilePath);
+        } catch (e) {
+
+          result = e.message;
+        }
+      });
+
+      after(() => {
+
+        stubGetEnvVariable.reset();
+      });
+
+      should('throw error indicating unknown environment', () => {
+
+        expect(result).to.equal('Unable to bootstrap for environment: \'someUnkownEnv\'. No settings found in settings file for this environment.');
+      });
     });
   });
 });

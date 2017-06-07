@@ -20,7 +20,8 @@
   "homepage": "https://github.com/warebrained/basis",
   "scripts": {
     "build": "eslint config/*.* gulpfile.babel.js && gulp build",
-    "start": "node build/app/bin/basis_local",
+    "start": "node build/app/bin/start_basis",
+    "dev": "cross-env NODE_ENV=development node build/app/bin/start_basis",
     "test": "cross-env BABEL_ENV=test mocha --require babel-core/register app/**/*Spec.js",
     "coverage": "cross-env BABEL_ENV=test nyc mocha --require babel-core/register app/**/*Spec.js",
     "publish-coverage": "nyc report --reporter=text-lcov | coveralls"
@@ -38,11 +39,11 @@
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
-    "babel-plugin-istanbul": "^4.1.3",
+    "babel-plugin-istanbul": "^4.1.4",
     "babel-plugin-rewire": "^1.1.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
-    "chai": "^3.5.0",
+    "chai": "^4.0.2",
     "colors": "^1.1.2",
     "coveralls": "^2.13.1",
     "cross-env": "^5.0.0",
@@ -65,9 +66,9 @@
     "minimatch": "^3.0.4",
     "minimist": "^1.2.0",
     "mocha": "^3.4.2",
-    "npm-check-updates": "^2.11.2",
-    "nyc": "^10.3.2",
+    "npm-check-updates": "^2.11.3",
+    "nyc": "^11.0.2",
     "run-sequence": "^1.2.2",
-    "sinon": "^2.3.1"
+    "sinon": "^2.3.2"
   }
 }

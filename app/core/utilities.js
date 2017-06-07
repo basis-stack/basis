@@ -4,11 +4,11 @@ export const dynamicImport = (moduleName, basePath = './../') => require(`${base
 
 export const terminate = (exitCode = 1) => { process.exit(exitCode); };
 
-// export const getEnvVariable = (key, defaultValue = undefined) => {
+export const getEnvVariable = (key, defaultValue = undefined) => {
 
-//   if (process.env[key] !== undefined) {
-//     return process.env[key];
-//   }
+  if (process.env[key] !== undefined) {
+    return process.env[key];
+  }
 
-//   return defaultValue;
-// }
+  return defaultValue;
+};

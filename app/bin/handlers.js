@@ -1,7 +1,8 @@
+import constants from './../core/constants';
 
 export const onListening = (config, logger) => {
 
-  logger.info(`[SERVER ] STARTED: listening on port ${config.webServerPort}`);
+  logger.info(`${constants.text.logging.serverPrefix} STARTED: listening on port ${config.webServerPort}`);
 };
 
 export const onError = (config, logger, error, handledCallback) => {
@@ -10,7 +11,7 @@ export const onError = (config, logger, error, handledCallback) => {
     throw error;
   }
 
-  const messagePrefix = '[SERVER ] LISTEN_ERROR:';
+  const messagePrefix = `${constants.text.logging.serverPrefix} LISTEN_ERROR:`;
 
   switch (error.code) {
 
