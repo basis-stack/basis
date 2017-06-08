@@ -53,9 +53,9 @@ the('errorHandlers middleware', () => {
       expect(result.status).to.equal(404);
     });
 
-    should('set error message to \'Resource Not Found\'', () => {
+    should('set error message to appropriate not found message', () => {
 
-      expect(result.message).to.equal('Resource Not Found');
+      expect(result.message).to.equal('The requested URL was not found on this server');
     });
 
     should('forward error on to next handler', () => {

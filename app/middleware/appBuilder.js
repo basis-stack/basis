@@ -1,4 +1,5 @@
 import path from 'path';
+import express from 'express';
 
 // Routes
 import initialiseRoutes from './../routes';
@@ -57,12 +58,16 @@ export default class AppBuilder {
     return this;
   }
 
-  useHandlebars() {
+  useEjs() {
 
-    return this._setViewEngine('hbs');
+    return this._setViewEngine('ejs');
   }
 
   useRoutes() {
+
+    // TODO: Move this to its own method OR the content middleware initialiser!!!
+    this._app.use(express.static(path.join(__dirname, '../../static')));
+
 
     // TODO: Need to ensure that this is called inbetween 'base' middleware (parsers and such) and error handlers. How best to do this ?
     initialiseRoutes(this._app, this._container);

@@ -29,8 +29,9 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.6",
     "express": "^4.15.3",
-    "hbs": "^4.0.1",
+    "http-status": "^1.0.1",
     "jsonfile": "^3.0.0",
     "lodash": "^4.17.4",
     "morgan": "^1.8.2",
@@ -38,6 +39,7 @@
     "winston": "^2.3.1"
   },
   "devDependencies": {
+    "@material/typography": "^0.2.2",
     "babel-core": "^6.24.1",
     "babel-plugin-istanbul": "^4.1.4",
     "babel-plugin-rewire": "^1.1.0",
@@ -56,6 +58,7 @@
     "eslint-plugin-react": "^7.0.1",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.1",
     "gulp-eslint": "^3.0.1",
     "gulp-filter": "^5.0.0",
     "gulp-print": "^2.0.1",
@@ -68,6 +71,7 @@
     "mocha": "^3.4.2",
     "npm-check-updates": "^2.11.3",
     "nyc": "^11.0.2",
+    "roboto-fontface": "^0.7.0",
     "run-sequence": "^1.2.2",
     "sinon": "^2.3.2"
   }

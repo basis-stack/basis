@@ -1,5 +1,6 @@
 import gulp from 'gulp';
 import del from 'del';
+// TODO: Replace with chalk !!
 import colors from 'colors';
 import replace from 'gulp-replace';
 import runSequence from 'run-sequence';
@@ -12,6 +13,7 @@ import filter from 'gulp-filter';
 import print from 'gulp-print';
 import eslint from 'gulp-eslint';
 import jsonfile from 'jsonfile';
+import concat from 'gulp-concat';
 
 import config from './config/gulp.config';
 import getEnvSettings from './config/settings';
@@ -120,6 +122,8 @@ gulp.task('package-json', (cb) => {
     delete outputPackageJson.repository;
     delete outputPackageJson.description;
 
+    // TODO: Add 'scripts' section with tweaked 'start', 'dev', 'production' scripts (for build dir)
+
     const pathName = `${config.paths.build}/${fileName}`;
     logMessage('Creating ', pathName);
 
@@ -131,7 +135,7 @@ gulp.task('package-json', (cb) => {
   });
 });
 
-/* Compile server-side app and environmentalise the bootup module */
+/* Compile server-side app */
 gulp.task('compile-app', () => {
 
   const startupDestFileName = `start_${envSettings.default.appName}`;
@@ -155,34 +159,47 @@ gulp.task('compile-app', () => {
 /* Copy server-side views */
 gulp.task('views', () => {
 
-  const viewsExtension = '*.hbs';
+  const viewsExtension = '*.ejs';
 
   return gulp.src(`${config.paths.app}/**/${viewsExtension}`)
              .pipe(gulp.dest(`${config.paths.build}/app`))
              .pipe(print(getFilePathLogMessage));
 });
 
-/* Lint */
-gulp.task('lint', () => {
+/* Concat and copy vendor assets (fonts, styles, scripts) to static */
+gulp.task('vendor-assets', () => {
 
-  const lintStream = gulp.src(`${config.paths.app}/**/*.js`)
-                         .pipe(eslint())
-                         .pipe(eslint.format())
-                         .pipe(eslint.failOnError());
+  const fontsStream = gulp.src(config.vendor.fonts)
+                          .pipe(gulp.dest(`${config.paths.build}/static/fonts/`));
 
-  return lintStream;
+  const stylesStream = gulp.src(config.vendor.styles)
+                           .pipe(replace('url(\'../../fonts/Roboto', 'url(\'../fonts'))
+                           .pipe(concat('server-vendor.css'))
+                           .pipe(gulp.dest(`${config.paths.build}/static/styles`));
+
+  return merge(fontsStream, stylesStream);
 });
+
+/* Lint */
+gulp.task('lint', () => (
+
+  gulp.src(`${config.paths.app}/**/*.js`)
+      .pipe(eslint())
+      .pipe(eslint.format())
+      .pipe(eslint.failOnError())
+));
 
 /* Build entire solution */
 gulp.task('build', (cb) => {
 
   runSequence('prepare-build',
               'lint',
-              [/* 'server-scripts', */'environment-settings', 'package-json', 'compile-app', 'views'],
+              ['environment-settings', 'package-json', 'compile-app', 'views', 'vendor-assets'],
               cb);
 });
 
 /* Package build artifacts */
+// TODO: Add server-scrips as dependency here
 gulp.task('package', () => {
 
   const packageFileName = `${envSettings.appName}.package.${envSettings.env}.zip`;

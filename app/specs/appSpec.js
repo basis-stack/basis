@@ -12,7 +12,7 @@ the('app', () => {
   const stubExpress = sinon.stub().returns(stubExpressInstance);
   const stubContainer = { stubContainer: true };
   const stubAppBuilderClass = { create: () => {} };
-  const appBuilderMethods = ['useHandlebars', 'logRequests', 'useDataParsers', 'useRoutes', 'handleErrors', 'trustProxy'];
+  const appBuilderMethods = ['useEjs', 'logRequests', 'useDataParsers', 'useRoutes', 'handleErrors', 'trustProxy'];
   const stubAppBuilderInstance = createStubObject(appBuilderMethods);
   stubAppBuilderInstance.result = {};
 
@@ -32,7 +32,7 @@ the('app', () => {
 
     let stubAppBuilderCreate;
 
-    let stubAppBuilderUseHandlebars;
+    let stubAppBuilderUseEjs;
     let stubAppBuilderLogRequests;
     let stubAppBuilderUseDataParsers;
     let stubAppBuilderUseRoutes;
@@ -46,7 +46,7 @@ the('app', () => {
 
       stubAppBuilderCreate = sinon.stub(stubAppBuilderClass, 'create').returns(stubAppBuilderInstance);
 
-      stubAppBuilderUseHandlebars = sinon.stub(stubAppBuilderInstance, appBuilderMethods[0]).returns(stubAppBuilderInstance);
+      stubAppBuilderUseEjs = sinon.stub(stubAppBuilderInstance, appBuilderMethods[0]).returns(stubAppBuilderInstance);
       stubAppBuilderLogRequests = sinon.stub(stubAppBuilderInstance, appBuilderMethods[1]).returns(stubAppBuilderInstance);
       stubAppBuilderUseDataParsers = sinon.stub(stubAppBuilderInstance, appBuilderMethods[2]).returns(stubAppBuilderInstance);
       stubAppBuilderUseRoutes = sinon.stub(stubAppBuilderInstance, appBuilderMethods[3]).returns(stubAppBuilderInstance);
@@ -63,10 +63,10 @@ the('app', () => {
       assertParameter(stubAppBuilderCreate, 1, stubExpressInstance);
     });
 
-    should('set handlebars as view engine', () => {
+    should('set EJS as view engine', () => {
 
-      assertWasCalled(stubAppBuilderUseHandlebars);
-      assertCalledBefore(stubAppBuilderUseHandlebars, stubAppBuilderLogRequests, appBuilderMethods[0], appBuilderMethods[1]);
+      assertWasCalled(stubAppBuilderUseEjs);
+      assertCalledBefore(stubAppBuilderUseEjs, stubAppBuilderLogRequests, appBuilderMethods[0], appBuilderMethods[1]);
     });
 
     should('log HTTP requests (using morgan or similar)', () => {

@@ -6,7 +6,7 @@ export default (container) => {
 
   const appBuilder = AppBuilder.create(container, express());
 
-  return appBuilder.useHandlebars()
+  return appBuilder.useEjs()
                    .logRequests()
                    .useDataParsers()
                    .useRoutes()

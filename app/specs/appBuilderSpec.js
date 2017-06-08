@@ -52,7 +52,7 @@ the('appBuilder', () => {
     });
   });
 
-  when('useHandlebars called', () => {
+  when('useEjs called', () => {
 
     let setMethodSpy;
     let result;
@@ -60,7 +60,7 @@ the('appBuilder', () => {
     before(() => {
 
       setMethodSpy = sinon.spy(stubApp, 'set');
-      result = builder.useHandlebars();
+      result = builder.useEjs();
     });
 
     should('set views path to app views directory', () => {
@@ -71,12 +71,12 @@ the('appBuilder', () => {
       expect(firstSetCall.args[1]).to.equal(path.join(__dirname, '/../views'));
     });
 
-    should('set view engine to hbs', () => {
+    should('set view engine to ejs', () => {
 
       const secondSetCall = setMethodSpy.getCall(1);
 
       expect(secondSetCall.args[0]).to.equal('view engine');
-      expect(secondSetCall.args[1]).to.equal('hbs');
+      expect(secondSetCall.args[1]).to.equal('ejs');
     });
 
     should('return the builder instance', () => {
