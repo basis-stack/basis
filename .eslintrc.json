@@ -11,6 +11,7 @@
     "import/no-dynamic-require": [0],
     "import/no-extraneous-dependencies": [2, {"devDependencies": ["**/*Spec.js", "**/specAssertions.js", "**/settings.js", "gulpfile.babel.js"]}],
     "chai-friendly/no-unused-expressions": 2,
+    "react/prop-types": [0],
     "no-unused-expressions": 0,
     "quotes": [2, "single"],
     "padded-blocks": [0],

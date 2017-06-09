@@ -11,8 +11,7 @@
     <style>
 
       .basis-error-container {
-        margin: 7% auto 0;
-        max-width: 500px;
+        margin: 7% 25% 0;
       }
 
       .basis-error-container small {
@@ -20,10 +19,6 @@
       }
 
     </style>
-    <div class="basis-error-container">
-      <h1 class="mdc-typography--display1"><%= status %>. <small><%= statusText %></small></h1>
-      <h2 class="mdc-typography--body1"><%= message %></h2>
-      <pre><%= error.stack %></pre>
-    </div>
+    <%- markup -%>
   </body>
 </html>

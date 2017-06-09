@@ -1,15 +1,15 @@
 import HTTPStatus from 'http-status';
 
+import ErrorView from './../views/error';
+import renderView from './../core/renderers';
+
 const getErrorDetail = (config, status, err) => {
 
   const statusText = HTTPStatus[status];
   const details = {
     status,
-
-    // TODO: Assert these !!!
     statusText,
     title: `Error ${status} (${statusText})`,
-
     message: err.message,
     error: (config.env === 'production' || status === HTTPStatus.NOT_FOUND) ? {} : err
   };
@@ -35,7 +35,7 @@ const handleServerError = (config, logger, err, req, res) => {
   }
 
   res.status(status);
-  res.render('error', errorDetail);
+  renderView(res, 'index', errorDetail.title, ErrorView, errorDetail);
 };
 
 export default (app, config, logger) => {

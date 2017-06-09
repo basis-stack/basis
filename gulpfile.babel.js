@@ -28,7 +28,7 @@ function logMessage(action, context) {
 
 function getFilePathLogMessage(filepath) {
 
-  return `Writing  ${filepath}`;
+  return ` Writing ${filepath}`;
 }
 
 /* Clean existing build & package artifacts */
@@ -147,11 +147,11 @@ gulp.task('compile-app', () => {
                                 .pipe(babel())
                                 .pipe(gulp.dest(`${startupDestDir}`));
 
-  const appFilesStream = gulp.src(`${config.paths.app}/**/*.js`)
-                             .pipe(filter(['**/*.js', '!**/startup.js', '!**/*Spec.js', '!**/specAliases.js', '!**/specAssertions.js', '!**/fakes.js']))
+  const appFilesStream = gulp.src([`${config.paths.app}/**/*.js`, `${config.paths.app}/**/*.jsx`])
+                             .pipe(filter(['**/*.js', '**/*.jsx', '!**/startup.js', '!**/*Spec.js', '!**/specAliases.js', '!**/specAssertions.js', '!**/fakes.js', '!**/stubModule.js']))
                              .pipe(babel())
-                             .pipe(gulp.dest(`${config.paths.build}/app`))
-                             .pipe(print(getFilePathLogMessage));
+                             .pipe(gulp.dest(`${config.paths.build}/app`));
+                             // .pipe(print(getFilePathLogMessage));
 
   return merge(startupFileStream, appFilesStream);
 });
@@ -162,8 +162,8 @@ gulp.task('views', () => {
   const viewsExtension = '*.ejs';
 
   return gulp.src(`${config.paths.app}/**/${viewsExtension}`)
-             .pipe(gulp.dest(`${config.paths.build}/app`))
-             .pipe(print(getFilePathLogMessage));
+             .pipe(gulp.dest(`${config.paths.build}/app`));
+             // .pipe(print(getFilePathLogMessage));
 });
 
 /* Concat and copy vendor assets (fonts, styles, scripts) to static */
@@ -171,11 +171,13 @@ gulp.task('vendor-assets', () => {
 
   const fontsStream = gulp.src(config.vendor.fonts)
                           .pipe(gulp.dest(`${config.paths.build}/static/fonts/`));
+                          // .pipe(print(getFilePathLogMessage));
 
   const stylesStream = gulp.src(config.vendor.styles)
                            .pipe(replace('url(\'../../fonts/Roboto', 'url(\'../fonts'))
                            .pipe(concat('server-vendor.css'))
                            .pipe(gulp.dest(`${config.paths.build}/static/styles`));
+                           // .pipe(print(getFilePathLogMessage));
 
   return merge(fontsStream, stylesStream);
 });
@@ -183,7 +185,7 @@ gulp.task('vendor-assets', () => {
 /* Lint */
 gulp.task('lint', () => (
 
-  gulp.src(`${config.paths.app}/**/*.js`)
+  gulp.src([`${config.paths.app}/**/*.js`, `${config.paths.app}/**/*.jsx`])
       .pipe(eslint())
       .pipe(eslint.format())
       .pipe(eslint.failOnError())

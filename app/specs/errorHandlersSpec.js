@@ -1,16 +1,19 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import HTTPStatus from 'http-status';
 
 import { the, when, withScenario, should } from './utils/specAliases';
 import { createStubObject, getStubResponse, getStubApp } from './utils/fakes';
 import { assertWasCalled, assertParameter } from './utils/specAssertions';
 
-import initialiseErrorHandlers from './../middleware/errorHandlers';
+import initialiseErrorHandlers, { __RewireAPI__ as ErrorHandlersAPI } from './../middleware/errorHandlers';
 
 the('errorHandlers middleware', () => {
 
   const stubConfig = { env: 'local' };
   const stubLogger = createStubObject('error');
+  const stubErrorView = {};
+  const stubRenderView = sinon.spy();
 
   const initialiseAndGetHandlers = (config = stubConfig) => {
 
@@ -24,6 +27,18 @@ the('errorHandlers middleware', () => {
       errorHandler: stubAppUse.args[1][0]
     };
   };
+
+  before(() => {
+
+    ErrorHandlersAPI.__Rewire__('ErrorView', stubErrorView);
+    ErrorHandlersAPI.__Rewire__('renderView', stubRenderView);
+  });
+
+  after(() => {
+
+    ErrorHandlersAPI.__ResetDependency__('ErrorView');
+    ErrorHandlersAPI.__ResetDependency__('renderView');
+  });
 
   when('invoked with a valid app instance', () => {
 
@@ -68,19 +83,25 @@ the('errorHandlers middleware', () => {
 
     const stubResponse = getStubResponse();
     const statusSpy = sinon.spy(stubResponse, 'status');
-    const renderSpy = sinon.spy(stubResponse, 'render');
     const loggerErrorSpy = sinon.spy(stubLogger, 'error');
 
     const reset = () => {
 
       statusSpy.reset();
-      renderSpy.reset();
+      stubRenderView.reset();
       loggerErrorSpy.reset();
+    };
+
+    const assertRenderView = (expectedTitle, expectedDetail) => {
+
+      assertParameter(stubRenderView, 2, expectedTitle);
+      assertParameter(stubRenderView, 4, expectedDetail, true);
     };
 
     withScenario('HTTP Error', () => {
 
-      const stubError = { status: 403, message: 'Some HTTP Error' };
+      const status = 403;
+      const stubError = { status, message: 'Some HTTP Error' };
 
       before(() => {
 
@@ -94,17 +115,22 @@ the('errorHandlers middleware', () => {
 
       should('set response status code to HTTP error code', () => {
 
-        assertWasCalled(statusSpy, 403);
+        assertWasCalled(statusSpy, status);
       });
 
-      should('set render the error page with error details', () => {
+      should('render the error page with error details', () => {
 
-        const result = renderSpy.args[0][1];
+        const statusText = HTTPStatus[status];
+        const expectedTitle = `Error ${status} (${statusText})`;
+        const expectedDetail = {
+          status,
+          statusText,
+          title: expectedTitle,
+          message: stubError.message,
+          error: stubError
+        };
 
-        assertParameter(renderSpy, 0, 'error');
-        expect(result.status).to.equal(stubError.status);
-        expect(result.message).to.equal(stubError.message);
-        expect(result.error).to.not.be.undefined;
+        assertRenderView(expectedTitle, expectedDetail);
       });
 
       should('log the error', () => {
@@ -117,6 +143,7 @@ the('errorHandlers middleware', () => {
 
     withScenario('General Error', () => {
 
+      const status = 500;
       const stubError = { message: 'Some General Error' };
 
       before(() => {
@@ -131,17 +158,22 @@ the('errorHandlers middleware', () => {
 
       should('set response status code to 500', () => {
 
-        assertWasCalled(statusSpy, 500);
+        assertWasCalled(statusSpy, status);
       });
 
-      should('set render the error page with error details', () => {
+      should('render the error page with error details', () => {
 
-        const result = renderSpy.args[0][1];
+        const statusText = HTTPStatus[status];
+        const expectedTitle = `Error ${status} (${statusText})`;
+        const expectedDetail = {
+          status,
+          statusText,
+          title: expectedTitle,
+          message: stubError.message,
+          error: stubError
+        };
 
-        assertParameter(renderSpy, 0, 'error');
-        expect(result.status).to.equal(500);
-        expect(result.message).to.equal(stubError.message);
-        expect(result.error).to.not.be.undefined;
+        assertRenderView(expectedTitle, expectedDetail);
       });
 
       should('log the error', () => {
@@ -169,15 +201,24 @@ the('errorHandlers middleware', () => {
 
       should('not include the Error object / details', () => {
 
-        const result = renderSpy.args[0][1];
+        const statusText = HTTPStatus[500];
+        const expectedTitle = `Error 500 (${statusText})`;
+        const expectedDetail = {
+          status: 500,
+          statusText,
+          title: expectedTitle,
+          message: stubError.message,
+          error: {}
+        };
 
-        expect(result.error).to.deep.equal({});
+        assertRenderView(expectedTitle, expectedDetail);
       });
     });
 
     withScenario('not found', () => {
 
-      const stubError = { status: 404 };
+      const status = 404;
+      const stubError = { status };
 
       before(() => {
 
@@ -191,9 +232,17 @@ the('errorHandlers middleware', () => {
 
       should('not include the Error object / details', () => {
 
-        const result = renderSpy.args[0][1];
+        const statusText = HTTPStatus[status];
+        const expectedTitle = `Error ${status} (${statusText})`;
+        const expectedDetail = {
+          status: status,
+          statusText,
+          title: expectedTitle,
+          message: stubError.message,
+          error: {}
+        };
 
-        expect(result.error).to.deep.equal({});
+        assertRenderView(expectedTitle, expectedDetail);
       });
     });
   });
