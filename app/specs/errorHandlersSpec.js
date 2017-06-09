@@ -235,7 +235,7 @@ the('errorHandlers middleware', () => {
         const statusText = HTTPStatus[status];
         const expectedTitle = `Error ${status} (${statusText})`;
         const expectedDetail = {
-          status: status,
+          status,
           statusText,
           title: expectedTitle,
           message: stubError.message,
