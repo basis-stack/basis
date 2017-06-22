@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
+import constants from './../core/constants';
 import { the, when, withScenario, should } from './utils/specAliases';
 import { onListening, onError } from './../bin/handlers';
 
@@ -16,7 +17,7 @@ the('(server) handlers', () => {
 
     should('Log an info message to logger indicating server start and port number', () => {
 
-      const expectedMessage = '[SERVER ] STARTED: listening on port SomePort';
+      const expectedMessage = `${constants.text.logging.serverPrefix} STARTED: listening on port SomePort`;
       expect(stubLoggerInfo.calledWithExactly(expectedMessage)).to.equal(true);
     });
   });
@@ -71,7 +72,7 @@ the('(server) handlers', () => {
 
       should('log friendly \'elevated privileges\' error message', () => {
 
-        const expectedMessage = '[SERVER ] LISTEN_ERROR: Port 666 requires elevated privileges';
+        const expectedMessage = `${constants.text.logging.serverPrefix} LISTEN_ERROR: port 666 requires elevated privileges`;
         expect(loggerErrorSpy.calledWithExactly(expectedMessage)).to.equal(true);
       });
 
@@ -98,7 +99,7 @@ the('(server) handlers', () => {
 
       should('log friendly \'port in use\' error message', () => {
 
-        const expectedMessage = '[SERVER ] LISTEN_ERROR: Port 666 is already in use';
+        const expectedMessage = `${constants.text.logging.serverPrefix} LISTEN_ERROR: port 666 is already in use`;
         expect(loggerErrorSpy.calledWithExactly(expectedMessage)).to.equal(true);
       });
 

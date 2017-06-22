@@ -6,10 +6,9 @@ class Container {
   constructor() {
 
     this._instanceMap = new Map();
-    this._settingsFilePath = `${__dirname}/../../settings.json`;
+    this._settingsFilePath = `${__dirname}/../../config/settings.json`;
 
-    // TODO: Rename this to instanceKeys so as to not confuse with native keys()
-    this.keys = {};
+    this.instanceKeys = {};
   }
 
   initialise() {
@@ -26,14 +25,14 @@ class Container {
 
   register(key, instance) {
 
-    this.keys[key] = key;
+    this.instanceKeys[key] = key;
     this._instanceMap.set(key, instance);
   }
 
   resolve(key) {
 
     if (!this._instanceMap.has(key)) {
-      throw new Error(`[CONTAINER]: Unable to resolve instance. Key '${key}' not found.`);
+      throw new Error(`[CONTAINER]: unable to resolve instance. Key '${key}' not found.`);
     }
 
     return this._instanceMap.get(key);

@@ -24,7 +24,7 @@ $RUNTIME/node_modules/.bin/pm2 start app/bin/%APPNAME%_%ENVIRONMENT% --env %ENVI
 FRONT_WITH_NGINX=%FRONT_WITH_NGINX%
 if [ "$FRONT_WITH_NGINX" = true ]
 then
-   echo $MSG_PREFIX"Starting nginx as reverse proxy"
+   echo $ORIG_MSG_PREFIX"Starting nginx as reverse proxy"
    # TODO: Start nginx
 fi
 

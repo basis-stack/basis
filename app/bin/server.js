@@ -2,15 +2,15 @@ import http from 'http';
 
 import constants from './../core/constants';
 import { onListening, onError } from './handlers';
-import terminate from './../core/utilities';
+import { terminate } from './../core/utilities';
 import createApp from './../app';
 
 export default (container) => {
 
-  const config = container.resolve(container.keys.config);
-  const logger = container.resolve(container.keys.logger);
+  const config = container.resolve(container.instanceKeys.config);
+  const logger = container.resolve(container.instanceKeys.logger);
 
-  logger.info(`${constants.text.logging.startupPrefix} INIT: Bootstrapped config for env: ${config.env.toUpperCase()}`);
+  logger.info(`${constants.text.logging.startupPrefix} INIT: bootstrapped config for env: ${config.env.toUpperCase()}`);
 
   const app = createApp(container);
   const server = http.createServer(app);

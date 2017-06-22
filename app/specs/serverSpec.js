@@ -50,7 +50,7 @@ the('server', () => {
 
     should('log an info message indicating runtime environment', () => {
 
-      const expectedMessage = `${constants.text.logging.startupPrefix} INIT: Bootstrapped config for env: SOMEENV`;
+      const expectedMessage = `${constants.text.logging.startupPrefix} INIT: bootstrapped config for env: SOMEENV`;
 
       assertWasCalled(stubLoggerInfo, expectedMessage);
     });

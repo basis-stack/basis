@@ -40,7 +40,7 @@ the('container', () => {
     should('initialise the instance map and component keys', () => {
 
       expect(container._instanceMap.size).to.equal(0);
-      expect(container.keys).to.deep.equal({});
+      expect(container.instanceKeys).to.deep.equal({});
     });
   });
 
@@ -97,7 +97,7 @@ the('container', () => {
 
     should('add the key to component keys enumeration', () => {
 
-      expect(container.keys.SomeKey).to.equal(stubKey);
+      expect(container.instanceKeys.SomeKey).to.equal(stubKey);
     });
   });
 
@@ -119,7 +119,7 @@ the('container', () => {
 
       should('throw an error indicating missing key', () => {
 
-        const expectedErrorMessage = `[CONTAINER]: Unable to resolve instance. Key '${stubKey}' not found.`;
+        const expectedErrorMessage = `[CONTAINER]: unable to resolve instance. Key '${stubKey}' not found.`;
         expect(result.message).to.equal(expectedErrorMessage);
       });
     });

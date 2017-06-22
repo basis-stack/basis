@@ -16,12 +16,12 @@ export const onError = (config, logger, error, handledCallback) => {
   switch (error.code) {
 
     case 'EACCES':
-      logger.error(`${messagePrefix} Port ${config.webServerPort} requires elevated privileges`);
+      logger.error(`${messagePrefix} port ${config.webServerPort} requires elevated privileges`);
       handledCallback();
       break;
 
     case 'EADDRINUSE':
-      logger.error(`${messagePrefix} Port ${config.webServerPort} is already in use`);
+      logger.error(`${messagePrefix} port ${config.webServerPort} is already in use`);
       handledCallback();
       break;
 

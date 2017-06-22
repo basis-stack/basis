@@ -64,12 +64,12 @@ the('routes index', () => {
 
     should('log an initialised info message for valid routes', () => {
 
-      assertWasCalled(stubLoggerInfo, '[STARTUP] INIT: Wired base route \'folderA\'');
+      assertWasCalled(stubLoggerInfo, '[STARTUP] INIT: wired base route \'folderA\'');
     });
 
     should('log a warning message for invalid / errored routes', () => {
 
-      assertWasCalled(stubLoggerWarn, '[STARTUP] INVALID_ROUTE: Unable to initialise route \'folderB\'. Error: Some route import error');
+      assertWasCalled(stubLoggerWarn, '[STARTUP] INVALID_ROUTE: unable to initialise route \'folderB\'. Error: Some route import error');
     });
 
     should('wire up the express router to the app', () => {

@@ -1,4 +1,5 @@
 export default {
   webServerPort: 8080,
-  frontWithNginx: true
+  frontWithNginx: true,
+  publicPort: 80
 };

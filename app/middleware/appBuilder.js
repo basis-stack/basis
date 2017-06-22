@@ -21,8 +21,8 @@ export default class AppBuilder {
     this._app = app;
 
     this._container = container;
-    this._config = container.resolve(container.keys.config);
-    this._logger = container.resolve(container.keys.logger);
+    this._config = container.resolve(container.instanceKeys.config);
+    this._logger = container.resolve(container.instanceKeys.logger);
   }
 
   static create(container, app) {

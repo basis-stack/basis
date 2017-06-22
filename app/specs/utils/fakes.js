@@ -24,7 +24,7 @@ export const getStubContainer = (stubConfig, stubLogger) => {
 
       return undefined;
     },
-    keys: { config: configKey, logger: loggerKey }
+    instanceKeys: { config: configKey, logger: loggerKey }
   };
 };
 

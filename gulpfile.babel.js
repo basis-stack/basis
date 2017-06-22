@@ -21,15 +21,12 @@ import getEnvSettings from './config/settings';
 const logMessagePrefix = '         + ';
 const envSettings = getEnvSettings();
 
-function logMessage(action, context) {
+const logMessage = (action, context) => {
 
   console.log(`${logMessagePrefix}${action}${context.magenta}`);
-}
+};
 
-function getFilePathLogMessage(filepath) {
-
-  return ` Writing ${filepath}`;
-}
+const getFilePathLogMessage = filepath => ` Writing ${filepath}`;
 
 /* Clean existing build & package artifacts */
 gulp.task('clean', (cb) => {
@@ -45,13 +42,12 @@ gulp.task('clean', (cb) => {
 /* Prepare build directory */
 gulp.task('prepare-build', ['clean'], (cb) => {
 
-  fs.mkdir(config.paths.build, (err) => {
-
-    if (err) { throw err; }
-    cb();
-  });
+  fs.mkdirSync(config.paths.build);
+  cb();
+  // mkdir(config.paths.build)
+  //   .then(cb)
+  //   .catch((err) => { cb(err); });
 });
-
 
 /* Copy server scripts */
 gulp.task('server-scripts', (cb) => {
@@ -76,8 +72,17 @@ gulp.task('server-scripts', (cb) => {
   cb();
 });
 
+gulp.task('nginx-config', () => (
+
+  gulp.src('./config/nginx.conf')
+      .pipe(print(getFilePathLogMessage))
+      .pipe(replace('%NGINX_LOCAL_PORT%', envSettings.production.webServerPort))
+      .pipe(replace('%NGINX_PUBLIC_PORT%', envSettings.production.publicPort))
+      .pipe(gulp.dest(`${config.paths.build}/config`))
+));
+
 /* Prepare Environment settings file */
-gulp.task('environment-settings', (cb) => {
+gulp.task('environment-settings', ['nginx-config'], (cb) => {
 
   const outputSettings = Object.assign(envSettings);
 
@@ -91,7 +96,7 @@ gulp.task('environment-settings', (cb) => {
           delete outputSettings[env].deployDirectory;
         });
 
-  const pathName = `${config.paths.build}/settings.json`;
+  const pathName = `${config.paths.build}/config/settings.json`;
   logMessage('Creating ', pathName);
 
   jsonfile.writeFile(pathName, outputSettings, { spaces: 2 }, (err) => {
@@ -192,10 +197,9 @@ gulp.task('lint', () => (
 ));
 
 /* Build entire solution */
-gulp.task('build', (cb) => {
+gulp.task('build', ['prepare-build'], (cb) => {
 
-  runSequence('prepare-build',
-              'lint',
+  runSequence('lint',
               ['environment-settings', 'package-json', 'compile-app', 'views', 'vendor-assets'],
               cb);
 });
@@ -204,7 +208,7 @@ gulp.task('build', (cb) => {
 // TODO: Add server-scrips as dependency here
 gulp.task('package', () => {
 
-  const packageFileName = `${envSettings.appName}.package.${envSettings.env}.zip`;
+  const packageFileName = `${envSettings.default.appName}.package.zip`;
   logMessage('Creating ', `${config.paths.package}/${packageFileName}`);
 
   return gulp.src(`${config.paths.build}/**/*`, { dot: true })

@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/warebrained/basis",
   "scripts": {
-    "build": "eslint config/*.* gulpfile.babel.js && gulp build",
+    "build": "eslint config/*.js gulpfile.babel.js && gulp build",
     "start": "node build/app/bin/start_basis",
     "dev": "cross-env NODE_ENV=development node build/app/bin/start_basis",
     "prod": "cross-env NODE_ENV=production node build/app/bin/start_basis",

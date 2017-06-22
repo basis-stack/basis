@@ -3,7 +3,7 @@ export default {
   text: {
     logging: {
       startupPrefix: '[STARTUP]',
-      serverPrefix: '[SERVER ]'
+      serverPrefix: '[SERVER_]'
     }
   },
   env: {
