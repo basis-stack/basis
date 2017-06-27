@@ -1,8 +1,11 @@
 import React from 'react';
 
-export default ({ children }) => (
+export default WrappedComponent => (
 
-  <div className="mdc-typography">
-    { children }
-  </div>
+  props => (
+
+    <div className="mdc-typography">
+      <WrappedComponent {...props} />
+    </div>
+  )
 );
