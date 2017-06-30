@@ -22,6 +22,8 @@
     "no-unused-vars": [0],
     "class-methods-use-this": [0],
     "no-console": [0],
-    "comma-dangle": [2, "never"]
+    "comma-dangle": [2, "never"],
+    "no-param-reassign": [2, { "props": false }],
+    "new-cap": [2, { "newIsCapExceptions": ["target"], "capIsNewExceptions": ["Router", "Controller", "Get", "Post"] }]
   }
 }

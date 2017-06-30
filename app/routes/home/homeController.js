@@ -1,16 +1,10 @@
+import { Controller, Get, Post } from './../../core/decorators';
+
+@Controller('/')
 export default class HomeController {
 
-  constructor(router) {
-
-    router.get('/', this._handleRoot);
-  }
-
-  static initialise(router) {
-
-    return new HomeController(router);
-  }
-
-  _handleRoot(req, res, next) {
+  @Get()
+  root(req, res, next) {
 
     res.send('Hello World!');
   }

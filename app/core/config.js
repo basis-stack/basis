@@ -1,4 +1,3 @@
-import fs from 'fs';
 import jsonfile from 'jsonfile';
 
 import constants from './constants';

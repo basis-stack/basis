@@ -1,24 +1,67 @@
 import 'reflect-metadata';
 import { expect } from 'chai';
+import * as sinon from 'sinon';
+import _ from 'lodash';
 
-import { the, should } from './utils/specAliases';
-import { Controller, Get, Post } from './../core/decorators';
+import { the, should, when } from './utils/specAliases';
+import { assertInstance, assertWasCalled } from './utils/specAssertions';
+import { Controller, Get, Post, __RewireAPI__ as DecoratorsAPI } from './../core/decorators';
 
 class StubTargetClass {
 
   methodA() {}
   methodB() {}
+  methodC() {}
+  methodD() {}
 }
 
 the('Controller decorator', () => {
 
-  should('attach rootPath metadata to the target class', () => {
+  const stubBindRoutes = sinon.spy();
+  const path = '/some-root-path';
 
-    const path = '/some-root-path';
+  before(() => {
+
+    DecoratorsAPI.__Rewire__('bindRoutes', stubBindRoutes);
 
     Controller(path)(StubTargetClass);
+  });
+
+  after(() => {
+
+    DecoratorsAPI.__ResetDependency__('bindRoutes');
+  });
+
+  should('attach rootPath metadata to the target class', () => {
 
     expect(Reflect.getMetadata('http:rootPath', StubTargetClass)).to.equal(path);
+  });
+
+  should('attach an initialise factory method to the target class', () => {
+
+    expect(StubTargetClass.initialise).to.not.be.undefined;
+    expect(_.isFunction(StubTargetClass.initialise)).to.equal(true);
+  });
+
+  when('target class initialise invoked', () => {
+
+    const stubRouter = {};
+    let result;
+
+    before(() => {
+
+      result = StubTargetClass.initialise(stubRouter);
+    });
+
+    should('return a new instance of the target class', () => {
+
+      assertInstance(result, StubTargetClass);
+    });
+
+    should('bind controller methods to the express router', () => {
+
+      assertWasCalled(stubBindRoutes);
+    });
   });
 });
 
@@ -35,6 +78,15 @@ the('Get decorator', () => {
     expect(Reflect.getMetadata('http:method', instance, 'methodA')).to.equal('get');
     expect(Reflect.getMetadata('http:path', instance, 'methodA')).to.equal(path);
   });
+
+  should('default path to empty string if not supplied', () => {
+
+    Get()(StubTargetClass.prototype, 'methodC', null);
+
+    const instance = new StubTargetClass();
+
+    expect(Reflect.getMetadata('http:path', instance, 'methodC')).to.equal('');
+  });
 });
 
 the('Post decorator', () => {
@@ -49,5 +101,14 @@ the('Post decorator', () => {
 
     expect(Reflect.getMetadata('http:method', instance, 'methodB')).to.equal('post');
     expect(Reflect.getMetadata('http:path', instance, 'methodB')).to.equal(path);
+  });
+
+  should('default path to empty string if not supplied', () => {
+
+    Post()(StubTargetClass.prototype, 'methodD', null);
+
+    const instance = new StubTargetClass();
+
+    expect(Reflect.getMetadata('http:path', instance, 'methodD')).to.equal('');
   });
 });

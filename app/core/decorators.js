@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 
+import bindRoutes from './../middleware/routeBinder';
+
 const httpMethodDecorator = (method, path) => (
 
   (target, property, descriptor) => {
@@ -14,8 +16,16 @@ export const Controller = rootPath => (
   (target) => {
 
     Reflect.defineMetadata('http:rootPath', rootPath, target);
+
+    target.initialise = (router) => {
+
+      const instance = new target();
+      bindRoutes(target, instance, router);
+
+      return instance;
+    };
   }
 );
 
-export const Get = path => httpMethodDecorator('get', path);
-export const Post = path => httpMethodDecorator('post', path);
+export const Get = (path = '') => httpMethodDecorator('get', path);
+export const Post = (path = '') => httpMethodDecorator('post', path);

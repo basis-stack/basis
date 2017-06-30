@@ -24,7 +24,7 @@ the('HomeController', () => {
     should('hook up a GET handler for the root (\'/\') path', () => {
 
       assertParameter(stubRouterGet, 0, '/');
-      assertParameter(stubRouterGet, 1, controller._handleRoot);
+      assertParameter(stubRouterGet, 1, controller.root);
     });
   });
 
@@ -33,7 +33,7 @@ the('HomeController', () => {
     const stubResponse = getStubResponse();
     const stubResponseSend = sinon.spy(stubResponse, 'send');
 
-    controller._handleRoot(undefined, stubResponse, undefined);
+    controller.root(undefined, stubResponse, undefined);
 
     should('send Hello World', () => {
 
