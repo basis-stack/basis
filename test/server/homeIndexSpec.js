@@ -1,9 +1,9 @@
 import * as sinon from 'sinon';
 
-import { the, should, when } from './utils/specAliases';
-import { assertWasCalled } from './utils/specAssertions';
-import { createStubObject } from './utils/fakes';
-import homeIndex, { __RewireAPI__ as HomeIndexAPI } from './../routes/home';
+import { the, should, when } from './../utils/specAliases';
+import { assertWasCalled } from './../utils/specAssertions';
+import { createStubObject } from './../utils/fakes';
+import homeIndex, { __RewireAPI__ as HomeIndexAPI } from './../../src/server/routes/home';
 
 the('home index', () => {
 

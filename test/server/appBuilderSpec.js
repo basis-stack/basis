@@ -2,10 +2,10 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import path from 'path';
 
-import { the, when, withScenario, should } from './utils/specAliases';
-import { getStubApp, getStubContainer } from './utils/fakes';
-import { assertWasCalled, assertParameter, assertInstance } from './utils/specAssertions';
-import AppBuilder, { __RewireAPI__ as AppBuilderAPI } from './../middleware/appBuilder';
+import { the, when, withScenario, should } from './../utils/specAliases';
+import { getStubApp, getStubContainer } from './../utils/fakes';
+import { assertWasCalled, assertParameter, assertInstance } from './../utils/specAssertions';
+import AppBuilder, { __RewireAPI__ as AppBuilderAPI } from './../../src/server/middleware/appBuilder';
 
 the('appBuilder', () => {
 
@@ -68,7 +68,7 @@ the('appBuilder', () => {
       const firstSetCall = setMethodSpy.getCall(0);
 
       expect(firstSetCall.args[0]).to.equal('views');
-      expect(firstSetCall.args[1]).to.equal(path.join(__dirname, '/../views'));
+      expect(firstSetCall.args[1]).to.equal(path.join(__dirname, '/../../src/server/views'));
     });
 
     should('set view engine to ejs', () => {

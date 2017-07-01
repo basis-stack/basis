@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { the, when, withScenario, should } from './utils/specAliases';
+import { the, when, withScenario, should } from './../utils/specAliases';
 
-import getContainer, { __RewireAPI__ as ContainerAPI } from './../core/container';
+import getContainer, { __RewireAPI__ as ContainerAPI } from './../../src/server/core/container';
 
 the('container', () => {
 

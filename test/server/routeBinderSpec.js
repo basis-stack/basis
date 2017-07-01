@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './utils/specAliases';
-import { assertParameter } from './utils/specAssertions';
-import { getStubRouter } from './utils/fakes';
-import { Controller, Get, Post } from './../core/decorators';
-import bindRoutes from './../middleware/routeBinder';
+import { the, should, when } from './../utils/specAliases';
+import { assertParameter } from './../utils/specAssertions';
+import { getStubRouter } from './../utils/fakes';
+import { Controller, Get, Post } from './../../src/server/core/decorators';
+import bindRoutes from './../../src/server/middleware/routeBinder';
 
 @Controller('/base-path')
 class StubController {

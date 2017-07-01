@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { the, when, withScenario, should } from './utils/specAliases';
 
-import { getStubApp } from './utils/fakes';
-import initialiseRequestLogger, { __RewireAPI__ as LoggingAPI } from './../middleware/logging';
+import { the, when, withScenario, should } from './../utils/specAliases';
+import { getStubApp } from './../utils/fakes';
+import initialiseRequestLogger, { __RewireAPI__ as LoggingAPI } from './../../src/server/middleware/logging';
 
 the('logging middleware initialiser', () => {
 

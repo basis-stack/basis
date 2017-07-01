@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './utils/specAliases';
-import { assertWasCalled, assertParameter, assertCalledBefore } from './utils/specAssertions';
-import { getStubContainer } from './utils/fakes';
-import createServer, { __RewireAPI__ as CreateServerAPI } from './../bin/server';
-import constants from './../core/constants';
+import { the, should, when } from './../utils/specAliases';
+import { assertWasCalled, assertParameter, assertCalledBefore } from './../utils/specAssertions';
+import { getStubContainer } from './../utils/fakes';
+import createServer, { __RewireAPI__ as CreateServerAPI } from './../../src/server/bin/server';
+import constants from './../../src/server/core/constants';
 
 the('server', () => {
 

@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import constants from './../core/constants';
-import { the, when, withScenario, should } from './utils/specAliases';
-import { onListening, onError } from './../bin/handlers';
+import constants from './../../src/server/core/constants';
+import { the, when, withScenario, should } from './../utils/specAliases';
+import { onListening, onError } from './../../src/server/bin/handlers';
 
 the('(server) handlers', () => {
 

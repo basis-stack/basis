@@ -2,11 +2,11 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import HTTPStatus from 'http-status';
 
-import { the, when, withScenario, should } from './utils/specAliases';
-import { createStubObject, getStubResponse, getStubApp } from './utils/fakes';
-import { assertWasCalled, assertParameter } from './utils/specAssertions';
+import { the, when, withScenario, should } from './../utils/specAliases';
+import { createStubObject, getStubResponse, getStubApp } from './../utils/fakes';
+import { assertWasCalled, assertParameter } from './../utils/specAssertions';
 
-import initialiseErrorHandlers, { __RewireAPI__ as ErrorHandlersAPI } from './../middleware/errorHandlers';
+import initialiseErrorHandlers, { __RewireAPI__ as ErrorHandlersAPI } from './../../src/server/middleware/errorHandlers';
 
 the('errorHandlers middleware', () => {
 

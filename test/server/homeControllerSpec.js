@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './utils/specAliases';
-import { assertWasCalled, assertParameter, assertInstance } from './utils/specAssertions';
-import { getStubRouter, getStubResponse } from './utils/fakes';
+import { the, should, when } from './../utils/specAliases';
+import { assertWasCalled, assertParameter, assertInstance } from './../utils/specAssertions';
+import { getStubRouter, getStubResponse } from './../utils/fakes';
 
-import HomeController from './../routes/home/homeController';
+import HomeController from './../../src/server/routes/home/homeController';
 
 the('HomeController', () => {
 

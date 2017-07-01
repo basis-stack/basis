@@ -20,11 +20,11 @@
   "homepage": "https://github.com/warebrained/basis",
   "scripts": {
     "build": "eslint config/*.js gulpfile.babel.js && gulp build",
-    "start": "node build/app/bin/start_basis",
-    "dev": "cross-env NODE_ENV=development node build/app/bin/start_basis",
-    "prod": "cross-env NODE_ENV=production node build/app/bin/start_basis",
-    "test": "cross-env BABEL_ENV=test mocha --require babel-core/register app/**/*Spec.js",
-    "coverage": "cross-env BABEL_ENV=test nyc mocha --require babel-core/register app/**/*Spec.js",
+    "start": "node build/server/bin/start_basis",
+    "dev": "cross-env NODE_ENV=development node build/server/bin/start_basis",
+    "prod": "cross-env NODE_ENV=production node build/server/bin/start_basis",
+    "test": "cross-env BABEL_ENV=test mocha test/**/*Spec.js",
+    "coverage": "cross-env BABEL_ENV=test nyc mocha test/**/*Spec.js",
     "publish-coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {

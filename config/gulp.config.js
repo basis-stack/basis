@@ -1,11 +1,13 @@
 const buildPath = './build';
-const appPath = './app';
+const serverPath = './src/server';
+const testsPath = './test';
 const packagePath = './package';
 
 export default {
   paths: {
     build: buildPath,
-    app: appPath,
+    server: serverPath,
+    tests: testsPath,
     package: packagePath
   },
   vendor: {

@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { the, should, when } from './utils/specAliases';
 
-import { createStubObject, getStubApp } from './utils/fakes';
-import { assertCall } from './utils/specAssertions';
-import initialiseDataParsers, { __RewireAPI__ as DataParsersAPI } from './../middleware/dataParsers';
+import { the, should, when } from './../utils/specAliases';
+import { createStubObject, getStubApp } from './../utils/fakes';
+import { assertCall } from './../utils/specAssertions';
+import initialiseDataParsers, { __RewireAPI__ as DataParsersAPI } from './../../src/server/middleware/dataParsers';
 
 the('dataParsers middleware initialiser', () => {
 

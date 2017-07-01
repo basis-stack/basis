@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import _ from 'lodash';
 
-import { the, should, when } from './utils/specAliases';
-import { assertInstance, assertWasCalled } from './utils/specAssertions';
-import { Controller, Get, Post, __RewireAPI__ as DecoratorsAPI } from './../core/decorators';
+import { the, should, when } from './../utils/specAliases';
+import { assertInstance, assertWasCalled } from './../utils/specAssertions';
+import { Controller, Get, Post, __RewireAPI__ as DecoratorsAPI } from './../../src/server/core/decorators';
 
 class StubTargetClass {
 

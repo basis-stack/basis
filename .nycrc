@@ -3,15 +3,10 @@
     "text-summary"
   ],
   "include": [
-    "app/**/*.js"
+    "src/**/*.js"
   ],
   "exclude": [
-    "**/startup.js",
-    "**/*Spec.js",
-    "**/fakes.js",
-    "**/specAliases.js",
-    "**/specAssertions.js",
-    "**/stubModule.js"
+    "**/startup.js"
   ],
   "require": [
     "babel-register"

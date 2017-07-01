@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, when, should, withScenario } from './utils/specAliases';
-import Config, { __RewireAPI__ as ConfigAPI } from './../core/config';
+import { the, when, should, withScenario } from './../utils/specAliases';
+import Config, { __RewireAPI__ as ConfigAPI } from './../../src/server/core/config';
 
 the('Config class', () => {
 

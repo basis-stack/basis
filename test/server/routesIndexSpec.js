@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './utils/specAliases';
-import { assertWasCalled } from './utils/specAssertions';
-import { createStubObject, getStubApp, getStubContainer, getStubLogger } from './utils/fakes';
-import routesIndex, { __RewireAPI__ as RoutesIndexAPI } from './../routes';
+import { the, should, when } from './../utils/specAliases';
+import { assertWasCalled } from './../utils/specAssertions';
+import { createStubObject, getStubApp, getStubContainer, getStubLogger } from './../utils/fakes';
+import routesIndex, { __RewireAPI__ as RoutesIndexAPI } from './../../src/server/routes';
 
 the('routes index', () => {
 

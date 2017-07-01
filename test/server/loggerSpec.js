@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { the, should, when } from './utils/specAliases';
+import { the, should, when } from './../utils/specAliases';
 
-import { assertParameter } from './utils/specAssertions';
-import { createStubObject } from './utils/fakes';
-import Logger, { __RewireAPI__ as LoggerApi } from './../core/logger';
+import { assertParameter } from './../utils/specAssertions';
+import { createStubObject } from './../utils/fakes';
+import Logger, { __RewireAPI__ as LoggerApi } from './../../src/server/core/logger';
 
 the('logger', () => {
 

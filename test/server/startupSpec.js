@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './utils/specAliases';
-import { assertWasCalled, assertParameter } from './utils/specAssertions';
-import { main, __RewireAPI__ as StartupAPI } from './../bin/startup';
+import { the, should, when } from './../utils/specAliases';
+import { assertWasCalled, assertParameter } from './../utils/specAssertions';
+import { main, __RewireAPI__ as StartupAPI } from './../../src/server/bin/startup';
 
 the('startup module', () => {
 

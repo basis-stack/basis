@@ -44,9 +44,6 @@ gulp.task('prepare-build', ['clean'], (cb) => {
 
   fs.mkdirSync(config.paths.build);
   cb();
-  // mkdir(config.paths.build)
-  //   .then(cb)
-  //   .catch((err) => { cb(err); });
 });
 
 /* Copy server scripts */
@@ -144,19 +141,19 @@ gulp.task('package-json', (cb) => {
 gulp.task('compile-app', () => {
 
   const startupDestFileName = `start_${envSettings.default.appName}`;
-  const startupDestDir = `${config.paths.build}/app/bin/`;
+  const startupDestDir = `${config.paths.build}/server/bin/`;
   logMessage('Creating ', `${startupDestDir}${startupDestFileName}`);
 
-  const startupFileStream = gulp.src(`${config.paths.app}/bin/startup.js`)
+  const startupFileStream = gulp.src(`${config.paths.server}/bin/startup.js`)
                                 .pipe(rename(startupDestFileName))
                                 .pipe(babel())
                                 .pipe(gulp.dest(`${startupDestDir}`));
 
-  const appFilesStream = gulp.src([`${config.paths.app}/**/*.js`, `${config.paths.app}/**/*.jsx`])
-                             .pipe(filter(['**/*.js', '**/*.jsx', '!**/startup.js', '!**/*Spec.js', '!**/specAliases.js', '!**/specAssertions.js', '!**/fakes.js', '!**/stubModule.js']))
+  const appFilesStream = gulp.src([`${config.paths.server}/**/*.js`, `${config.paths.server}/**/*.jsx`])
+                             .pipe(filter(['**/*.js', '**/*.jsx', '!**/startup.js']))
                              .pipe(babel())
-                             .pipe(gulp.dest(`${config.paths.build}/app`));
-                             // .pipe(print(getFilePathLogMessage));
+                             .pipe(gulp.dest(`${config.paths.build}/server`))
+                             .pipe(print(getFilePathLogMessage));
 
   return merge(startupFileStream, appFilesStream);
 });
@@ -166,8 +163,8 @@ gulp.task('views', () => {
 
   const viewsExtension = '*.ejs';
 
-  return gulp.src(`${config.paths.app}/**/${viewsExtension}`)
-             .pipe(gulp.dest(`${config.paths.build}/app`));
+  return gulp.src(`${config.paths.server}/**/${viewsExtension}`)
+             .pipe(gulp.dest(`${config.paths.build}/server`));
              // .pipe(print(getFilePathLogMessage));
 });
 
@@ -190,7 +187,7 @@ gulp.task('vendor-assets', () => {
 /* Lint */
 gulp.task('lint', () => (
 
-  gulp.src([`${config.paths.app}/**/*.js`, `${config.paths.app}/**/*.jsx`])
+  gulp.src([`${config.paths.server}/**/*.js`, `${config.paths.server}/**/*.jsx`, `${config.paths.tests}/**/*.js`])
       .pipe(eslint())
       .pipe(eslint.format())
       .pipe(eslint.failOnError())

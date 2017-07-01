@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { the, when, withScenario, should } from './utils/specAliases';
 
-import getWinston from './../core/winstonProvider';
+import { the, when, withScenario, should } from './../utils/specAliases';
+import getWinston from './../../src/server/core/winstonProvider';
 
 const assertInstance = (result) => {
 
