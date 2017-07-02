@@ -14,9 +14,12 @@ import print from 'gulp-print';
 import eslint from 'gulp-eslint';
 import jsonfile from 'jsonfile';
 import concat from 'gulp-concat';
+import webpack from 'webpack';
+import util from 'gulp-util';
 
 import config from './config/gulp.config';
 import getEnvSettings from './config/settings';
+import webpackConfig from './config/webpack.config';
 
 const logMessagePrefix = '         + ';
 const envSettings = getEnvSettings();
@@ -40,7 +43,7 @@ gulp.task('clean', (cb) => {
 });
 
 /* Prepare build directory */
-gulp.task('prepare-build', ['clean'], (cb) => {
+gulp.task('prepare:build', ['clean'], (cb) => {
 
   fs.mkdirSync(config.paths.build);
   cb();
@@ -69,17 +72,17 @@ gulp.task('server-scripts', (cb) => {
   cb();
 });
 
-gulp.task('nginx-config', () => (
+gulp.task('copy:nginx-config', () => (
 
-  gulp.src('./config/nginx.conf')
-      .pipe(print(getFilePathLogMessage))
+  gulp.src(['./config/nginx.conf'])
       .pipe(replace('%NGINX_LOCAL_PORT%', envSettings.production.webServerPort))
       .pipe(replace('%NGINX_PUBLIC_PORT%', envSettings.production.publicPort))
       .pipe(gulp.dest(`${config.paths.build}/config`))
+      .pipe(print(getFilePathLogMessage))
 ));
 
 /* Prepare Environment settings file */
-gulp.task('environment-settings', ['nginx-config'], (cb) => {
+gulp.task('create:env-settings', ['copy:nginx-config'], (cb) => {
 
   const outputSettings = Object.assign(envSettings);
 
@@ -104,7 +107,7 @@ gulp.task('environment-settings', ['nginx-config'], (cb) => {
 });
 
 /* Prepare package.json for the server / runtime */
-gulp.task('package-json', (cb) => {
+gulp.task('create:package-json', (cb) => {
 
   const fileName = 'package.json';
 
@@ -138,16 +141,16 @@ gulp.task('package-json', (cb) => {
 });
 
 /* Compile server-side app */
-gulp.task('compile-app', () => {
+gulp.task('compile:server', () => {
 
   const startupDestFileName = `start_${envSettings.default.appName}`;
   const startupDestDir = `${config.paths.build}/server/bin/`;
-  logMessage('Creating ', `${startupDestDir}${startupDestFileName}`);
 
   const startupFileStream = gulp.src(`${config.paths.server}/bin/startup.js`)
                                 .pipe(rename(startupDestFileName))
                                 .pipe(babel())
-                                .pipe(gulp.dest(`${startupDestDir}`));
+                                .pipe(gulp.dest(`${startupDestDir}`))
+                                .pipe(print(getFilePathLogMessage));
 
   const appFilesStream = gulp.src([`${config.paths.server}/**/*.js`, `${config.paths.server}/**/*.jsx`])
                              .pipe(filter(['**/*.js', '**/*.jsx', '!**/startup.js']))
@@ -159,17 +162,17 @@ gulp.task('compile-app', () => {
 });
 
 /* Copy server-side views */
-gulp.task('views', () => {
+gulp.task('copy:views', () => {
 
   const viewsExtension = '*.ejs';
 
   return gulp.src(`${config.paths.server}/**/${viewsExtension}`)
-             .pipe(gulp.dest(`${config.paths.build}/server`));
-             // .pipe(print(getFilePathLogMessage));
+             .pipe(gulp.dest(`${config.paths.build}/server`))
+             .pipe(print(getFilePathLogMessage));
 });
 
 /* Concat and copy vendor assets (fonts, styles, scripts) to static */
-gulp.task('vendor-assets', () => {
+gulp.task('bundle:vendor-assets', () => {
 
   const fontsStream = gulp.src(config.vendor.fonts)
                           .pipe(gulp.dest(`${config.paths.build}/static/fonts/`));
@@ -184,20 +187,36 @@ gulp.task('vendor-assets', () => {
   return merge(fontsStream, stylesStream);
 });
 
-/* Lint */
-gulp.task('lint', () => (
+/* Bundle client assets with Webpack */
+gulp.task('bundle:client', (cb) => {
 
-  gulp.src([`${config.paths.server}/**/*.js`, `${config.paths.server}/**/*.jsx`, `${config.paths.tests}/**/*.js`])
+  webpack(webpackConfig, (err, stats) => {
+
+    if (err) {
+      throw new util.PluginError('bundle:client', err);
+    }
+
+    const ouptut = stats.toString({ assets: true, chunks: false, chunkModules: false, colors: true, hash: false, timings: false, version: false });
+    util.log(`[bundle:client] Completed\n ${ouptut}`);
+
+    cb();
+  });
+});
+
+/* Lint */
+gulp.task('lint:all', () => (
+
+  gulp.src(['./src/**/*.js', './src/**/*.jsx', `${config.paths.tests}/**/*.js`])
       .pipe(eslint())
       .pipe(eslint.format())
       .pipe(eslint.failOnError())
 ));
 
 /* Build entire solution */
-gulp.task('build', ['prepare-build'], (cb) => {
+gulp.task('build', ['prepare:build'], (cb) => {
 
-  runSequence('lint',
-              ['environment-settings', 'package-json', 'compile-app', 'views', 'vendor-assets'],
+  runSequence('lint:all',
+              ['create:env-settings', 'create:package-json', 'compile:server', 'copy:views', /* 'bundle:vendor-assets',*/ 'bundle:client'],
               cb);
 });
 

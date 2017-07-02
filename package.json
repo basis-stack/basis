@@ -71,6 +71,7 @@
     "gulp-print": "^2.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
+    "gulp-util": "^3.0.8",
     "gulp-zip": "^4.0.0",
     "merge-stream": "^1.0.1",
     "minimatch": "^3.0.4",
