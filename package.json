@@ -20,9 +20,9 @@
   "homepage": "https://github.com/warebrained/basis",
   "scripts": {
     "build": "eslint config/*.js gulpfile.babel.js && gulp build",
-    "start": "node build/server/bin/start_basis",
-    "dev": "cross-env NODE_ENV=development node build/server/bin/start_basis",
-    "prod": "cross-env NODE_ENV=production node build/server/bin/start_basis",
+    "start": "node dist/bin/start_basis",
+    "dev": "cross-env NODE_ENV=development node dist/bin/start_basis",
+    "prod": "cross-env NODE_ENV=production node dist/bin/start_basis",
     "test": "cross-env BABEL_ENV=test mocha test/**/*Spec.js",
     "coverage": "cross-env BABEL_ENV=test nyc mocha test/**/*Spec.js",
     "publish-coverage": "nyc report --reporter=text-lcov | coveralls"
@@ -46,6 +46,7 @@
     "@material/typography": "^0.2.2",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
     "babel-plugin-istanbul": "^4.1.4",
     "babel-plugin-rewire": "^1.1.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -71,6 +72,7 @@
     "gulp-print": "^2.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
+    "gulp-sass": "^3.1.0",
     "gulp-util": "^3.0.8",
     "gulp-zip": "^4.0.0",
     "merge-stream": "^1.0.1",

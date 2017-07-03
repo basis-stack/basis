@@ -1,0 +1,16 @@
+// TODO: Use Material theme here instead (on elements)
+$error-title-colour: #777;
+
+body {
+  margin: 0;
+}
+
+.basis-error-container {
+
+  margin: 7% 25% 0;
+
+  small {
+
+    color: $error-title-colour;
+  }
+}

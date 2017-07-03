@@ -15,11 +15,12 @@ node_modules
 .c9
 
 # Temporary build artefacts
-build
+dist
 temp
 package
 .DS_Store
 
 # Local bash scripts
+g
 rs
 cover

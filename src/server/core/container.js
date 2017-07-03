@@ -6,7 +6,7 @@ class Container {
   constructor() {
 
     this._instanceMap = new Map();
-    this._settingsFilePath = `${__dirname}/../../config/settings.json`;
+    this._settingsFilePath = `${__dirname}/../config/settings.json`;
 
     this.instanceKeys = {};
   }

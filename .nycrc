@@ -6,7 +6,8 @@
     "src/**/*.js"
   ],
   "exclude": [
-    "**/startup.js"
+    "**/startup.js",
+    "**/client/app.js"
   ],
   "require": [
     "babel-register"

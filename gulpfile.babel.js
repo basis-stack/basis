@@ -16,6 +16,7 @@ import jsonfile from 'jsonfile';
 import concat from 'gulp-concat';
 import webpack from 'webpack';
 import util from 'gulp-util';
+import sass from 'gulp-sass';
 
 import config from './config/gulp.config';
 import getEnvSettings from './config/settings';
@@ -144,7 +145,7 @@ gulp.task('create:package-json', (cb) => {
 gulp.task('compile:server', () => {
 
   const startupDestFileName = `start_${envSettings.default.appName}`;
-  const startupDestDir = `${config.paths.build}/server/bin/`;
+  const startupDestDir = `${config.paths.build}/bin/`;
 
   const startupFileStream = gulp.src(`${config.paths.server}/bin/startup.js`)
                                 .pipe(rename(startupDestFileName))
@@ -155,7 +156,7 @@ gulp.task('compile:server', () => {
   const appFilesStream = gulp.src([`${config.paths.server}/**/*.js`, `${config.paths.server}/**/*.jsx`])
                              .pipe(filter(['**/*.js', '**/*.jsx', '!**/startup.js']))
                              .pipe(babel())
-                             .pipe(gulp.dest(`${config.paths.build}/server`))
+                             .pipe(gulp.dest(`${config.paths.build}`))
                              .pipe(print(getFilePathLogMessage));
 
   return merge(startupFileStream, appFilesStream);
@@ -167,24 +168,36 @@ gulp.task('copy:views', () => {
   const viewsExtension = '*.ejs';
 
   return gulp.src(`${config.paths.server}/**/${viewsExtension}`)
-             .pipe(gulp.dest(`${config.paths.build}/server`))
+             .pipe(gulp.dest(`${config.paths.build}`))
              .pipe(print(getFilePathLogMessage));
 });
 
 /* Concat and copy vendor assets (fonts, styles, scripts) to static */
-gulp.task('bundle:vendor-assets', () => {
+gulp.task('copy:fonts', () => (
 
-  const fontsStream = gulp.src(config.vendor.fonts)
-                          .pipe(gulp.dest(`${config.paths.build}/static/fonts/`));
-                          // .pipe(print(getFilePathLogMessage));
+  gulp.src(config.vendor.fonts)
+      .pipe(gulp.dest(`${config.paths.build}/public/fonts/`))
+));
 
-  const stylesStream = gulp.src(config.vendor.styles)
-                           .pipe(replace('url(\'../../fonts/Roboto', 'url(\'../fonts'))
-                           .pipe(concat('server-vendor.css'))
-                           .pipe(gulp.dest(`${config.paths.build}/static/styles`));
-                           // .pipe(print(getFilePathLogMessage));
+gulp.task('sass:server', () => {
 
-  return merge(fontsStream, stylesStream);
+  const options = {
+    outputStyle: 'compact',
+    includePaths: ['node_modules/']
+  };
+
+  const vendorStream = gulp.src(`${config.paths.server}/assets/styles/vendors.scss`)
+                           .pipe(sass(options).on('error', sass.logError))
+                           .pipe(replace('url("../../../fonts/Roboto', 'url("../fonts'))
+                           .pipe(rename('server-vendor.css'))
+                           .pipe(gulp.dest(`${config.paths.build}/public/styles`));
+
+  const contentStream = gulp.src(`${config.paths.server}/assets/styles/main.scss`)
+                            .pipe(sass(options).on('error', sass.logError))
+                            .pipe(rename('server.css'))
+                            .pipe(gulp.dest(`${config.paths.build}/public/styles`));
+
+  return merge(vendorStream, contentStream);
 });
 
 /* Bundle client assets with Webpack */
@@ -216,7 +229,7 @@ gulp.task('lint:all', () => (
 gulp.task('build', ['prepare:build'], (cb) => {
 
   runSequence('lint:all',
-              ['create:env-settings', 'create:package-json', 'compile:server', 'copy:views', /* 'bundle:vendor-assets',*/ 'bundle:client'],
+              ['create:env-settings', 'create:package-json', 'compile:server', 'copy:views', 'bundle:client', 'copy:fonts', 'sass:server'],
               cb);
 });
 

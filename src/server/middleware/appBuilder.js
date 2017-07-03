@@ -66,7 +66,7 @@ export default class AppBuilder {
   useRoutes() {
 
     // TODO: Move this to its own method OR the content middleware initialiser!!!
-    this._app.use(express.static(path.join(__dirname, '../../static')));
+    this._app.use(express.static(path.join(__dirname, '../public')));
 
 
     // TODO: Need to ensure that this is called inbetween 'base' middleware (parsers and such) and error handlers. How best to do this ?
