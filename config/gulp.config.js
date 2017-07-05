@@ -12,8 +12,8 @@ export default {
   },
   vendor: {
     fonts: [
-      // TODO: Bring in material icons font
-      './node_modules/roboto-fontface/fonts/Roboto/**/@(*Light|*Regular|*Medium).{eot,svg,ttf,woff,woff2}'
+      './node_modules/roboto-fontface/fonts/Roboto/**/@(*Light|*Regular|*Medium).{eot,svg,ttf,woff,woff2}',
+      './node_modules/material-design-icons-iconfont/dist/fonts/**/*.{eot,svg,ttf,woff,woff2}'
     ]
   }
 };

@@ -6,6 +6,6 @@ export default class HomeController {
   @Get()
   root(req, res, next) {
 
-    res.send('Hello World!');
+    res.render('app', { title: 'Basis' });
   }
 }

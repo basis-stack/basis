@@ -3,10 +3,8 @@ import 'reflect-metadata';
 export default (controllerClass, controllerInstance, router) => {
 
   const baseRoute = Reflect.getMetadata('http:rootPath', controllerClass);
-
-  // TODO: Filter out any methods that do not have metadata attached (e.g. private methods, etc)
   const methods = Object.getOwnPropertyNames(controllerClass.prototype)
-                        .filter(m => m !== 'constructor');
+                        .filter(m => m !== 'constructor' && Reflect.hasMetadata('http:path', controllerInstance, m));
 
   methods.forEach((name) => {
 

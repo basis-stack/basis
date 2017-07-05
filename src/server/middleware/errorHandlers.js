@@ -1,6 +1,6 @@
 import HTTPStatus from 'http-status';
 
-import ErrorView from './../views/error';
+import ErrorView from './../views/errorView';
 import renderView from './../core/renderers';
 
 const getErrorDetail = (config, status, err) => {

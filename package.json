@@ -43,6 +43,7 @@
     "winston": "^2.3.1"
   },
   "devDependencies": {
+    "@material/theme": "^0.1.5",
     "@material/typography": "^0.2.2",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
@@ -75,6 +76,7 @@
     "gulp-sass": "^3.1.0",
     "gulp-util": "^3.0.8",
     "gulp-zip": "^4.0.0",
+    "material-design-icons-iconfont": "^3.0.3",
     "merge-stream": "^1.0.1",
     "minimatch": "^3.0.4",
     "minimist": "^1.2.0",

@@ -15,6 +15,10 @@ class StubController {
 
   @Post('/post-something')
   postSomething() {}
+
+  nonDecoratedMethod() {}
+
+  _privateMethod() {}
 }
 
 the('routeBinder', () => {
@@ -40,11 +44,6 @@ the('routeBinder', () => {
 
       expect(stubRouterGet.args[0][0].includes('/base-path/')).to.equal(true);
       expect(stubRouterPost.args[0][0].includes('/base-path/')).to.equal(true);
-    });
-
-    should('exclude methods without decorators', () => {
-
-      // TODO: Do this !!!
     });
 
     should('flatten double slashes to single', () => {

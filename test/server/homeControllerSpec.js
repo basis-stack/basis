@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 
 import { the, should, when } from './../utils/specAliases';
-import { assertWasCalled, assertParameter, assertInstance } from './../utils/specAssertions';
+import { assertParameter, assertInstance } from './../utils/specAssertions';
 import { getStubRouter, getStubResponse } from './../utils/fakes';
 
 import HomeController from './../../src/server/routes/home/homeController';
@@ -31,13 +31,14 @@ the('HomeController', () => {
   when('route path hit', () => {
 
     const stubResponse = getStubResponse();
-    const stubResponseSend = sinon.spy(stubResponse, 'send');
+    const stubResponseRender = sinon.spy(stubResponse, 'render');
 
     controller.root(undefined, stubResponse, undefined);
 
-    should('send Hello World', () => {
+    should('render the app (SPA) view', () => {
 
-      assertWasCalled(stubResponseSend, 'Hello World!');
+      assertParameter(stubResponseRender, 0, 'app');
+      assertParameter(stubResponseRender, 1, { title: 'Basis' }, true);
     });
   });
 });
