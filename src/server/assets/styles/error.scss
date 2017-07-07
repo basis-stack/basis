@@ -1,7 +1,7 @@
-// TODO: Use Material theme here instead (on elements)
-$error-title-colour: #777;
+@import 'material-colors/dist/colors.scss';
 
 body {
+
   margin: 0;
 }
 
@@ -9,8 +9,7 @@ body {
 
   margin: 7% 25% 0;
 
-  small {
-
-    color: $error-title-colour;
+  i {
+    color: $md-red-a200;
   }
 }

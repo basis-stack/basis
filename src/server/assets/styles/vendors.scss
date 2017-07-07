@@ -1,16 +1,47 @@
-$fonts-path: '../fonts';
+@import 'material-colors/dist/colors.scss';
 
+$fonts-path: '../fonts';
 $roboto-font-path: $fonts-path;
 $material-design-icons-font-path: $fonts-path + '/';
 
+$mdc-theme-primary: $md-blue-grey-600;
+$mdc-theme-accent: $md-light-blue-400;
+$mdc-theme-background: $md-white;
+
 @import 'roboto-fontface/css/roboto/sass/roboto-fontface';
-@import '@material/typography/mdc-typography';
 @import 'material-design-icons-iconfont/dist/material-design-icons.scss';
+@import '@material/typography/mdc-typography';
+@import '@material/theme/mdc-theme';
+
+@mixin md-size($size) {
+
+  &.md-#{$size} { font-size: #{ $size + 'px' }; }
+}
 
 .material-icons {
 
-  &.md-18 { font-size: 18px; }
-  &.md-24 { font-size: 24px; }
-  &.md-36 { font-size: 36px; }
-  &.md-48 { font-size: 48px; }
+  @include md-size(18);
+  @include md-size(24);
+  @include md-size(36);
+  @include md-size(48);
+
+  &.md-dark {
+
+    color: rgba(0, 0, 0, 0.54);
+
+    &.md-inactive {
+
+      color: rgba(0, 0, 0, 0.26);
+    }
+  }
+
+  &.md-light {
+
+    color: rgba(255, 255, 255, 1);
+
+    &.md-inactive {
+
+      color: rgba(255, 255, 255, 0.3);
+    }
+  }
 }
