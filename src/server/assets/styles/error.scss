@@ -7,9 +7,13 @@ body {
 
 .basis-error-container {
 
-  margin: 7% 25% 0;
+  margin: 7% 0 0;
 
-  i {
-    color: $md-red-a200;
+  div.col-xs-1 {
+    text-align: right;
+  }
+
+  pre {
+    margin-top: 2rem;
   }
 }
