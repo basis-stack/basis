@@ -49,7 +49,7 @@ the('logging middleware initialiser', () => {
     return stubAppUse.args[0][0];
   };
 
-  when('invoked with a valid app instance', () => {
+  when('invoked with valid app instance', () => {
 
     withScenario('non-production env config', () => {
 
@@ -65,7 +65,7 @@ the('logging middleware initialiser', () => {
         stubMorgan.resetHistory();
       });
 
-      should('return a valid morgan instance', () => {
+      should('return valid morgan instance', () => {
 
         assertResult(result, stubMorganResult);
       });
@@ -96,7 +96,7 @@ the('logging middleware initialiser', () => {
         stubMorgan.resetHistory();
       });
 
-      should('return a valid morgan instance', () => {
+      should('return valid morgan instance', () => {
 
         assertResult(result, stubMorganResult);
       });

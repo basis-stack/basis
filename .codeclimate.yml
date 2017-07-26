@@ -2,10 +2,15 @@ engines:
   eslint:
     enabled: true
     channel: "eslint-3"
+    config:
+      extensions:
+      - .js
+      - .jsx
 
 ratings:
    paths:
    - "**.js"
+   - "**.jsx"
 
 exclude_paths:
 - node_modules/**/*

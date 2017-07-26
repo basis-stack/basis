@@ -10,10 +10,22 @@ body {
   margin: 7% 0 0;
 
   div.col-xs-1 {
+
     text-align: right;
   }
 
   pre {
+
     margin-top: 2rem;
+  }
+
+  i[data-icon="sentiment_dissatisfied"] {
+
+    color: $md-amber-400;
+  }
+
+  i[data-icon="error_outline"] {
+
+    color: $md-red-400;
   }
 }

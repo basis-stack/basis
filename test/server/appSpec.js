@@ -12,7 +12,7 @@ the('app', () => {
   const stubExpress = sinon.stub().returns(stubExpressInstance);
   const stubContainer = { stubContainer: true };
   const stubAppBuilderClass = { create: () => {} };
-  const appBuilderMethods = ['useEjs', 'logRequests', 'useDataParsers', 'useRoutes', 'handleErrors', 'trustProxy'];
+  const appBuilderMethods = ['useEjs', 'logRequests', 'useDataParsers', 'defaultContent', 'useRoutes', 'handleErrors', 'trustProxy'];
   const stubAppBuilderInstance = createStubObject(appBuilderMethods);
   stubAppBuilderInstance.result = {};
 
@@ -35,6 +35,7 @@ the('app', () => {
     let stubAppBuilderUseEjs;
     let stubAppBuilderLogRequests;
     let stubAppBuilderUseDataParsers;
+    let stubAppBuilderDefaultContent;
     let stubAppBuilderUseRoutes;
     let stubAppBuilderHandleErrors;
     let stubAppBuilderTrustProxy;
@@ -49,9 +50,10 @@ the('app', () => {
       stubAppBuilderUseEjs = sinon.stub(stubAppBuilderInstance, appBuilderMethods[0]).returns(stubAppBuilderInstance);
       stubAppBuilderLogRequests = sinon.stub(stubAppBuilderInstance, appBuilderMethods[1]).returns(stubAppBuilderInstance);
       stubAppBuilderUseDataParsers = sinon.stub(stubAppBuilderInstance, appBuilderMethods[2]).returns(stubAppBuilderInstance);
-      stubAppBuilderUseRoutes = sinon.stub(stubAppBuilderInstance, appBuilderMethods[3]).returns(stubAppBuilderInstance);
-      stubAppBuilderHandleErrors = sinon.stub(stubAppBuilderInstance, appBuilderMethods[4]).returns(stubAppBuilderInstance);
-      stubAppBuilderTrustProxy = sinon.stub(stubAppBuilderInstance, appBuilderMethods[5]).returns(stubAppBuilderInstance);
+      stubAppBuilderDefaultContent = sinon.stub(stubAppBuilderInstance, appBuilderMethods[3]).returns(stubAppBuilderInstance);
+      stubAppBuilderUseRoutes = sinon.stub(stubAppBuilderInstance, appBuilderMethods[4]).returns(stubAppBuilderInstance);
+      stubAppBuilderHandleErrors = sinon.stub(stubAppBuilderInstance, appBuilderMethods[5]).returns(stubAppBuilderInstance);
+      stubAppBuilderTrustProxy = sinon.stub(stubAppBuilderInstance, appBuilderMethods[6]).returns(stubAppBuilderInstance);
       stubAppBuilderResult = sinon.stub(stubAppBuilderInstance, 'result').get(() => stubExpressInstance);
 
       result = createApp(stubContainer);
@@ -78,25 +80,31 @@ the('app', () => {
     should('use the data parsers (body & cookie)', () => {
 
       assertWasCalled(stubAppBuilderUseDataParsers);
-      assertCalledBefore(stubAppBuilderUseDataParsers, stubAppBuilderUseRoutes, appBuilderMethods[2], appBuilderMethods[3]);
+      assertCalledBefore(stubAppBuilderUseDataParsers, stubAppBuilderDefaultContent, appBuilderMethods[2], appBuilderMethods[3]);
+    });
+
+    should('apply default content middleware', () => {
+
+      assertWasCalled(stubAppBuilderDefaultContent);
+      assertCalledBefore(stubAppBuilderDefaultContent, stubAppBuilderUseRoutes, appBuilderMethods[3], appBuilderMethods[4]);
     });
 
     should('initialise app routes', () => {
 
       assertWasCalled(stubAppBuilderUseRoutes);
-      assertCalledBefore(stubAppBuilderUseRoutes, stubAppBuilderHandleErrors, appBuilderMethods[3], appBuilderMethods[4]);
+      assertCalledBefore(stubAppBuilderUseRoutes, stubAppBuilderHandleErrors, appBuilderMethods[4], appBuilderMethods[5]);
     });
 
     should('handle errors (and 404s)', () => {
 
       assertWasCalled(stubAppBuilderHandleErrors);
-      assertCalledBefore(stubAppBuilderHandleErrors, stubAppBuilderTrustProxy, appBuilderMethods[4], appBuilderMethods[5]);
+      assertCalledBefore(stubAppBuilderHandleErrors, stubAppBuilderTrustProxy, appBuilderMethods[5], appBuilderMethods[6]);
     });
 
     should('enable \'trust proxy\' setting', () => {
 
       assertWasCalled(stubAppBuilderTrustProxy);
-      assertCalledBefore(stubAppBuilderTrustProxy, stubAppBuilderResult, appBuilderMethods[5], 'result');
+      assertCalledBefore(stubAppBuilderTrustProxy, stubAppBuilderResult, appBuilderMethods[6], 'result');
     });
 
     should('return the express instance', () => {

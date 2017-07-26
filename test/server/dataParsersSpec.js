@@ -31,24 +31,24 @@ the('dataParsers middleware initialiser', () => {
   });
 
 
-  when('invoked with a valid app instance', () => {
+  when('invoked with valid app instance', () => {
 
     before(() => {
 
       initialiseDataParsers(stubApp);
     });
 
-    should('initialise the body-parser json middleware', () => {
+    should('initialise body-parser json middleware', () => {
 
       assertCall(stubAppUse, 0, stubJsonParser);
     });
 
-    should('initialise the body-parser urlencoded middleware', () => {
+    should('initialise body-parser urlencoded middleware', () => {
 
       assertCall(stubAppUse, 1, stubUrlencodedParser);
     });
 
-    should('initialise the cookie-parser middleware', () => {
+    should('initialise cookie-parser middleware', () => {
 
       assertCall(stubAppUse, 2, stubCookieParser);
     });

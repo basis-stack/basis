@@ -13,29 +13,32 @@ the('appBuilder', () => {
   const stubLogger = { logStream: {} };
   const stubContainer = getStubContainer(stubConfig, stubLogger);
   const stubApp = getStubApp();
-  const stubInitialiseRoutes = sinon.spy();
-  const stubInitialiseRequestLogger = sinon.spy();
+  const stubInitialiseContent = sinon.spy();
   const stubInitialiseDataParsers = sinon.spy();
   const stubInitialiseErrorHandlers = sinon.spy();
+  const stubInitialiseRequestLogger = sinon.spy();
+  const stubInitialiseRoutes = sinon.spy();
 
   let builder;
 
   before(() => {
 
-    AppBuilderAPI.__Rewire__('initialiseRoutes', stubInitialiseRoutes);
-    AppBuilderAPI.__Rewire__('initialiseRequestLogger', stubInitialiseRequestLogger);
+    AppBuilderAPI.__Rewire__('initialiseContent', stubInitialiseContent);
     AppBuilderAPI.__Rewire__('initialiseDataParsers', stubInitialiseDataParsers);
     AppBuilderAPI.__Rewire__('initialiseErrorHandlers', stubInitialiseErrorHandlers);
+    AppBuilderAPI.__Rewire__('initialiseRequestLogger', stubInitialiseRequestLogger);
+    AppBuilderAPI.__Rewire__('initialiseRoutes', stubInitialiseRoutes);
 
     builder = AppBuilder.create(stubContainer, stubApp);
   });
 
   after(() => {
 
-    AppBuilderAPI.__ResetDependency__('initialiseRoutes');
-    AppBuilderAPI.__ResetDependency__('initialiseRequestLogger');
+    AppBuilderAPI.__ResetDependency__('initialiseContent');
     AppBuilderAPI.__ResetDependency__('initialiseDataParsers');
     AppBuilderAPI.__ResetDependency__('initialiseErrorHandlers');
+    AppBuilderAPI.__ResetDependency__('initialiseRequestLogger');
+    AppBuilderAPI.__ResetDependency__('initialiseRoutes');
   });
 
   when('created', () => {
@@ -127,6 +130,28 @@ the('appBuilder', () => {
       expect(result).to.equal(builder);
     });
   });
+
+
+  when('defaultContent called', () => {
+
+    let result;
+
+    before(() => {
+
+      result = builder.defaultContent();
+    });
+
+    should('initialise the default content options (serve static & compress)', () => {
+
+      assertWasCalled(stubInitialiseContent, stubApp);
+    });
+
+    should('return the builder instance', () => {
+
+      expect(result).to.equal(builder);
+    });
+  });
+
 
   when('useRoutes called', () => {
 

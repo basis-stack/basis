@@ -1,13 +1,14 @@
 import path from 'path';
 import express from 'express';
 
-// Routes
-import initialiseRoutes from './../routes';
-
 // Middleware
-import initialiseRequestLogger from './logging';
+import initialiseContent from './content';
 import initialiseDataParsers from './dataParsers';
 import initialiseErrorHandlers from './errorHandlers';
+import initialiseRequestLogger from './logging';
+
+// Routes
+import initialiseRoutes from './../routes';
 
 // TODO: Need to decide if this app builder pattern is the most effective way of hooking up all the various middleware, roputes, etc and what a specific app actually wants.
 //       Could get a bit gnarly with lots of middleware, and so the chain calls might get a bit verbose. Not sure, need to play with it and see how feels.
@@ -35,6 +36,13 @@ export default class AppBuilder {
     return this._app;
   }
 
+  defaultContent() {
+
+    initialiseContent(this._app);
+
+    return this;
+  }
+
   handleErrors() {
 
     // TODO: Need to ensure that this is the last middleware include to be called.
@@ -58,6 +66,13 @@ export default class AppBuilder {
     return this;
   }
 
+  useDataParsers() {
+
+    initialiseDataParsers(this._app);
+
+    return this;
+  }
+
   useEjs() {
 
     return this._setViewEngine('ejs');
@@ -65,19 +80,8 @@ export default class AppBuilder {
 
   useRoutes() {
 
-    // TODO: Move this to its own method OR the content middleware initialiser!!!
-    this._app.use(express.static(path.join(__dirname, '../public')));
-
-
     // TODO: Need to ensure that this is called inbetween 'base' middleware (parsers and such) and error handlers. How best to do this ?
     initialiseRoutes(this._app, this._container);
-
-    return this;
-  }
-
-  useDataParsers() {
-
-    initialiseDataParsers(this._app);
 
     return this;
   }

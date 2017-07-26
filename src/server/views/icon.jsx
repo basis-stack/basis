@@ -14,5 +14,5 @@ export default (props) => {
     !active ? 'md-inactive' : ''
   );
 
-  return <i className={classes}>{ props.value }</i>;
+  return <i className={classes} data-icon={props.value}>{ props.value }</i>;
 };

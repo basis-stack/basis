@@ -21,7 +21,7 @@ const ErrorView = (props) => {
       <div className="row">
         <div className="col-xs-offset-4 col-xs-8">
           <h2 className="mdc-typography--subheading1 mdc-theme--text-primary-on-background">{ props.message }</h2>
-          <pre className="mdc-typography--body1 mdc-theme--text-secondary-on-background">{ props.error.stack }</pre>
+          <pre className="mdc-typography--body1 mdc-theme--text-hint-on-background">{ props.error.stack }</pre>
         </div>
       </div>
     </div>
