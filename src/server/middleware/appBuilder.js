@@ -6,6 +6,7 @@ import initialiseContent from './content';
 import initialiseDataParsers from './dataParsers';
 import initialiseErrorHandlers from './errorHandlers';
 import initialiseRequestLogger from './logging';
+import initialiseSecurity from './security';
 
 // Routes
 import initialiseRoutes from './../routes';
@@ -55,6 +56,13 @@ export default class AppBuilder {
 
     // TODO: Need to ensure that this is first middleware include called.
     initialiseRequestLogger(this._app, this._config, this._logger.logStream);
+
+    return this;
+  }
+
+  secure() {
+
+    initialiseSecurity(this._app);
 
     return this;
   }

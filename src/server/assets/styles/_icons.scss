@@ -1,0 +1,38 @@
+@mixin md-size($size) {
+
+  &.md-#{$size} {
+
+    font-size: #{ $size + 'px' };
+    width: #{ $size + 'px' };
+    text-align: center;
+  }
+}
+
+.material-icons,
+.fa {
+
+  @include md-size(18);
+  @include md-size(24);
+  @include md-size(36);
+  @include md-size(48);
+
+  &.md-dark {
+
+    color: rgba(0, 0, 0, 0.54);
+
+    &.md-inactive {
+
+      color: rgba(0, 0, 0, 0.26);
+    }
+  }
+
+  &.md-light {
+
+    color: rgba(255, 255, 255, 1);
+
+    &.md-inactive {
+
+      color: rgba(255, 255, 255, 0.3);
+    }
+  }
+}

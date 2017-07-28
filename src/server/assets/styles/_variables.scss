@@ -1,0 +1,12 @@
+@import 'material-colors/dist/colors.scss';
+
+$fonts-path: '../fonts';
+
+$roboto-font-path: $fonts-path;
+$material-design-icons-font-path: $fonts-path + '/';
+$fa-font-path: $fonts-path;
+$fa-font-size-base: 24px;
+
+$mdc-theme-primary: $md-blue-grey-600;
+$mdc-theme-accent: $md-light-blue-400;
+$mdc-theme-background: $md-white;

@@ -18,6 +18,7 @@ the('appBuilder', () => {
   const stubInitialiseErrorHandlers = sinon.spy();
   const stubInitialiseRequestLogger = sinon.spy();
   const stubInitialiseRoutes = sinon.spy();
+  const stubInitialiseSecurity = sinon.spy();
 
   let builder;
 
@@ -28,6 +29,7 @@ the('appBuilder', () => {
     AppBuilderAPI.__Rewire__('initialiseErrorHandlers', stubInitialiseErrorHandlers);
     AppBuilderAPI.__Rewire__('initialiseRequestLogger', stubInitialiseRequestLogger);
     AppBuilderAPI.__Rewire__('initialiseRoutes', stubInitialiseRoutes);
+    AppBuilderAPI.__Rewire__('initialiseSecurity', stubInitialiseSecurity);
 
     builder = AppBuilder.create(stubContainer, stubApp);
   });
@@ -39,6 +41,7 @@ the('appBuilder', () => {
     AppBuilderAPI.__ResetDependency__('initialiseErrorHandlers');
     AppBuilderAPI.__ResetDependency__('initialiseRequestLogger');
     AppBuilderAPI.__ResetDependency__('initialiseRoutes');
+    AppBuilderAPI.__ResetDependency__('initialiseSecurity');
   });
 
   when('created', () => {
@@ -131,7 +134,6 @@ the('appBuilder', () => {
     });
   });
 
-
   when('defaultContent called', () => {
 
     let result;
@@ -152,6 +154,25 @@ the('appBuilder', () => {
     });
   });
 
+  when('secure called', () => {
+
+    let result;
+
+    before(() => {
+
+      result = builder.secure();
+    });
+
+    should('initialise security measures (HTTP headers via helmet)', () => {
+
+      assertWasCalled(stubInitialiseSecurity, stubApp);
+    });
+
+    should('return the builder instance', () => {
+
+      expect(result).to.equal(builder);
+    });
+  });
 
   when('useRoutes called', () => {
 

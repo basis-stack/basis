@@ -1,1 +1,6 @@
-// TODO: Add helmet, etc middleware here
+import helmet from 'helmet';
+
+export default (app) => {
+
+  // TODO: init helmet defaults
+};
