@@ -188,7 +188,7 @@ gulp.task('sass:server', () => {
 
   const vendorStream = gulp.src(`${config.paths.server}/assets/styles/vendors.scss`)
                            .pipe(sass(options).on('error', sass.logError))
-                           .pipe(replace('/Roboto/', '/'))
+                           .pipe(replace('/roboto/', '/'))
                            .pipe(rename('server-vendor.css'))
                            .pipe(gulp.dest(`${config.paths.build}/public/styles`));
 

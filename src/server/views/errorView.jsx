@@ -1,8 +1,8 @@
 import React from 'react';
 import HTTPStatus from 'http-status';
 
-import Icon from './icon';
-import material from './materialContainer';
+import Icon from './../components/icon';
+import material from './../components/materialContainer';
 
 const ErrorView = (props) => {
 
