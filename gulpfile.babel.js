@@ -5,7 +5,6 @@ import colors from 'colors';
 import replace from 'gulp-replace';
 import runSequence from 'run-sequence';
 import fs from 'fs';
-import zip from 'gulp-zip';
 import rename from 'gulp-rename';
 import babel from 'gulp-babel';
 import merge from 'merge-stream';
@@ -17,6 +16,11 @@ import concat from 'gulp-concat';
 import webpack from 'webpack';
 import util from 'gulp-util';
 import sass from 'gulp-sass';
+import install from 'gulp-install';
+import extReplace from 'gulp-ext-replace';
+import tar from 'gulp-tar';
+import gzip from 'gulp-gzip';
+import chmod from 'gulp-chmod';
 
 import config from './config/gulp.config';
 import getEnvSettings from './config/settings';
@@ -35,7 +39,7 @@ const getFilePathLogMessage = filepath => ` Writing ${filepath}`;
 /* Clean existing build & package artifacts */
 gulp.task('clean', (cb) => {
 
-  del([config.paths.build, config.paths.package]).then((paths) => {
+  del([config.paths.build, config.paths.package, './deploy']).then((paths) => {
 
     const pathsText = paths.length === 0 ? 'NONE' : paths.join(';\n                ');
     logMessage('Deleted   ', pathsText);
@@ -47,30 +51,43 @@ gulp.task('clean', (cb) => {
 gulp.task('prepare:build', ['clean'], (cb) => {
 
   fs.mkdirSync(config.paths.build);
+  fs.mkdirSync(`${config.paths.build}/config`);
   cb();
 });
 
 /* Copy server scripts */
-gulp.task('server-scripts', (cb) => {
+gulp.task('copy:server-scripts', () => {
 
-  // TODO: Rethink this stuff given new env settings mechanism
+  const scriptsPath = './scripts';
+  let deployVariables = '';
 
-  // if (envSettings.env !== 'local') {
+  Object.keys(envSettings)
+        .filter(env => env !== 'local' && env !== 'default')
+        .forEach((env) => {
 
-  //   gulp.src('./scripts/*.sh')
-  //       .pipe(print(getFilePathLogMessage))
-  //       .pipe(replace('%APPNAME%', envSettings.appName))
-  //       .pipe(replace('%ENVIRONMENT%', envSettings.env))
-  //       .pipe(replace('%DEPLOY_USER%', envSettings.deployUser))
-  //       .pipe(replace('%DEPLOY_HOST%', envSettings.deployHost))
-  //       .pipe(replace('%DEPLOY_LOCATION%', envSettings.deployDirectory))
-  //       .pipe(replace('%NODE_RUNTIME_ENV%', envSettings.nodeRuntimeVersion))
-  //       .pipe(replace('%FRONT_WITH_NGINX%', envSettings.frontWithNginx))
-  //       .pipe(gulp.dest(`${config.paths.build}/scripts`));
-  //   cb();
-  // }
+          deployVariables += `\n"${env}")\n` +
+                             `  DEPLOY_USER=${envSettings[env].deployUser}\n` +
+                             `  DEPLOY_HOST=${envSettings[env].deployHost}\n` +
+                             `  DEPLOY_LOCATION=${envSettings[env].deployDirectory}\n` +
+                             '  ;;\n';
+        });
 
-  cb();
+  const runtimeScripts = gulp.src([`${scriptsPath}/start.sh`, `${scriptsPath}/stop.sh`])
+                             .pipe(replace('%APPNAME%', envSettings.default.appName))
+                             .pipe(replace('%FRONT_WITH_NGINX%', envSettings.default.frontWithNginx))
+                             .pipe(extReplace(''))
+                             .pipe(gulp.dest(config.paths.build))
+                             .pipe(print(getFilePathLogMessage));
+
+  const deployScript = gulp.src([`${scriptsPath}/deploy.sh`])
+                           .pipe(replace('%APPNAME%', envSettings.default.appName))
+                           .pipe(replace('%DEPLOY_VARIABLES%', deployVariables))
+                           .pipe(extReplace(''))
+                           .pipe(chmod(0o755))
+                           .pipe(gulp.dest('./'))
+                           .pipe(print(getFilePathLogMessage));
+
+  return merge(runtimeScripts, deployScript);
 });
 
 gulp.task('copy:nginx-config', () => (
@@ -83,7 +100,7 @@ gulp.task('copy:nginx-config', () => (
 ));
 
 /* Prepare Environment settings file */
-gulp.task('create:env-settings', ['copy:nginx-config'], (cb) => {
+gulp.task('create:env-settings', (cb) => {
 
   const outputSettings = Object.assign(envSettings);
 
@@ -190,12 +207,14 @@ gulp.task('sass:server', () => {
                            .pipe(sass(options).on('error', sass.logError))
                            .pipe(replace('/roboto/', '/'))
                            .pipe(rename('server-vendor.css'))
-                           .pipe(gulp.dest(`${config.paths.build}/public/styles`));
+                           .pipe(gulp.dest(`${config.paths.build}/public/styles`))
+                           .pipe(print(getFilePathLogMessage));
 
   const contentStream = gulp.src(`${config.paths.server}/assets/styles/main.scss`)
                             .pipe(sass(options).on('error', sass.logError))
                             .pipe(rename('server.css'))
-                            .pipe(gulp.dest(`${config.paths.build}/public/styles`));
+                            .pipe(gulp.dest(`${config.paths.build}/public/styles`))
+                            .pipe(print(getFilePathLogMessage));
 
   return merge(vendorStream, contentStream);
 });
@@ -233,15 +252,22 @@ gulp.task('build', ['prepare:build'], (cb) => {
               cb);
 });
 
-/* Package build artifacts */
-// TODO: Add server-scrips as dependency here
-gulp.task('package', () => {
+/* Install runtime dependencies */
+gulp.task('install:runtime-dependencies', () => (
 
-  const packageFileName = `${envSettings.default.appName}.package.zip`;
+  gulp.src(`${config.paths.build}/package.json`)
+      .pipe(install())
+));
+
+/* Package build artifacts */
+gulp.task('package', ['install:runtime-dependencies', 'copy:server-scripts'], () => {
+
+  const packageFileName = `${envSettings.default.appName}.package.tar`;
   logMessage('Creating ', `${config.paths.package}/${packageFileName}`);
 
-  return gulp.src(`${config.paths.build}/**/*`, { dot: true })
-             .pipe(zip(packageFileName))
+  return gulp.src(`${config.paths.build}/**/*`)
+             .pipe(tar(packageFileName))
+             .pipe(gzip())
              .pipe(gulp.dest(config.paths.package));
 });
 

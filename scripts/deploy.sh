@@ -1,20 +1,40 @@
 #!/usr/bin/env bash
 
 MSG_PREFIX="[DEPLOY] "
-ORIG_MSG_PREFIX=$MSG_PREFIX
 
 echo $MSG_PREFIX"------------------------"
 echo $MSG_PREFIX"#   Deploy Artifacts   #"
 echo $MSG_PREFIX"------------------------"
 
-# Change to root dir
-. scripts/set_runtime_dir.sh
+# Set target env
+TARGET_ENV=${1:-"development"}
+echo $MSG_PREFIX"Using deploy settings for env: $TARGET_ENV"
 
-# Deploy app package to %DEPLOY_HOST%
-DEST="%DEPLOY_USER%@%DEPLOY_HOST%:/tmp"
-echo $ORIG_MSG_PREFIX"Deploying to "$DEST
-scp $RUNTIME../package/%APPNAME%.package.%ENVIRONMENT%.zip $DEST
-echo $ORIG_MSG_PREFIX"Unzipping package"
-ssh %DEPLOY_USER%@%DEPLOY_HOST% "unzip -o -a /tmp/%APPNAME%.package.%ENVIRONMENT%.zip -d %DEPLOY_LOCATION%"
-echo $ORIG_MSG_PREFIX"Done."
-echo $ORIG_MSG_PREFIX"------------------------"
+# Determine deploy settings for target (input) env
+case "$TARGET_ENV" in
+%DEPLOY_VARIABLES%
+*)
+  DEPLOY_USER="UNKNOWN"
+  DEPLOY_HOST="UNKNOWN"
+  DEPLOY_LOCATION="UNKNOWN"
+  ;;
+
+esac
+
+# Copy app package to deploy host
+DEST="$DEPLOY_USER@$DEPLOY_HOST:/tmp"
+PACKAGE_NAME=%APPNAME%.package.tar.gz
+echo $MSG_PREFIX"Deploying package ($PACKAGE_NAME) to "$DEST
+scp package/$PACKAGE_NAME $DEST
+
+# TODO: Shutdown existing service
+
+# Unzip to deploy location and adjust permissions
+echo $MSG_PREFIX"Unzipping package to $DEPLOY_LOCATION and setting permissions"
+ssh $DEPLOY_USER@$DEPLOY_HOST "tar -xvzf /tmp/$PACKAGE_NAME -C $DEPLOY_LOCATION && chmod -R a+x $DEPLOY_LOCATION/."
+
+# TODO: Start the app
+
+# End
+echo $MSG_PREFIX"Done."
+echo $MSG_PREFIX"------------------------"

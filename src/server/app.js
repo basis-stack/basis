@@ -9,6 +9,7 @@ export default (container) => {
   return appBuilder.useEjs()
                    .logRequests()
                    .useDataParsers()
+                   .secure()
                    .defaultContent()
                    .useRoutes()
                    .handleErrors()
