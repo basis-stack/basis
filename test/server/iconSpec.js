@@ -1,7 +1,8 @@
 import { expect } from 'chai';
 // import { shallow } from 'enzyme';
 
-import { the, when, should, withScenario } from './../utils/specAliases';
+import { the, when, should, withScenario } from './../../packages/testing/aliases';
+
 import Icon from './../../src/server/components/icon';
 
 the('<Icon /> component', () => {

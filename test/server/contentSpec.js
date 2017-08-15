@@ -2,9 +2,10 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import path from 'path';
 
-import { the, should, when } from './../utils/specAliases';
-import { createStubObject, getStubApp } from './../utils/fakes';
-import { assertWasCalled, assertCall } from './../utils/specAssertions';
+import { the, should, when } from './../../packages/testing/aliases';
+import { createStubObject, getStubApp } from './../../packages/testing/fakes';
+import { assertWasCalled, assertCall } from './../../packages/testing/assertions';
+
 import initialiseContent, { __RewireAPI__ as ContentAPI } from './../../src/server/middleware/content';
 
 the('content middleware initialiser', () => {

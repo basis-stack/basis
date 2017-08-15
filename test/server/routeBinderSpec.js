@@ -1,9 +1,10 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './../utils/specAliases';
-import { assertParameter } from './../utils/specAssertions';
-import { getStubRouter } from './../utils/fakes';
+import { the, should, when } from './../../packages/testing/aliases';
+import { assertParameter } from './../../packages/testing/assertions';
+import { getStubRouter } from './../../packages/testing/fakes';
+
 import { Controller, Get, Post } from './../../src/server/core/decorators';
 import bindRoutes from './../../src/server/middleware/routeBinder';
 

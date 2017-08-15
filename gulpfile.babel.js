@@ -238,7 +238,7 @@ gulp.task('bundle:client', (cb) => {
 /* Lint */
 gulp.task('lint:all', () => (
 
-  gulp.src(['./src/**/*.js', './src/**/*.jsx', `${config.paths.tests}/**/*.js`])
+  gulp.src(['./src/**/*.js', './src/**/*.jsx', `${config.paths.tests}/**/*.js`, `${config.paths.packages}/**/*.js`])
       .pipe(eslint())
       .pipe(eslint.format())
       .pipe(eslint.failOnError())

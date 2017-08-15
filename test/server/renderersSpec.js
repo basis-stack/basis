@@ -1,8 +1,9 @@
 import * as sinon from 'sinon';
 
-import { the, should, when } from './../utils/specAliases';
-import { createStubObject, getStubResponse } from './../utils/fakes';
-import { assertWasCalled, assertParameter } from './../utils/specAssertions';
+import { the, should, when } from './../../packages/testing/aliases';
+import { createStubObject, getStubResponse } from './../../packages/testing/fakes';
+import { assertWasCalled, assertParameter } from './../../packages/testing/assertions';
+
 import renderView, { __RewireAPI__ as RenderersAPI } from './../../src/server/core/renderers';
 
 the('renderers', () => {

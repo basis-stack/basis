@@ -1,7 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when, withScenario } from './../utils/specAliases';
+import { the, should, when, withScenario } from './../../packages/testing/aliases';
+
 import { terminate, dynamicImport, getEnvVariable } from './../../src/server/core/utilities';
 
 the('utilities module', () => {
@@ -33,7 +34,7 @@ the('utilities module', () => {
 
     before(() => {
 
-      result = dynamicImport('../../test/utils/stubModule');
+      result = dynamicImport('../../packages/testing/module');
     });
 
     should('import and return the specified module', () => {

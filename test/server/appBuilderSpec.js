@@ -2,9 +2,10 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import path from 'path';
 
-import { the, when, withScenario, should } from './../utils/specAliases';
-import { getStubApp, getStubContainer } from './../utils/fakes';
-import { assertWasCalled, assertParameter, assertInstance } from './../utils/specAssertions';
+import { the, when, withScenario, should } from './../../packages/testing/aliases';
+import { getStubApp, getStubContainer } from './../../packages/testing/fakes';
+import { assertWasCalled, assertParameter, assertInstance } from './../../packages/testing/assertions';
+
 import AppBuilder, { __RewireAPI__ as AppBuilderAPI } from './../../src/server/middleware/appBuilder';
 
 the('appBuilder', () => {

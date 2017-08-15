@@ -1,14 +1,19 @@
 const buildPath = './dist';
 const serverPath = './src/server';
 const testsPath = './test';
+
+// TODO: Change this so doesn't conflict with individual npm packages
 const packagePath = './package';
+
+const packagesPath = './packages';
 
 export default {
   paths: {
     build: buildPath,
     server: serverPath,
     tests: testsPath,
-    package: packagePath
+    package: packagePath,
+    packages: packagesPath
   },
   vendor: {
     fonts: [

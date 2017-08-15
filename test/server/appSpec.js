@@ -1,9 +1,10 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './../utils/specAliases';
-import { createStubObject } from './../utils/fakes';
-import { assertWasCalled, assertParameter, assertCalledBefore } from './../utils/specAssertions';
+import { the, should, when } from './../../packages/testing/aliases';
+import { createStubObject } from './../../packages/testing/fakes';
+import { assertWasCalled, assertParameter, assertCalledBefore } from './../../packages/testing/assertions';
+
 import createApp, { __RewireAPI__ as CreateAppAPI } from './../../src/server/app';
 
 the('app', () => {
