@@ -161,7 +161,7 @@ gulp.task('create:package-json', (cb) => {
 /* Compile server-side app */
 gulp.task('compile:server', () => {
 
-  const startupDestFileName = `start_${envSettings.default.appName}`;
+  const startupDestFileName = `start-${envSettings.default.appName}`;
   const startupDestDir = `${config.paths.build}/bin/`;
 
   const startupFileStream = gulp.src(`${config.paths.server}/bin/startup.js`)

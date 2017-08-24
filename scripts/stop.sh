@@ -21,6 +21,6 @@ echo $MSG_PREFIX"Stopping node app process"
 
 # TODO: Need to check it is actually running 1st, before we blindly just shut it down
 
-node node_modules/pm2/bin/pm2 stop %APPNAME%_$NODE_ENV
+node node_modules/pm2/bin/pm2 stop %APPNAME%-$NODE_ENV
 echo $MSG_PREFIX"Done."
 echo $MSG_PREFIX"-----------------------"

@@ -10,7 +10,7 @@ echo $MSG_PREFIX"--------------------"
 echo $MSG_PREFIX"Starting node app as background process"
 export NODE_ENV=${1:-"development"}
 # TODO: Need to update pm2 in memory if is present
-node node_modules/pm2/bin/pm2 start bin/start_%APPNAME% --name="%APPNAME%_$NODE_ENV"
+node node_modules/pm2/bin/pm2 start bin/start-%APPNAME% --name="%APPNAME%-$NODE_ENV"
 
 # Start nginx if we need to
 FRONT_WITH_NGINX=%FRONT_WITH_NGINX%

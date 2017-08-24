@@ -20,9 +20,9 @@
   "homepage": "https://github.com/warebrained/basis",
   "scripts": {
     "build": "eslint config/*.js gulpfile.babel.js && gulp build",
-    "start": "node dist/bin/start_basis",
-    "dev": "cross-env NODE_ENV=development node dist/bin/start_basis",
-    "prod": "cross-env NODE_ENV=production node dist/bin/start_basis",
+    "start": "node dist/bin/start-basis",
+    "dev": "cross-env NODE_ENV=development node dist/bin/start-basis",
+    "prod": "cross-env NODE_ENV=production node dist/bin/start-basis",
     "test": "cross-env BABEL_ENV=test mocha test/**/*Spec.js",
     "coverage": "cross-env BABEL_ENV=test nyc mocha test/**/*Spec.js",
     "publish-coverage": "nyc report --reporter=text-lcov | coveralls"
@@ -98,6 +98,7 @@
     "npm-check-updates": "^2.12.1",
     "nyc": "^11.1.0",
     "react-test-renderer": "^15.6.1",
+    "react-toolbox": "^2.0.0-beta.12",
     "roboto-fontface": "^0.8.0",
     "run-sequence": "^2.1.0",
     "sinon": "^3.2.0",

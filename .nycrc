@@ -8,7 +8,8 @@
   ],
   "exclude": [
     "**/startup.js",
-    "**/client/app.js",
+    "src/client/app.jsx",
+    "src/client/index.js",
     "src/server/views/**"
   ],
   "require": [

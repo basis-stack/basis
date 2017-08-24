@@ -4,5 +4,5 @@ export default {
   publicPort: 80,
   deployUser: '<PROD_USER>',
   deployHost: '<PROD_HOST>',
-  deployDirectory: '<PROD_PATH'
+  deployDirectory: '<PROD_PATH>'
 };
