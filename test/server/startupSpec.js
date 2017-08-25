@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './../../packages/testing/aliases';
-import { assertWasCalled, assertParameter } from './../../packages/testing/assertions';
+import { the, should, when,
+         assertWasCalled, assertParameter } from './../../packages/testing';
 
 import { main, __RewireAPI__ as StartupAPI } from './../../src/server/bin/startup';
 

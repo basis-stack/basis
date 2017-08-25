@@ -1,4 +1,7 @@
-export default () => {
+export * from './src/aliases';
 
-  throw new Error('Invalid usage. Please import items from each individual module directly, e.g. import { createStubObject } from @basis/testing/fakes.');
-};
+// TODO: Figure out why export * does not work here !!
+export { createStubObject, getStubContainer, getStubRouter, getStubResponse, getStubApp, getStubLogger } from './src/fakes';
+export { assertWasCalled, assertParameter, assertCall, assertCalledBefore, assertInstance } from './src/assertions';
+
+export { default as stubModule } from './src/module';

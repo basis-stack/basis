@@ -23,8 +23,8 @@
     "start": "node dist/bin/start-basis",
     "dev": "cross-env NODE_ENV=development node dist/bin/start-basis",
     "prod": "cross-env NODE_ENV=production node dist/bin/start-basis",
-    "test": "cross-env BABEL_ENV=test mocha test/**/*Spec.js",
-    "coverage": "cross-env BABEL_ENV=test nyc mocha test/**/*Spec.js",
+    "test": "cross-env BABEL_ENV=test mocha test/**/*Spec.js packages/**/*Spec.js",
+    "coverage": "cross-env BABEL_ENV=test nyc mocha test/**/*Spec.js packages/**/*Spec.js",
     "publish-coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
@@ -42,6 +42,7 @@
     "pm2": "^2.6.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-toolbox": "^2.0.0-beta.12",
     "reflect-metadata": "^0.1.10",
     "winston": "^2.3.1",
     "wordwrap": "^1.0.0"
@@ -64,6 +65,7 @@
     "colors": "^1.1.2",
     "coveralls": "^2.13.1",
     "cross-env": "^5.0.5",
+    "css-loader": "^0.28.5",
     "del": "^3.0.0",
     "enzyme": "^2.9.1",
     "eslint": "^3.19.0",
@@ -97,11 +99,16 @@
     "mocha": "^3.5.0",
     "npm-check-updates": "^2.12.1",
     "nyc": "^11.1.0",
+    "postcss-cssnext": "^3.0.2",
+    "postcss-each": "^0.10.0",
+    "postcss-import": "^10.0.0",
+    "postcss-loader": "^2.0.6",
+    "postcss-mixins": "^6.1.0",
     "react-test-renderer": "^15.6.1",
-    "react-toolbox": "^2.0.0-beta.12",
     "roboto-fontface": "^0.8.0",
     "run-sequence": "^2.1.0",
     "sinon": "^3.2.0",
+    "style-loader": "^0.18.2",
     "webpack": "^3.5.4"
   }
 }

@@ -1,9 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './../../packages/testing/aliases';
-import { assertParameter } from './../../packages/testing/assertions';
-import { getStubRouter } from './../../packages/testing/fakes';
+import { the, should, when,
+         getStubRouter, assertParameter } from './../../packages/testing';
 
 import { Controller, Get, Post } from './../../src/server/core/decorators';
 import bindRoutes from './../../src/server/middleware/routeBinder';

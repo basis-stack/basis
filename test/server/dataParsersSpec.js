@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './../../packages/testing/aliases';
-import { createStubObject, getStubApp } from './../../packages/testing/fakes';
-import { assertCall } from './../../packages/testing/assertions';
+import { the, should, when,
+         createStubObject, getStubApp,
+         assertCall } from './../../packages/testing';
 
 import initialiseDataParsers, { __RewireAPI__ as DataParsersAPI } from './../../src/server/middleware/dataParsers';
 

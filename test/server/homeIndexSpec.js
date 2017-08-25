@@ -1,8 +1,7 @@
 import * as sinon from 'sinon';
 
-import { the, should, when } from './../../packages/testing/aliases';
-import { assertWasCalled } from './../../packages/testing/assertions';
-import { createStubObject } from './../../packages/testing/fakes';
+import { the, should, when,
+         createStubObject, assertWasCalled } from './../../packages/testing';
 
 import homeIndex, { __RewireAPI__ as HomeIndexAPI } from './../../src/server/routes/home';
 

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, when, withScenario, should } from './../../packages/testing/aliases';
+import { the, when, withScenario, should } from './../../packages/testing';
 
 import constants from './../../src/server/core/constants';
 import { onListening, onError } from './../../src/server/bin/handlers';

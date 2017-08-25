@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, when, withScenario, should } from './../../packages/testing/aliases';
+import { the, when, withScenario, should } from './../../packages/testing';
 
 import getContainer, { __RewireAPI__ as ContainerAPI } from './../../src/server/core/container';
 

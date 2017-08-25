@@ -2,9 +2,9 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import HTTPStatus from 'http-status';
 
-import { the, when, withScenario, should } from './../../packages/testing/aliases';
-import { createStubObject, getStubResponse, getStubApp } from './../../packages/testing/fakes';
-import { assertWasCalled, assertParameter } from './../../packages/testing/assertions';
+import { the, when, withScenario, should,
+         createStubObject, getStubResponse, getStubApp,
+         assertWasCalled, assertParameter } from './../../packages/testing';
 
 import initialiseErrorHandlers, { __RewireAPI__ as ErrorHandlersAPI } from './../../src/server/middleware/errorHandlers';
 

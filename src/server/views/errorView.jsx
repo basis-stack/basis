@@ -2,8 +2,7 @@ import React from 'react';
 import HTTPStatus from 'http-status';
 import wordwrap from 'wordwrap';
 
-import Icon from './../components/icon';
-import material from './../components/materialContainer';
+import { Icon, material } from './../../../packages/components';
 
 const ErrorView = (props) => {
 

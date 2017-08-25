@@ -8,5 +8,6 @@
     "test": {
       "plugins": ["istanbul"]
     }
-  }
+  },
+  "ignore": ["dist"]
 }

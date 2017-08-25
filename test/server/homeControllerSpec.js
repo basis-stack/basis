@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './../../packages/testing/aliases';
-import { assertParameter, assertInstance } from './../../packages/testing/assertions';
-import { getStubRouter, getStubResponse } from './../../packages/testing/fakes';
+import { the, should, when,
+         getStubRouter, getStubResponse,
+         assertParameter, assertInstance } from './../../packages/testing';
 
 import HomeController from './../../src/server/routes/home/homeController';
 

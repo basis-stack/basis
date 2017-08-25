@@ -1,8 +1,8 @@
 import * as sinon from 'sinon';
 
-import { the, should, when } from './../../packages/testing/aliases';
-import { createStubObject, getStubResponse } from './../../packages/testing/fakes';
-import { assertWasCalled, assertParameter } from './../../packages/testing/assertions';
+import { the, should, when,
+         createStubObject, getStubResponse,
+         assertWasCalled, assertParameter } from './../../packages/testing';
 
 import renderView, { __RewireAPI__ as RenderersAPI } from './../../src/server/core/renderers';
 

@@ -3,9 +3,9 @@ import chai, { expect } from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import { shallow } from 'enzyme';
 
-import { the, when, should } from './../../packages/testing/aliases';
+import { the, when, should } from './../../testing';
 
-import material from './../../src/server/components/materialContainer';
+import material from './../src/materialContainer';
 
 const StubComponent = props => <span>{ props.someProp }</span>;
 

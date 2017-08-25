@@ -1,8 +1,7 @@
 import * as sinon from 'sinon';
 
-import { the, should, when } from './../../packages/testing/aliases';
-import { getStubApp } from './../../packages/testing/fakes';
-import { assertWasCalled } from './../../packages/testing/assertions';
+import { the, should, when,
+         getStubApp, assertWasCalled } from './../../packages/testing';
 
 import initialiseSecurity, { __RewireAPI__ as SecurityAPI } from './../../src/server/middleware/security';
 

@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, when, withScenario, should } from './../../packages/testing/aliases';
-import { getStubApp } from './../../packages/testing/fakes';
+import { the, when, withScenario, should,
+         getStubApp } from './../../packages/testing';
 
 import initialiseRequestLogger, { __RewireAPI__ as LoggingAPI } from './../../src/server/middleware/logging';
 

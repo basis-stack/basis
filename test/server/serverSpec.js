@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './../../packages/testing/aliases';
-import { assertWasCalled, assertParameter, assertCalledBefore } from './../../packages/testing/assertions';
-import { getStubContainer } from './../../packages/testing/fakes';
+import { the, should, when,
+         getStubContainer,
+         assertWasCalled, assertParameter, assertCalledBefore } from './../../packages/testing';
 
 import constants from './../../src/server/core/constants';
 import createServer, { __RewireAPI__ as CreateServerAPI } from './../../src/server/bin/server';

@@ -3,9 +3,9 @@ import chai, { expect } from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import { shallow } from 'enzyme';
 
-import { the, when, should, withScenario } from './../../packages/testing/aliases';
+import { the, when, should, withScenario } from './../../testing';
 
-import Icon from './../../src/server/components/icon';
+import Icon from './../src/icon';
 
 chai.use(chaiEnzyme());
 

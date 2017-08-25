@@ -3,8 +3,8 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import _ from 'lodash';
 
-import { the, should, when } from './../../packages/testing/aliases';
-import { assertInstance, assertWasCalled } from './../../packages/testing/assertions';
+import { the, should, when,
+         assertInstance, assertWasCalled } from './../../packages/testing';
 
 import { Controller, Get, Post, __RewireAPI__ as DecoratorsAPI } from './../../src/server/core/decorators';
 

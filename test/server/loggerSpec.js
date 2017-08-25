@@ -1,9 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when } from './../../packages/testing/aliases';
-import { assertParameter } from './../../packages/testing/assertions';
-import { createStubObject } from './../../packages/testing/fakes';
+import { the, should, when,
+         createStubObject, assertParameter } from './../../packages/testing';
 
 import Logger, { __RewireAPI__ as LoggerApi } from './../../src/server/core/logger';
 

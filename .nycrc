@@ -3,14 +3,18 @@
     "text-summary"
   ],
   "include": [
+    "packages/**/*.js",
+    "packages/**/*.jsx",
     "src/**/*.js",
     "src/**/*.jsx"
   ],
   "exclude": [
-    "**/startup.js",
+    "src/server/bin/startup.js",
     "src/client/app.jsx",
     "src/client/index.js",
-    "src/server/views/**"
+    "src/server/views/**",
+    "**/test/**",
+    "packages/testing/**/*.js"
   ],
   "require": [
     "babel-register"
