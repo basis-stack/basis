@@ -179,6 +179,24 @@ gulp.task('compile:server', () => {
   return merge(startupFileStream, appFilesStream);
 });
 
+/* Compile nested basis packages */
+gulp.task('compile:packages', () => {
+
+  const destDir = `${config.paths.build}/packages`;
+
+  const sourceStream = gulp.src([`${config.paths.packages}/**/*.js`, `${config.paths.packages}/**/*.jsx`, '!**/test/*'])
+                           // .pipe(filter(['**/*.js', '**/*.jsx', '!**/*Spec.js']))
+                           .pipe(babel())
+                           .pipe(gulp.dest(destDir))
+                           .pipe(print(getFilePathLogMessage));
+
+  const packageJsonStream = gulp.src(`${config.paths.packages}/**/package.json`)
+                                .pipe(gulp.dest(destDir))
+                                .pipe(print(getFilePathLogMessage));
+
+  return merge(sourceStream, packageJsonStream);
+});
+
 /* Copy server-side views */
 gulp.task('copy:views', () => {
 
@@ -238,7 +256,7 @@ gulp.task('bundle:client', (cb) => {
 /* Lint */
 gulp.task('lint:all', () => (
 
-  gulp.src(['./src/**/*.js', './src/**/*.jsx', `${config.paths.tests}/**/*.js`, `${config.paths.packages}/**/*.js`])
+  gulp.src(['./src/**/*.js', './src/**/*.jsx', `${config.paths.tests}/**/*.js`, `${config.paths.packages}/**/*.js`, `${config.paths.packages}/**/*.jsx`])
       .pipe(eslint())
       .pipe(eslint.format())
       .pipe(eslint.failOnError())
@@ -248,7 +266,7 @@ gulp.task('lint:all', () => (
 gulp.task('build', ['prepare:build'], (cb) => {
 
   runSequence('lint:all',
-              ['create:env-settings', 'create:package-json', 'compile:server', 'copy:views', 'bundle:client', 'copy:fonts', 'sass:server'],
+              ['create:env-settings', 'create:package-json', 'compile:server', 'compile:packages', 'copy:views', 'bundle:client', 'copy:fonts', 'sass:server'],
               cb);
 });
 
@@ -264,6 +282,8 @@ gulp.task('package', ['install:runtime-dependencies', 'copy:server-scripts'], ()
 
   const packageFileName = `${envSettings.default.appName}.package.tar`;
   logMessage('Creating ', `${config.paths.package}/${packageFileName}`);
+
+  // TODO: Exclude packages dir from package zip
 
   return gulp.src(`${config.paths.build}/**/*`)
              .pipe(tar(packageFileName))

@@ -28,6 +28,7 @@
     "publish-coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
+    "basis-components": "0.0.1",
     "body-parser": "^1.17.2",
     "classnames": "^2.2.5",
     "compression": "^1.7.0",
