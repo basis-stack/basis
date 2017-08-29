@@ -1,7 +1,7 @@
 {
   "name": "basis-testing",
   "version": "0.0.2",
-  "description": "A set of unit testing utilities (centered on mocha/sinon/chai) to help with testing the basis stack.",
+  "description": "A set of unit testing utilities (centered on mocha/sinon/chai) to help with testing the Basis stack.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"No tests\" && exit 1"

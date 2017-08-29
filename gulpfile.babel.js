@@ -8,11 +8,9 @@ import fs from 'fs';
 import rename from 'gulp-rename';
 import babel from 'gulp-babel';
 import merge from 'merge-stream';
-import filter from 'gulp-filter';
 import print from 'gulp-print';
 import eslint from 'gulp-eslint';
 import jsonfile from 'jsonfile';
-import concat from 'gulp-concat';
 import webpack from 'webpack';
 import util from 'gulp-util';
 import sass from 'gulp-sass';
@@ -21,6 +19,7 @@ import extReplace from 'gulp-ext-replace';
 import tar from 'gulp-tar';
 import gzip from 'gulp-gzip';
 import chmod from 'gulp-chmod';
+import file from 'gulp-file';
 
 import config from './config/gulp.config';
 import getEnvSettings from './config/settings';
@@ -163,15 +162,15 @@ gulp.task('compile:server', () => {
 
   const startupDestFileName = `start-${envSettings.default.appName}`;
   const startupDestDir = `${config.paths.build}/bin/`;
+  const mainSrc = `import { main } from 'basis-server';
+                   main();`;
 
-  const startupFileStream = gulp.src(`${config.paths.server}/bin/startup.js`)
-                                .pipe(rename(startupDestFileName))
-                                .pipe(babel())
-                                .pipe(gulp.dest(`${startupDestDir}`))
-                                .pipe(print(getFilePathLogMessage));
+  const startupFileStream = file(startupDestFileName, mainSrc, { src: true })
+                              .pipe(babel())
+                              .pipe(gulp.dest(`${startupDestDir}`))
+                              .pipe(print(getFilePathLogMessage));
 
   const appFilesStream = gulp.src([`${config.paths.server}/**/*.js`, `${config.paths.server}/**/*.jsx`])
-                             .pipe(filter(['**/*.js', '**/*.jsx', '!**/startup.js']))
                              .pipe(babel())
                              .pipe(gulp.dest(`${config.paths.build}`))
                              .pipe(print(getFilePathLogMessage));
@@ -185,7 +184,6 @@ gulp.task('compile:packages', () => {
   const destDir = `${config.paths.build}/packages`;
 
   const sourceStream = gulp.src([`${config.paths.packages}/**/*.js`, `${config.paths.packages}/**/*.jsx`, '!**/test/*'])
-                           // .pipe(filter(['**/*.js', '**/*.jsx', '!**/*Spec.js']))
                            .pipe(babel())
                            .pipe(gulp.dest(destDir))
                            .pipe(print(getFilePathLogMessage));
@@ -285,7 +283,7 @@ gulp.task('package', ['install:runtime-dependencies', 'copy:server-scripts'], ()
 
   // TODO: Exclude packages dir from package zip
 
-  return gulp.src(`${config.paths.build}/**/*`)
+  return gulp.src([`${config.paths.build}/**/*`, `!${config.paths.build}/packages/**/*`])
              .pipe(tar(packageFileName))
              .pipe(gzip())
              .pipe(gulp.dest(config.paths.package));

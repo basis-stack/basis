@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from './../../core/decorators';
+import { Controller, Get } from 'basis-server';
 
 @Controller('/')
 export default class HomeController {

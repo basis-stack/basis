@@ -1,6 +1,6 @@
 {
   "reporter": [
-    "text-summary"
+    "text"
   ],
   "include": [
     "packages/**/*.js",
@@ -9,10 +9,8 @@
     "src/**/*.jsx"
   ],
   "exclude": [
-    "src/server/bin/startup.js",
     "src/client/app.jsx",
     "src/client/index.js",
-    "src/server/views/**",
     "**/test/**",
     "packages/testing/**/*.js"
   ],

@@ -1,6 +1,6 @@
 {
   "name": "basis-components",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "A set of React components used throughout the Basis stack",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,9 @@
   "homepage": "https://github.com/warebrained/basis#readme",
   "dependencies": {
     "classnames": "^2.2.5",
-    "react": "^15.6.1"
+    "http-status": "^1.0.1",
+    "react": "^15.6.1",
+    "wordwrap": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^4.1.1",

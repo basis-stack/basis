@@ -1,6 +1,7 @@
 // TODO: Replace with chalk
 import 'colors';
 import fs from 'fs';
+import relative from 'require-relative';
 
 export default () => {
 
@@ -12,10 +13,8 @@ export default () => {
   knownEnvironments.forEach((env) => {
 
     try {
-      /* eslint-disable global-require */
-      const envSetting = require(`./settings.${env}.js`);
-      /* eslint-enable global-require */
 
+      const envSetting = relative(`./settings.${env}.js`, __dirname);
       allSettings[env] = envSetting.default;
     } catch (e) {
 

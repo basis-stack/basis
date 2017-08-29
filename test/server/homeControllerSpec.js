@@ -3,7 +3,7 @@ import * as sinon from 'sinon';
 
 import { the, should, when,
          getStubRouter, getStubResponse,
-         assertParameter, assertInstance } from './../../packages/testing';
+         assertParameter, assertInstance } from 'basis-testing';
 
 import HomeController from './../../src/server/routes/home/homeController';
 
