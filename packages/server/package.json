@@ -1,6 +1,6 @@
 {
   "name": "basis-server",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "The core framework, middleware and runtime components for the Basis web server",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/warebrained/basis#readme",
   "dependencies": {
+    "basis-assets": "^0.0.1",
     "basis-components": "^0.0.3",
     "body-parser": "^1.17.2",
     "classnames": "^2.2.5",
