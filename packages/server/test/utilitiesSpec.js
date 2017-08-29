@@ -17,7 +17,7 @@ the('utilities module', () => {
     before(() => {
 
       UtilitiesAPI.__Rewire__('fs', stubFs);
-      stubCwd = sinon.stub(process, 'cwd').returns('/some-runtime-path');
+      stubCwd = sinon.stub(process, 'cwd').returns('some-runtime-path');
     });
 
     after(() => {
@@ -45,7 +45,7 @@ the('utilities module', () => {
 
       should('return the runtime directory', () => {
 
-        expect(result).to.equal('/some-runtime-path');
+        expect(result).to.equal('some-runtime-path');
       });
     });
 
@@ -68,7 +68,7 @@ the('utilities module', () => {
 
       should('return the runtime directory', () => {
 
-        expect(result).to.equal('/some-runtime-path/dist');
+        expect(result).to.equal(path.join('some-runtime-path', 'dist'));
       });
     });
   });

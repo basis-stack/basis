@@ -1,4 +1,5 @@
 import * as sinon from 'sinon';
+import path from 'path';
 
 import { the, should, when,
          createStubObject, getStubApp,
@@ -15,7 +16,7 @@ the('content middleware initialiser', () => {
   const stubExpressStatic = sinon.stub(stubExpress, 'static').returns(stubExpressStaticResult);
   const stubApp = getStubApp();
   const stubAppUse = sinon.spy(stubApp, 'use');
-  const stubGetRootPath = sinon.stub().returns('/somepath');
+  const stubGetRootPath = sinon.stub().returns('somepath');
 
   before(() => {
 
@@ -46,7 +47,7 @@ the('content middleware initialiser', () => {
 
     should('initialise static serving of /public folder', () => {
 
-      const expectedPublicPath = '/somepath/public';
+      const expectedPublicPath = path.join('somepath', 'public');
 
       assertWasCalled(stubExpressStatic, expectedPublicPath);
       assertCall(stubAppUse, 1, stubExpressStaticResult);

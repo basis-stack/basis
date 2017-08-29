@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import path from 'path';
 
 import { the, when, should,
          getStubApp, getStubContainer,
@@ -19,7 +20,7 @@ the('appBuilder', () => {
   const stubInitialiseRequestLogger = sinon.spy();
   const stubInitialiseRoutes = sinon.spy();
   const stubInitialiseSecurity = sinon.spy();
-  const stubGetRootPath = sinon.stub().returns('/somepath');
+  const stubGetRootPath = sinon.stub().returns('somepath');
 
   let builder;
 
@@ -77,7 +78,7 @@ the('appBuilder', () => {
       const firstSetCall = setMethodSpy.getCall(0);
 
       expect(firstSetCall.args[0]).to.equal('views');
-      expect(firstSetCall.args[1]).to.equal('/somepath/views');
+      expect(firstSetCall.args[1]).to.equal(path.join('somepath', 'views'));
     });
 
     should('set view engine to ejs', () => {

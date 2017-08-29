@@ -188,7 +188,7 @@ gulp.task('compile:packages', () => {
                            .pipe(gulp.dest(destDir))
                            .pipe(print(getFilePathLogMessage));
 
-  const packageJsonStream = gulp.src(`${config.paths.packages}/**/package.json`)
+  const packageJsonStream = gulp.src([`${config.paths.packages}/**/package.json`, '!**/assets/package.json'])
                                 .pipe(gulp.dest(destDir))
                                 .pipe(print(getFilePathLogMessage));
 
@@ -218,21 +218,29 @@ gulp.task('sass:server', () => {
     outputStyle: 'compact',
     includePaths: ['node_modules/']
   };
+  const basisAssetsPath = './node_modules/basis-assets/server/styles';
+  const distPath = 'public/styles';
 
-  const vendorStream = gulp.src(`${config.paths.server}/assets/styles/vendors.scss`)
+  const vendorStream = gulp.src(`${basisAssetsPath}/vendors.scss`)
                            .pipe(sass(options).on('error', sass.logError))
                            .pipe(replace('/roboto/', '/'))
                            .pipe(rename('server-vendor.css'))
-                           .pipe(gulp.dest(`${config.paths.build}/public/styles`))
+                           .pipe(gulp.dest(`${config.paths.build}/${distPath}`))
                            .pipe(print(getFilePathLogMessage));
 
-  const contentStream = gulp.src(`${config.paths.server}/assets/styles/main.scss`)
-                            .pipe(sass(options).on('error', sass.logError))
-                            .pipe(rename('server.css'))
-                            .pipe(gulp.dest(`${config.paths.build}/public/styles`))
-                            .pipe(print(getFilePathLogMessage));
+  const coreStream = gulp.src(`${basisAssetsPath}/core.scss`)
+                         .pipe(sass(options).on('error', sass.logError))
+                         .pipe(rename('server-core.css'))
+                         .pipe(gulp.dest(`${config.paths.build}/${distPath}`))
+                         .pipe(print(getFilePathLogMessage));
 
-  return merge(vendorStream, contentStream);
+  const mainStream = gulp.src(`${config.paths.server}/assets/styles/main.scss`)
+                         .pipe(sass(options).on('error', sass.logError))
+                         .pipe(rename('server.css'))
+                         .pipe(gulp.dest(`${config.paths.build}/${distPath}`))
+                         .pipe(print(getFilePathLogMessage));
+
+  return merge(vendorStream, coreStream, mainStream);
 });
 
 /* Bundle client assets with Webpack */

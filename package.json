@@ -28,6 +28,7 @@
     "publish-coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
+    "basis-assets": "^0.0.1",
     "basis-server": "^0.0.4",
     "basis-testing": "^0.0.2",
     "react": "^15.6.1",
@@ -35,8 +36,6 @@
     "react-toolbox": "^2.0.0-beta.12"
   },
   "devDependencies": {
-    "@material/theme": "^0.1.7",
-    "@material/typography": "^0.3.0",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
@@ -61,8 +60,6 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.2.1",
-    "flexboxgrid": "^6.3.1",
-    "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.0",
     "gulp-chmod": "^2.0.0",
@@ -78,8 +75,6 @@
     "gulp-tar": "^2.0.0",
     "gulp-util": "^3.0.8",
     "jsonfile": "^3.0.1",
-    "material-colors": "^1.2.5",
-    "material-design-icons-iconfont": "^3.0.3",
     "merge-stream": "^1.0.1",
     "minimatch": "^3.0.4",
     "minimist": "^1.2.0",
@@ -93,7 +88,6 @@
     "postcss-mixins": "^6.1.0",
     "react-test-renderer": "^15.6.1",
     "require-relative": "^0.8.7",
-    "roboto-fontface": "^0.8.0",
     "run-sequence": "^2.1.0",
     "sinon": "^3.2.0",
     "style-loader": "^0.18.2",
