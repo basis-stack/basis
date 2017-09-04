@@ -10,12 +10,12 @@ export default (container) => {
   const config = container.resolve(container.instanceKeys.config);
   const logger = container.resolve(container.instanceKeys.logger);
 
-  logger.info(`${constants.text.logging.startupPrefix} INIT: bootstrapped config for env: ${config.env.toUpperCase()}`);
+  logger.info(`${constants.text.logging.startupPrefix} INIT: bootstrapped config for env: ${config.shared.env.toUpperCase()}`);
 
   const app = createApp(container);
   const server = http.createServer(app);
 
-  server.listen(config.webServerPort);
+  server.listen(config.server.webServerPort);
   server.on('error', (error) => { onError(config, logger, error, () => { terminate(1); }); });
   server.on('listening', () => { onListening(config, logger); });
 

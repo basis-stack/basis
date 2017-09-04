@@ -1,31 +1,41 @@
+import 'reflect-metadata';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
 import { the, should, when,
-         getStubRouter, getStubResponse,
-         assertParameter, assertInstance } from 'basis-testing';
+         getStubResponse, getStubContainer,
+         assertParameter } from 'basis-testing';
 
 import HomeController from './../../src/server/routes/home/homeController';
 
 the('HomeController', () => {
 
-  const stubRouter = getStubRouter();
-  const stubRouterGet = sinon.spy(stubRouter, 'get');
+  const stubConfig = {
+    shared: { env: 'SomeEnv' },
+    client: { someProb: 'Some Value' }
+  };
+  const stubContainer = getStubContainer(stubConfig, undefined);
 
-  const controller = HomeController.initialise(stubRouter);
+  const controller = new HomeController(stubContainer);
 
-  when('initialised', () => {
+  should('define a GET handler for the root (\'/\') path', () => {
 
-    should('return a new controller instance', () => {
+    const methodName = 'root';
+    const path = Reflect.getMetadata('http:path', controller, methodName);
+    const method = Reflect.getMetadata('http:method', controller, methodName);
 
-      assertInstance(controller, HomeController);
-    });
+    expect(path).to.equal('');
+    expect(method).to.equal('get');
+  });
 
-    should('hook up a GET handler for the root (\'/\') path', () => {
+  should('define a GET handler for the \'/config\' path', () => {
 
-      assertParameter(stubRouterGet, 0, '/');
-      assertParameter(stubRouterGet, 1, controller.root);
-    });
+    const methodName = 'getClientConfig';
+    const path = Reflect.getMetadata('http:path', controller, methodName);
+    const method = Reflect.getMetadata('http:method', controller, methodName);
+
+    expect(path).to.equal('config');
+    expect(method).to.equal('get');
   });
 
   when('route path hit', () => {
@@ -39,6 +49,21 @@ the('HomeController', () => {
 
       assertParameter(stubResponseRender, 0, 'app');
       assertParameter(stubResponseRender, 1, { title: 'Basis' }, true);
+    });
+  });
+
+  when('config path hit', () => {
+
+    const stubResponse = getStubResponse();
+    const stubResponseSend = sinon.spy(stubResponse, 'send');
+
+    controller.getClientConfig(undefined, stubResponse, undefined);
+
+    should('send combined client config json', () => {
+
+      const expectedJson = { env: 'SomeEnv', someProb: 'Some Value' };
+
+      assertParameter(stubResponseSend, 0, expectedJson, true);
     });
   });
 });

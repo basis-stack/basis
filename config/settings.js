@@ -15,7 +15,7 @@ export default () => {
     try {
 
       const envSetting = relative(`./settings.${env}.js`, __dirname);
-      allSettings[env] = envSetting.default;
+      allSettings[env] = Object.assign(envSetting.default);
     } catch (e) {
 
       console.log(`${'[settings]'.yellow} ${'INVALID_ENV'.red}: Unable to import environment settings for '${env}'. Error: ${e.message}`);

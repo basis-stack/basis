@@ -1,7 +1,7 @@
 import * as sinon from 'sinon';
 
 import { the, should, when,
-         createStubObject, assertWasCalled } from 'basis-testing';
+         createStubObject, assertParameter } from 'basis-testing';
 
 import homeIndex, { __RewireAPI__ as HomeIndexAPI } from './../../src/server/routes/home';
 
@@ -9,6 +9,7 @@ the('home index', () => {
 
   const stubHomeControllerClass = createStubObject('initialise');
   const stubRouter = {};
+  const stubContainer = {};
 
   before(() => {
 
@@ -28,12 +29,13 @@ the('home index', () => {
 
       stubHomeControllerInitialise = sinon.stub(stubHomeControllerClass, 'initialise');
 
-      homeIndex(stubRouter);
+      homeIndex(stubRouter, stubContainer);
     });
 
     should('initialise the HomeController', () => {
 
-      assertWasCalled(stubHomeControllerInitialise, stubRouter);
+      assertParameter(stubHomeControllerInitialise, 0, stubRouter);
+      assertParameter(stubHomeControllerInitialise, 1, stubContainer);
     });
   });
 });

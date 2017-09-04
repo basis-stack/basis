@@ -17,9 +17,9 @@ export const Controller = rootPath => (
 
     Reflect.defineMetadata('http:rootPath', rootPath, target);
 
-    target.initialise = (router) => {
+    target.initialise = (router, container) => {
 
-      const instance = new target();
+      const instance = new target(container);
       bindRoutes(target, instance, router);
 
       return instance;

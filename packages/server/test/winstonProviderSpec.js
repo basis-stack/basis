@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import assignDeep from 'object-assign-deep';
 
 import { the, when, withScenario, should } from './../../testing';
 
@@ -12,13 +13,13 @@ const assertInstance = (result) => {
 
 the('winstonProvider', () => {
 
-  const config = { appName: 'testapp' };
+  const config = { shared: { appName: 'testapp' } };
 
   when('instance requested', () => {
 
     withScenario('local env config', () => {
 
-      const result = getWinston(Object.assign(config, { env: 'local' }));
+      const result = getWinston(assignDeep(config, { shared: { env: 'local' } }));
 
       should('return a valid winston instance', () => {
 
@@ -34,7 +35,7 @@ the('winstonProvider', () => {
 
     withScenario('non-local env config', () => {
 
-      const result = getWinston(Object.assign(config, { env: 'some_other_env' }));
+      const result = getWinston(assignDeep(config, { shared: { env: 'some_other_env' } }));
 
       should('return a valid winston instance', () => {
 

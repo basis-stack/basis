@@ -11,7 +11,7 @@ const getErrorDetail = (config, status, err) => {
     statusText,
     title: `Error ${status} (${statusText})`,
     message: err.message,
-    error: (config.env === 'production' || status === HTTPStatus.NOT_FOUND) ? {} : err
+    error: (config.shared.env === 'production' || status === HTTPStatus.NOT_FOUND) ? {} : err
   };
 
   return details;

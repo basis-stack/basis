@@ -12,6 +12,6 @@ export default (controllerClass, controllerInstance, router) => {
     const httpMethod = Reflect.getMetadata('http:method', controllerInstance, name);
     const route = `${baseRoute}/${specificPath}`.replace('//', '/');
 
-    router[httpMethod](route, controllerInstance[name]);
+    router[httpMethod](route, controllerInstance[name].bind(controllerInstance));
   });
 };

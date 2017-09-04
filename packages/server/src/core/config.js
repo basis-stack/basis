@@ -1,4 +1,5 @@
 import jsonfile from 'jsonfile';
+import assignDeep from 'object-assign-deep';
 
 import constants from './constants';
 import { getEnvVariable } from './utilities';
@@ -22,6 +23,6 @@ export default class Config {
       throw new Error(`Unable to bootstrap for environment: '${runtimeEnv}'. No settings found in settings file for this environment.`);
     }
 
-    return new Config(Object.assign({}, allSettings.default, allSettings[runtimeEnv], { env: runtimeEnv }));
+    return new Config(assignDeep({}, allSettings.default, allSettings[runtimeEnv], { shared: { env: runtimeEnv } }));
   }
 }

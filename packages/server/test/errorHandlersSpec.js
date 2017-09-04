@@ -10,7 +10,7 @@ import initialiseErrorHandlers, { __RewireAPI__ as ErrorHandlersAPI } from './..
 
 the('errorHandlers middleware', () => {
 
-  const stubConfig = { env: 'local' };
+  const stubConfig = { shared: { env: 'local' } };
   const stubLogger = createStubObject('error');
   const stubErrorView = {};
   const stubRenderView = sinon.spy();
@@ -187,7 +187,7 @@ the('errorHandlers middleware', () => {
     withScenario('Production config', () => {
 
       const stubError = { message: 'Some General Error in Production' };
-      const stubProdConfig = { env: 'production' };
+      const stubProdConfig = { shared: { env: 'production' } };
 
       before(() => {
 

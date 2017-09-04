@@ -1,6 +1,6 @@
 {
   "name": "basis-server",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "The core framework, middleware and runtime components for the Basis web server",
   "main": "index.js",
   "scripts": {
@@ -36,6 +36,7 @@
     "jsonfile": "^3.0.1",
     "lodash": "^4.17.4",
     "morgan": "^1.8.2",
+    "object-assign-deep": "^0.3.1",
     "pm2": "^2.6.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

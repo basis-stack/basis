@@ -2,7 +2,7 @@ import constants from './../core/constants';
 
 export const onListening = (config, logger) => {
 
-  logger.info(`${constants.text.logging.serverPrefix} STARTED: listening on port ${config.webServerPort}`);
+  logger.info(`${constants.text.logging.serverPrefix} STARTED: listening on port ${config.server.webServerPort}`);
 };
 
 export const onError = (config, logger, error, handledCallback) => {
@@ -16,12 +16,12 @@ export const onError = (config, logger, error, handledCallback) => {
   switch (error.code) {
 
     case 'EACCES':
-      logger.error(`${messagePrefix} port ${config.webServerPort} requires elevated privileges`);
+      logger.error(`${messagePrefix} port ${config.server.webServerPort} requires elevated privileges`);
       handledCallback();
       break;
 
     case 'EADDRINUSE':
-      logger.error(`${messagePrefix} port ${config.webServerPort} is already in use`);
+      logger.error(`${messagePrefix} port ${config.server.webServerPort} is already in use`);
       handledCallback();
       break;
 

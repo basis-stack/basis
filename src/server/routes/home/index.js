@@ -1,6 +1,6 @@
 import HomeController from './homeController';
 
-export default (router) => {
+export default (router, container) => {
 
-  HomeController.initialise(router);
+  HomeController.initialise(router, container);
 };

@@ -68,7 +68,7 @@ the('Config class', () => {
 
       should('include env name', () => {
 
-        expect(result.env).to.equal('local');
+        expect(result.shared.env).to.equal('local');
       });
     });
 
@@ -100,7 +100,7 @@ the('Config class', () => {
 
       should('include env name', () => {
 
-        expect(result.env).to.equal('someEnv');
+        expect(result.shared.env).to.equal('someEnv');
       });
     });
 

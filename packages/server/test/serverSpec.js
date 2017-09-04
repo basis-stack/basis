@@ -17,7 +17,10 @@ the('server', () => {
   const stubAppInstance = {};
   const stubCreateApp = sinon.stub().returns(stubAppInstance);
   const stubHttpCreateServer = sinon.stub(stubHttp, 'createServer').returns(stubServer);
-  const stubConfig = { webServerPort: 'SomePort', env: 'SomeEnv' };
+  const stubConfig = {
+    shared: { env: 'SomeEnv' },
+    server: { webServerPort: 'SomePort' }
+  };
   const stubLogger = { info: () => {} };
   const stubContainer = getStubContainer(stubConfig, stubLogger);
   const stubServerListen = sinon.spy(stubServer, 'listen');
@@ -70,7 +73,7 @@ the('server', () => {
     should('listen on the configured port', () => {
 
       assertWasCalled(stubServerListen);
-      assertParameter(stubServerListen, 0, stubConfig.webServerPort);
+      assertParameter(stubServerListen, 0, stubConfig.server.webServerPort);
     });
 
     should('return the server instance', () => {

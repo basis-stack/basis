@@ -65,21 +65,21 @@ gulp.task('copy:server-scripts', () => {
         .forEach((env) => {
 
           deployVariables += `\n"${env}")\n` +
-                             `  DEPLOY_USER=${envSettings[env].deployUser}\n` +
-                             `  DEPLOY_HOST=${envSettings[env].deployHost}\n` +
-                             `  DEPLOY_LOCATION=${envSettings[env].deployDirectory}\n` +
+                             `  DEPLOY_USER=${envSettings[env].deploy.deployUser}\n` +
+                             `  DEPLOY_HOST=${envSettings[env].deploy.deployHost}\n` +
+                             `  DEPLOY_LOCATION=${envSettings[env].deploy.deployDirectory}\n` +
                              '  ;;\n';
         });
 
   const runtimeScripts = gulp.src([`${scriptsPath}/start.sh`, `${scriptsPath}/stop.sh`])
-                             .pipe(replace('%APPNAME%', envSettings.default.appName))
-                             .pipe(replace('%FRONT_WITH_NGINX%', envSettings.default.frontWithNginx))
+                             .pipe(replace('%APPNAME%', envSettings.default.shared.appName))
+                             .pipe(replace('%FRONT_WITH_NGINX%', envSettings.default.server.frontWithNginx))
                              .pipe(extReplace(''))
                              .pipe(gulp.dest(config.paths.build))
                              .pipe(print(getFilePathLogMessage));
 
   const deployScript = gulp.src([`${scriptsPath}/deploy.sh`])
-                           .pipe(replace('%APPNAME%', envSettings.default.appName))
+                           .pipe(replace('%APPNAME%', envSettings.default.shared.appName))
                            .pipe(replace('%DEPLOY_VARIABLES%', deployVariables))
                            .pipe(extReplace(''))
                            .pipe(chmod(0o755))
@@ -92,8 +92,8 @@ gulp.task('copy:server-scripts', () => {
 gulp.task('copy:nginx-config', () => (
 
   gulp.src(['./config/nginx.conf'])
-      .pipe(replace('%NGINX_LOCAL_PORT%', envSettings.production.webServerPort))
-      .pipe(replace('%NGINX_PUBLIC_PORT%', envSettings.production.publicPort))
+      .pipe(replace('%NGINX_LOCAL_PORT%', envSettings.production.server.webServerPort))
+      .pipe(replace('%NGINX_PUBLIC_PORT%', envSettings.production.server.publicPort))
       .pipe(gulp.dest(`${config.paths.build}/config`))
       .pipe(print(getFilePathLogMessage))
 ));
@@ -106,11 +106,16 @@ gulp.task('create:env-settings', (cb) => {
   Object.keys(envSettings)
         .forEach((env) => {
 
-          delete outputSettings[env].frontWithNginx;
-          delete outputSettings[env].nodeRuntimeVersion;
-          delete outputSettings[env].deployUser;
-          delete outputSettings[env].deployHost;
-          delete outputSettings[env].deployDirectory;
+          if (outputSettings[env].server !== undefined) {
+
+            delete outputSettings[env].server.frontWithNginx;
+            delete outputSettings[env].server.nodeRuntimeVersion;
+          }
+
+          if (outputSettings[env].deploy !== undefined) {
+
+            delete outputSettings[env].deploy;
+          }
         });
 
   const pathName = `${config.paths.build}/config/settings.json`;
@@ -133,7 +138,7 @@ gulp.task('create:package-json', (cb) => {
     if (readError) { throw readError; }
 
     const outputPackageJson = Object.assign(packageJson);
-    outputPackageJson.name = envSettings.default.appName;
+    outputPackageJson.name = envSettings.default.shared.appName;
     delete outputPackageJson.devDependencies;
     delete outputPackageJson.scripts;
     delete outputPackageJson.homepage;
@@ -160,10 +165,12 @@ gulp.task('create:package-json', (cb) => {
 /* Compile server-side app */
 gulp.task('compile:server', () => {
 
-  const startupDestFileName = `start-${envSettings.default.appName}`;
+  const startupDestFileName = `start-${envSettings.default.shared.appName}`;
   const startupDestDir = `${config.paths.build}/bin/`;
   const mainSrc = `import { main } from 'basis-server';
-                   main();`;
+                  main();`;
+  // const mainSrc = `import { main } from './../packages/server';
+  //                 main();`;
 
   const startupFileStream = file(startupDestFileName, mainSrc, { src: true })
                               .pipe(babel())
@@ -286,7 +293,7 @@ gulp.task('install:runtime-dependencies', () => (
 /* Package build artifacts */
 gulp.task('package', ['install:runtime-dependencies', 'copy:server-scripts'], () => {
 
-  const packageFileName = `${envSettings.default.appName}.package.tar`;
+  const packageFileName = `${envSettings.default.shared.appName}.package.tar`;
   logMessage('Creating ', `${config.paths.package}/${packageFileName}`);
 
   // TODO: Exclude packages dir from package zip

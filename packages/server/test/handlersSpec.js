@@ -10,7 +10,7 @@ the('(server) handlers', () => {
 
   when('listening handled', () => {
 
-    const stubConfig = { webServerPort: 'SomePort' };
+    const stubConfig = { server: { webServerPort: 'SomePort' } };
     const stubLogger = { info: () => {} };
     const stubLoggerInfo = sinon.spy(stubLogger, 'info');
 
@@ -46,7 +46,7 @@ the('(server) handlers', () => {
     let callbackInvoked;
     const stubError = { syscall: 'listen' };
     const stubLogger = { error: () => {} };
-    const stubConfig = { webServerPort: '666' };
+    const stubConfig = { server: { webServerPort: '666' } };
     const stubCallback = () => { callbackInvoked = true; };
 
     const resetStubs = () => {

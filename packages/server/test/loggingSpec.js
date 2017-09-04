@@ -54,7 +54,7 @@ the('logging middleware initialiser', () => {
 
     withScenario('non-production env config', () => {
 
-      const stubConfig = { env: 'development' };
+      const stubConfig = { shared: { env: 'development' } };
       let result;
 
       before(() => {
@@ -84,7 +84,7 @@ the('logging middleware initialiser', () => {
 
     withScenario('production env config', () => {
 
-      const stubConfig = { env: 'production' };
+      const stubConfig = { shared: { env: 'production' } };
       let result;
 
       before(() => {

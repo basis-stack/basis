@@ -1,6 +1,6 @@
 {
   "reporter": [
-    "text"
+    "text-summary"
   ],
   "include": [
     "packages/**/*.js",

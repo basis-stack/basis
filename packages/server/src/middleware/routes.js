@@ -19,7 +19,7 @@ export default (app, container) => {
 
       // TODO: Check to see if the imported route (route.default) a) is a function and b) takes router as a parameter --> And throw 'Invalid Route Definition' error if not
 
-      route.default(router);
+      route.default(router, container);
       logger.info(`${constants.text.logging.startupPrefix} INIT: wired base route '${r}'`);
     } catch (error) {
 

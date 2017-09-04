@@ -3,7 +3,7 @@ import * as sinon from 'sinon';
 
 import { the, should, when,
          createStubObject, getStubApp, getStubContainer, getStubLogger,
-         assertWasCalled } from './../../testing';
+         assertWasCalled, assertParameter } from './../../testing';
 
 import routesIndex, { __RewireAPI__ as RoutesIndexAPI } from './../src/middleware/routes';
 
@@ -16,6 +16,7 @@ the('routes index', () => {
   const stubApp = getStubApp();
   const stubLogger = getStubLogger();
   const stubRouteA = createStubObject('default');
+  const stubContainer = getStubContainer({}, stubLogger);
 
   before(() => {
 
@@ -50,7 +51,7 @@ the('routes index', () => {
       stubRouteADefault = sinon.stub(stubRouteA, 'default');
       stubAppUse = sinon.spy(stubApp, 'use');
 
-      routesIndex(stubApp, getStubContainer({}, stubLogger));
+      routesIndex(stubApp, stubContainer);
     });
 
     should('initialise the express router', () => {
@@ -60,7 +61,8 @@ the('routes index', () => {
 
     should('initialise valid routes', () => {
 
-      assertWasCalled(stubRouteADefault, stubRouter);
+      assertParameter(stubRouteADefault, 0, stubRouter);
+      assertParameter(stubRouteADefault, 1, stubContainer);
     });
 
     should('log an initialised info message for valid routes', () => {

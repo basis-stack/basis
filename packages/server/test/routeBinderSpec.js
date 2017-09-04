@@ -10,11 +10,23 @@ import bindRoutes from './../src/middleware/routeBinder';
 @Controller('/base-path')
 class StubController {
 
+  constructor() {
+
+    this._thingA = 'Thing A';
+    this._thingB = 'Thing B';
+  }
+
   @Get('get-something')
-  getSomething() {}
+  getSomething() {
+
+    return this._thingA;
+  }
 
   @Post('/post-something')
-  postSomething() {}
+  postSomething() {
+
+    return this._thingB;
+  }
 
   nonDecoratedMethod() {}
 
@@ -32,12 +44,15 @@ the('routeBinder', () => {
 
     bindRoutes(StubController, controller, stubRouter);
 
-    should('bind methods (with decorators) to the express router with the defined route', () => {
+    should('bind methods (with decorators) to the express router for the defined route', () => {
+
+      const getSomethingResult = stubRouterGet.args[0][1]();
+      const postSomethingResult = stubRouterPost.args[0][1]();
 
       assertParameter(stubRouterGet, 0, '/base-path/get-something');
-      assertParameter(stubRouterGet, 1, controller.getSomething);
       assertParameter(stubRouterPost, 0, '/base-path/post-something');
-      assertParameter(stubRouterPost, 1, controller.postSomething);
+      expect(getSomethingResult).to.equal('Thing A');
+      expect(postSomethingResult).to.equal('Thing B');
     });
 
     should('prefox routes with the controller rootPath', () => {
