@@ -27,13 +27,13 @@ PACKAGE_NAME=%APPNAME%.package.tar.gz
 echo $MSG_PREFIX"Deploying package ($PACKAGE_NAME) to "$DEST
 scp package/$PACKAGE_NAME $DEST
 
-# TODO: Shutdown existing service
+# TODO: Shutdown existing service (via stop $TARGET_ENV)
 
 # Unzip to deploy location and adjust permissions
 echo $MSG_PREFIX"Unzipping package to $DEPLOY_LOCATION and setting permissions"
 ssh $DEPLOY_USER@$DEPLOY_HOST "tar -xvzf /tmp/$PACKAGE_NAME -C $DEPLOY_LOCATION && chmod -R a+x $DEPLOY_LOCATION/."
 
-# TODO: Start the app
+# TODO: Start the app (via start $TARGET_ENV)
 
 # End
 echo $MSG_PREFIX"Done."

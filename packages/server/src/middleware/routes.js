@@ -21,9 +21,9 @@ export default (app, container) => {
 
       route.default(router, container);
       logger.info(`${constants.text.logging.startupPrefix} INIT: wired base route '${r}'`);
-    } catch (error) {
+    } catch (err) {
 
-      logger.warn(`${constants.text.logging.startupPrefix} INVALID_ROUTE: unable to initialise route '${r}'. Error: ${error.message}`);
+      logger.warn(`${constants.text.logging.startupPrefix} INVALID_ROUTE: unable to initialise route '${r}'. Error: ${err.message}`);
     }
   });
 

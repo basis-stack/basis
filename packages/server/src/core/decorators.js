@@ -11,6 +11,8 @@ const httpMethodDecorator = (method, path) => (
   }
 );
 
+// TODO: Add Authenticated class decorator here
+
 export const Controller = rootPath => (
 
   (target) => {
@@ -29,3 +31,5 @@ export const Controller = rootPath => (
 
 export const Get = (path = '') => httpMethodDecorator('get', path);
 export const Post = (path = '') => httpMethodDecorator('post', path);
+
+// TODO: Add Put, Delete, etc here

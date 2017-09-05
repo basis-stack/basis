@@ -8,12 +8,20 @@ import getContainer, { __RewireAPI__ as ContainerAPI } from './../src/core/conta
 the('container', () => {
 
   const stubConfig = {};
-  const stubLogger = {};
+  const stubLogger = { warn: () => {} };
+  const stubLoggerWarn = sinon.spy(stubLogger, 'warn');
   const stubConfigClass = { createFromSettingsFile: () => {} };
   const stubLoggerClass = { createFromConfig: () => {} };
+  const stubInstance1 = { someInstance1: true };
+  const stubInstance2 = { someInstance2: true };
+  const stubDependencies = new Map().set('someKey1', stubInstance1)
+                                    .set('someKey2', stubInstance2);
+  const stubBootstrap = sinon.stub().returns(stubDependencies);
+  const stubDynamicImport = sinon.stub().returns({ default: stubBootstrap });
 
   sinon.stub(stubConfigClass, 'createFromSettingsFile').returns(stubConfig);
   sinon.stub(stubLoggerClass, 'createFromConfig').returns(stubLogger);
+
 
   let container;
 
@@ -21,6 +29,7 @@ the('container', () => {
 
     ContainerAPI.__Rewire__('Config', stubConfigClass);
     ContainerAPI.__Rewire__('Logger', stubLoggerClass);
+    ContainerAPI.__Rewire__('dynamicImport', stubDynamicImport);
 
     container = getContainer();
   });
@@ -29,6 +38,7 @@ the('container', () => {
 
     ContainerAPI.__ResetDependency__('Config');
     ContainerAPI.__ResetDependency__('Logger');
+    ContainerAPI.__ResetDependency__('dynamicImport');
   });
 
   const reset = () => {
@@ -72,6 +82,33 @@ the('container', () => {
     should('return the initialised container', () => {
 
       expect(result).to.equal(container);
+    });
+
+    withScenario('a valid bootstrap (dependencies) file', () => {
+
+      should('register all custom dependencies', () => {
+
+        expect(container.resolve('someKey1')).to.equal(stubInstance1);
+        expect(container.resolve('someKey2')).to.equal(stubInstance2);
+      });
+    });
+
+    withScenario('an invalid or missing bootstrap (dependencies) file', () => {
+
+      before(() => {
+
+        stubDynamicImport.reset();
+        stubDynamicImport.throws(new Error('Some import error'));
+        container.initialise();
+      });
+
+      should('log a warning message indicating error', () => {
+
+        const arg = stubLoggerWarn.args[0][0];
+
+        expect(arg).to.have.string('INVALID_BOOTSTRAP');
+        expect(arg).to.have.string('Some import error');
+      });
     });
   });
 

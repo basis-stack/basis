@@ -1,6 +1,7 @@
 import path from 'path';
 
-import { getRootPath } from './utilities';
+import constants from './constants';
+import { getRootPath, dynamicImport } from './utilities';
 import Config from './config';
 import Logger from './logger';
 
@@ -19,9 +20,22 @@ class Container {
     this._instanceMap.clear();
 
     const config = Config.createFromSettingsFile(this._settingsFilePath);
+    const logger = Logger.createFromConfig(config);
 
     this.register('config', config);
-    this.register('logger', Logger.createFromConfig(config));
+    this.register('logger', logger);
+
+    try {
+
+      const bootstrap = dynamicImport('./bin/bootstrap').default;
+      const customDependencies = bootstrap(config, logger);
+
+      customDependencies.forEach((v, k) => { this.register(k, v); });
+
+    } catch (err) {
+
+      logger.warn(`${constants.text.logging.startupPrefix} INVALID_BOOTSTRAP: unable to initialise custom dependencies in ./bin/bootstrap. Error: ${err.message}`);
+    }
 
     return this;
   }

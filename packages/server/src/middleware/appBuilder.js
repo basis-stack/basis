@@ -16,6 +16,8 @@ import initialiseRoutes from './routes';
 //       Could get a bit gnarly with lots of middleware, and so the chain calls might get a bit verbose. Not sure, need to play with it and see how feels.
 //       Could always have config to drive each middleware option and have a wrapper 'useIf' call that checks the config. That way could be config driven if needs be, and app.js would remain
 //       consistent in each application.
+//       Or even have each middleware initialiser as a strategy (pattern), with each defining their precedence and their init function. Then this builder could just pull them in dynamically
+//       and register with the app. That way could scale better, and apps could specify exactly want they want as middleware and in what order.
 
 export default class AppBuilder {
 
