@@ -9,8 +9,7 @@
     "src/**/*.jsx"
   ],
   "exclude": [
-    "src/client/app.jsx",
-    "src/client/index.js",
+    "src/client/**",
     "src/server/bin/bootstrap.js",
     "**/test/**",
     "packages/testing/**/*.js"
