@@ -15,6 +15,7 @@ export default {
 
   // Client specific settings
   client: {
+    appDisplayName: 'Basis'
   },
 
   // Deploy settings
