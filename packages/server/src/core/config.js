@@ -17,7 +17,7 @@ export default class Config {
 
     return jsonfile.readFileSync(path.join(getRootPath(), 'package.json'))
                    .version;
-  };
+  }
 
   static createFromSettingsFile(filePath) {
 
