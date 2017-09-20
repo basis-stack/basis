@@ -10,7 +10,9 @@
     "chai-friendly"
   ],
   "rules": {
-    "import/no-extraneous-dependencies": [2, {"devDependencies": ["**/*Spec.js", "**/settings.js", "gulpfile.babel.js"]}],
+    "import/no-extraneous-dependencies": [2, {
+      "devDependencies": ["**/*Spec.js", "**/settings.js", "gulpfile.babel.js"]
+    }],
     "chai-friendly/no-unused-expressions": 2,
     "react/prop-types": [0],
     "react/jsx-filename-extension": [0],
@@ -24,7 +26,19 @@
     "class-methods-use-this": [0],
     "no-console": [0],
     "comma-dangle": [2, "never"],
-    "no-param-reassign": [2, { "props": false }],
-    "new-cap": [2, { "newIsCapExceptions": ["target"], "capIsNewExceptions": ["Router", "Controller", "Get", "Post"] }]
+    "no-param-reassign": [2, {
+      "props": false
+    }],
+    "new-cap": [2, {
+      "newIsCapExceptions": ["target"],
+      "capIsNewExceptions": ["Router", "Controller", "Get", "Post"]
+    }],
+    "indent": [2, 2, {
+      "FunctionDeclaration": { "parameters": "first" },
+      "CallExpression": { "arguments": "first" },
+      "MemberExpression": "off",
+      "ImportDeclaration": "first",
+      "SwitchCase": 1
+    }]
   }
 }
