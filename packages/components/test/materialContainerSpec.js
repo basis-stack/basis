@@ -1,31 +1,31 @@
-import React from 'react';
-import chai, { expect } from 'chai';
-import chaiEnzyme from 'chai-enzyme';
-import { shallow } from 'enzyme';
+// import React from 'react';
+// import chai, { expect } from 'chai';
+// import chaiEnzyme from 'chai-enzyme';
+// import { shallow } from 'enzyme';
 
-import { the, when, should } from './../../testing';
+// import { the, when, should } from './../../testing';
 
-import material from './../src/materialContainer';
+// import material from './../src/materialContainer';
 
-const StubComponent = props => <span>{ props.someProp }</span>;
+// const StubComponent = props => <span>{ props.someProp }</span>;
 
-chai.use(chaiEnzyme());
+// chai.use(chaiEnzyme());
 
-the('materialContainer HOC (higher-order component)', () => {
+// the('materialContainer HOC (higher-order component)', () => {
 
-  when('invoked', () => {
+//   when('invoked', () => {
 
-    const HigherComponent = material(StubComponent);
-    const wrapper = shallow(<HigherComponent someProp="someValue" />);
+//     const HigherComponent = material(StubComponent);
+//     const wrapper = shallow(<HigherComponent someProp="someValue" />);
 
-    should('wrap the input component in a <div> tag and use Material Design typography', () => {
+//     should('wrap the input component in a <div> tag and use Material Design typography', () => {
 
-      expect(wrapper.find('div')).to.have.className('mdc-typography');
-    });
+//       expect(wrapper.find('div')).to.have.className('mdc-typography');
+//     });
 
-    should('render the input component and pass properties down to it', () => {
+//     should('render the input component and pass properties down to it', () => {
 
-      expect(wrapper.find('StubComponent')).to.have.prop('someProp', 'someValue');
-    });
-  });
-});
+//       expect(wrapper.find('StubComponent')).to.have.prop('someProp', 'someValue');
+//     });
+//   });
+// });
