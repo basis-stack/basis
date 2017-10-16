@@ -13,7 +13,7 @@
     "src/server/bin/bootstrap.js",
     "**/test/**",
     "packages/testing/**/*.js",
-    "packages/components/**/*.jsx"
+    "packages/components/**/errorView/*.jsx"
   ],
   "require": [
     "babel-register"
