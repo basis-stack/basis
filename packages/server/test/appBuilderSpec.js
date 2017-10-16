@@ -247,16 +247,16 @@ the('appBuilder', () => {
 
   when('result requested', () => {
 
-    let result;
+    let r;
 
     before(() => {
 
-      result = builder.result;
+      r = builder.result;
     });
 
     should('return the app (express) instance', () => {
 
-      expect(result).to.equal(stubApp);
+      expect(r).to.equal(stubApp);
     });
   });
 });

@@ -21,6 +21,7 @@ package
 .DS_Store
 
 # Local bash scripts
+install
 g
 rs
 cover

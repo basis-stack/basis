@@ -7,7 +7,7 @@ $material-design-icons-font-path: $fonts-path + '/';
 $fa-font-path: $fonts-path;
 $fa-font-size-base: 24px;
 
-// TODO: Need to make these app configurable
+// TODO: Need to make these app configurable (i.e. check if have been provided by the app already)
 $mdc-theme-primary: $md-blue-700;
 $mdc-theme-accent: $md-blue-500;
 $mdc-theme-background: $md-white;

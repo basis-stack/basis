@@ -259,7 +259,15 @@ gulp.task('bundle:client', (cb) => {
       throw new util.PluginError('bundle:client', err);
     }
 
-    const ouptut = stats.toString({ assets: true, chunks: false, chunkModules: false, colors: true, hash: false, timings: false, version: false });
+    const ouptut = stats.toString({
+      assets: true,
+      chunks: false,
+      chunkModules: false,
+      colors: true,
+      hash: false,
+      timings: false,
+      version: false
+    });
     util.log(`[bundle:client] Completed\n ${ouptut}`);
 
     cb();
