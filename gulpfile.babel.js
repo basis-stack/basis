@@ -222,7 +222,7 @@ gulp.task('copy:fonts', () => {
 
   return gulp.src(config.vendor.fonts)
              .pipe(changed(dest))
-             .pipe(gulp.dest(dest))
+             .pipe(gulp.dest(dest));
 });
 
 gulp.task('sass:server', () => {
