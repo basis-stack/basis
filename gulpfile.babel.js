@@ -20,6 +20,7 @@ import tar from 'gulp-tar';
 import gzip from 'gulp-gzip';
 import chmod from 'gulp-chmod';
 import file from 'gulp-file';
+import changed from 'gulp-changed';
 
 import config from './config/gulp.config';
 import getEnvSettings from './config/settings';
@@ -206,18 +207,23 @@ gulp.task('compile:packages', () => {
 gulp.task('copy:views', () => {
 
   const viewsExtension = '*.ejs';
+  const dest = config.paths.build;
 
   return gulp.src(`${config.paths.server}/**/${viewsExtension}`)
-             .pipe(gulp.dest(`${config.paths.build}`))
+             .pipe(changed(dest))
+             .pipe(gulp.dest(dest))
              .pipe(print(getFilePathLogMessage));
 });
 
 /* Concat and copy vendor assets (fonts, styles, scripts) to static */
-gulp.task('copy:fonts', () => (
+gulp.task('copy:fonts', () => {
 
-  gulp.src(config.vendor.fonts)
-      .pipe(gulp.dest(`${config.paths.build}/public/fonts/`))
-));
+  const dest = `${config.paths.build}/public/fonts/`;
+
+  return gulp.src(config.vendor.fonts)
+             .pipe(changed(dest))
+             .pipe(gulp.dest(dest))
+});
 
 gulp.task('sass:server', () => {
 
