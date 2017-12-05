@@ -1,10 +1,9 @@
 import gulp from 'gulp';
-import del from 'del';
+// import del from 'del';
 // TODO: Replace with chalk !!
 import colors from 'colors';
 import replace from 'gulp-replace';
 import runSequence from 'run-sequence';
-import fs from 'fs';
 import rename from 'gulp-rename';
 import babel from 'gulp-babel';
 import merge from 'merge-stream';
@@ -26,29 +25,31 @@ import path from 'path';
 import config from './config/gulp.config';
 
 // TODO: Get from basis-build once published
-import { logMessage, getFilePathLogMessage, getEnvSettings } from './packages/build';
+import { logMessage, getFilePathLogMessage, getEnvSettings, initialiseTasks, constants } from './packages/build';
 import webpackConfig from './config/webpack.config';
+
+initialiseTasks(config);
 
 const envSettings = getEnvSettings(path.join(__dirname, 'config'));
 
 /* Clean existing build & package artifacts */
-gulp.task('clean', (cb) => {
+// gulp.task('clean', (cb) => {
 
-  del([config.paths.build, config.paths.package, './deploy']).then((paths) => {
+//   del([config.paths.build, config.paths.package, './deploy']).then((paths) => {
 
-    const pathsText = paths.length === 0 ? 'NONE' : paths.join(';\n                ');
-    logMessage('Deleted   ', pathsText);
-    cb();
-  });
-});
+//     const pathsText = paths.length === 0 ? 'NONE' : paths.join(';\n                ');
+//     logMessage('Deleted   ', pathsText);
+//     cb();
+//   });
+// });
 
-/* Prepare build directory */
-gulp.task('prepare:build', ['clean'], (cb) => {
+// /* Prepare build directory */
+// gulp.task('prepare:build', ['clean'], (cb) => {
 
-  fs.mkdirSync(config.paths.build);
-  fs.mkdirSync(`${config.paths.build}/config`);
-  cb();
-});
+//   fs.mkdirSync(config.paths.build);
+//   fs.mkdirSync(`${config.paths.build}/config`);
+//   cb();
+// });
 
 /* Copy server scripts */
 gulp.task('copy:server-scripts', () => {
@@ -285,7 +286,7 @@ gulp.task('lint:all', () => (
 ));
 
 /* Build entire solution */
-gulp.task('build', ['prepare:build'], (cb) => {
+gulp.task('build', [constants.taskKeys.prepareBuild], (cb) => {
 
   runSequence('lint:all',
               ['create:env-settings', 'create:package-json', 'compile:server', 'compile:packages', 'copy:views', 'bundle:client', 'copy:fonts', 'sass:server'],
