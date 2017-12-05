@@ -3,18 +3,18 @@ import 'colors';
 import fs from 'fs';
 import relative from 'require-relative';
 
-export default () => {
+export default (configDir) => {
 
   const allSettings = {};
-  const knownEnvironments = fs.readdirSync(__dirname)
-                              .filter(item => item.includes('settings') && !item.includes('gulp.config.js') && !item.includes('settings.js'))
+  const knownEnvironments = fs.readdirSync(configDir)
+                              .filter(item => item.includes('settings') && !item.includes('gulp.config.js'))
                               .map(envFile => envFile.split('.')[1]);
 
   knownEnvironments.forEach((env) => {
 
     try {
 
-      const envSetting = relative(`./settings.${env}.js`, __dirname);
+      const envSetting = relative(`./settings.${env}.js`, configDir);
       allSettings[env] = Object.assign(envSetting.default);
     } catch (e) {
 

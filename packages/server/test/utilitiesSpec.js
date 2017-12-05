@@ -7,7 +7,7 @@ import { the, should, when, withScenario,
 
 import { getRootPath, terminate, dynamicImport, getEnvVariable, __RewireAPI__ as UtilitiesAPI } from './../src/core/utilities';
 
-the('utilities module', () => {
+the('server utilities module', () => {
 
   when('getRootPath invoked', () => {
 

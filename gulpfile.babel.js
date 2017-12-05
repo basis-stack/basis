@@ -21,20 +21,15 @@ import gzip from 'gulp-gzip';
 import chmod from 'gulp-chmod';
 import file from 'gulp-file';
 import changed from 'gulp-changed';
+import path from 'path';
 
 import config from './config/gulp.config';
-import getEnvSettings from './config/settings';
+
+// TODO: Get from basis-build once published
+import { logMessage, getFilePathLogMessage, getEnvSettings } from './packages/build';
 import webpackConfig from './config/webpack.config';
 
-const logMessagePrefix = '         + ';
-const envSettings = getEnvSettings();
-
-const logMessage = (action, context) => {
-
-  console.log(`${logMessagePrefix}${action}${context.magenta}`);
-};
-
-const getFilePathLogMessage = filepath => ` Writing ${filepath}`;
+const envSettings = getEnvSettings(path.join(__dirname, 'config'));
 
 /* Clean existing build & package artifacts */
 gulp.task('clean', (cb) => {
