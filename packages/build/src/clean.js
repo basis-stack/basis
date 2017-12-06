@@ -4,17 +4,21 @@ import fs from 'fs';
 import { logMessage } from './utilities';
 import constants from './constants';
 
-export default config => [{
+export default context => [{
 
   /* Clean existing build & package artifacts */
   key: constants.taskKeys.clean,
   dependencies: null,
   func: (cb) => {
 
-    del([config.paths.build, config.paths.package, './deploy']).then((paths) => {
+    del([context.config.paths.build, context.config.paths.package, './deploy']).then((paths) => {
 
       const pathsText = paths.length === 0 ? 'NONE' : paths.join(';\n                ');
-      logMessage('Deleted   ', pathsText);
+
+      if (context.config.options.logFileNames) {
+        logMessage('Deleted   ', pathsText);
+      }
+
       cb();
     });
   }
@@ -25,8 +29,8 @@ export default config => [{
   dependencies: [constants.taskKeys.clean],
   func: (cb) => {
 
-    fs.mkdirSync(config.paths.build);
-    fs.mkdirSync(`${config.paths.build}/config`);
+    fs.mkdirSync(context.config.paths.build);
+    fs.mkdirSync(`${context.config.paths.build}/config`);
     cb();
   }
 }];
