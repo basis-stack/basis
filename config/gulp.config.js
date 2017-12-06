@@ -29,6 +29,6 @@ export default {
 
   // Options
   options: {
-    logFileNames: true
+    logFileNames: false
   }
 };

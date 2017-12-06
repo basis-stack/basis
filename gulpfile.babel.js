@@ -1,6 +1,7 @@
 import gulp from 'gulp';
 import path from 'path';
 import runSequence from 'run-sequence';
+import { constants, getEnvSettings, initialiseTasks } from 'basis-build';
 
 // import replace from 'gulp-replace';
 // import merge from 'merge-stream';
@@ -14,7 +15,7 @@ import config from './config/gulp.config';
 import webpackConfig from './config/webpack.config';
 
 // TODO: Get from basis-build once published
-import { constants, getEnvSettings, initialiseTasks } from './packages/build';
+// import { constants, getEnvSettings, initialiseTasks } from './packages/build';
 
 const rootDir = __dirname;
 const envSettings = getEnvSettings(path.join(rootDir, 'config'));
