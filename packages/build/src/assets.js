@@ -8,7 +8,6 @@ export default context => [{
 
   /* Copy vendor fonts to public (static) */
   key: constants.taskKeys.copyFonts,
-  dependencies: null,
   func: () => {
 
     const dest = `${context.config.paths.build}/public/fonts/`;

@@ -28,7 +28,15 @@ export default {
     // Server
     compileServer: 'compile:server',
     copyServerViews: 'copy:server:views',
-    sassServer: 'sass:server'
+    sassServer: 'sass:server',
+
+    // Build
+    buildServer: 'build:server',
+    buildPackages: 'build:packages',
+    buildClient: 'build:client',
+    buildAll: 'build:all',
+    buildFull: 'build:full',
+    buildIncremental: 'build:incremental'
   },
 
   globs: {

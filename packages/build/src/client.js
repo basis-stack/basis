@@ -7,7 +7,7 @@ export default context => [{
 
   /* Bundle client code & assets with Webpack */
   key: constants.taskKeys.bundleClient,
-  dependencies: null,
+  dependencies: [constants.taskKeys.lintClient],
   func: (cb) => {
 
     webpack(context.webpackConfig, (err, stats) => {
@@ -16,17 +16,20 @@ export default context => [{
         throw new util.PluginError(constants.taskKeys.bundleClient, err);
       }
 
-      const ouptut = stats.toString({
-        assets: true,
-        chunks: false,
-        chunkModules: false,
-        colors: true,
-        hash: false,
-        timings: false,
-        version: false
-      });
+      if (context.config.options.logFileNames) {
 
-      util.log(`[${constants.taskKeys.bundleClient}] Completed\n ${ouptut}`);
+        const ouptut = stats.toString({
+          assets: true,
+          chunks: false,
+          chunkModules: false,
+          colors: true,
+          hash: false,
+          timings: false,
+          version: false
+        });
+
+        util.log(`[${constants.taskKeys.bundleClient}] Completed\n ${ouptut}`);
+      }
 
       cb();
     });

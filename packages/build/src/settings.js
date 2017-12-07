@@ -5,6 +5,7 @@ import relative from 'require-relative';
 
 export default (configDir) => {
 
+  const outputPrefix = '[settings]';
   const allSettings = {};
   const knownEnvironments = fs.readdirSync(configDir)
                               .filter(item => item.includes('settings') && !item.includes('gulp.config.js'))
@@ -16,11 +17,14 @@ export default (configDir) => {
 
       const envSetting = relative(`./settings.${env}.js`, configDir);
       allSettings[env] = Object.assign(envSetting.default);
+
     } catch (e) {
 
-      console.log(`${'[settings]'.yellow} ${'INVALID_ENV'.red}: Unable to import environment settings for '${env}'. Error: ${e.message}`);
+      console.log(`${outputPrefix.yellow} ${'INVALID_ENV'.red}: Unable to import environment settings for '${env}'. Error: ${e.message}`);
     }
   });
+
+  console.log(`${outputPrefix.yellow} Loaded environment settings for: ${knownEnvironments.join(', ').green}`);
 
   return allSettings;
 };

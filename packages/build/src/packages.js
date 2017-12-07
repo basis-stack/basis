@@ -9,7 +9,7 @@ export default context => [{
 
   /* Compile nested basis packages */
   key: constants.taskKeys.compilePackages,
-  dependencies: null,
+  dependencies: [constants.taskKeys.lintPackages],
   func: () => {
 
     const destDir = `${context.config.paths.build}/packages`;

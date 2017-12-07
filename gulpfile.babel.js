@@ -1,7 +1,8 @@
 import gulp from 'gulp';
 import path from 'path';
-import runSequence from 'run-sequence';
-import { constants, getEnvSettings, initialiseTasks } from 'basis-build';
+
+import { getEnvSettings, initialiseTasks } from 'basis-build';
+// import { getEnvSettings, initialiseTasks } from './packages/build';
 
 // import replace from 'gulp-replace';
 // import merge from 'merge-stream';
@@ -14,13 +15,9 @@ import { constants, getEnvSettings, initialiseTasks } from 'basis-build';
 import config from './config/gulp.config';
 import webpackConfig from './config/webpack.config';
 
-// TODO: Get from basis-build once published
-// import { constants, getEnvSettings, initialiseTasks } from './packages/build';
-
 const rootDir = __dirname;
 const envSettings = getEnvSettings(path.join(rootDir, 'config'));
-
-initialiseTasks(config, envSettings, webpackConfig, rootDir);
+const tasks = initialiseTasks(config, envSettings, webpackConfig, rootDir);
 
 /* Copy server scripts */
 // gulp.task('copy:server-scripts', () => {
@@ -66,14 +63,6 @@ initialiseTasks(config, envSettings, webpackConfig, rootDir);
 //       .pipe(print(getFilePathLogMessage))
 // ));
 
-/* Build entire solution */
-gulp.task('build', [constants.taskKeys.prepareBuild], (cb) => {
-
-  runSequence('lint:all',
-              ['create:env-settings', 'create:package-json', 'compile:server', 'compile:packages', 'copy:server:views', 'bundle:client', 'copy:fonts', 'sass:server'],
-              cb);
-});
-
 // /* Install runtime dependencies */
 // gulp.task('install:runtime-dependencies', () => (
 
@@ -96,6 +85,4 @@ gulp.task('build', [constants.taskKeys.prepareBuild], (cb) => {
 // });
 
 /* Default gulp task */
-gulp.task('default', ['build'], (cb) => {
-
-});
+gulp.task('default', [tasks.buildFull]);

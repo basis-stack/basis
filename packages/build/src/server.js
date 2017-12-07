@@ -14,7 +14,6 @@ export default context => [{
 
   /* */
   key: constants.taskKeys.sassServer,
-  dependencies: null,
   func: () => {
 
     const options = {
@@ -49,7 +48,6 @@ export default context => [{
 
   /* Copy server (express) view templates to views */
   key: constants.taskKeys.copyServerViews,
-  dependencies: null,
   func: () => (
 
     gulp.src(`${context.config.paths.server}${constants.globs.views}`)
@@ -61,7 +59,7 @@ export default context => [{
 
   /* Compile server routes and startup modules */
   key: constants.taskKeys.compileServer,
-  dependencies: null,
+  dependencies: [constants.taskKeys.lintServer],
   func: () => {
 
     const startupDestFileName = `start-${context.envSettings.default.shared.appName}`;

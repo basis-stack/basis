@@ -1,5 +1,5 @@
 import del from 'del';
-import fs from 'fs';
+import fs from 'fs-extra';
 
 import { logMessage } from './utilities';
 import constants from './constants';
@@ -8,7 +8,6 @@ export default context => [{
 
   /* Clean existing build & package artifacts */
   key: constants.taskKeys.clean,
-  dependencies: null,
   func: (cb) => {
 
     del([context.config.paths.build, context.config.paths.package, './deploy']).then((paths) => {
@@ -26,11 +25,10 @@ export default context => [{
 
   /* Prepare build directory */
   key: constants.taskKeys.prepareBuild,
-  dependencies: [constants.taskKeys.clean],
   func: (cb) => {
 
-    fs.mkdirSync(context.config.paths.build);
-    fs.mkdirSync(`${context.config.paths.build}/config`);
+    fs.ensureDirSync(context.config.paths.build);
+    fs.ensureDirSync(`${context.config.paths.build}/config`);
     cb();
   }
 }];

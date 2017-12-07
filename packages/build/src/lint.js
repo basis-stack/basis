@@ -17,24 +17,20 @@ export default context => [{
 
   /* Lint Client */
   key: constants.taskKeys.lintClient,
-  dependencies: null,
   func: () => lint(getSource(context.config.paths.client))
 }, {
 
   /* Lint Server */
   key: constants.taskKeys.lintServer,
-  dependencies: null,
   func: () => lint(getSource(context.config.paths.server))
 }, {
 
   /* Lint Packages */
   key: constants.taskKeys.lintPackages,
-  dependencies: null,
   func: () => lint(getSource(context.config.paths.packages))
 }, {
 
   /* Lint All */
   key: constants.taskKeys.lintAll,
-  dependencies: [constants.taskKeys.lintClient, constants.taskKeys.lintServer, constants.taskKeys.lintPackages],
-  func: () => {}
+  dependencies: [constants.taskKeys.lintClient, constants.taskKeys.lintServer, constants.taskKeys.lintPackages]
 }];

@@ -8,7 +8,7 @@ export default context => [{
 
   /* Prepare Environment settings file */
   key: constants.taskKeys.createEnvSettings,
-  dependencies: null,
+  dependencies: [constants.taskKeys.prepareBuild],
   func: (cb) => {
 
     const outputSettings = Object.assign(context.envSettings);
@@ -45,7 +45,7 @@ export default context => [{
 
   /* Prepare package.json for the server / runtime */
   key: constants.taskKeys.createPackageJson,
-  dependencies: null,
+  dependencies: [constants.taskKeys.prepareBuild],
   func: (cb) => {
 
     const fileName = 'package.json';
