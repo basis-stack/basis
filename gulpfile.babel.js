@@ -12,7 +12,7 @@ import { getEnvSettings, initialiseTasks } from 'basis-build';
 // import gzip from 'gulp-gzip';
 // import chmod from 'gulp-chmod';
 
-import config from './config/gulp.config';
+import config from './config/build.config';
 import webpackConfig from './config/webpack.config';
 
 const rootDir = __dirname;

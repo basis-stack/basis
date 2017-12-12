@@ -10,12 +10,19 @@ export default context => [{
   key: constants.taskKeys.clean,
   func: (cb) => {
 
-    del([context.config.paths.build, context.config.paths.package, './deploy']).then((paths) => {
+    const pathsToNuke = [
+      context.config.paths.build,
+      context.config.paths.package,
+      context.config.paths.temp,
+      './deploy'
+    ];
 
-      const pathsText = paths.length === 0 ? 'NONE' : paths.join(';\n                ');
+    del(pathsToNuke).then((paths) => {
 
       if (context.config.options.logFileNames) {
-        logMessage('Deleted   ', pathsText);
+
+        const pathsText = paths.length === 0 ? 'NONE' : paths.join('\n                    ');
+        logMessage('Deleted  ', pathsText);
       }
 
       cb();
@@ -23,12 +30,36 @@ export default context => [{
   }
 }, {
 
-  /* Prepare build directory */
+  /* Prepare build directory(s) */
   key: constants.taskKeys.prepareBuild,
   func: (cb) => {
 
-    fs.ensureDirSync(context.config.paths.build);
-    fs.ensureDirSync(`${context.config.paths.build}/config`);
+    const pathsToPrepare = [
+      context.config.paths.build,
+      `${context.config.paths.build}/config`,
+      context.config.paths.temp
+    ];
+
+    pathsToPrepare.forEach((p) => { fs.ensureDirSync(p); });
     cb();
+  }
+}, {
+
+  /* Finalise the build by deleting any temp resources */
+  key: constants.taskKeys.finalise,
+  func: (cb) => {
+
+    const pathsToNuke = [context.config.paths.temp];
+
+    del(pathsToNuke).then((paths) => {
+
+      if (context.config.options.logFileNames) {
+
+        const pathsText = paths.length === 0 ? 'NONE' : paths.join('\n                    ');
+        logMessage('Cleaned   ', pathsText);
+      }
+
+      cb();
+    });
   }
 }];

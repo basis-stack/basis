@@ -19,10 +19,14 @@ export default context => [{
                              .pipe(gulp.dest(destDir))
                              .pipe(logFileWrite(context.config));
 
-    const packageJsonStream = gulp.src([`${context.config.paths.packages}${constants.globs.packageJson}`, '!**/assets/package.json'])
+    const sassStream = gulp.src([`${context.config.paths.packages}${constants.globs.sass}`])
+                           .pipe(gulp.dest(destDir))
+                           .pipe(logFileWrite(context.config));
+
+    const packageJsonStream = gulp.src([`${context.config.paths.packages}${constants.globs.packageJson}`])
                                   .pipe(gulp.dest(destDir))
                                   .pipe(logFileWrite(context.config));
 
-    return merge(sourceStream, packageJsonStream);
+    return merge(sourceStream, sassStream, packageJsonStream);
   }
 }];

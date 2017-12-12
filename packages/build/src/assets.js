@@ -6,15 +6,17 @@ import constants from './constants';
 
 export default context => [{
 
-  /* Copy vendor fonts to public (static) */
+  /* Copy vendor & custom fonts to public (static) */
   key: constants.taskKeys.copyFonts,
   func: () => {
 
     const dest = `${context.config.paths.build}/public/fonts/`;
 
-    return gulp.src(context.config.vendor.fonts)
+    return gulp.src(context.config.vendor.fonts.concat(context.config.custom.fonts))
                .pipe(changed(dest))
                .pipe(gulp.dest(dest))
                .pipe(logFileWrite(context.config));
   }
+
+  // TODO: Add image copy task
 }];

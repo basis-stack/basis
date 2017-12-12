@@ -1,7 +1,7 @@
 import jsonfile from 'jsonfile';
 import path from 'path';
 
-import { logMessage } from './utilities';
+import { writeJson } from './utilities';
 import constants from './constants';
 
 export default context => [{
@@ -30,16 +30,7 @@ export default context => [{
 
     const pathName = `${context.config.paths.build}/config/settings.json`;
 
-    if (context.config.options.logFileNames) {
-      logMessage('Creating ', pathName);
-    }
-
-    jsonfile.writeFile(pathName, outputSettings, { spaces: 2 }, (err) => {
-
-      if (err) { throw err; }
-
-      cb();
-    });
+    writeJson(context.config, pathName, outputSettings, cb);
   }
 }, {
 
@@ -71,16 +62,7 @@ export default context => [{
 
       const targetPath = `${context.config.paths.build}/${fileName}`;
 
-      if (context.config.options.logFileNames) {
-        logMessage('Creating ', targetPath);
-      }
-
-      jsonfile.writeFile(targetPath, outputPackageJson, { spaces: 2 }, (writeError) => {
-
-        if (writeError) { throw writeError; }
-
-        cb();
-      });
+      writeJson(context.config, targetPath, outputPackageJson, cb);
     });
   }
 }];

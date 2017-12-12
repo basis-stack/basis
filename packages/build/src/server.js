@@ -7,37 +7,54 @@ import rename from 'gulp-rename';
 import replace from 'gulp-replace';
 import sass from 'gulp-sass';
 
-import { logFileWrite } from './utilities';
+import { logFileWrite, sassOptions } from './utilities';
 import constants from './constants';
+
+const themeFileName = 'server-theme.scss';
 
 export default context => [{
 
-  /* */
-  key: constants.taskKeys.sassServer,
+  /* Generate core theme (colours) SCSS */
+  key: constants.taskKeys.createServerTheme,
   func: () => {
 
-    const options = {
-      outputStyle: 'compact',
-      includePaths: ['node_modules/']
-    };
+    const getColour = colour => colour.replace('\'', '');
+
+    const themeFileContent =
+      `$mdc-theme-primary: ${getColour(context.config.theme.primary)};
+       $mdc-theme-secondary: ${getColour(context.config.theme.secondary)};
+       $mdc-theme-background: ${getColour(context.config.theme.background)};
+
+       @import 'basis-assets/server/styles/vendors';`;
+
+    return file(themeFileName, themeFileContent, { src: true })
+            .pipe(gulp.dest(context.config.paths.temp))
+            .pipe(logFileWrite(context.config));
+  }
+}, {
+  /* SASS Server */
+  key: constants.taskKeys.sassServer,
+  dependencies: [constants.taskKeys.createServerTheme],
+  func: () => {
+
     const basisAssetsPath = './node_modules/basis-assets/server/styles';
     const dest = `${context.config.paths.build}/public/styles`;
 
-    const vendorStream = gulp.src(`${basisAssetsPath}/vendors.scss`)
-                             .pipe(sass(options).on('error', sass.logError))
+    const vendorStream = gulp.src(`${context.config.paths.temp}/${themeFileName}`)
+                             .pipe(sass(sassOptions).on('error', sass.logError))
                              .pipe(replace('/roboto/', '/'))
                              .pipe(rename('server-vendor.css'))
                              .pipe(gulp.dest(dest))
                              .pipe(logFileWrite(context.config));
 
     const coreStream = gulp.src(`${basisAssetsPath}/core.scss`)
-                           .pipe(sass(options).on('error', sass.logError))
+                           .pipe(sass(sassOptions).on('error', sass.logError))
                            .pipe(rename('server-core.css'))
                            .pipe(gulp.dest(dest))
                            .pipe(logFileWrite(context.config));
 
     const mainStream = gulp.src(`${context.config.paths.server}/assets/styles/main.scss`)
-                           .pipe(sass(options).on('error', sass.logError))
+                           .pipe(sass(sassOptions).on('error', sass.logError))
                            .pipe(rename('server.css'))
                            .pipe(gulp.dest(dest))
                            .pipe(logFileWrite(context.config));

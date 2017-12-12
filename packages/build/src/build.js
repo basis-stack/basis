@@ -20,7 +20,10 @@ export default context => [{
 
   /* Lint client code and bundle all code, dependencies and artifacts to bundle.js */
   key: keys.buildClient,
-  dependencies: [keys.bundleClient]
+  dependencies: [
+    keys.bundleClient,
+    keys.sassClient
+  ]
 }, {
 
   /* Lint packages code and compile all to dist/packages */
@@ -37,7 +40,7 @@ export default context => [{
   key: keys.buildFull,
   func: (cb) => {
 
-    runSequence(keys.clean, keys.buildAll, cb);
+    runSequence(keys.clean, keys.buildAll, keys.finalise, cb);
   }
 }, {
 

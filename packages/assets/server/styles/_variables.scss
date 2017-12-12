@@ -1,5 +1,3 @@
-@import 'material-colors/dist/colors.scss';
-
 $fonts-path: '../fonts';
 
 $roboto-font-path: $fonts-path;
@@ -7,7 +5,7 @@ $material-design-icons-font-path: $fonts-path + '/';
 $fa-font-path: $fonts-path;
 $fa-font-size-base: 24px;
 
-// TODO: Need to make these app configurable (i.e. check if have been provided by the app already)
-$mdc-theme-primary: $md-blue-700;
-$mdc-theme-accent: $md-blue-500;
-$mdc-theme-background: $md-white;
+// TODO: Get from material-colors !!
+$mdc-theme-primary: #2196F3 !default;
+$mdc-theme-secondary: #ffc400 !default;
+$mdc-theme-background: #fff !default;

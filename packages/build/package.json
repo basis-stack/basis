@@ -1,6 +1,6 @@
 {
   "name": "basis-build",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Build chain utilities and tasks for the Basis stack",
   "scripts": {
     "test": "echo \"No tests\" && exit 1"
@@ -32,10 +32,12 @@
     "gulp-replace": "^0.6.1",
     "gulp-print": "^2.0.1",
     "gulp-sass": "^3.1.0",
+    "gulp-shell": "^0.6.3",
     "gulp-util": "^3.0.8",
     "fs-extra": "^4.0.3",
     "jsonfile": "^4.0.0",
     "merge-stream": "^1.0.1",
+    "react-toolbox-themr": "^1.0.2",
     "require-relative": "^0.8.7",
     "run-sequence": "^2.2.0",
     "webpack": "^3.10.0"
