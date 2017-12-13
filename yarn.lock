@@ -2782,9 +2782,9 @@ eslint-config-airbnb@^16.1.0:
   dependencies:
     eslint-config-airbnb-base "^12.1.0"
 
-eslint-config-basis-stack@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/eslint-config-basis-stack/-/eslint-config-basis-stack-0.0.4.tgz#c9159f302ad7281591b1d12047cd8d328c1b2300"
+eslint-config-basis-stack@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/eslint-config-basis-stack/-/eslint-config-basis-stack-0.0.6.tgz#5dc3d6bd8b1dc94903d0f39a4f71071585e2e268"
 
 eslint-import-resolver-node@^0.3.1:
   version "0.3.1"
