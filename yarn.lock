@@ -1307,9 +1307,9 @@ basis-assets@^0.0.6:
     material-design-icons-iconfont "^3.0.3"
     roboto-fontface "^0.8.0"
 
-basis-build@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/basis-build/-/basis-build-0.0.4.tgz#63c3e5e02ab2c05cb12140cdb82c5e388a0f0c40"
+basis-build@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/basis-build/-/basis-build-0.0.6.tgz#236ed4e42c3ba0f37e9f77877264b13a835652a4"
   dependencies:
     colors "^1.1.2"
     del "^3.0.0"

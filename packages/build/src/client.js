@@ -14,14 +14,15 @@ const reactToolboxConfigFilename = 'react-toolbox.config.json';
 const themeFileName = 'client-theme.scss';
 const reactToolboxCustomProps = {
   primary: 'color-primary',
+  primaryDark: 'color-primary-dark',
   secondary: 'color-accent'
 };
 
 const getReactToolboxConfig = config => ({
 
-  include: ['APP_BAR', 'BUTTON'],
   customProperties: {
     [reactToolboxCustomProps.primary]: config.theme.primary,
+    [reactToolboxCustomProps.primaryDark]: config.theme.primaryDark,
     [reactToolboxCustomProps.secondary]: config.theme.secondary
   },
   output: config.paths.temp

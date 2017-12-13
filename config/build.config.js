@@ -26,8 +26,10 @@ export default Object.assign({}, assetConfig, {
   },
 
   // UI Theme (Material Components Web + React Toolbox colours)
+  // TODO: Get these from assetConfig.colours
   theme: {
     primary: '#2196F3',
+    primaryDark: '#1976D2',
     secondary: '#ffc400',
     background: '#fff'
   }
