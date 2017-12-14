@@ -12,8 +12,11 @@ import serverTasks from './src/server';
 import constants from './src/constants';
 
 export { default as getEnvSettings } from './src/settings';
+export { logFileWrite, sassOptions } from './src/utilities';
 
 export const initialiseTasks = (config, envSettings, webpackConfig, rootDir) => {
+
+  // TODO: Add validate config step here (and throw error if anything missing)
 
   const context = {
     config, envSettings, webpackConfig, rootDir

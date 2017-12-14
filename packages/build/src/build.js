@@ -33,7 +33,9 @@ export default context => [{
 
   /* Lint and build everything */
   key: keys.buildAll,
-  dependencies: [keys.buildServer, keys.buildPackages, keys.buildClient]
+  dependencies: context.config.options.serverOnly ?
+    [keys.buildServer] :
+    [keys.buildServer, keys.buildPackages, keys.buildClient]
 }, {
 
   /* Full clean and rebuild everything */

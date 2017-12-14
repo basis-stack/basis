@@ -2,7 +2,8 @@
   "presets": ["env", "react"],
   "plugins": [
     "rewire",
-    "transform-decorators-legacy"
+    "transform-decorators-legacy",
+    "transform-object-rest-spread"
   ],
   "env": {
     "test": {

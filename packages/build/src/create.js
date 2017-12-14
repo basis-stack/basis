@@ -26,6 +26,11 @@ export default context => [{
 
               delete outputSettings[env].deploy;
             }
+
+            if (context.config.options.serverOnly) {
+
+              delete outputSettings[env].client;
+            }
           });
 
     const pathName = `${context.config.paths.build}/config/settings.json`;
@@ -57,6 +62,23 @@ export default context => [{
       delete outputPackageJson.keywords;
       delete outputPackageJson.repository;
       delete outputPackageJson.description;
+
+      const depsToNuke = [
+        'basis-testing',
+        'history',
+        'react',
+        'react-dom',
+        'react-redux',
+        'react-router-dom',
+        'react-router-redux',
+        'react-toolbox',
+        'redux'
+      ];
+
+      depsToNuke.forEach((d) => {
+
+        delete outputPackageJson.dependencies[d];
+      });
 
       // TODO: Add 'scripts' section with tweaked 'start', 'dev', 'production' scripts (for build dir)
 

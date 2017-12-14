@@ -2,6 +2,7 @@ import babel from 'gulp-babel';
 import changed from 'gulp-changed';
 import file from 'gulp-file';
 import gulp from 'gulp';
+import gulpif from 'gulp-if';
 import merge from 'merge-stream';
 import rename from 'gulp-rename';
 import replace from 'gulp-replace';
@@ -19,11 +20,14 @@ export default context => [{
   func: () => {
 
     const getColour = colour => colour.replace('\'', '');
+    const theme = context.config.theme !== undefined ?
+      context.config.theme :
+      { primary: '#1976d2', secondary: '#f9a825', background: '#fff' };
 
     const themeFileContent =
-      `$mdc-theme-primary: ${getColour(context.config.theme.primary)};
-       $mdc-theme-secondary: ${getColour(context.config.theme.secondary)};
-       $mdc-theme-background: ${getColour(context.config.theme.background)};
+      `$mdc-theme-primary: ${getColour(theme.primary)};
+       $mdc-theme-secondary: ${getColour(theme.secondary)};
+       $mdc-theme-background: ${getColour(theme.background)};
 
        @import 'basis-assets/server/styles/vendors';`;
 
@@ -65,13 +69,19 @@ export default context => [{
 
   /* Copy server (express) view templates to views */
   key: constants.taskKeys.copyServerViews,
-  func: () => (
+  func: () => {
 
-    gulp.src(`${context.config.paths.server}${constants.globs.views}`)
-        .pipe(changed(context.config.paths.build))
-        .pipe(gulp.dest(context.config.paths.build))
-        .pipe(logFileWrite(context.config))
-  )
+    const clientVendorStyleTag = '  <link href="styles/client-vendor.css" rel="stylesheet">\n';
+    const src = context.config.options.serverOnly ?
+      [`${context.config.paths.server}${constants.globs.views}`, `!${context.config.paths.server}/views/app.ejs`] :
+      `${context.config.paths.server}${constants.globs.views}`;
+
+    return gulp.src(src)
+               .pipe(changed(context.config.paths.build))
+               .pipe(gulpif(context.config.options.serverOnly, replace(clientVendorStyleTag, '')))
+               .pipe(gulp.dest(context.config.paths.build))
+               .pipe(logFileWrite(context.config));
+  }
 }, {
 
   /* Compile server routes and startup modules */

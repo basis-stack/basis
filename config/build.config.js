@@ -1,6 +1,9 @@
 import assetConfig from 'basis-assets';
 
-export default Object.assign({}, assetConfig, {
+export default {
+
+  // Basis Asset config
+  ...assetConfig,
 
   // File paths
   paths: {
@@ -15,7 +18,8 @@ export default Object.assign({}, assetConfig, {
 
   // Build options
   options: {
-    logFileNames: false
+    logFileNames: false,
+    serverOnly: false
   },
 
   // Custom assets
@@ -33,4 +37,4 @@ export default Object.assign({}, assetConfig, {
     secondary: '#ffc400',
     background: '#fff'
   }
-});
+};
