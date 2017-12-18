@@ -28,7 +28,7 @@
     "publish-coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
-    "basis-server": "^0.0.14",
+    "basis-server": "^0.0.15",
     "basis-testing": "^0.0.3",
     "history": "^4.7.2",
     "object-assign-deep": "^0.3.1",
