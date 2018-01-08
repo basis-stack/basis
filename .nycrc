@@ -14,7 +14,8 @@
     "**/test/**",
     "packages/testing/**/*.js",
     "packages/components/**/errorView/*.jsx",
-    "packages/build/**"
+    "packages/build/**",
+    "packages/server/src/bin/socketServer.js"
   ],
   "require": [
     "babel-register"

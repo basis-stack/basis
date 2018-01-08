@@ -1,6 +1,7 @@
+import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, should, when,
+import { the, should, when, withScenario,
          assertWasCalled, assertParameter } from './../../testing';
 
 import main, { __RewireAPI__ as MainAPI } from './../src/bin/main';
@@ -10,65 +11,97 @@ the('main (startup) module', () => {
   const stubContainer = { initialise: () => {} };
   const stubGetContainer = sinon.stub().returns(stubContainer);
   const stubContainerInitialise = sinon.stub(stubContainer, 'initialise').returns(stubContainer);
+  const stubHttpServer = {};
+  const stubSocketServer = {};
+  const stubStartHttpServer = sinon.stub().returns(stubHttpServer);
+  const stubStartSocketServer = sinon.stub().returns(stubSocketServer);
   const stubModules = [{
-    key: 'moduleA',
-    initRoutes: () => {}
+    key: 'moduleA', initRoutes: () => {}
   }, {
-    key: 'moduleB',
-    initRoutes: () => {}
+    key: 'moduleB', initRoutes: () => {}, initChannels: () => {}
   }, {
-    key: 'moduleC'
+    key: 'moduleC', initChannels: () => {}
   }];
   const stubGetModules = sinon.stub().returns(stubModules);
-  const stubHttpServer = {};
-  const stubCreateServer = sinon.stub().returns(stubHttpServer);
 
   before(() => {
 
     MainAPI.__Rewire__('getContainer', stubGetContainer);
     MainAPI.__Rewire__('getModules', stubGetModules);
-    MainAPI.__Rewire__('startHttpServer', stubCreateServer);
-
-    main();
+    MainAPI.__Rewire__('startHttpServer', stubStartHttpServer);
+    MainAPI.__Rewire__('startSocketServer', stubStartSocketServer);
   });
 
   after(() => {
 
-    stubContainerInitialise.restore();
-
     MainAPI.__ResetDependency__('getContainer');
     MainAPI.__ResetDependency__('getModules');
     MainAPI.__ResetDependency__('startHttpServer');
+    MainAPI.__ResetDependency__('startSocketServer');
   });
 
   when('executed', () => {
 
-    should('initialise the (dependency) container', () => {
+    withScenario('valid routes and channels', () => {
 
-      assertWasCalled(stubContainerInitialise);
+      before(() => {
+
+        main();
+      });
+
+      after(() => {
+
+        stubStartSocketServer.reset();
+      });
+
+      should('initialise the (dependency) container', () => {
+
+        assertWasCalled(stubContainerInitialise);
+      });
+
+      should('load all feature modules', () => {
+
+        assertWasCalled(stubGetModules, stubContainer);
+      });
+
+      should('pass the container & routes to httpServer and start it', () => {
+
+        const expectedRoutes = stubModules.filter(m => m.initRoutes !== undefined)
+                                          .map(m => ({ moduleKey: m.key, init: m.initRoutes }));
+
+        assertParameter(stubStartHttpServer, 0, stubContainer);
+        assertParameter(stubStartHttpServer, 1, expectedRoutes, true);
+        assertWasCalled(stubStartHttpServer);
+      });
+
+      should('pass container, httpServer & channels to socketServer and start it', () => {
+
+        const expectedChannels = stubModules.filter(m => m.initChannels !== undefined)
+                                            .map(m => ({ moduleKey: m.key, init: m.initChannels }));
+
+        assertParameter(stubStartSocketServer, 0, stubContainer);
+        assertParameter(stubStartSocketServer, 1, stubHttpServer);
+        assertParameter(stubStartSocketServer, 2, expectedChannels, true);
+        assertWasCalled(stubStartSocketServer);
+      });
     });
 
-    should('load all feature modules', () => {
+    withScenario('no channels present', () => {
 
-      assertWasCalled(stubGetModules, stubContainer);
-    });
+      before(() => {
 
-    should('pass the initialised container to httpServer', () => {
+        main([]);
+      });
 
-      assertParameter(stubCreateServer, 0, stubContainer);
-    });
+      after(() => {
 
-    should('pass routes to httpServer', () => {
+        stubStartSocketServer.reset();
+      });
 
-      const expectedResult = stubModules.filter(m => m.initRoutes !== undefined)
-                                        .map(m => ({ moduleKey: m.key, init: m.initRoutes }));
+      should('not start the socketServer', () => {
 
-      assertParameter(stubCreateServer, 1, expectedResult, true);
-    });
-
-    should('start the server', () => {
-
-      assertWasCalled(stubCreateServer);
+        expect(stubStartSocketServer.notCalled).to.equal(true);
+      });
     });
   });
 });
