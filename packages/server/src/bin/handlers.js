@@ -2,7 +2,7 @@ import constants from './../core/constants';
 
 export const onListening = (config, logger) => {
 
-  logger.info(`${constants.text.logging.serverPrefix} STARTED: listening on port ${config.server.webServerPort}`);
+  logger.info(`${constants.text.logging.serverPrefix} START: listening on port ${config.server.webServerPort}`);
 };
 
 export const onError = (config, logger, error, handledCallback) => {

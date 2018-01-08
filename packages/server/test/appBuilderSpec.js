@@ -180,11 +180,12 @@ the('appBuilder', () => {
 
   when('useRoutes called', () => {
 
+    const stubRoutes = {};
     let result;
 
     before(() => {
 
-      result = builder.useRoutes();
+      result = builder.useRoutes(stubRoutes);
     });
 
     should('initialise the app routes', () => {
@@ -192,6 +193,7 @@ the('appBuilder', () => {
       assertWasCalled(stubInitialiseRoutes);
       assertParameter(stubInitialiseRoutes, 0, stubApp);
       assertParameter(stubInitialiseRoutes, 1, stubContainer);
+      assertParameter(stubInitialiseRoutes, 2, stubRoutes);
     });
 
     should('return the builder instance', () => {

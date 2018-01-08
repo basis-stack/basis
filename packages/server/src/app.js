@@ -2,7 +2,7 @@ import express from 'express';
 
 import AppBuilder from './middleware/appBuilder';
 
-export default (container) => {
+export default (container, routes) => {
 
   const appBuilder = AppBuilder.create(container, express());
 
@@ -11,7 +11,7 @@ export default (container) => {
                    .useDataParsers()
                    .secure()
                    .defaultContent()
-                   .useRoutes()
+                   .useRoutes(routes)
                    .handleErrors()
                    .trustProxy()
                    .result;

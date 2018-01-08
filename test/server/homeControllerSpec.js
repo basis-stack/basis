@@ -6,7 +6,7 @@ import { the, should, when,
          getStubResponse, getStubContainer,
          assertParameter } from 'basis-testing';
 
-import HomeController from './../../src/server/routes/home/homeController';
+import HomeController from './../../src/server/modules/home/homeController';
 
 the('HomeController', () => {
 

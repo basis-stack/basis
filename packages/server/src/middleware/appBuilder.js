@@ -89,10 +89,10 @@ export default class AppBuilder {
     return this._setViewEngine('ejs');
   }
 
-  useRoutes() {
+  useRoutes(routes) {
 
     // TODO: Need to ensure that this is called inbetween 'base' middleware (parsers and such) and error handlers. How best to do this ?
-    initialiseRoutes(this._app, this._container);
+    initialiseRoutes(this._app, this._container, routes);
 
     return this;
   }

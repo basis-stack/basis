@@ -18,7 +18,7 @@ the('(server) handlers', () => {
 
     should('Log an info message to logger indicating server start and port number', () => {
 
-      const expectedMessage = `${constants.text.logging.serverPrefix} STARTED: listening on port SomePort`;
+      const expectedMessage = `${constants.text.logging.serverPrefix} START: listening on port SomePort`;
       expect(stubLoggerInfo.calledWithExactly(expectedMessage)).to.equal(true);
     });
   });

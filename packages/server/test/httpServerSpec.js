@@ -6,9 +6,9 @@ import { the, should, when,
          assertWasCalled, assertParameter, assertCalledBefore } from './../../testing';
 
 import constants from './../src/core/constants';
-import createServer, { __RewireAPI__ as CreateServerAPI } from './../src/bin/server';
+import createServer, { __RewireAPI__ as CreateServerAPI } from './../src/bin/httpServer';
 
-the('server', () => {
+the('http server', () => {
 
   const stubServer = { listen: () => {}, on: () => {} };
   const stubHttp = { createServer: () => {} };
@@ -23,6 +23,7 @@ the('server', () => {
   };
   const stubLogger = { info: () => {} };
   const stubContainer = getStubContainer(stubConfig, stubLogger);
+  const stubRoutes = [];
   const stubServerListen = sinon.spy(stubServer, 'listen');
   const stubLoggerInfo = sinon.spy(stubLogger, 'info');
   const stubServerOn = sinon.spy(stubServer, 'on');
@@ -38,7 +39,7 @@ the('server', () => {
     CreateServerAPI.__Rewire__('createApp', stubCreateApp);
     CreateServerAPI.__Rewire__('terminate', stubTerminate);
 
-    result = createServer(stubContainer);
+    result = createServer(stubContainer, stubRoutes);
   });
 
   after(() => {
@@ -63,6 +64,11 @@ the('server', () => {
 
       assertParameter(stubCreateApp, 0, stubContainer);
       assertCalledBefore(stubCreateApp, stubHttpCreateServer, 'createApp()', 'createServer()');
+    });
+
+    should('pass the routes to createApp()', () => {
+
+      assertParameter(stubCreateApp, 1, stubRoutes);
     });
 
     should('create the http server using the app', () => {

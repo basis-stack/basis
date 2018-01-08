@@ -15,6 +15,8 @@ the('app', () => {
   const stubAppBuilderClass = { create: () => {} };
   const appBuilderMethods = ['useEjs', 'logRequests', 'useDataParsers', 'secure', 'defaultContent', 'useRoutes', 'handleErrors', 'trustProxy'];
   const stubAppBuilderInstance = createStubObject(appBuilderMethods);
+  const stubRoutes = {};
+
   stubAppBuilderInstance.result = {};
 
   before(() => {
@@ -59,7 +61,7 @@ the('app', () => {
       stubAppBuilderTrustProxy = sinon.stub(stubAppBuilderInstance, appBuilderMethods[7]).returns(stubAppBuilderInstance);
       stubAppBuilderResult = sinon.stub(stubAppBuilderInstance, 'result').get(() => stubExpressInstance);
 
-      result = createApp(stubContainer);
+      result = createApp(stubContainer, stubRoutes);
     });
 
     should('pass the container and an express instance to the AppBuilder', () => {
@@ -100,7 +102,7 @@ the('app', () => {
 
     should('initialise app routes', () => {
 
-      assertWasCalled(stubAppBuilderUseRoutes);
+      assertWasCalled(stubAppBuilderUseRoutes, stubRoutes);
       assertCalledBefore(stubAppBuilderUseRoutes, stubAppBuilderHandleErrors, appBuilderMethods[5], appBuilderMethods[6]);
     });
 

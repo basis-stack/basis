@@ -3,7 +3,7 @@ import * as sinon from 'sinon';
 import { the, should, when,
          createStubObject, assertParameter } from 'basis-testing';
 
-import homeIndex, { __RewireAPI__ as HomeIndexAPI } from './../../src/server/routes/home';
+import homeIndex, { __RewireAPI__ as HomeIndexAPI } from './../../src/server/modules/home';
 
 the('home index', () => {
 
@@ -21,7 +21,7 @@ the('home index', () => {
     HomeIndexAPI.__ResetDependency__('HomeController');
   });
 
-  when('invoked with a router instance', () => {
+  when('initRoutes invoked with a router instance', () => {
 
     let stubHomeControllerInitialise;
 
@@ -29,7 +29,7 @@ the('home index', () => {
 
       stubHomeControllerInitialise = sinon.stub(stubHomeControllerClass, 'initialise');
 
-      homeIndex(stubRouter, stubContainer);
+      homeIndex.initRoutes(stubRouter, stubContainer);
     });
 
     should('initialise the HomeController', () => {

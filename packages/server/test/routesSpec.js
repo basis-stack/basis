@@ -1,57 +1,49 @@
-import { expect } from 'chai';
 import * as sinon from 'sinon';
 
 import { the, should, when,
          createStubObject, getStubApp, getStubContainer, getStubLogger,
-         assertWasCalled, assertParameter } from './../../testing';
+         assertCall, assertWasCalled, assertParameter } from './../../testing';
 
-import routesIndex, { __RewireAPI__ as RoutesIndexAPI } from './../src/middleware/routes';
+import routes, { __RewireAPI__ as RoutesIndexAPI } from './../src/middleware/routes';
 
-the('routes index', () => {
+the('routes middleware', () => {
 
-  const stubFs = createStubObject('readdirSync');
   const stubRouter = {};
   const stubExpress = createStubObject('Router');
-  const stubDynamicImport = sinon.stub();
   const stubApp = getStubApp();
   const stubLogger = getStubLogger();
-  const stubRouteA = createStubObject('default');
+  const stubRouteA = { init: () => {}, moduleKey: 'moduleA' };
+  const stubRouteB = { init: () => {}, moduleKey: 'moduleB' };
+  const stubRoutes = [stubRouteA, stubRouteB];
   const stubContainer = getStubContainer({}, stubLogger);
 
   before(() => {
 
     RoutesIndexAPI.__Rewire__('express', stubExpress);
-    RoutesIndexAPI.__Rewire__('fs', stubFs);
-    RoutesIndexAPI.__Rewire__('dynamicImport', stubDynamicImport);
   });
 
   after(() => {
 
     RoutesIndexAPI.__ResetDependency__('express');
-    RoutesIndexAPI.__ResetDependency__('fs');
-    RoutesIndexAPI.__ResetDependency__('dynamicImport');
   });
 
-  when('invoked with a valid app instance', () => {
+  when('invoked with a valid app instance & valid routes', () => {
 
     let stubExpressRouter;
     let stubLoggerInfo;
-    let stubLoggerWarn;
-    let stubRouteADefault;
     let stubAppUse;
+    let stubRouteAInit;
+    let stubRouteBInit;
 
     before(() => {
 
-      sinon.stub(stubFs, 'readdirSync').returns(['folderA', 'folderB']);
       stubExpressRouter = sinon.stub(stubExpress, 'Router').returns(stubRouter);
-      stubDynamicImport.onFirstCall().returns(stubRouteA);
-      stubDynamicImport.onSecondCall().throws(new Error('Some route import error'));
       stubLoggerInfo = sinon.stub(stubLogger, 'info');
-      stubLoggerWarn = sinon.stub(stubLogger, 'warn');
-      stubRouteADefault = sinon.stub(stubRouteA, 'default');
       stubAppUse = sinon.spy(stubApp, 'use');
+      stubRouteAInit = sinon.spy(stubRouteA, 'init');
+      stubRouteBInit = sinon.spy(stubRouteB, 'init');
 
-      routesIndex(stubApp, stubContainer);
+      routes(stubApp, stubContainer, stubRoutes);
     });
 
     should('initialise the express router', () => {
@@ -59,20 +51,18 @@ the('routes index', () => {
       assertWasCalled(stubExpressRouter);
     });
 
-    should('initialise valid routes', () => {
+    should('initialise all routes', () => {
 
-      assertParameter(stubRouteADefault, 0, stubRouter);
-      assertParameter(stubRouteADefault, 1, stubContainer);
+      assertParameter(stubRouteAInit, 0, stubRouter);
+      assertParameter(stubRouteAInit, 1, stubContainer);
+      assertParameter(stubRouteBInit, 0, stubRouter);
+      assertParameter(stubRouteBInit, 1, stubContainer);
     });
 
-    should('log an initialised info message for valid routes', () => {
+    should('log an initialised info message for each route (module)', () => {
 
-      assertWasCalled(stubLoggerInfo, '[STARTUP] INIT: wired base route \'folderA\'');
-    });
-
-    should('log a warning message for invalid / errored routes', () => {
-
-      assertWasCalled(stubLoggerWarn, '[STARTUP] INVALID_ROUTE: unable to initialise route \'folderB\'. Error: Some route import error');
+      assertCall(stubLoggerInfo, 0, '[STARTUP] INIT: wired routes for module \'moduleA\'');
+      assertCall(stubLoggerInfo, 1, '[STARTUP] INIT: wired routes for module \'moduleB\'');
     });
 
     should('wire up the express router to the app', () => {
