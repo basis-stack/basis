@@ -3,7 +3,7 @@ import React from 'react';
 const Home = ({ onClick }) => (
 
   <div>
-    OK
+    Welcome to Basis
   </div>
 );
 

@@ -1,8 +1,8 @@
 import gulp from 'gulp';
 import path from 'path';
 
-// import { getEnvSettings, initialiseTasks } from 'basis-build';
-import { getEnvSettings, initialiseTasks } from './packages/build';
+import { getEnvSettings, initialiseTasks } from 'basis-build';
+// import { getEnvSettings, initialiseTasks } from './packages/build';
 
 import config from './config/build.config';
 import webpackConfig from './config/webpack.config';

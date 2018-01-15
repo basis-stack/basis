@@ -1,7 +1,6 @@
 {
   "name": "basis-build",
   "version": "0.0.12",
-  "version": "0.0.11",
   "description": "Build chain utilities and tasks for the Basis stack",
   "scripts": {
     "test": "echo \"No tests\" && exit 1"
