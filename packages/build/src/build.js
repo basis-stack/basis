@@ -21,8 +21,7 @@ export default context => [{
   /* Lint client code and bundle all code, dependencies and artifacts to bundle.js */
   key: keys.buildClient,
   dependencies: [
-    keys.bundleClient,
-    keys.sassClient
+    keys.bundleClient
   ]
 }, {
 

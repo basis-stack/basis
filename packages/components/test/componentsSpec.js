@@ -20,9 +20,4 @@ the('components index', () => {
 
     expect(components.material).to.not.be.undefined;
   });
-
-  should('export the React Toolbox components', () => {
-
-    expect(components.RTButton).to.not.be.undefined;
-  });
 });

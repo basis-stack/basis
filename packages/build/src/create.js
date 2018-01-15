@@ -71,7 +71,6 @@ export default context => [{
         'react-redux',
         'react-router-dom',
         'react-router-redux',
-        'react-toolbox',
         'redux'
       ];
 
