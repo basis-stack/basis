@@ -12,7 +12,7 @@ export default context => [{
 
     const pathsToNuke = [
       context.config.paths.build,
-      context.config.paths.package,
+      context.config.paths.publish,
       context.config.paths.temp,
       './deploy'
     ];

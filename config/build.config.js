@@ -9,7 +9,7 @@ export default {
   paths: {
     build: './dist',
     client: './src/client',
-    package: './package',
+    publish: './publish',
     packages: './packages',
     server: './src/server',
     temp: './temp',
@@ -18,8 +18,9 @@ export default {
 
   // Build options
   options: {
-    logFileNames: false,
-    serverOnly: false
+    logFileNames: true,
+    serverOnly: false,
+    uniqueArtifactName: true
   },
 
   // Custom assets

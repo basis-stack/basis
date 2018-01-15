@@ -9,6 +9,7 @@ import createTasks from './src/create';
 import lintTasks from './src/lint';
 import packagesTasks from './src/packages';
 import serverTasks from './src/server';
+import publishTasks from './src/publish';
 import constants from './src/constants';
 
 export { default as getEnvSettings } from './src/settings';
@@ -21,7 +22,7 @@ export const initialiseTasks = (config, envSettings, webpackConfig, rootDir) => 
   const context = {
     config, envSettings, webpackConfig, rootDir
   };
-  const taskSources = [assetTasks, buildTasks, cleanTasks, clientTasks, createTasks, lintTasks, packagesTasks, serverTasks];
+  const taskSources = [assetTasks, buildTasks, cleanTasks, clientTasks, createTasks, lintTasks, packagesTasks, serverTasks, publishTasks];
   const allTasks = taskSources.map(ts => ts(context))
                               .reduce((acc, cur) => acc.concat(cur), []);
 

@@ -17,7 +17,7 @@ coverage
 # Temporary build artefacts
 dist
 temp
-package
+publish
 .DS_Store
 
 # Local bash scripts
@@ -26,4 +26,4 @@ g
 rs
 cover
 deploy
-publish
+pub
