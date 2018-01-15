@@ -9,10 +9,6 @@ export default {
 
     // Client
     bundleClient: 'bundle:client',
-    createClientTheme: 'create:client:theme',
-    createReactToolboxConfig: 'create:react-toolbox:config',
-    createReactToolboxTheme: 'create:react-toolbox:theme',
-    sassClient: 'sass:client',
 
     // Create
     createPackageJson: 'create:package-json',

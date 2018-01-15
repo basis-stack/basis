@@ -1,31 +1,22 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import logger from 'redux-logger';
+import { routerMiddleware } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
 
-import Header from './header';
-import Home from './home';
-import About from './about';
+import { reducers, routes } from './modules';
+import rootReducer from './rootReducer';
 
-const App = (props) => {
+import Shell from './shell';
 
-  const handleClick = () => {
+const history = createHistory();
+const navigateMiddleware = routerMiddleware(history);
+const store = createStore(rootReducer(reducers), applyMiddleware(logger, navigateMiddleware));
 
-    console.log('Toggled');
-  };
+export default (
 
-  const welcomeMessage = 'Welcome to Basis';
-
-  return (
-    <main>
-      <Header />
-      <div>
-        <h1>{welcomeMessage}</h1>
-      </div>
-      <Switch>
-        <Route exact path="/" render={() => <Home onClick={handleClick} />} />
-        <Route exact path="/about" component={About} />
-      </Switch>
-    </main>
-  );
-};
-
-export default App;
+  <Provider store={store}>
+    <Shell history={history} />
+  </Provider>
+);

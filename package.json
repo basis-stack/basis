@@ -28,17 +28,19 @@
     "publish-coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
-    "basis-server": "^0.0.18",
+    "basis-server": "^0.0.19",
     "basis-testing": "^0.0.3",
     "history": "^4.7.2",
+    "material-ui": "^1.0.0-beta.28",
     "object-assign-deep": "^0.3.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.6",
-    "react-toolbox": "^2.0.0-beta.12",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "superagent": "^3.8.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -51,8 +53,8 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "basis-assets": "^0.0.6",
-    "basis-build": "^0.0.8",
+    "basis-assets": "^0.0.7",
+    "basis-build": "^0.0.12",
     "chai": "^4.1.2",
     "chai-enzyme": "^1.0.0-beta.0",
     "cheerio": "^1.0.0-rc.2",
@@ -71,23 +73,14 @@
     "eslint-plugin-react": "^7.5.1",
     "fs-extra": "^5.0.0",
     "gulp": "^3.9.1",
-    "gulp-ext-replace": "^0.3.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.6.1",
-    "gulp-watch": "^5.0.0",
     "merge-stream": "^1.0.1",
     "minimatch": "^3.0.4",
     "minimist": "^1.2.0",
     "mocha": "^4.1.0",
     "nyc": "^11.4.1",
-    "postcss-cssnext": "^3.0.2",
-    "postcss-each": "^0.10.0",
-    "postcss-import": "^11.0.0",
-    "postcss-loader": "^2.0.10",
-    "postcss-mixins": "^6.2.0",
     "react-test-renderer": "^16.2.0",
     "run-sequence": "^2.2.1",
-    "sinon": "^4.1.4",
+    "sinon": "^4.1.5",
     "style-loader": "^0.19.1"
   }
 }
