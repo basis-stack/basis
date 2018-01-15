@@ -25,7 +25,7 @@ esac
 DEST="$DEPLOY_USER@$DEPLOY_HOST:/tmp"
 PACKAGE_NAME=%APPNAME%.package.tar.gz
 echo $MSG_PREFIX"Deploying package ($PACKAGE_NAME) to "$DEST
-scp package/$PACKAGE_NAME $DEST
+scp publish/$PACKAGE_NAME $DEST
 
 # TODO: Shutdown existing service (via stop $TARGET_ENV)
 

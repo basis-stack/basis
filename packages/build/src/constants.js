@@ -38,7 +38,12 @@ export default {
     buildClient: 'build:client',
     buildAll: 'build:all',
     buildFull: 'build:full',
-    buildIncremental: 'build:incremental'
+    buildIncremental: 'build:incremental',
+
+    // Publish
+    copyServerScripts: 'copy:server:scripts',
+    installRuntimeDependencies: 'install:runtime:dependencies',
+    packageArtifacts: 'package:artifacts'
   },
 
   globs: {

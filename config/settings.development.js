@@ -7,9 +7,9 @@ export default {
   },
 
   deploy: {
-    deployUser: '<DEV_USER>',
-    deployHost: '<DEV_HOST>',
-    deployDirectory: '<DEV_PATH>'
+    deployUser: 'basis-deploy',
+    deployHost: '188.166.208.138',
+    deployDirectory: ''
   },
 
   client: {
