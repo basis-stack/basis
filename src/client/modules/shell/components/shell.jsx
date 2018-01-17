@@ -1,12 +1,12 @@
 import React from 'react';
 import request from 'superagent';
 import { connect } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
 import { Switch, Route } from 'react-router-dom';
+import { core } from 'basis-client';
 
-import { initialise } from './modules/core/actions';
 import Home from './home';
 import About from './about';
+import { FullHeight, AppBar, MuiButton } from './../../../components';
 
 class Shell extends React.Component {
 
@@ -29,23 +29,36 @@ class Shell extends React.Component {
     }
   }
 
+  _getTheme() {
+
+    return {
+      primary: '#f00',
+      secondary: '#0f0'
+    };
+  }
+
   render() {
 
     return (
 
-      <ConnectedRouter history={this.props.history}>
+      <FullHeight>
+        <AppBar />
+        <MuiButton color="accent" onClick={() => this.props.onChangeTheme(this._getTheme())}>
+          Change
+        </MuiButton>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/about" component={About} />
         </Switch>
-      </ConnectedRouter>
+      </FullHeight>
     );
   }
 }
 
 const mapDispatchToProps = dispatch => ({
 
-  onConfigReady: (config) => { dispatch(initialise(config)); }
+  onChangeTheme: (theme) => { dispatch(core.actions.changeTheme(theme)); },
+  onConfigReady: (config) => { dispatch(core.actions.initialise(config)); }
 });
 
 const mapStateToProps = state => ({

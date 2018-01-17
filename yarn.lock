@@ -1348,9 +1348,9 @@ basis-assets@^0.0.7:
     material-design-icons-iconfont "^3.0.3"
     roboto-fontface "^0.8.0"
 
-basis-build@^0.0.12:
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/basis-build/-/basis-build-0.0.12.tgz#3302b24bb47e0524dcaddb9433b024f04fbf4c50"
+basis-build@^0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/basis-build/-/basis-build-0.0.14.tgz#075a7488d121fc06bb98c9d15da89172d47ca1d6"
   dependencies:
     colors "^1.1.2"
     del "^3.0.0"
@@ -1378,6 +1378,19 @@ basis-build@^0.0.12:
     require-relative "^0.8.7"
     run-sequence "^2.2.1"
     webpack "^3.10.0"
+
+basis-client@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/basis-client/-/basis-client-0.0.3.tgz#b681096083591eecee185e489ac00c995dd0b8c4"
+  dependencies:
+    history "^4.7.2"
+    material-ui "^1.0.0-beta.28"
+    react "^16.2.0"
+    react-dom "^16.2.0"
+    react-redux "^5.0.6"
+    react-router-redux "^5.0.0-alpha.6"
+    redux "^3.7.2"
+    redux-logger "^3.0.6"
 
 basis-components@^0.0.10:
   version "0.0.10"
@@ -6771,7 +6784,7 @@ react-event-listener@^0.5.0, react-event-listener@^0.5.1:
     prop-types "^15.6.0"
     warning "^3.0.0"
 
-react-jss@^8.1.0:
+react-jss@^8.1.0, react-jss@^8.2.1:
   version "8.2.1"
   resolved "https://registry.yarnpkg.com/react-jss/-/react-jss-8.2.1.tgz#b2905063ba8b950f095a139a75232d851c79e15e"
   dependencies:

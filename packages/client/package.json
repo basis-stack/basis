@@ -1,0 +1,40 @@
+{
+  "name": "basis-client",
+  "version": "0.0.3",
+  "description": "The core client-side (SPA) framework, UI libaries integration and UI building blocks for the Basis stack",
+  "scripts": {
+    "test": "echo \"No tests\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/warebrained/basis.git"
+  },
+  "keywords": [
+    "basis",
+    "client",
+    "SPA",
+    "react",
+    "redux",
+    "material-ui"
+  ],
+  "author": "Justin Ware <wareisjustin@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/warebrained/basis/issues"
+  },
+  "homepage": "https://github.com/warebrained/basis#readme",
+  "dependencies": {
+    "history": "^4.7.2",
+    "material-ui": "^1.0.0-beta.28",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router-redux": "^5.0.0-alpha.6",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "sinon": "^4.1.5"
+  }
+}

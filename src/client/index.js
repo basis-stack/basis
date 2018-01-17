@@ -1,6 +1,10 @@
-import ReactDOM from 'react-dom';
+import React from 'react';
+import { initialise, core } from 'basis-client';
 
-import App from './app';
+import shell from './modules/shell';
+import TempApp from './modules/shell/components/shell';
 
-const mountNode = document.getElementById('rootComponentMount');
-ReactDOM.render(App, mountNode);
+const modules = [core, shell];
+const app = <TempApp />;
+
+initialise(modules, app);

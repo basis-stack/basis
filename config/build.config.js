@@ -30,12 +30,12 @@ export default {
     // TODO: Add images here !!!
   },
 
-  // UI Theme (Material Components Web + React Toolbox colours)
+  // UI Theme (Material Components Web + Material UI colours)
   // TODO: Get these from assetConfig.colours
   theme: {
     primary: '#2196F3',
-    primaryDark: '#1976D2',
     secondary: '#ffc400',
-    background: '#fff'
+    background: '#fff',
+    appBar: '#1976D2'
   }
 };

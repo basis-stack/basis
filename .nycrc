@@ -15,6 +15,7 @@
     "packages/testing/**/*.js",
     "packages/components/**/errorView/*.jsx",
     "packages/build/**",
+    "packages/client/**",
     "packages/server/src/bin/socketServer.js"
   ],
   "require": [

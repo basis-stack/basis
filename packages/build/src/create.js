@@ -64,6 +64,7 @@ export default context => [{
       delete outputPackageJson.description;
 
       const depsToNuke = [
+        'basis-client',
         'basis-testing',
         'history',
         'react',
@@ -71,7 +72,11 @@ export default context => [{
         'react-redux',
         'react-router-dom',
         'react-router-redux',
-        'redux'
+        'redux',
+        'redux-logger',
+        'material-ui',
+        'prop-types',
+        'react-jss'
       ];
 
       depsToNuke.forEach((d) => {

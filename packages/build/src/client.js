@@ -7,6 +7,7 @@ export default context => [{
 
   /* Bundle client code & assets with Webpack */
   key: constants.taskKeys.bundleClient,
+  dependencies: [constants.taskKeys.lintClient],
   func: (cb) => {
 
     webpack(context.webpackConfig, (err, stats) => {
