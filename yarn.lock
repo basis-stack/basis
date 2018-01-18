@@ -1379,9 +1379,9 @@ basis-build@^0.0.14:
     run-sequence "^2.2.1"
     webpack "^3.10.0"
 
-basis-client@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/basis-client/-/basis-client-0.0.3.tgz#b681096083591eecee185e489ac00c995dd0b8c4"
+basis-client@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/basis-client/-/basis-client-0.0.5.tgz#41bf2aa91af3dea6deeedfc700066770faeb0ae5"
   dependencies:
     history "^4.7.2"
     material-ui "^1.0.0-beta.28"

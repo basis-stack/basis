@@ -1,11 +1,14 @@
 import actions from './actions';
-import reducers from './reducers';
+import getReducers from './reducers';
 
 export default {
   actions,
-  config: {
-    key: 'core',
-    route: undefined,
-    reducers
-  }
+  initialise: theme => ({
+
+    config: {
+      key: 'core',
+      route: undefined,
+      reducers: getReducers(theme)
+    }
+  })
 };

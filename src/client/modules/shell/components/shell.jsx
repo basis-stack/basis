@@ -2,7 +2,8 @@ import React from 'react';
 import request from 'superagent';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
-import { core } from 'basis-client';
+import { core } from 'basis-client/modules';
+// import { core } from './../../../../../packages/client/modules';
 
 import Home from './home';
 import About from './about';

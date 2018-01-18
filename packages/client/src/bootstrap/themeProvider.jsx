@@ -2,14 +2,19 @@ import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { connect } from 'react-redux';
 
-const getMuiTheme = themeConfig => createMuiTheme({
+const getMuiTheme = themeConfig => (
 
-  // TODO: if themeConfig.appBar exists, then add components/appBar section
-  palette: {
-    primary: { main: themeConfig.primary },
-    secondary: { main: themeConfig.secondary }
-  }
-});
+  themeConfig === undefined ?
+    createMuiTheme() :
+    createMuiTheme({
+
+      // TODO: if themeConfig.appBar exists, then add components/appBar section
+      palette: {
+        primary: { main: themeConfig.primary },
+        secondary: { main: themeConfig.secondary }
+      }
+    })
+);
 
 const ThemeProvider = ({ muiTheme, children }) => (
 

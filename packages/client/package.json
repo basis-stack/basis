@@ -1,6 +1,6 @@
 {
   "name": "basis-client",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "The core client-side (SPA) framework, UI libaries integration and UI building blocks for the Basis stack",
   "scripts": {
     "test": "echo \"No tests\" && exit 1"

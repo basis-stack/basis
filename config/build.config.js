@@ -1,4 +1,5 @@
 import assetConfig from 'basis-assets';
+import theme from './theme';
 
 export default {
 
@@ -31,11 +32,5 @@ export default {
   },
 
   // UI Theme (Material Components Web + Material UI colours)
-  // TODO: Get these from assetConfig.colours
-  theme: {
-    primary: '#2196F3',
-    secondary: '#ffc400',
-    background: '#fff',
-    appBar: '#1976D2'
-  }
+  theme
 };

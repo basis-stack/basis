@@ -1,17 +1,12 @@
 import * as actionTypes from './../constants/actionTypes';
 
-const initialState = {
+const getInitialState = theme => ({
 
   config: undefined,
-  // TODO: Get this from (build) config somehow (import from temp ??)
-  theme: {
-    primary: '#2196F3',
-    secondary: '#ffc400',
-    appBar: '#1976D2'
-  }
-};
+  theme
+});
 
-export default (state = initialState, action) => {
+export default theme => (state = getInitialState(theme), action) => {
 
   switch (action.type) {
 
