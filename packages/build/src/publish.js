@@ -66,10 +66,10 @@ export default context => [{
   ],
   func: () => {
 
-    const baseFileName = context.envSettings.default.shared.appName;
+    const baseFileName = `${context.envSettings.default.shared.appName}.${context.packageJson.version}`;
     const packageFileName = context.config.options.uniqueArtifactName ?
-      `${baseFileName}.package.${new Date().getTime()}.tar` :
-      `${baseFileName}.package.tar`;
+      `${baseFileName}.T${new Date().getTime()}.tar` :
+      `${baseFileName}.tar`;
 
     return gulp.src([`${context.config.paths.build}/**/*`, `!${context.config.paths.build}/packages`, `!${context.config.paths.build}/packages/**`])
                .pipe(tar(packageFileName))

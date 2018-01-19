@@ -2,14 +2,13 @@ import gulp from 'gulp';
 import path from 'path';
 
 import { getEnvSettings, initialiseTasks } from 'basis-build';
-// import { getEnvSettings, initialiseTasks } from './packages/build';
 
 import config from './config/build.config';
 import webpackConfig from './config/webpack.config';
+import packageJson from './package.json';
 
-const rootDir = __dirname;
-const envSettings = getEnvSettings(path.join(rootDir, 'config'));
-const tasks = initialiseTasks(config, envSettings, webpackConfig, rootDir);
+const envSettings = getEnvSettings(path.join(__dirname, 'config'));
+const tasks = initialiseTasks(config, envSettings, packageJson, webpackConfig);
 
 // gulp.task('copy:nginx-config', () => (
 

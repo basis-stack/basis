@@ -44,51 +44,43 @@ export default context => [{
   dependencies: [constants.taskKeys.prepareBuild],
   func: (cb) => {
 
-    const fileName = 'package.json';
-    const sourcePath = path.join(context.rootDir, fileName);
+    const outputPackageJson = Object.assign({}, context.packageJson);
+    outputPackageJson.name = context.envSettings.default.shared.appName;
+    delete outputPackageJson.devDependencies;
+    delete outputPackageJson.scripts;
+    delete outputPackageJson.homepage;
+    delete outputPackageJson.bugs;
+    delete outputPackageJson.license;
+    delete outputPackageJson.author;
+    delete outputPackageJson.keywords;
+    delete outputPackageJson.repository;
+    delete outputPackageJson.description;
 
-    jsonfile.readFile(sourcePath, (readError, packageJson) => {
+    const depsToNuke = [
+      'basis-client',
+      'basis-testing',
+      'history',
+      'react',
+      'react-dom',
+      'react-redux',
+      'react-router-dom',
+      'react-router-redux',
+      'redux',
+      'redux-logger',
+      'material-ui',
+      'prop-types',
+      'react-jss'
+    ];
 
-      if (readError) { throw readError; }
+    depsToNuke.forEach((d) => {
 
-      const outputPackageJson = Object.assign(packageJson);
-      outputPackageJson.name = context.envSettings.default.shared.appName;
-      delete outputPackageJson.devDependencies;
-      delete outputPackageJson.scripts;
-      delete outputPackageJson.homepage;
-      delete outputPackageJson.bugs;
-      delete outputPackageJson.license;
-      delete outputPackageJson.author;
-      delete outputPackageJson.keywords;
-      delete outputPackageJson.repository;
-      delete outputPackageJson.description;
-
-      const depsToNuke = [
-        'basis-client',
-        'basis-testing',
-        'history',
-        'react',
-        'react-dom',
-        'react-redux',
-        'react-router-dom',
-        'react-router-redux',
-        'redux',
-        'redux-logger',
-        'material-ui',
-        'prop-types',
-        'react-jss'
-      ];
-
-      depsToNuke.forEach((d) => {
-
-        delete outputPackageJson.dependencies[d];
-      });
-
-      // TODO: Add 'scripts' section with tweaked 'start', 'dev', 'production' scripts (for build dir)
-
-      const targetPath = `${context.config.paths.build}/${fileName}`;
-
-      writeJson(context.config, targetPath, outputPackageJson, cb);
+      delete outputPackageJson.dependencies[d];
     });
+
+    // TODO: Add 'scripts' section with tweaked 'start', 'dev', 'production' scripts (for build dir)
+
+    const targetPath = `${context.config.paths.build}/package.json`;
+
+    writeJson(context.config, targetPath, outputPackageJson, cb);
   }
 }];
