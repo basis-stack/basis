@@ -25,6 +25,7 @@ export default {
 
     // Packages
     compilePackages: 'compile:packages',
+    publishPackages: 'publish:packages',
 
     // Server
     compileServer: 'compile:server',
@@ -51,6 +52,7 @@ export default {
     js: '/**/*.js',
     jsx: '/**/*.jsx',
     notTests: '!**/test/*',
+    notNodeModules: '!**/node_modules/**/*.*',
     packageJson: '/**/package.json',
     sass: '/**/*.scss',
     views: '/**/*.ejs'
