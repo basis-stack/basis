@@ -1,3 +1,4 @@
+import colors from 'colors';
 import gulp from 'gulp';
 import install from 'gulp-install';
 import tar from 'gulp-tar';

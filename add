@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+yarn add $1 $2 -W

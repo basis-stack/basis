@@ -1,0 +1,16 @@
+src
+  server
+    assets
+      styles
+    ...
+    app.js
+  shared
+    components
+  client
+    shared
+      components
+    routes
+
+test
+  utils
+  mocha.opts
