@@ -18,8 +18,12 @@ export default (app, moduleData) => {
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <ThemeProvider>
-          {/* TODO: Need to pass moduleData.routes down to the app also (using React.cloneElement) */}
-          { app }
+          {/*
+            TODO: Should we pass anything else down to the App ? History ?
+                  Not sure on this, passing history down could encourage navigation & path checking outside of Redux state.
+                  This could lead to inconsistentcies in history and state.
+          */}
+          { React.cloneElement(app, { routes: moduleData.routes }) }
         </ThemeProvider>
       </ConnectedRouter>
     </Provider>

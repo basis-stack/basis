@@ -2,15 +2,15 @@ export default (modules) => {
 
   const reducers = {};
 
-  modules.filter(m => m.config.reducers !== undefined)
+  modules.filter(m => m.reducers !== undefined)
          .forEach((m) => {
 
-           reducers[m.config.key] = m.config.reducers;
+           reducers[m.key] = m.reducers;
          });
 
   return {
     reducers,
-    routes: modules.filter(m => m.config.route !== undefined)
-                   .map(m => m.config.route)
+    routes: modules.filter(m => m.route !== undefined)
+                   .map(m => m.route)
   };
 };

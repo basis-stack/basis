@@ -1,13 +1,15 @@
 {
   "presets": ["env", "react"],
   "plugins": [
-    "rewire",
     "transform-decorators-legacy",
     "transform-object-rest-spread"
   ],
   "env": {
     "test": {
-      "plugins": ["istanbul"]
+      "plugins": [
+        "rewire",
+        "istanbul"
+      ]
     }
   },
   "ignore": ["dist"]

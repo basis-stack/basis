@@ -19,6 +19,7 @@ dist
 temp
 publish
 .DS_Store
+TEMP_TO_MOVE
 
 # Local bash scripts
 install

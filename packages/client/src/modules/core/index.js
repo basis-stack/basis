@@ -5,10 +5,8 @@ export default {
   actions,
   initialise: theme => ({
 
-    config: {
-      key: 'core',
-      route: undefined,
-      reducers: getReducers(theme)
-    }
+    key: 'core',
+    route: undefined,
+    reducers: getReducers(theme)
   })
 };

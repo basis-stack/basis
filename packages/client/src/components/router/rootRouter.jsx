@@ -1,10 +1,9 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-// import { Fade } from './components';
-import { routeTypes } from './modules/shared';
+import routeTypes from './../../constants/routeTypes';
 
-export default ({ history, routes }) => {
+export default ({ routes }) => {
 
   const getRoute = (routeConfig, index) => {
 

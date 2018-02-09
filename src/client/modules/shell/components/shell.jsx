@@ -1,13 +1,11 @@
 import React from 'react';
 import request from 'superagent';
 import { connect } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+// import { Switch, Route } from 'react-router-dom';
 import { core } from 'basis-client/modules';
-// import { core } from './../../../../../packages/client/modules';
+import Typography from 'material-ui/Typography';
 
-import Home from './home';
-import About from './about';
-import { FullHeight, AppBar, MuiButton } from './../../../components';
+import { AppBar, Section } from './../../../components';
 
 class Shell extends React.Component {
 
@@ -30,35 +28,27 @@ class Shell extends React.Component {
     }
   }
 
-  _getTheme() {
-
-    return {
-      primary: '#f00',
-      secondary: '#0f0'
-    };
-  }
-
   render() {
 
     return (
 
-      <FullHeight>
-        <AppBar />
-        <MuiButton color="accent" onClick={() => this.props.onChangeTheme(this._getTheme())}>
-          Change
-        </MuiButton>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/about" component={About} />
-        </Switch>
-      </FullHeight>
+      <div>
+        <AppBar onMenuClick={() => { console.log('Menu click'); }} />
+        <Section>
+          <Typography variant="display3" gutterBottom>
+            Welcome To Basis
+          </Typography>
+          <Typography variant="subheading" gutterBottom>
+            This is an App template based on the Basis Stack.
+          </Typography>
+        </Section>
+      </div>
     );
   }
 }
 
 const mapDispatchToProps = dispatch => ({
 
-  onChangeTheme: (theme) => { dispatch(core.actions.changeTheme(theme)); },
   onConfigReady: (config) => { dispatch(core.actions.initialise(config)); }
 });
 
