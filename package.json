@@ -29,7 +29,7 @@
     "publish-coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
-    "basis-client": "^0.0.5",
+    "basis-client": "^0.0.6",
     "basis-components": "^0.0.10",
     "basis-server": "^0.0.19",
     "basis-testing": "^0.0.3",
