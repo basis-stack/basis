@@ -29,7 +29,8 @@
     "publish-coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
-    "basis-client": "^0.0.6",
+    "axios": "^0.17.1",
+    "basis-client": "^0.0.8",
     "basis-components": "^0.0.10",
     "basis-server": "^0.0.19",
     "basis-testing": "^0.0.3",
@@ -41,7 +42,7 @@
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.6",
-    "superagent": "^3.8.2"
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

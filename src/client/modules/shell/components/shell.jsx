@@ -1,11 +1,11 @@
 import React from 'react';
-import request from 'superagent';
 import { connect } from 'react-redux';
 // import { Switch, Route } from 'react-router-dom';
 import { core } from 'basis-client/modules';
 import Typography from 'material-ui/Typography';
 
 import { AppBar, Section } from './../../../components';
+import { fetchConfig } from './../actions';
 
 class Shell extends React.Component {
 
@@ -13,18 +13,7 @@ class Shell extends React.Component {
 
     if (this.props.config === undefined) {
 
-      request.get('/config')
-             .end((err, res) => {
-
-               if (err !== null) {
-
-                 // TODO: What to do here ?? Probably dispatch an app error action (to trigger a popup error message)
-                 console.error(`Unable to request client config. Error: ${err.message}`);
-               } else {
-
-                 this.props.onConfigReady(res.body);
-               }
-             });
+      this.props.onFetchConfig();
     }
   }
 
@@ -49,7 +38,7 @@ class Shell extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
 
-  onConfigReady: (config) => { dispatch(core.actions.initialise(config)); }
+  onFetchConfig: () => { dispatch(fetchConfig()); }
 });
 
 const mapStateToProps = state => ({

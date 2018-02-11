@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 import { routerMiddleware, ConnectedRouter } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 
@@ -12,7 +13,7 @@ export default (app, moduleData) => {
 
   const history = createHistory();
   const navigateMiddleware = routerMiddleware(history);
-  const store = createStore(rootReducer(moduleData.reducers), applyMiddleware(logger, navigateMiddleware));
+  const store = createStore(rootReducer(moduleData.reducers), applyMiddleware(logger, navigateMiddleware, thunk));
 
   return (
     <Provider store={store}>
