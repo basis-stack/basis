@@ -24,6 +24,8 @@ export default {
     lintAll: 'lint:all',
 
     // Packages
+    linkPackages: 'link:packages',
+    unlinkPackages: 'unlink:packages',
     compilePackages: 'compile:packages',
     publishPackages: 'publish:packages',
 

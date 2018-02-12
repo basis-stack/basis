@@ -12,6 +12,18 @@ import constants from './constants';
 
 const exec = childProcessPromise.exec;
 const logMessagePrefix = '         + ';
+const runtimeDir = process.cwd();
+const packages = fs.readdirSync(path.join(runtimeDir, 'packages'))
+                   .map((p) => {
+
+                     const packageJson = jsonfile.readFileSync(path.join(runtimeDir, `packages/${p}/package.json`));
+
+                     return {
+                       dir: p,
+                       name: packageJson.name,
+                       version: packageJson.version
+                     };
+                   });
 
 const logMessage = (message, success = false) => {
 
@@ -48,6 +60,49 @@ const doPublish = (config, packageDetails) => (
   })
 );
 
+const linkPackages = (config, packageDetails, link = true) => {
+
+  const cmd = link ?
+    `cd packages/${packageDetails.dir} && yarn link && cd ../.. && yarn link ${packageDetails.name}` :
+    `yarn unlink ${packageDetails.name}`;
+  const message = link ?
+    `Linked nested package ${packageDetails.name}@${packageDetails.version}` :
+    `Unlinked nested package ${packageDetails.name}@${packageDetails.version}`;
+
+  return new Promise((resolve, reject) => {
+
+    exec(cmd)
+      .then((result) => {
+
+        resolve({
+
+          success: true,
+          message
+        });
+      })
+      .catch((err) => {
+
+        reject(err);
+      });
+  });
+};
+
+const runCmdForPackages = (cmdOp, cb) => {
+
+  Rx.Observable
+    .from(packages.map(cmdOp))
+    .mergeAll()
+    .toArray()
+    .subscribe((results) => {
+
+      results.forEach((r) => { logMessage(r.message, r.success); });
+      cb();
+    }, (err) => {
+
+      cb(err);
+    });
+};
+
 export default context => [{
 
   /* Compile nested basis packages */
@@ -81,30 +136,22 @@ export default context => [{
   key: constants.taskKeys.publishPackages,
   func: (cb) => {
 
-    const runtimeDir = process.cwd();
-    const packages = fs.readdirSync(path.join(runtimeDir, `${context.config.paths.build}/packages`))
-                       .map((p) => {
+    runCmdForPackages(p => doPublish(context.config, p), cb);
+  }
+}, {
 
-                         const packageJson = jsonfile.readFileSync(path.join(runtimeDir, `${context.config.paths.build}/packages/${p}/package.json`));
+  /* Link sub packages */
+  key: constants.taskKeys.linkPackages,
+  func: (cb) => {
 
-                         return {
-                           dir: p,
-                           name: packageJson.name,
-                           version: packageJson.version
-                         };
-                       });
+    runCmdForPackages(p => linkPackages(context.config, p), cb);
+  }
+}, {
 
-    Rx.Observable
-      .from(packages.map(p => doPublish(context.config, p)))
-      .mergeAll()
-      .toArray()
-      .subscribe((results) => {
+  /* Unlink sub packages */
+  key: constants.taskKeys.unlinkPackages,
+  func: (cb) => {
 
-        results.forEach((r) => { logMessage(r.message, r.success); });
-        cb();
-      }, (err) => {
-
-        cb(err);
-      });
+    runCmdForPackages(p => linkPackages(context.config, p, false), cb);
   }
 }];
