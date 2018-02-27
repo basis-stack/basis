@@ -3,35 +3,44 @@ import webpack from 'webpack';
 
 import constants from './constants';
 
-export default context => [{
+export default (context) => {
 
-  /* Bundle client code & assets with Webpack */
-  key: constants.taskKeys.bundleClient,
-  dependencies: [constants.taskKeys.lintClient],
-  func: (cb) => {
+  const bundleClient = {
 
-    webpack(context.webpackConfig, (err, stats) => {
+    /* Bundle client code & assets with Webpack */
+    key: constants.taskKeys.bundleClient,
+    func: (cb) => {
 
-      if (err) {
-        throw new util.PluginError(constants.taskKeys.bundleClient, err);
-      }
+      webpack(context.webpackConfig, (err, stats) => {
 
-      if (context.config.options.logFileNames) {
+        if (err) {
+          throw new util.PluginError(constants.taskKeys.bundleClient, err);
+        }
 
-        const ouptut = stats.toString({
-          assets: true,
-          chunks: false,
-          chunkModules: false,
-          colors: true,
-          hash: false,
-          timings: false,
-          version: false
-        });
+        if (context.config.options.logFileNames) {
 
-        util.log(`[${constants.taskKeys.bundleClient}] Completed\n ${ouptut}`);
-      }
+          const ouptut = stats.toString({
+            assets: true,
+            chunks: false,
+            chunkModules: false,
+            colors: true,
+            hash: false,
+            timings: false,
+            version: false
+          });
 
-      cb();
-    });
+          util.log(`[${constants.taskKeys.bundleClient}] Completed\n ${ouptut}`);
+        }
+
+        cb();
+      });
+    }
+  };
+
+  if (context.lint) {
+    
+    bundleClient.dependencies = [constants.taskKeys.lintClient];
   }
-}];
+
+  return [bundleClient];
+};

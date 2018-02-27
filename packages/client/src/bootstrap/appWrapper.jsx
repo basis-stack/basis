@@ -13,7 +13,8 @@ export default (app, moduleData) => {
 
   const history = createHistory();
   const navigateMiddleware = routerMiddleware(history);
-  const store = createStore(rootReducer(moduleData.reducers), applyMiddleware(logger, navigateMiddleware, thunk));
+  const store = createStore(rootReducer(moduleData.reducers),
+                            applyMiddleware(navigateMiddleware, thunk, logger));
 
   return (
     <Provider store={store}>

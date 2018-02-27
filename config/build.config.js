@@ -11,10 +11,8 @@ export default {
     build: './dist',
     client: './src/client',
     publish: './publish',
-    packages: './packages',
     server: './src/server',
-    temp: './temp',
-    tests: './test'
+    temp: './temp'
   },
 
   // Build options

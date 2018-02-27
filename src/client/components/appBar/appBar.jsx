@@ -18,29 +18,30 @@ const styles = {
   }
 };
 
-const AppBar = (props) => {
+const AppBar = ({ classes, onLeftIconClick, onSettingsClick, onLogoutClick }) => (
 
-  const { classes, onMenuClick } = props;
-
-  return (
-    <div>
-      <MuiAppBar position="static" elevation={2}>
-        <MuiToolbar>
-          <MuiIconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={onMenuClick}>
-            <Icon value="menu" inverse />
-          </MuiIconButton>
-          <MuiTypography variant="title" color="inherit" className={classes.title}>
-            Basis
-          </MuiTypography>
-        </MuiToolbar>
-      </MuiAppBar>
-    </div>
-  );
-};
+  <div>
+    <MuiAppBar position="static" elevation={0}>
+      <MuiToolbar>
+        <MuiIconButton className={classes.menuButton}
+                        color="inherit"
+                        aria-label="Menu"
+                        onClick={onLeftIconClick}>
+          <Icon value="menu" inverse />
+        </MuiIconButton>
+        <MuiTypography variant="title" color="inherit" className={classes.title}>
+          Basis
+        </MuiTypography>
+      </MuiToolbar>
+    </MuiAppBar>
+  </div>
+);
 
 AppBar.propTypes = {
-  // classes: PropTypes.object.isRequired,
-  onMenuClick: PropTypes.func.isRequired
+  classes: PropTypes.object.isRequired,
+  onLeftIconClick: PropTypes.func.isRequired,
+  onSettingsClick: PropTypes.func.isRequired,
+  onLogoutClick: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(AppBar);

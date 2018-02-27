@@ -13,24 +13,31 @@ const lint = src => (
       .pipe(eslint.failOnError())
 );
 
-export default context => [{
+export default (context) => {
+  
+  const lintAllDeps = context.hasPackages ?
+    [constants.taskKeys.lintClient, constants.taskKeys.lintServer, constants.taskKeys.lintPackages] :
+    [constants.taskKeys.lintClient, constants.taskKeys.lintServer];
 
-  /* Lint Client */
-  key: constants.taskKeys.lintClient,
-  func: () => lint(getSource(context.config.paths.client))
-}, {
+  return [{
 
-  /* Lint Server */
-  key: constants.taskKeys.lintServer,
-  func: () => lint(getSource(context.config.paths.server))
-}, {
+    /* Lint Client */
+    key: constants.taskKeys.lintClient,
+    func: () => lint(getSource(context.config.paths.client))
+  }, {
 
-  /* Lint Packages */
-  key: constants.taskKeys.lintPackages,
-  func: () => lint(getSource(context.config.paths.packages))
-}, {
+    /* Lint Server */
+    key: constants.taskKeys.lintServer,
+    func: () => lint(getSource(context.config.paths.server))
+  }, {
 
-  /* Lint All */
-  key: constants.taskKeys.lintAll,
-  dependencies: [constants.taskKeys.lintClient, constants.taskKeys.lintServer, constants.taskKeys.lintPackages]
-}];
+    /* Lint Packages */
+    key: constants.taskKeys.lintPackages,
+    func: () => lint(getSource(context.config.paths.packages))
+  }, {
+
+    /* Lint All */
+    key: constants.taskKeys.lintAll,
+    dependencies: lintAllDeps
+  }];
+};

@@ -55,18 +55,23 @@ export default context => [{
     delete outputPackageJson.keywords;
     delete outputPackageJson.repository;
     delete outputPackageJson.description;
+    delete outputPackageJson.private;
+    delete outputPackageJson.workspaces;
 
     const depsToNuke = [
       'basis-client',
+      'basis-components',
       'basis-testing',
       'history',
       'react',
       'react-dom',
+      'react-jss',
       'react-redux',
       'react-router-dom',
       'react-router-redux',
       'redux',
       'redux-logger',
+      'redux-thunk',
       'material-ui',
       'prop-types',
       'react-jss'

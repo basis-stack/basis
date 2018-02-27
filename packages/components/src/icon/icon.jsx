@@ -10,12 +10,10 @@ export default (props) => {
   const content = !fontAwesome ? props.value : null;
   const baseCssClass = fontAwesome ? `fa ${props.value}` : 'material-icons';
 
-  const classes = classNames(
-    baseCssClass,
-    `md-${size}`,
-    inverse ? 'md-light' : 'md-dark',
-    inactive ? 'md-inactive' : ''
-  );
+  const classes = classNames(baseCssClass,
+                             `md-${size}`,
+                             inverse ? 'md-light' : 'md-dark',
+                             inactive ? 'md-inactive' : '');
 
   return <i className={classes} data-icon={props.value}>{ content }</i>;
 };
