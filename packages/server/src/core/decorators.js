@@ -2,6 +2,8 @@ import 'reflect-metadata';
 
 import bindRoutes from './../middleware/routeBinder';
 
+const defaultPath = '';
+
 const httpMethodDecorator = (method, path) => (
 
   (target, property, descriptor) => {
@@ -29,7 +31,7 @@ export const Controller = rootPath => (
   }
 );
 
-export const Get = (path = '') => httpMethodDecorator('get', path);
-export const Post = (path = '') => httpMethodDecorator('post', path);
+export const Get = (path = defaultPath) => httpMethodDecorator('get', path);
+export const Post = (path = defaultPath) => httpMethodDecorator('post', path);
 
 // TODO: Add Put, Delete, etc here

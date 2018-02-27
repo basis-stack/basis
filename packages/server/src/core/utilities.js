@@ -16,7 +16,7 @@ export const dynamicImport = (moduleName, basePath = getRootPath()) => relative(
 
 export const terminate = (exitCode = 1) => { process.exit(exitCode); };
 
-export const getEnvVariable = (key, defaultValue = undefined) => {
+export const getEnvVariable = (key, defaultValue) => {
 
   if (process.env[key] !== undefined) {
     return process.env[key];

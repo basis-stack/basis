@@ -7,8 +7,8 @@
   "env": {
     "test": {
       "plugins": [
-        "rewire",
-        "istanbul"
+        "istanbul",
+        "rewire"
       ]
     }
   },
