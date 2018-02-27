@@ -2,8 +2,8 @@ import HomeController from './homeController';
 
 export default {
 
-  initRoutes: (router, container) => {
+  initRoutes: (router, container, passport) => {
 
-    HomeController.initialise(router, container);
+    HomeController.initialise(router, container, passport);
   }
 };

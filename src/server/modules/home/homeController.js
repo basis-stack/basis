@@ -1,7 +1,8 @@
 import assignDeep from 'object-assign-deep';
 
-import { Controller, Get } from 'basis-server';
+import { Authenticate, Controller, Get } from 'basis-server';
 
+@Authenticate('basic', { session: false })
 @Controller('/')
 export default class HomeController {
 

@@ -3,6 +3,7 @@ import path from 'path';
 import { getRootPath } from './../core/utilities';
 
 // Middleware
+import initialiseAuthentication from './authentication';
 import initialiseContent from './content';
 import initialiseDataParsers from './dataParsers';
 import initialiseErrorHandlers from './errorHandlers';
@@ -77,6 +78,13 @@ export default class AppBuilder {
     return this;
   }
 
+  useAuthentication() {
+
+    this._passport = initialiseAuthentication(this._app, this._container);
+
+    return this;
+  }
+
   useDataParsers() {
 
     initialiseDataParsers(this._app);
@@ -92,7 +100,7 @@ export default class AppBuilder {
   useRoutes(routes) {
 
     // TODO: Need to ensure that this is called inbetween 'base' middleware (parsers and such) and error handlers. How best to do this ?
-    initialiseRoutes(this._app, this._container, routes);
+    initialiseRoutes(this._app, this._container, this._passport, routes);
 
     return this;
   }
