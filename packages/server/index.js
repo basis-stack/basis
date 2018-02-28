@@ -1,2 +1,2 @@
-export { Authenticate, Controller, Get } from './src/core/decorators';
+// eslint-disable-next-line import/prefer-default-export
 export { default as main } from './src/bin/main';

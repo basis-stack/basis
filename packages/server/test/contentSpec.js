@@ -5,7 +5,7 @@ import { the, should, when,
          createStubObject, getStubApp,
          assertWasCalled, assertCall } from './../../testing';
 
-import initialiseContent, { __RewireAPI__ as ContentAPI } from './../src/middleware/content';
+import initContent, { __RewireAPI__ as ContentAPI } from './../src/middleware/content';
 
 the('content middleware initialiser', () => {
 
@@ -37,7 +37,7 @@ the('content middleware initialiser', () => {
 
     before(() => {
 
-      initialiseContent(stubApp);
+      initContent(stubApp);
     });
 
     should('initialise compression middleware', () => {
