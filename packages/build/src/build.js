@@ -27,11 +27,14 @@ export default (context) => {
     ]
   }, {
 
+    /* Lint packages code and compile all to dist/packages */
+    key: keys.buildPackages,
+    dependencies: [keys.compilePackages]
+  }, {
+
     /* Lint and build everything */
     key: keys.buildAll,
-    dependencies: context.config.options.serverOnly ?
-      [keys.buildServer] :
-      [keys.buildServer, keys.buildClient]
+    dependencies: []
   }, {
 
     /* Full clean and rebuild everything */
@@ -50,16 +53,25 @@ export default (context) => {
     }
   }];
 
-  if (context.hasPackages && !context.config.options.serverOnly) {
+  const buildAllDeps = tasks[3].dependencies;
 
-    tasks.push({
+  if (context.hasServer) {
+    
+    buildAllDeps.push(constants.taskKeys.buildServer);
+  } else {
 
-      /* Lint packages code and compile all to dist/packages */
-      key: keys.buildPackages,
-      dependencies: [keys.compilePackages]
-    });
+    buildAllDeps.push(constants.taskKeys.copyFonts);
+    buildAllDeps.push(constants.taskKeys.sassServer);
+  }
 
-    tasks[2].dependencies.push(keys.buildPackages);
+  if (context.hasClient) {
+
+    buildAllDeps.push(constants.taskKeys.buildClient);
+  }
+
+  if (context.hasPackages) {
+    
+    buildAllDeps.push(constants.taskKeys.buildPackages);
   }
 
   return tasks;
