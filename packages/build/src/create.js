@@ -4,88 +4,96 @@ import path from 'path';
 import { writeJson } from './utilities';
 import constants from './constants';
 
-export default context => [{
+export default (context) => {
 
-  /* Prepare Environment settings file */
-  key: constants.taskKeys.createEnvSettings,
-  dependencies: [constants.taskKeys.prepareBuild],
-  func: (cb) => {
+  if (!context.hasServer) {
 
-    const outputSettings = Object.assign(context.envSettings);
-
-    Object.keys(context.envSettings)
-          .forEach((env) => {
-
-            if (outputSettings[env].server !== undefined) {
-
-              delete outputSettings[env].server.frontWithNginx;
-              delete outputSettings[env].server.nodeRuntimeVersion;
-            }
-
-            if (outputSettings[env].deploy !== undefined) {
-
-              delete outputSettings[env].deploy;
-            }
-
-            if (context.config.options.serverOnly) {
-
-              delete outputSettings[env].client;
-            }
-          });
-
-    const pathName = `${context.config.paths.build}/config/settings.json`;
-
-    writeJson(context.config, pathName, outputSettings, cb);
+    return [];
   }
-}, {
 
-  /* Prepare package.json for the server / runtime */
-  key: constants.taskKeys.createPackageJson,
-  dependencies: [constants.taskKeys.prepareBuild],
-  func: (cb) => {
+  return [{
 
-    const outputPackageJson = Object.assign({}, context.packageJson);
-    outputPackageJson.name = context.envSettings.default.shared.appName;
-    delete outputPackageJson.devDependencies;
-    delete outputPackageJson.scripts;
-    delete outputPackageJson.homepage;
-    delete outputPackageJson.bugs;
-    delete outputPackageJson.license;
-    delete outputPackageJson.author;
-    delete outputPackageJson.keywords;
-    delete outputPackageJson.repository;
-    delete outputPackageJson.description;
-    delete outputPackageJson.private;
-    delete outputPackageJson.workspaces;
+    /* Prepare Environment settings file */
+    key: constants.taskKeys.createEnvSettings,
+    dependencies: [constants.taskKeys.prepareBuild],
+    func: (cb) => {
 
-    const depsToNuke = [
-      'basis-client',
-      'basis-components',
-      'basis-testing',
-      'history',
-      'react',
-      'react-dom',
-      'react-jss',
-      'react-redux',
-      'react-router-dom',
-      'react-router-redux',
-      'redux',
-      'redux-logger',
-      'redux-thunk',
-      'material-ui',
-      'prop-types',
-      'react-jss'
-    ];
+      const outputSettings = Object.assign(context.envSettings);
 
-    depsToNuke.forEach((d) => {
+      Object.keys(context.envSettings)
+            .forEach((env) => {
 
-      delete outputPackageJson.dependencies[d];
-    });
+              if (outputSettings[env].server !== undefined) {
 
-    // TODO: Add 'scripts' section with tweaked 'start', 'dev', 'production' scripts (for build dir)
+                delete outputSettings[env].server.frontWithNginx;
+                delete outputSettings[env].server.nodeRuntimeVersion;
+              }
 
-    const targetPath = `${context.config.paths.build}/package.json`;
+              if (outputSettings[env].deploy !== undefined) {
 
-    writeJson(context.config, targetPath, outputPackageJson, cb);
-  }
-}];
+                delete outputSettings[env].deploy;
+              }
+
+              if (context.config.options.serverOnly) {
+
+                delete outputSettings[env].client;
+              }
+            });
+
+      const pathName = `${context.config.paths.build}/config/settings.json`;
+
+      writeJson(context.config, pathName, outputSettings, cb);
+    }
+  }, {
+
+    /* Prepare package.json for the server / runtime */
+    key: constants.taskKeys.createPackageJson,
+    dependencies: [constants.taskKeys.prepareBuild],
+    func: (cb) => {
+
+      const outputPackageJson = Object.assign({}, context.packageJson);
+      outputPackageJson.name = context.envSettings.default.shared.appName;
+      delete outputPackageJson.devDependencies;
+      delete outputPackageJson.scripts;
+      delete outputPackageJson.homepage;
+      delete outputPackageJson.bugs;
+      delete outputPackageJson.license;
+      delete outputPackageJson.author;
+      delete outputPackageJson.keywords;
+      delete outputPackageJson.repository;
+      delete outputPackageJson.description;
+      delete outputPackageJson.private;
+      delete outputPackageJson.workspaces;
+
+      const depsToNuke = [
+        'basis-client',
+        'basis-components',
+        'basis-testing',
+        'history',
+        'react',
+        'react-dom',
+        'react-jss',
+        'react-redux',
+        'react-router-dom',
+        'react-router-redux',
+        'redux',
+        'redux-logger',
+        'redux-thunk',
+        'material-ui',
+        'prop-types',
+        'react-jss'
+      ];
+
+      depsToNuke.forEach((d) => {
+
+        delete outputPackageJson.dependencies[d];
+      });
+
+      // TODO: Add 'scripts' section with tweaked 'start', 'dev', 'production' scripts (for build dir)
+
+      const targetPath = `${context.config.paths.build}/package.json`;
+
+      writeJson(context.config, targetPath, outputPackageJson, cb);
+    }
+  }];
+};

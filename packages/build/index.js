@@ -15,20 +15,25 @@ import publishTasks from './src/publish';
 import constants from './src/constants';
 import getEnvSettings from './src/settings';
 
+const runtimeDir = process.cwd();
+const checkDir = dir => fs.existsSync(path.join(runtimeDir, dir));
+
 export { logFileWrite, sassOptions } from './src/utilities';
 
 export const initialiseTasks = (config, packageJson, webpackConfig) => {
 
   // TODO: Add validate config step here (and throw error if anything missing)
 
-  const runtimeDir = process.cwd();
   const context = {
     config,
     runtimeDir,
+    // TODO: This is a *somewhat* expensive operation, only do this if absolutely neccessary (i.e. server tasks, etc) 
     envSettings: getEnvSettings(path.join(runtimeDir, 'config')),
     packageJson,
     webpackConfig,
-    hasPackages: fs.existsSync(path.join(runtimeDir, 'packages')),
+    hasPackages: checkDir('packages'),
+    hasServer: checkDir('src/server'),
+    hasClient: checkDir('src/client'),
     lint: config.options.lint !== undefined ? config.options.lint : true
   };
 

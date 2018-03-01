@@ -15,9 +15,22 @@ const lint = src => (
 
 export default (context) => {
   
-  const lintAllDeps = context.hasPackages ?
-    [constants.taskKeys.lintClient, constants.taskKeys.lintServer, constants.taskKeys.lintPackages] :
-    [constants.taskKeys.lintClient, constants.taskKeys.lintServer];
+  let lintAllDeps = [];
+
+  if (context.hasServer) {
+    
+    lintAllDeps.push(constants.taskKeys.lintServer);
+  }
+
+  if (context.hasClient) {
+
+    lintAllDeps.push(constants.taskKeys.lintClient);
+  }
+
+  if (context.hasPackages) {
+
+    lintAllDeps.push(constants.taskKeys.lintPackages);
+  }
 
   return [{
 
