@@ -4,9 +4,9 @@ import * as sinon from 'sinon';
 import _ from 'lodash';
 
 import { the, should, when,
-         assertInstance, assertWasCalled } from './../../testing';
+        assertInstance, assertWasCalled } from './../../testing';
 
-import { Controller, Get, Post, __RewireAPI__ as DecoratorsAPI } from './../src/core/decorators';
+import { Authenticate, Controller, Get, Head, Post, Put, Delete, Options, __RewireAPI__ as DecoratorsAPI } from './../src/core/decorators';
 
 class StubTargetClass {
 
@@ -14,7 +14,51 @@ class StubTargetClass {
   methodB() {}
   methodC() {}
   methodD() {}
+  methodE() {}
+  methodF() {}
+  methodG() {}
+  methodH() {}
+  methodI() {}
+  methodJ() {}
+  methodK() {}
+  methodL() {}
 }
+
+const assetMethodDecorator = (decorator, stubMethod, withPath = true) => {
+
+  const httpMethodName = decorator.name.toLowerCase();
+  const expectedPath = withPath ? `/some-${httpMethodName}-path` : '';
+
+  if (withPath) {
+
+    decorator(expectedPath)(StubTargetClass.prototype, stubMethod, null);
+  } else {
+
+    decorator()(StubTargetClass.prototype, stubMethod, null);
+  }
+
+  const instance = new StubTargetClass();
+
+  expect(Reflect.getMetadata('http:method', instance, stubMethod)).to.equal(httpMethodName);
+  expect(Reflect.getMetadata('http:path', instance, stubMethod)).to.equal(expectedPath);
+};
+
+the('Authenticate decorator', () => {
+
+  const stubOptions = {};
+
+  before(() => {
+
+    Authenticate('some-auth-strategy', stubOptions)(StubTargetClass);
+  });
+
+  should('attach authenticate metadata to the target class', () => {
+
+    expect(Reflect.getMetadata('http:authenticate', StubTargetClass)).to.equal(true);
+    expect(Reflect.getMetadata('http:authStrategy', StubTargetClass)).to.equal('some-auth-strategy');
+    expect(Reflect.getMetadata('http:authOptions', StubTargetClass)).to.equal(stubOptions);
+  });
+});
 
 the('Controller decorator', () => {
 
@@ -70,23 +114,25 @@ the('Get decorator', () => {
 
   should('attach http method (\'get\') & path metadata to the target class method', () => {
 
-    const path = '/some-get-path';
-
-    Get(path)(StubTargetClass.prototype, 'methodA', null);
-
-    const instance = new StubTargetClass();
-
-    expect(Reflect.getMetadata('http:method', instance, 'methodA')).to.equal('get');
-    expect(Reflect.getMetadata('http:path', instance, 'methodA')).to.equal(path);
+    assetMethodDecorator(Get, 'methodA');
   });
 
   should('default path to empty string if not supplied', () => {
 
-    Get()(StubTargetClass.prototype, 'methodC', null);
+    assetMethodDecorator(Get, 'methodB', false);
+  });
+});
 
-    const instance = new StubTargetClass();
+the('Head decorator', () => {
 
-    expect(Reflect.getMetadata('http:path', instance, 'methodC')).to.equal('');
+  should('attach http method (\'head\') & path metadata to the target class method', () => {
+
+    assetMethodDecorator(Head, 'methodC');
+  });
+
+  should('default path to empty string if not supplied', () => {
+
+    assetMethodDecorator(Head, 'methodD', false);
   });
 });
 
@@ -94,22 +140,50 @@ the('Post decorator', () => {
 
   should('attach http method (\'post\') & path metadata to the target class method', () => {
 
-    const path = '/some-post-path';
-
-    Post(path)(StubTargetClass.prototype, 'methodB', null);
-
-    const instance = new StubTargetClass();
-
-    expect(Reflect.getMetadata('http:method', instance, 'methodB')).to.equal('post');
-    expect(Reflect.getMetadata('http:path', instance, 'methodB')).to.equal(path);
+    assetMethodDecorator(Post, 'methodE');
   });
 
   should('default path to empty string if not supplied', () => {
 
-    Post()(StubTargetClass.prototype, 'methodD', null);
+    assetMethodDecorator(Post, 'methodF', false);
+  });
+});
 
-    const instance = new StubTargetClass();
+the('Put decorator', () => {
 
-    expect(Reflect.getMetadata('http:path', instance, 'methodD')).to.equal('');
+  should('attach http method (\'put\') & path metadata to the target class method', () => {
+
+    assetMethodDecorator(Put, 'methodG');
+  });
+
+  should('default path to empty string if not supplied', () => {
+
+    assetMethodDecorator(Put, 'methodH', false);
+  });
+});
+
+the('Delete decorator', () => {
+
+  should('attach http method (\'delete\') & path metadata to the target class method', () => {
+
+    assetMethodDecorator(Delete, 'methodI');
+  });
+
+  should('default path to empty string if not supplied', () => {
+
+    assetMethodDecorator(Delete, 'methodJ', false);
+  });
+});
+
+the('Options decorator', () => {
+
+  should('attach http method (\'options\') & path metadata to the target class method', () => {
+
+    assetMethodDecorator(Options, 'methodK');
+  });
+
+  should('default path to empty string if not supplied', () => {
+
+    assetMethodDecorator(Options, 'methodL', false);
   });
 });

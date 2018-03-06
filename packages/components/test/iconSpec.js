@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import chaiEnzyme from 'chai-enzyme';
 
 import { the, when, should, withScenario } from './../../testing';
+// import { packageName } from './constants';
 
 import Icon from './../src/icon';
 

@@ -4,7 +4,7 @@ import { the, should } from './../../testing';
 
 import * as components from './../';
 
-the('components index', () => {
+the('components package', () => {
 
   should('export the Icon component', () => {
 

@@ -87,9 +87,9 @@ the('errorHandlers middleware', () => {
 
     const reset = () => {
 
-      statusSpy.reset();
-      stubRenderView.reset();
-      loggerErrorSpy.reset();
+      statusSpy.resetHistory();
+      stubRenderView.resetHistory();
+      loggerErrorSpy.resetHistory();
     };
 
     const assertRenderView = (expectedTitle, expectedDetail) => {

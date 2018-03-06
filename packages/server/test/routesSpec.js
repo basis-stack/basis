@@ -4,7 +4,7 @@ import { the, should, when,
          createStubObject, getStubApp, getStubContainer, getStubLogger,
          assertCall, assertWasCalled, assertParameter } from './../../testing';
 
-import routes, { __RewireAPI__ as RoutesIndexAPI } from './../src/middleware/routes';
+import initRoutes, { __RewireAPI__ as RoutesIndexAPI } from './../src/middleware/routes';
 
 the('routes middleware', () => {
 
@@ -16,6 +16,7 @@ the('routes middleware', () => {
   const stubRouteB = { init: () => {}, moduleKey: 'moduleB' };
   const stubRoutes = [stubRouteA, stubRouteB];
   const stubContainer = getStubContainer({}, stubLogger);
+  const stubPassport = {};
 
   before(() => {
 
@@ -43,7 +44,7 @@ the('routes middleware', () => {
       stubRouteAInit = sinon.spy(stubRouteA, 'init');
       stubRouteBInit = sinon.spy(stubRouteB, 'init');
 
-      routes(stubApp, stubContainer, stubRoutes);
+      initRoutes(stubApp, stubContainer, stubPassport, stubRoutes);
     });
 
     should('initialise the express router', () => {
@@ -55,8 +56,10 @@ the('routes middleware', () => {
 
       assertParameter(stubRouteAInit, 0, stubRouter);
       assertParameter(stubRouteAInit, 1, stubContainer);
+      assertParameter(stubRouteAInit, 2, stubPassport);
       assertParameter(stubRouteBInit, 0, stubRouter);
       assertParameter(stubRouteBInit, 1, stubContainer);
+      assertParameter(stubRouteBInit, 2, stubPassport);
     });
 
     should('log an initialised info message for each route (module)', () => {

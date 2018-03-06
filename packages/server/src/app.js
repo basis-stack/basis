@@ -11,6 +11,7 @@ export default (container, routes) => {
                    .useDataParsers()
                    .secure()
                    .defaultContent()
+                   .useAuthentication()
                    .useRoutes(routes)
                    .handleErrors()
                    .trustProxy()

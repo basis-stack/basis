@@ -3,6 +3,7 @@ import path from 'path';
 import { getRootPath } from './../core/utilities';
 
 // Middleware
+import initialiseAuthentication from './authentication';
 import initialiseContent from './content';
 import initialiseDataParsers from './dataParsers';
 import initialiseErrorHandlers from './errorHandlers';
@@ -50,6 +51,7 @@ export default class AppBuilder {
   handleErrors() {
 
     // TODO: Need to ensure that this is the last middleware include to be called.
+
     initialiseErrorHandlers(this._app, this._config, this._logger);
 
     return this;
@@ -58,6 +60,7 @@ export default class AppBuilder {
   logRequests() {
 
     // TODO: Need to ensure that this is first middleware include called.
+
     initialiseRequestLogger(this._app, this._config, this._logger.logStream);
 
     return this;
@@ -77,6 +80,13 @@ export default class AppBuilder {
     return this;
   }
 
+  useAuthentication() {
+
+    this._passport = initialiseAuthentication(this._app, this._container);
+
+    return this;
+  }
+
   useDataParsers() {
 
     initialiseDataParsers(this._app);
@@ -92,7 +102,10 @@ export default class AppBuilder {
   useRoutes(routes) {
 
     // TODO: Need to ensure that this is called inbetween 'base' middleware (parsers and such) and error handlers. How best to do this ?
-    initialiseRoutes(this._app, this._container, routes);
+
+    // TODO: Do we actually need to pass in the passport instance here ?? (Or can routes use a singleton instance ??)
+
+    initialiseRoutes(this._app, this._container, this._passport, routes);
 
     return this;
   }

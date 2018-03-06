@@ -14,12 +14,14 @@ the('appBuilder', () => {
   const stubLogger = { logStream: {} };
   const stubContainer = getStubContainer(stubConfig, stubLogger);
   const stubApp = getStubApp();
+  const stubPassport = {};
   const stubInitialiseContent = sinon.spy();
   const stubInitialiseDataParsers = sinon.spy();
   const stubInitialiseErrorHandlers = sinon.spy();
   const stubInitialiseRequestLogger = sinon.spy();
   const stubInitialiseRoutes = sinon.spy();
   const stubInitialiseSecurity = sinon.spy();
+  const stubInitialiseAuthentication = sinon.stub().returns(stubPassport);
   const stubGetRootPath = sinon.stub().returns('somepath');
 
   let builder;
@@ -32,6 +34,7 @@ the('appBuilder', () => {
     AppBuilderAPI.__Rewire__('initialiseRequestLogger', stubInitialiseRequestLogger);
     AppBuilderAPI.__Rewire__('initialiseRoutes', stubInitialiseRoutes);
     AppBuilderAPI.__Rewire__('initialiseSecurity', stubInitialiseSecurity);
+    AppBuilderAPI.__Rewire__('initialiseAuthentication', stubInitialiseAuthentication);
     AppBuilderAPI.__Rewire__('getRootPath', stubGetRootPath);
 
     builder = AppBuilder.create(stubContainer, stubApp);
@@ -45,6 +48,7 @@ the('appBuilder', () => {
     AppBuilderAPI.__ResetDependency__('initialiseRequestLogger');
     AppBuilderAPI.__ResetDependency__('initialiseRoutes');
     AppBuilderAPI.__ResetDependency__('initialiseSecurity');
+    AppBuilderAPI.__ResetDependency__('initialiseAuthentication');
     AppBuilderAPI.__ResetDependency__('getRootPath');
   });
 
@@ -178,6 +182,28 @@ the('appBuilder', () => {
     });
   });
 
+  when('useAuthentication called', () => {
+
+    let result;
+
+    before(() => {
+
+      result = builder.useAuthentication();
+    });
+
+    should('initialise the authentication middleware', () => {
+
+      assertWasCalled(stubInitialiseAuthentication);
+      assertParameter(stubInitialiseAuthentication, 0, stubApp);
+      assertParameter(stubInitialiseAuthentication, 1, stubContainer);
+    });
+
+    should('return the builder instance', () => {
+
+      expect(result).to.equal(builder);
+    });
+  });
+
   when('useRoutes called', () => {
 
     const stubRoutes = {};
@@ -193,7 +219,7 @@ the('appBuilder', () => {
       assertWasCalled(stubInitialiseRoutes);
       assertParameter(stubInitialiseRoutes, 0, stubApp);
       assertParameter(stubInitialiseRoutes, 1, stubContainer);
-      assertParameter(stubInitialiseRoutes, 2, stubRoutes);
+      assertParameter(stubInitialiseRoutes, 3, stubRoutes);
     });
 
     should('return the builder instance', () => {
