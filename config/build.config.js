@@ -18,7 +18,6 @@ export default {
   // Build options
   options: {
     logFileNames: false,
-    serverOnly: false,
     uniqueArtifactName: true
   },
 

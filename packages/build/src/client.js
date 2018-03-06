@@ -5,6 +5,11 @@ import constants from './constants';
 
 export default (context) => {
 
+  if (!context.hasClient) {
+
+    return [];
+  }
+  
   const bundleClient = {
 
     /* Bundle client code & assets with Webpack */

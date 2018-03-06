@@ -13,7 +13,7 @@ export default context => [{
 
     const dest = `${context.config.paths.build}/public/fonts/`;
 
-    if (context.config.options.serverOnly) {
+    if (!context.hasClient) {
 
       _.remove(context.config.vendor.fonts, f => f.includes('font-awesome'));
     }
