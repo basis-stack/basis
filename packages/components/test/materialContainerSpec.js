@@ -4,6 +4,7 @@ import chaiEnzyme from 'chai-enzyme';
 import { shallow } from 'enzyme';
 
 import { the, when, should } from './../../testing';
+// import { packageName } from './constants';
 
 import material from './../src/materialContainer';
 

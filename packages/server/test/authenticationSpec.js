@@ -51,7 +51,7 @@ the('authentication middleware initialiser', () => {
       assertCall(stubPassportUse, 1, 'stratergyB');
     });
 
-    should('initialise passport and wire as middleware', () => {
+    should('initialise passport and wire to the app', () => {
 
       assertWasCalled(stubAppUse, stubInitializeResult);
     });

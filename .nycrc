@@ -1,6 +1,6 @@
 {
   "reporter": [
-    "text-summary"
+    "text"
   ],
   "include": [
     "packages/**/*.js",
@@ -10,13 +10,10 @@
   ],
   "exclude": [
     "src/client/**",
-    "src/server/bin/bootstrap.js",
+    "src/server/bin/**",
     "**/test/**",
-    "packages/testing/**/*.js",
-    "packages/components/**/errorView/*.jsx",
-    "packages/build/**",
-    "packages/client/**",
-    "packages/server/src/bin/socketServer.js"
+    "packages/testing/**",
+    "packages/build/**"
   ],
   "require": [
     "babel-register"
