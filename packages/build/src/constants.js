@@ -42,6 +42,7 @@ export default {
     buildAll: 'build:all',
     buildFull: 'build:full',
     buildIncremental: 'build:incremental',
+    buildStatic: 'build:static',
 
     // Publish
     copyServerScripts: 'copy:server:scripts',

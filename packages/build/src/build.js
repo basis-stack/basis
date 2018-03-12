@@ -51,6 +51,11 @@ export default (context) => {
 
       runSequence(keys.buildAll, cb);
     }
+  }, {
+
+    /* Build only static assets (for public folder) */
+    key: keys.buildStatic,
+    dependencies: [keys.copyFonts, keys.sassServer ]
   }];
 
   const buildAllDeps = tasks[3].dependencies;

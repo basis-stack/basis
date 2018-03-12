@@ -1,8 +1,7 @@
 import assignDeep from 'object-assign-deep';
 
-import { Authenticate, Controller, Get } from 'basis-server/decorators';
+import { Controller, Get } from 'basis-server/decorators';
 
-@Authenticate('basic', { session: false })
 @Controller('/')
 export default class HomeController {
 

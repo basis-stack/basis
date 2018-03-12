@@ -2,6 +2,7 @@ import 'colors';
 import fs from 'fs';
 import gulp from 'gulp';
 import path from 'path';
+import assetConfig from 'basis-assets';
 
 import assetTasks from './src/assets';
 import buildTasks from './src/build';
@@ -23,16 +24,17 @@ export { logFileWrite, sassOptions } from './src/utilities';
 export const initialiseTasks = (config, packageJson, webpackConfig) => {
 
   // TODO: Add validate config step here (and throw error if anything missing)
+  
+  const hasServer = checkDir('src/server');
 
   const context = {
-    config,
+    config: { ...config, ...assetConfig },
     runtimeDir,
-    // TODO: This is a *somewhat* expensive operation, only do this if absolutely neccessary (i.e. server tasks, etc) 
-    envSettings: getEnvSettings(path.join(runtimeDir, 'config')),
+    envSettings: hasServer ? getEnvSettings(path.join(runtimeDir, 'config')) : undefined,
     packageJson,
     webpackConfig,
     hasPackages: checkDir('packages'),
-    hasServer: checkDir('src/server'),
+    hasServer,
     hasClient: checkDir('src/client'),
     lint: config.options.lint !== undefined ? config.options.lint : true
   };

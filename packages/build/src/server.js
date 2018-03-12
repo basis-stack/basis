@@ -9,7 +9,7 @@ import replace from 'gulp-replace';
 import sass from 'gulp-sass';
 import cleanCSS from 'gulp-clean-css';
 
-import { logFileWrite, sassOptions } from './utilities';
+import { getStaticDir, logFileWrite, sassOptions } from './utilities';
 import constants from './constants';
 
 const themeFileName = 'server-theme.scss';
@@ -48,7 +48,7 @@ export default context => {
     func: () => {
   
       const basisAssetsPath = './node_modules/basis-assets/server/styles';
-      const dest = `${context.config.paths.build}/public/styles`;
+      const dest = `${getStaticDir(context)}/styles`;
       const vendorFileName = context.hasServer ? 'server-vendor' : 'vendor'; 
   
       const vendorStream = gulp.src(`${context.config.paths.temp}/${themeFileName}`)

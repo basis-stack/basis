@@ -1,10 +1,6 @@
-import assetConfig from 'basis-assets';
 import theme from './theme';
 
 export default {
-
-  // Basis Asset config
-  ...assetConfig,
 
   // File paths
   paths: {

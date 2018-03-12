@@ -2,7 +2,7 @@ import changed from 'gulp-changed';
 import gulp from 'gulp';
 import _ from 'lodash';
 
-import { logFileWrite } from './utilities';
+import { getStaticDir, logFileWrite } from './utilities';
 import constants from './constants';
 
 export default context => [{
@@ -11,7 +11,7 @@ export default context => [{
   key: constants.taskKeys.copyFonts,
   func: () => {
 
-    const dest = `${context.config.paths.build}/public/fonts/`;
+    const dest = `${getStaticDir(context)}/fonts/`;
 
     if (!context.hasClient) {
 
