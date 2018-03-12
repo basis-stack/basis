@@ -1,8 +1,10 @@
 import assignDeep from 'object-assign-deep';
+import cors from 'cors';
 
-import { Controller, Get } from 'basis-server/decorators';
+import { Controller, Get, Middleware } from 'basis-server/decorators';
 
 @Controller('/')
+@Middleware(cors())
 export default class HomeController {
 
   constructor(container) {

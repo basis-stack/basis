@@ -37,6 +37,7 @@
     "basis-components": "^0.0.10",
     "basis-server": "^0.0.19",
     "basis-testing": "^0.0.3",
+    "cors": "^2.8.4",
     "material-ui": "^1.0.0-beta.32",
     "object-assign-deep": "^0.3.1",
     "prop-types": "^15.6.0",
