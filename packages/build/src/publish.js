@@ -13,7 +13,7 @@ import { logFileWrite } from './utilities';
 
 const keys = constants.taskKeys;
 
-export default context => [{
+export default ({ envSettings, config, packageJson }) => [{
 
   key: keys.copyServerScripts,
   func: () => {
@@ -21,32 +21,32 @@ export default context => [{
     const scriptsPath = './scripts';
     let deployVariables = '';
 
-    Object.keys(context.envSettings)
+    Object.keys(envSettings)
           .filter(env => env !== 'local' && env !== 'default')
           .forEach((env) => {
 
             deployVariables += `\n"${env}")\n` +
-                              `  DEPLOY_USER=${context.envSettings[env].deploy.deployUser}\n` +
-                              `  DEPLOY_HOST=${context.envSettings[env].deploy.deployHost}\n` +
-                              `  DEPLOY_LOCATION=${context.envSettings[env].deploy.deployDirectory}\n` +
+                              `  DEPLOY_USER=${envSettings[env].deploy.deployUser}\n` +
+                              `  DEPLOY_HOST=${envSettings[env].deploy.deployHost}\n` +
+                              `  DEPLOY_LOCATION=${envSettings[env].deploy.deployDirectory}\n` +
                               '  ;;\n';
           });
 
     const runtimeScripts = gulp.src([`${scriptsPath}/start.sh`, `${scriptsPath}/stop.sh`, `${scriptsPath}/install_platform.sh`])
-                               .pipe(replace('%APPNAME%', context.envSettings.default.shared.appName))
-                               .pipe(replace('%FRONT_WITH_NGINX%', context.envSettings.default.server.frontWithNginx))
-                               .pipe(replace('%NODE_RUNTIME_ENV%', context.envSettings.default.server.nodeRuntimeVersion))
+                               .pipe(replace('%APPNAME%', envSettings.default.shared.appName))
+                               .pipe(replace('%FRONT_WITH_NGINX%', envSettings.default.server.frontWithNginx))
+                               .pipe(replace('%NODE_RUNTIME_ENV%', envSettings.default.server.nodeRuntimeVersion))
                                .pipe(extReplace(''))
-                               .pipe(gulp.dest(context.config.paths.build))
-                               .pipe(logFileWrite(context.config));
+                               .pipe(gulp.dest(config.paths.build))
+                               .pipe(logFileWrite(config));
 
     const deployScript = gulp.src([`${scriptsPath}/deploy.sh`])
-                             .pipe(replace('%APPNAME%', context.envSettings.default.shared.appName))
+                             .pipe(replace('%APPNAME%', envSettings.default.shared.appName))
                              .pipe(replace('%DEPLOY_VARIABLES%', deployVariables))
                              .pipe(extReplace(''))
                              .pipe(chmod(0o755))
                              .pipe(gulp.dest('./'))
-                             .pipe(logFileWrite(context.config));
+                             .pipe(logFileWrite(config));
 
     return merge(runtimeScripts, deployScript);
   }
@@ -55,7 +55,7 @@ export default context => [{
   key: keys.installRuntimeDependencies,
   func: () => (
 
-    gulp.src(`${context.config.paths.build}/package.json`)
+    gulp.src(`${config.paths.build}/package.json`)
         .pipe(install())
   )
 }, {
@@ -67,15 +67,15 @@ export default context => [{
   ],
   func: () => {
 
-    const baseFileName = `${context.envSettings.default.shared.appName}.${context.packageJson.version}`;
-    const packageFileName = context.config.options.uniqueArtifactName ?
+    const baseFileName = `${envSettings.default.shared.appName}.${packageJson.version}`;
+    const packageFileName = config.options.uniqueArtifactName ?
       `${baseFileName}.T${new Date().getTime()}.tar` :
       `${baseFileName}.tar`;
 
-    return gulp.src([`${context.config.paths.build}/**/*`, `!${context.config.paths.build}/packages`, `!${context.config.paths.build}/packages/**`])
+    return gulp.src([`${config.paths.build}/**/*`, `!${config.paths.build}/packages`, `!${config.paths.build}/packages/**`])
                .pipe(tar(packageFileName))
                .pipe(gzip())
-               .pipe(gulp.dest(context.config.paths.publish))
-               .pipe(logFileWrite(context.config));
+               .pipe(gulp.dest(config.paths.publish))
+               .pipe(logFileWrite(config));
   }
 }];

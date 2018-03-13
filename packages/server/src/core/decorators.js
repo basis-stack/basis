@@ -57,4 +57,4 @@ export const Put = (path = defaultPath) => httpMethodDecorator('put', path);
 export const Delete = (path = defaultPath) => httpMethodDecorator('delete', path);
 export const Options = (path = defaultPath) => httpMethodDecorator('options', path);
 
-export const Middleware = middleware => middlewareDecorator(middleware);
+export const Middleware = (...middleware) => middlewareDecorator(middleware);

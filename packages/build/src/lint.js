@@ -13,21 +13,21 @@ const lint = src => (
       .pipe(eslint.failOnError())
 );
 
-export default (context) => {
-  
-  let lintAllDeps = [];
+export default ({ hasServer, hasClient, hasPackages, config }) => {
 
-  if (context.hasServer) {
-    
+  const lintAllDeps = [];
+
+  if (hasServer) {
+
     lintAllDeps.push(constants.taskKeys.lintServer);
   }
 
-  if (context.hasClient) {
+  if (hasClient) {
 
     lintAllDeps.push(constants.taskKeys.lintClient);
   }
 
-  if (context.hasPackages) {
+  if (hasPackages) {
 
     lintAllDeps.push(constants.taskKeys.lintPackages);
   }
@@ -36,17 +36,17 @@ export default (context) => {
 
     /* Lint Client */
     key: constants.taskKeys.lintClient,
-    func: () => lint(getSource(context.config.paths.client))
+    func: () => lint(getSource(config.paths.client))
   }, {
 
     /* Lint Server */
     key: constants.taskKeys.lintServer,
-    func: () => lint(getSource(context.config.paths.server))
+    func: () => lint(getSource(config.paths.server))
   }, {
 
     /* Lint Packages */
     key: constants.taskKeys.lintPackages,
-    func: () => lint(getSource(context.config.paths.packages))
+    func: () => lint(getSource(config.paths.packages))
   }, {
 
     /* Lint All */

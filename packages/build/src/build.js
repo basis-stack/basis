@@ -4,7 +4,7 @@ import constants from './constants';
 
 const keys = constants.taskKeys;
 
-export default (context) => { 
+export default ({ hasServer, hasClient, hasPackages }) => {
 
   const tasks = [{
 
@@ -55,13 +55,13 @@ export default (context) => {
 
     /* Build only static assets (for public folder) */
     key: keys.buildStatic,
-    dependencies: [keys.copyFonts, keys.sassServer ]
+    dependencies: [keys.copyFonts, keys.sassServer]
   }];
 
   const buildAllDeps = tasks[3].dependencies;
 
-  if (context.hasServer) {
-    
+  if (hasServer) {
+
     buildAllDeps.push(constants.taskKeys.buildServer);
   } else {
 
@@ -69,13 +69,13 @@ export default (context) => {
     buildAllDeps.push(constants.taskKeys.sassServer);
   }
 
-  if (context.hasClient) {
+  if (hasClient) {
 
     buildAllDeps.push(constants.taskKeys.buildClient);
   }
 
-  if (context.hasPackages) {
-    
+  if (hasPackages) {
+
     buildAllDeps.push(constants.taskKeys.buildPackages);
   }
 
