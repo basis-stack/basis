@@ -27,28 +27,22 @@ const middlewareDecorator = middleware => (
   }
 );
 
-export const Authenticate = (strategy, options) => (target) => {
-
-  Reflect.defineMetadata('http:authenticate', true, target);
-  Reflect.defineMetadata('http:authStrategy', strategy, target);
-  Reflect.defineMetadata('http:authOptions', options, target);
-};
-
 export const Controller = rootPath => (
 
   (target) => {
 
     Reflect.defineMetadata('http:rootPath', rootPath, target);
 
-    target.initialise = (router, container, passport) => {
+    target.initialise = (router, container) => {
 
       const instance = new target(container);
-      bindRoutes(target, instance, router, passport);
+      bindRoutes(target, instance, router);
 
       return instance;
     };
   }
 );
+export const Middleware = (...middleware) => middlewareDecorator(middleware);
 
 export const Get = (path = defaultPath) => httpMethodDecorator('get', path);
 export const Head = (path = defaultPath) => httpMethodDecorator('head', path);
@@ -56,5 +50,3 @@ export const Post = (path = defaultPath) => httpMethodDecorator('post', path);
 export const Put = (path = defaultPath) => httpMethodDecorator('put', path);
 export const Delete = (path = defaultPath) => httpMethodDecorator('delete', path);
 export const Options = (path = defaultPath) => httpMethodDecorator('options', path);
-
-export const Middleware = (...middleware) => middlewareDecorator(middleware);

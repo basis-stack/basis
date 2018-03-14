@@ -16,9 +16,11 @@ export default (controllerClass, controllerInstance, router) => {
     const handler = controllerInstance[name].bind(controllerInstance);
 
     // TODO: Test this branch !!
+
     if (baseMiddleware !== undefined || specificMiddleware !== undefined) {
 
-      // TODO: Concatenate all specific middle to base if it inddeed exists
+      // TODO: Concatenate all specific middleware to base if it inddeed exists
+
       const middleware = specificMiddleware !== undefined ? specificMiddleware : baseMiddleware;
       router[httpMethod](route, ...middleware, handler);
     } else {

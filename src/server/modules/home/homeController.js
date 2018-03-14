@@ -3,14 +3,8 @@ import cors from 'cors';
 
 import { Controller, Get, Middleware } from 'basis-server/decorators';
 
-const testMiddleware = (req, res, next) => {
-
-  console.log('Everything is awesome');
-  next();
-};
-
 @Controller('/')
-@Middleware(cors(), testMiddleware)
+@Middleware(cors())
 export default class HomeController {
 
   constructor(container) {
