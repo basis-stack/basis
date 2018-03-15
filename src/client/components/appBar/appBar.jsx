@@ -7,35 +7,47 @@ import MuiToolbar from 'material-ui/Toolbar';
 import MuiTypography from 'material-ui/Typography';
 import MuiIconButton from 'material-ui/IconButton';
 
-const styles = {
+const styles = theme => ({
 
   title: {
     flex: 1
   },
-  menuButton: {
+  leftButton: {
     marginLeft: -12,
     marginRight: 3
   }
+});
+
+const AppBar = ({ classes, onLeftIconClick, onSettingsClick, onLogoutClick }) => {
+
+  const leftIconButtonProps = { className: classes.leftButton, color: 'inherit', onClick: onLeftIconClick };
+  const leftIconProps = { value: 'menu', inverse: true };
+
+  const leftIcon = (
+    <MuiIconButton {...leftIconButtonProps}>
+      <Icon {...leftIconProps} />
+    </MuiIconButton>
+  );
+
+  return (
+    <div>
+      <MuiAppBar position="static" elevation={0}>
+        <MuiToolbar>
+          { leftIcon }
+          <MuiTypography variant="title" color="inherit" className={classes.title}>
+            Basis
+          </MuiTypography>
+          <MuiIconButton color="inherit" onClick={onSettingsClick}>
+            <Icon value="settings" inverse />
+          </MuiIconButton>
+          <MuiIconButton color="inherit" onClick={onLogoutClick}>
+            <Icon value="exit_to_app" inverse />
+          </MuiIconButton>
+        </MuiToolbar>
+      </MuiAppBar>
+    </div>
+  );
 };
-
-const AppBar = ({ classes, onLeftIconClick, onSettingsClick, onLogoutClick }) => (
-
-  <div>
-    <MuiAppBar position="static" elevation={0}>
-      <MuiToolbar>
-        <MuiIconButton className={classes.menuButton}
-                        color="inherit"
-                        aria-label="Menu"
-                        onClick={onLeftIconClick}>
-          <Icon value="menu" inverse />
-        </MuiIconButton>
-        <MuiTypography variant="title" color="inherit" className={classes.title}>
-          Basis
-        </MuiTypography>
-      </MuiToolbar>
-    </MuiAppBar>
-  </div>
-);
 
 AppBar.propTypes = {
   classes: PropTypes.object.isRequired,

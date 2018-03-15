@@ -1,11 +1,11 @@
 import React from 'react';
-import Reboot from 'material-ui/Reboot';
+import CssBaseline from 'material-ui/CssBaseline';
 import { RootRouter } from 'basis-client/components';
 
 export default ({ routes }) => (
 
   <div>
-    <Reboot />
+    <CssBaseline />
     <RootRouter routes={routes} />
   </div>
 );
