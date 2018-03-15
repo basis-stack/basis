@@ -219,7 +219,7 @@ the('appBuilder', () => {
       assertWasCalled(stubInitialiseRoutes);
       assertParameter(stubInitialiseRoutes, 0, stubApp);
       assertParameter(stubInitialiseRoutes, 1, stubContainer);
-      assertParameter(stubInitialiseRoutes, 3, stubRoutes);
+      assertParameter(stubInitialiseRoutes, 2, stubRoutes);
     });
 
     should('return the builder instance', () => {

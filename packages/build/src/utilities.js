@@ -5,11 +5,11 @@ import print from 'gulp-print';
 
 export const logMessagePrefix = '         + ';
 
-export const getStaticDir = context => (
-  
-  context.config.paths.public != undefined ?
-    context.config.paths.public :
-    `${context.config.paths.build}/public`
+export const getStaticDir = config => (
+
+  config.paths.public !== undefined ?
+    config.paths.public :
+    `${config.paths.build}/public`
 );
 
 export const logMessage = (action, context, theConsole = console) => {

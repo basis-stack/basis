@@ -16,7 +16,6 @@ the('routes middleware', () => {
   const stubRouteB = { init: () => {}, moduleKey: 'moduleB' };
   const stubRoutes = [stubRouteA, stubRouteB];
   const stubContainer = getStubContainer({}, stubLogger);
-  const stubPassport = {};
 
   before(() => {
 
@@ -44,7 +43,7 @@ the('routes middleware', () => {
       stubRouteAInit = sinon.spy(stubRouteA, 'init');
       stubRouteBInit = sinon.spy(stubRouteB, 'init');
 
-      initRoutes(stubApp, stubContainer, stubPassport, stubRoutes);
+      initRoutes(stubApp, stubContainer, stubRoutes);
     });
 
     should('initialise the express router', () => {
@@ -56,10 +55,8 @@ the('routes middleware', () => {
 
       assertParameter(stubRouteAInit, 0, stubRouter);
       assertParameter(stubRouteAInit, 1, stubContainer);
-      assertParameter(stubRouteAInit, 2, stubPassport);
       assertParameter(stubRouteBInit, 0, stubRouter);
       assertParameter(stubRouteBInit, 1, stubContainer);
-      assertParameter(stubRouteBInit, 2, stubPassport);
     });
 
     should('log an initialised info message for each route (module)', () => {

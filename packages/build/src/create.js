@@ -4,9 +4,9 @@ import path from 'path';
 import { writeJson } from './utilities';
 import constants from './constants';
 
-export default (context) => {
+export default ({ hasServer, hasClient, envSettings, config, packageJson }) => {
 
-  if (!context.hasServer) {
+  if (!hasServer) {
 
     return [];
   }
@@ -18,9 +18,9 @@ export default (context) => {
     dependencies: [constants.taskKeys.prepareBuild],
     func: (cb) => {
 
-      const outputSettings = Object.assign(context.envSettings);
+      const outputSettings = Object.assign(envSettings);
 
-      Object.keys(context.envSettings)
+      Object.keys(envSettings)
             .forEach((env) => {
 
               if (outputSettings[env].server !== undefined) {
@@ -34,15 +34,15 @@ export default (context) => {
                 delete outputSettings[env].deploy;
               }
 
-              if (context.config.options.serverOnly) {
+              if (!hasClient) {
 
                 delete outputSettings[env].client;
               }
             });
 
-      const pathName = `${context.config.paths.build}/config/settings.json`;
+      const pathName = `${config.paths.build}/config/settings.json`;
 
-      writeJson(context.config, pathName, outputSettings, cb);
+      writeJson(config, pathName, outputSettings, cb);
     }
   }, {
 
@@ -51,8 +51,8 @@ export default (context) => {
     dependencies: [constants.taskKeys.prepareBuild],
     func: (cb) => {
 
-      const outputPackageJson = Object.assign({}, context.packageJson);
-      outputPackageJson.name = context.envSettings.default.shared.appName;
+      const outputPackageJson = Object.assign({}, packageJson);
+      outputPackageJson.name = envSettings.default.shared.appName;
       delete outputPackageJson.devDependencies;
       delete outputPackageJson.scripts;
       delete outputPackageJson.homepage;
@@ -91,9 +91,9 @@ export default (context) => {
 
       // TODO: Add 'scripts' section with tweaked 'start', 'dev', 'production' scripts (for build dir)
 
-      const targetPath = `${context.config.paths.build}/package.json`;
+      const targetPath = `${config.paths.build}/package.json`;
 
-      writeJson(context.config, targetPath, outputPackageJson, cb);
+      writeJson(config, targetPath, outputPackageJson, cb);
     }
   }];
 };

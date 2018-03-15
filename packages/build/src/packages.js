@@ -91,74 +91,73 @@ const runCmdForPackages = (packages, cmdOp, cb) => {
     });
 };
 
-export default (context) => {
-  
-  if (!context.hasPackages) {
+export default ({ hasPackages, runtimeDir, config }) => {
+
+  if (!hasPackages) {
 
     return [];
-  } else {
-
-    const packages = fs.readdirSync(path.join(context.runtimeDir, 'packages'))
-                       .map((p) => {
-                      
-                         const packageJson = jsonfile.readFileSync(path.join(context.runtimeDir, `packages/${p}/package.json`));
-                      
-                         return {
-                           dir: p,
-                           name: packageJson.name,
-                           version: packageJson.version
-                         };
-                       });
-    
-    return [{
-
-      /* Compile nested basis packages */
-      key: constants.taskKeys.compilePackages,
-      dependencies: [constants.taskKeys.lintPackages],
-      func: () => {
-
-        const destDir = `${context.config.paths.build}/packages`;
-
-        const sourceStream = gulp.src([`./packages${constants.globs.js}`, `./packages${constants.globs.jsx}`,
-                                       constants.globs.notNodeModules, constants.globs.notTests])
-                                .pipe(babel())
-                                .pipe(gulp.dest(destDir))
-                                .pipe(logFileWrite(context.config));
-
-        const sassStream = gulp.src([`./packages${constants.globs.sass}`, constants.globs.notNodeModules])
-                              .pipe(gulp.dest(destDir))
-                              .pipe(logFileWrite(context.config));
-
-        const packageJsonStream = gulp.src([`./packages${constants.globs.packageJson}`, constants.globs.notNodeModules])
-                                      .pipe(gulp.dest(destDir))
-                                      .pipe(logFileWrite(context.config));
-
-        return merge(sourceStream, sassStream, packageJsonStream);
-      }
-    }, {
-
-      /* Publish compiled packages to npm registry */
-      key: constants.taskKeys.publishPackages,
-      func: (cb) => {
-
-        runCmdForPackages(packages, p => doPublish(context.config, p), cb);
-      }
-    }, {
-
-      /* Link sub packages */
-      key: constants.taskKeys.linkPackages,
-      func: (cb) => {
-
-        runCmdForPackages(packages, p => linkPackages(context.config, p), cb);
-      }
-    }, {
-
-      /* Unlink sub packages */
-      key: constants.taskKeys.unlinkPackages,
-      func: (cb) => {
-
-        runCmdForPackages(packages, p => linkPackages(context.config, p, false), cb);
-      }
-    }];
   }
+
+  const packages = fs.readdirSync(path.join(runtimeDir, 'packages'))
+                     .map((p) => {
+
+                       const packageJson = jsonfile.readFileSync(path.join(runtimeDir, `packages/${p}/package.json`));
+
+                       return {
+                         dir: p,
+                         name: packageJson.name,
+                         version: packageJson.version
+                       };
+                     });
+
+  return [{
+
+    /* Compile nested basis packages */
+    key: constants.taskKeys.compilePackages,
+    dependencies: [constants.taskKeys.lintPackages],
+    func: () => {
+
+      const destDir = `${config.paths.build}/packages`;
+
+      const sourceStream = gulp.src([`./packages${constants.globs.js}`, `./packages${constants.globs.jsx}`,
+                                    constants.globs.notNodeModules, constants.globs.notTests])
+                              .pipe(babel())
+                              .pipe(gulp.dest(destDir))
+                              .pipe(logFileWrite(config));
+
+      const sassStream = gulp.src([`./packages${constants.globs.sass}`, constants.globs.notNodeModules])
+                            .pipe(gulp.dest(destDir))
+                            .pipe(logFileWrite(config));
+
+      const packageJsonStream = gulp.src([`./packages${constants.globs.packageJson}`, constants.globs.notNodeModules])
+                                    .pipe(gulp.dest(destDir))
+                                    .pipe(logFileWrite(config));
+
+      return merge(sourceStream, sassStream, packageJsonStream);
+    }
+  }, {
+
+    /* Publish compiled packages to npm registry */
+    key: constants.taskKeys.publishPackages,
+    func: (cb) => {
+
+      runCmdForPackages(packages, p => doPublish(config, p), cb);
+    }
+  }, {
+
+    /* Link sub packages */
+    key: constants.taskKeys.linkPackages,
+    func: (cb) => {
+
+      runCmdForPackages(packages, p => linkPackages(config, p), cb);
+    }
+  }, {
+
+    /* Unlink sub packages */
+    key: constants.taskKeys.unlinkPackages,
+    func: (cb) => {
+
+      runCmdForPackages(packages, p => linkPackages(config, p, false), cb);
+    }
+  }];
 };

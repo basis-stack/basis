@@ -103,9 +103,7 @@ export default class AppBuilder {
 
     // TODO: Need to ensure that this is called inbetween 'base' middleware (parsers and such) and error handlers. How best to do this ?
 
-    // TODO: Do we actually need to pass in the passport instance here ?? (Or can routes use a singleton instance ??)
-
-    initialiseRoutes(this._app, this._container, this._passport, routes);
+    initialiseRoutes(this._app, this._container, routes);
 
     return this;
   }

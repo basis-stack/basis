@@ -3,26 +3,26 @@ import webpack from 'webpack';
 
 import constants from './constants';
 
-export default (context) => {
+export default ({ hasClient, webpackConfig, config, lint }) => {
 
-  if (!context.hasClient) {
+  if (!hasClient) {
 
     return [];
   }
-  
+
   const bundleClient = {
 
     /* Bundle client code & assets with Webpack */
     key: constants.taskKeys.bundleClient,
     func: (cb) => {
 
-      webpack(context.webpackConfig, (err, stats) => {
+      webpack(webpackConfig, (err, stats) => {
 
         if (err) {
           throw new util.PluginError(constants.taskKeys.bundleClient, err);
         }
 
-        if (context.config.options.logFileNames) {
+        if (config.options.logFileNames) {
 
           const ouptut = stats.toString({
             assets: true,
@@ -42,8 +42,8 @@ export default (context) => {
     }
   };
 
-  if (context.lint) {
-    
+  if (lint) {
+
     bundleClient.dependencies = [constants.taskKeys.lintClient];
   }
 

@@ -4,22 +4,22 @@ import fs from 'fs-extra';
 import { logMessage } from './utilities';
 import constants from './constants';
 
-export default context => [{
+export default ({ config }) => [{
 
   /* Clean existing build & package artifacts */
   key: constants.taskKeys.clean,
   func: (cb) => {
 
     const pathsToNuke = [
-      context.config.paths.build,
-      context.config.paths.publish,
-      context.config.paths.temp,
+      config.paths.build,
+      config.paths.publish,
+      config.paths.temp,
       './deploy'
     ];
 
     del(pathsToNuke).then((paths) => {
 
-      if (context.config.options.logFileNames) {
+      if (config.options.logFileNames) {
 
         const pathsText = paths.length === 0 ? 'NONE' : paths.join('\n                    ');
         logMessage('Deleted  ', pathsText);
@@ -35,9 +35,9 @@ export default context => [{
   func: (cb) => {
 
     const pathsToPrepare = [
-      context.config.paths.build,
-      `${context.config.paths.build}/config`,
-      context.config.paths.temp
+      config.paths.build,
+      `${config.paths.build}/config`,
+      config.paths.temp
     ];
 
     pathsToPrepare.forEach((p) => { fs.ensureDirSync(p); });
@@ -49,11 +49,11 @@ export default context => [{
   key: constants.taskKeys.finalise,
   func: (cb) => {
 
-    const pathsToNuke = [context.config.paths.temp];
+    const pathsToNuke = [config.paths.temp];
 
     del(pathsToNuke).then((paths) => {
 
-      if (context.config.options.logFileNames) {
+      if (config.options.logFileNames) {
 
         const pathsText = paths.length === 0 ? 'NONE' : paths.join('\n                    ');
         logMessage('Cleaned   ', pathsText);

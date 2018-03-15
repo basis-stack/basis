@@ -7,6 +7,10 @@ import { the, should, when,
 import { Controller, Get, Post } from './../src/core/decorators';
 import bindRoutes from './../src/middleware/routeBinder';
 
+const stubMiddleware1 = {};
+const stubMiddleware2 = {};
+const stubMiddleware3 = {};
+
 @Controller('/base-path')
 class StubController {
 
@@ -55,7 +59,7 @@ the('routeBinder', () => {
       expect(postSomethingResult).to.equal('Thing B');
     });
 
-    should('prefox routes with the controller rootPath', () => {
+    should('prefix routes with the controller rootPath', () => {
 
       expect(stubRouterGet.args[0][0].includes('/base-path/')).to.equal(true);
       expect(stubRouterPost.args[0][0].includes('/base-path/')).to.equal(true);
@@ -65,5 +69,15 @@ the('routeBinder', () => {
 
       assertParameter(stubRouterPost, 0, '/base-path/post-something');
     });
+
+    // should('bind any root middleware defined on the Controller', () => {
+
+
+    // });
+
+    // should('bind any specific middleware defined on the methods', () => {
+
+
+    // });
   });
 });
