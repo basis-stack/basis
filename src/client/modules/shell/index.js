@@ -1,5 +1,6 @@
 import { routeTypes } from 'basis-client';
 
+import reducers from './reducers';
 import Shell from './components/shell';
 
 export default {
@@ -13,6 +14,6 @@ export default {
       component: Shell,
       type: routeTypes.shellHub
     },
-    reducers: undefined
+    reducers
   })
 };

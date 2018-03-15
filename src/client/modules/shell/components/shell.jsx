@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { Switch, Route } from 'react-router-dom';
-import { core } from 'basis-client/modules';
-import Typography from 'material-ui/Typography';
+import MuiTypography from 'material-ui/Typography';
+import MuiDrawer from 'material-ui/Drawer';
 
 import { AppBar, Section } from './../../../components';
-import { fetchConfig } from './../actions';
+import { fetchConfig, toggleDrawer } from './../actions';
+import SettingsPanel from './settingsPanel';
 
 class Shell extends React.Component {
 
@@ -22,14 +22,22 @@ class Shell extends React.Component {
     return (
 
       <div>
-        <AppBar onMenuClick={() => { console.log('Menu click'); }} />
+        <AppBar onLeftIconClick={() => { console.log('Left icon click'); }}
+                onSettingsClick={this.props.onToggleDrawer}
+                onLogoutClick={() => { console.log('Logout'); }} />
+        <MuiDrawer anchor="right"
+                   open={this.props.layout.drawerOpen}
+                   onClose={this.props.onToggleDrawer}>
+          <SettingsPanel onCancel={this.props.onToggleDrawer}
+                         onSave={(data) => { console.log(data); this.props.onToggleDrawer(); }} />
+        </MuiDrawer>
         <Section>
-          <Typography variant="display3" gutterBottom>
+          <MuiTypography variant="display3" gutterBottom>
             Welcome To Basis
-          </Typography>
-          <Typography variant="subheading" gutterBottom>
+          </MuiTypography>
+          <MuiTypography variant="subheading" gutterBottom>
             This is an App template based on the Basis Stack.
-          </Typography>
+          </MuiTypography>
         </Section>
       </div>
     );
@@ -38,12 +46,14 @@ class Shell extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
 
-  onFetchConfig: () => { dispatch(fetchConfig()); }
+  onFetchConfig: () => { dispatch(fetchConfig()); },
+  onToggleDrawer: () => { dispatch(toggleDrawer()); }
 });
 
 const mapStateToProps = state => ({
 
-  config: state.core.config
+  config: state.core.config,
+  layout: state.shell.layout
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Shell);
