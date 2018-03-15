@@ -1,8 +1,3 @@
 {
-  "extends": "basis-stack",
-  "rules": {
-    "new-cap": [2, {
-      "capIsNewExceptions": ["Authenticate", "Controller", "Route", "Router", "Get", "Head", "Post", "Put", "Delete", "Options", "Middleware"]
-    }]
-  }
+  "extends": "basis-stack"
 }
