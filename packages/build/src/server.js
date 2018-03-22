@@ -14,7 +14,7 @@ import constants from './constants';
 
 const themeFileName = 'server-theme.scss';
 
-export default ({ config, hasServer, envSettings }) => {
+export default ({ config, hasServer, envSettings, lint }) => {
 
   const createServerTheme = {
 
@@ -88,8 +88,39 @@ export default ({ config, hasServer, envSettings }) => {
     return [createServerTheme, sassServer];
   }
 
+  const compileServer = {
+
+    /* Compile server routes and startup modules */
+    key: constants.taskKeys.compileServer,
+    func: () => {
+
+      const startupDestFileName = `start-${envSettings.default.shared.appName}`;
+      const startupDestDir = `${config.paths.build}/bin/`;
+      const mainSrc = `import { main } from 'basis-server';
+                      main();`;
+
+      const startupFileStream = file(startupDestFileName, mainSrc, { src: true })
+                                  .pipe(babel())
+                                  .pipe(gulp.dest(`${startupDestDir}`))
+                                  .pipe(logFileWrite(config));
+
+      const appFilesStream = gulp.src([`${config.paths.server}${constants.globs.js}`, `${config.paths.server}${constants.globs.jsx}`])
+                                .pipe(babel())
+                                .pipe(gulp.dest(`${config.paths.build}`))
+                                .pipe(logFileWrite(config));
+
+      return merge(startupFileStream, appFilesStream);
+    }
+  };
+
+  if (lint) {
+
+    compileServer.dependencies = [constants.taskKeys.lintServer];
+  }
+
   return [
     createServerTheme,
+    compileServer,
     sassServer, {
 
       /* Copy server (express) view templates to views */
@@ -106,30 +137,6 @@ export default ({ config, hasServer, envSettings }) => {
                   .pipe(gulpif(config.options.serverOnly, replace(clientVendorStyleTag, '')))
                   .pipe(gulp.dest(config.paths.build))
                   .pipe(logFileWrite(config));
-      }
-    }, {
-
-      /* Compile server routes and startup modules */
-      key: constants.taskKeys.compileServer,
-      dependencies: [constants.taskKeys.lintServer],
-      func: () => {
-
-        const startupDestFileName = `start-${envSettings.default.shared.appName}`;
-        const startupDestDir = `${config.paths.build}/bin/`;
-        const mainSrc = `import { main } from 'basis-server';
-                        main();`;
-
-        const startupFileStream = file(startupDestFileName, mainSrc, { src: true })
-                                    .pipe(babel())
-                                    .pipe(gulp.dest(`${startupDestDir}`))
-                                    .pipe(logFileWrite(config));
-
-        const appFilesStream = gulp.src([`${config.paths.server}${constants.globs.js}`, `${config.paths.server}${constants.globs.jsx}`])
-                                  .pipe(babel())
-                                  .pipe(gulp.dest(`${config.paths.build}`))
-                                  .pipe(logFileWrite(config));
-
-        return merge(startupFileStream, appFilesStream);
       }
     }
   ];
