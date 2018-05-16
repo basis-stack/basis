@@ -1,4 +1,3 @@
-import babel from 'gulp-babel';
 import changed from 'gulp-changed';
 import file from 'gulp-file';
 import gulp from 'gulp';
@@ -11,6 +10,7 @@ import cleanCSS from 'gulp-clean-css';
 
 import { getStaticDir, logFileWrite, sassOptions } from './utilities';
 import constants from './constants';
+import compile from './getCompiler';
 
 const themeFileName = 'server-theme.scss';
 
@@ -96,18 +96,13 @@ export default ({ config, hasServer, envSettings, lint }) => {
 
       const startupDestFileName = `start-${envSettings.default.shared.appName}`;
       const startupDestDir = `${config.paths.build}/bin/`;
-      const mainSrc = `import { main } from 'basis-server';
-                      main();`;
+      const mainSrc = 'require(\'basis-server\').main();';
 
       const startupFileStream = file(startupDestFileName, mainSrc, { src: true })
-                                  .pipe(babel())
                                   .pipe(gulp.dest(`${startupDestDir}`))
                                   .pipe(logFileWrite(config));
 
-      const appFilesStream = gulp.src([`${config.paths.server}${constants.globs.js}`, `${config.paths.server}${constants.globs.jsx}`])
-                                .pipe(babel())
-                                .pipe(gulp.dest(`${config.paths.build}`))
-                                .pipe(logFileWrite(config));
+      const appFilesStream = compile(config, config.paths.server, config.paths.build);
 
       return merge(startupFileStream, appFilesStream);
     }
@@ -133,10 +128,10 @@ export default ({ config, hasServer, envSettings, lint }) => {
           `${config.paths.server}${constants.globs.views}`;
 
         return gulp.src(src)
-                  .pipe(changed(config.paths.build))
-                  .pipe(gulpif(config.options.serverOnly, replace(clientVendorStyleTag, '')))
-                  .pipe(gulp.dest(config.paths.build))
-                  .pipe(logFileWrite(config));
+                   .pipe(changed(config.paths.build))
+                   .pipe(gulpif(config.options.serverOnly, replace(clientVendorStyleTag, '')))
+                   .pipe(gulp.dest(config.paths.build))
+                   .pipe(logFileWrite(config));
       }
     }
   ];

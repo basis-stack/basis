@@ -4,7 +4,7 @@ export default (controllerClass, controllerInstance, router) => {
 
   const baseRoute = Reflect.getMetadata('http:rootPath', controllerClass);
   const baseMiddleware = Reflect.hasMetadata('http:middleware', controllerClass) ?
-                           Reflect.getMetadata('http:middleware', controllerClass) : [];
+    Reflect.getMetadata('http:middleware', controllerClass) : [];
   const methods = Object.getOwnPropertyNames(controllerClass.prototype)
                         .filter(m => m !== 'constructor' && Reflect.hasMetadata('http:path', controllerInstance, m));
 
@@ -12,7 +12,7 @@ export default (controllerClass, controllerInstance, router) => {
 
     const specificPath = Reflect.getMetadata('http:path', controllerInstance, name);
     const specificMiddleware = Reflect.hasMetadata('http:middleware', controllerInstance, name) ?
-                                 Reflect.getMetadata('http:middleware', controllerInstance, name) : [];
+      Reflect.getMetadata('http:middleware', controllerInstance, name) : [];
     const httpMethod = Reflect.getMetadata('http:method', controllerInstance, name);
     const route = `${baseRoute}/${specificPath}`.replace('//', '/');
     const handler = controllerInstance[name].bind(controllerInstance);

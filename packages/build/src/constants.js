@@ -58,6 +58,8 @@ export default {
     notNodeModules: '!**/node_modules/**/*.*',
     packageJson: '/**/package.json',
     sass: '/**/*.scss',
+    ts: '/**/*.ts',
+    tsx: '/**/*.tsx',
     views: '/**/*.ejs'
   },
 

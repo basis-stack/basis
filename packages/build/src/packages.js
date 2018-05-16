@@ -1,4 +1,3 @@
-import babel from 'gulp-babel';
 import childProcessPromise from 'child-process-promise';
 import gulp from 'gulp';
 import fs from 'fs';
@@ -7,8 +6,9 @@ import merge from 'merge-stream';
 import path from 'path';
 import Rx from 'rxjs/Rx';
 
-import { logFileWrite } from './utilities';
+import { logFileWrite, runtimeDir } from './utilities';
 import constants from './constants';
+import compile from './getCompiler';
 
 const exec = childProcessPromise.exec;
 const logMessagePrefix = '         + ';
@@ -33,6 +33,7 @@ const doPublish = (config, packageDetails) => (
       })
       .catch((err) => {
 
+        // TODO: Add check for Artifactory error message also: cannot modify pre-existing version'
         if (err.message.includes('code E403') && err.message.includes('cannot publish over the previously published')) {
 
           resolve({
@@ -91,7 +92,7 @@ const runCmdForPackages = (packages, cmdOp, cb) => {
     });
 };
 
-export default ({ hasPackages, runtimeDir, config }) => {
+export default ({ hasPackages, config, lint }) => {
 
   if (!hasPackages) {
 
@@ -112,6 +113,12 @@ export default ({ hasPackages, runtimeDir, config }) => {
 
   return [{
 
+    // TODO: Add linting as dep only if specified (as per server)
+    // if (lint) {
+
+    //   compilePackages.dependencies = [constants.taskKeys.lintPackages];
+    // }
+
     /* Compile nested basis packages */
     key: constants.taskKeys.compilePackages,
     dependencies: [constants.taskKeys.lintPackages],
@@ -119,11 +126,7 @@ export default ({ hasPackages, runtimeDir, config }) => {
 
       const destDir = `${config.paths.build}/packages`;
 
-      const sourceStream = gulp.src([`./packages${constants.globs.js}`, `./packages${constants.globs.jsx}`,
-                                    constants.globs.notNodeModules, constants.globs.notTests])
-                              .pipe(babel())
-                              .pipe(gulp.dest(destDir))
-                              .pipe(logFileWrite(config));
+      const sourceStream = compile(config, './packages', destDir);
 
       const sassStream = gulp.src([`./packages${constants.globs.sass}`, constants.globs.notNodeModules])
                             .pipe(gulp.dest(destDir))

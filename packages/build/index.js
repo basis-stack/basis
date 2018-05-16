@@ -1,5 +1,4 @@
 import 'colors';
-import fs from 'fs';
 import gulp from 'gulp';
 import path from 'path';
 import assetConfig from 'basis-assets';
@@ -15,17 +14,15 @@ import serverTasks from './src/server';
 import publishTasks from './src/publish';
 import constants from './src/constants';
 import getEnvSettings from './src/settings';
-
-const runtimeDir = process.cwd();
-const checkDir = dir => fs.existsSync(path.join(runtimeDir, dir));
+import { runtimeDir, checkPath } from './src/utilities';
 
 export { logFileWrite, sassOptions } from './src/utilities';
 
 export const initialiseTasks = (config, packageJson, webpackConfig) => {
 
   // TODO: Add validate config step here (and throw error if anything missing)
-  
-  const hasServer = checkDir('src/server');
+
+  const hasServer = checkPath('src/server');
 
   const context = {
     config: { ...config, ...assetConfig },
@@ -33,9 +30,9 @@ export const initialiseTasks = (config, packageJson, webpackConfig) => {
     envSettings: hasServer ? getEnvSettings(path.join(runtimeDir, 'config')) : undefined,
     packageJson,
     webpackConfig,
-    hasPackages: checkDir('packages'),
+    hasPackages: checkPath('packages'),
     hasServer,
-    hasClient: checkDir('src/client'),
+    hasClient: checkPath('src/client'),
     lint: config.options.lint !== undefined ? config.options.lint : true
   };
 

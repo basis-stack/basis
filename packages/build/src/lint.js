@@ -1,17 +1,5 @@
-import eslint from 'gulp-eslint';
-import gulp from 'gulp';
-
 import constants from './constants';
-
-const getSource = path => [`${path}${constants.globs.js}`, `${path}${constants.globs.jsx}`];
-
-const lint = src => (
-
-  gulp.src(src)
-      .pipe(eslint())
-      .pipe(eslint.format())
-      .pipe(eslint.failOnError())
-);
+import lint from './getLinter';
 
 export default ({ hasServer, hasClient, hasPackages, config }) => {
 
@@ -36,17 +24,17 @@ export default ({ hasServer, hasClient, hasPackages, config }) => {
 
     /* Lint Client */
     key: constants.taskKeys.lintClient,
-    func: () => lint(getSource(config.paths.client))
+    func: () => lint(config.paths.client)
   }, {
 
     /* Lint Server */
     key: constants.taskKeys.lintServer,
-    func: () => lint(getSource(config.paths.server))
+    func: () => lint(config.paths.server)
   }, {
 
     /* Lint Packages */
     key: constants.taskKeys.lintPackages,
-    func: () => lint(getSource(config.paths.packages))
+    func: () => lint('./packages')
   }, {
 
     /* Lint All */

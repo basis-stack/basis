@@ -1,9 +1,13 @@
-import colors from 'colors';
+import 'colors';
+import fs from 'fs';
 import gulpif from 'gulp-if';
 import jsonfile from 'jsonfile';
+import path from 'path';
 import print from 'gulp-print';
 
+export const runtimeDir = process.cwd();
 export const logMessagePrefix = '         + ';
+export const checkPath = dir => fs.existsSync(path.join(runtimeDir, dir));
 
 export const getStaticDir = config => (
 
@@ -24,11 +28,11 @@ export const logFileWrite = (config) => {
   return gulpif(config.options.logFileNames, print(getMessage));
 };
 
-export const writeJson = (config, path, object, callback) => {
+export const writeJson = (config, filepath, object, callback) => {
 
   if (config.options.logFileNames) {
 
-    logMessage('Creating ', path);
+    logMessage('Creating ', filepath);
   }
 
   jsonfile.writeFile(path, object, { spaces: 2 }, (err) => {
