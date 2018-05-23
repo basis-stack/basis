@@ -13,7 +13,7 @@ export default {
 
   // Build options
   options: {
-    logFileNames: true,
+    logFileNames: false,
     uniqueArtifactName: true,
     lint: false
   },
