@@ -2,7 +2,7 @@ import * as sinon from 'sinon';
 
 import { the, should, when,
          createStubObject, getStubApp, getStubContainer, getStubLogger,
-         assertCall, assertWasCalled, assertParameter } from './../../testing';
+         assertCall, assertWasCalled, assertParameter } from './../../testing/src';
 
 import initRoutes, { __RewireAPI__ as RoutesIndexAPI } from './../src/middleware/routes';
 

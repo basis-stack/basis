@@ -1,14 +1,14 @@
 {
   "name": "basis-assets",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Vendor SCSS / CSS dependencies and server assets for the Basis stack",
-  "module": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "echo \"No tests\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/warebrained/basis.git"
+    "url": "git+https://github.com/basis-stack/basis.git"
   },
   "keywords": [
     "basis",
@@ -18,9 +18,9 @@
   "author": "Justin Ware <wareisjustin@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/warebrained/basis/issues"
+    "url": "https://github.com/basis-stack/basis/issues"
   },
-  "homepage": "https://github.com/warebrained/basis#readme",
+  "homepage": "https://github.com/basis-stack/basis#readme",
   "dependencies": {
     "@material/theme": "^0.28.0",
     "@material/typography": "^0.28.0",

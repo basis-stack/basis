@@ -3,20 +3,20 @@ import gulp from 'gulp';
 import path from 'path';
 import assetConfig from 'basis-assets';
 
-import assetTasks from './src/assets';
-import buildTasks from './src/build';
-import cleanTasks from './src/clean';
-import clientTasks from './src/client';
-import createTasks from './src/create';
-import lintTasks from './src/lint';
-import packagesTasks from './src/packages';
-import serverTasks from './src/server';
-import publishTasks from './src/publish';
-import constants from './src/constants';
-import getEnvSettings from './src/settings';
-import { runtimeDir, checkPath } from './src/utilities';
+import assetTasks from './assets';
+import buildTasks from './build';
+import cleanTasks from './clean';
+import clientTasks from './client';
+import createTasks from './create';
+import lintTasks from './lint';
+import packagesTasks from './packages';
+import serverTasks from './server';
+import publishTasks from './publish';
+import constants from './constants';
+import getEnvSettings from './settings';
+import { runtimeDir, checkPath } from './utilities';
 
-export { logFileWrite, sassOptions } from './src/utilities';
+export { logFileWrite, sassOptions } from './utilities';
 
 export const initialiseTasks = (config, packageJson, webpackConfig) => {
 

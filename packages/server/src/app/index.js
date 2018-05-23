@@ -1,6 +1,6 @@
 import express from 'express';
 
-import AppBuilder from './middleware/appBuilder';
+import AppBuilder from './../middleware/appBuilder';
 
 export default (container, routes) => {
 

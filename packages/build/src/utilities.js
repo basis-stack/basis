@@ -35,7 +35,7 @@ export const writeJson = (config, filepath, object, callback) => {
     logMessage('Creating ', filepath);
   }
 
-  jsonfile.writeFile(path, object, { spaces: 2 }, (err) => {
+  jsonfile.writeFile(filepath, object, { spaces: 2 }, (err) => {
 
     if (err) { throw err; }
 

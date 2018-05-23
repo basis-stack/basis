@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 
 import { the, should, when, withScenario,
-         assertWasCalled, assertParameter } from './../../testing';
+         assertWasCalled, assertParameter } from './../../testing/src';
 
 import main, { __RewireAPI__ as MainAPI } from './../src/bin/main';
 

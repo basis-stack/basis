@@ -1,5 +1,4 @@
 import util from 'gulp-util';
-import webpack from 'webpack';
 
 import constants from './constants';
 
@@ -15,6 +14,9 @@ export default ({ hasClient, webpackConfig, config, lint }) => {
     /* Bundle client code & assets with Webpack */
     key: constants.taskKeys.bundleClient,
     func: (cb) => {
+
+      // eslint-disable-next-line global-require, import/no-unresolved
+      const webpack = require('webpack');
 
       webpack(webpackConfig, (err, stats) => {
 

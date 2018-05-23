@@ -3,7 +3,7 @@ import chai, { expect } from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import { shallow } from 'enzyme';
 
-import { the, when, should } from './../../testing';
+import { the, when, should } from './../../testing/src';
 // import { packageName } from './constants';
 
 import material from './../src/materialContainer';

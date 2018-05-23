@@ -12,6 +12,7 @@
     "src/client/**",
     "src/server/bin/**",
     "**/test/**",
+    "**/dist/**",
     "packages/testing/**",
     "packages/build/**"
   ],

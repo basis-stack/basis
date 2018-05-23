@@ -56,6 +56,7 @@ export default {
     jsx: '/**/*.jsx',
     notTests: '!**/test/*',
     notNodeModules: '!**/node_modules/**/*.*',
+    notDist: '!**/dist/**/*.*',
     packageJson: '/**/package.json',
     sass: '/**/*.scss',
     ts: '/**/*.ts',

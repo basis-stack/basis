@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 
-import { the, should } from './../../testing';
+import { the, should } from './../../testing/src';
 
-import * as components from './../';
+import * as components from './../src';
 
 the('components package', () => {
 

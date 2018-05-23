@@ -1,14 +1,14 @@
 {
   "name": "basis-server",
-  "version": "0.0.21",
+  "version": "0.0.23",
   "description": "The core framework, middleware and runtime components for the Basis web server",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "echo \"No tests\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/warebrained/basis.git"
+    "url": "git+https://github.com/basis-stack/basis.git"
   },
   "keywords": [
     "node",
@@ -19,34 +19,34 @@
   "author": "Justin Ware <wareisjustin@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/warebrained/basis/issues"
+    "url": "https://github.com/basis-stack/basis/issues"
   },
-  "homepage": "https://github.com/warebrained/basis#readme",
+  "homepage": "https://github.com/basis-stack/basis#readme",
   "dependencies": {
-    "basis-components": "^0.0.10",
-    "body-parser": "^1.18.2",
+    "basis-components": "^0.0.11",
+    "body-parser": "^1.18.3",
     "classnames": "^2.2.5",
     "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",
-    "ejs": "^2.5.7",
-    "express": "^4.16.2",
-    "helmet": "^3.11.0",
-    "http-status": "^1.0.1",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "helmet": "^3.12.1",
+    "http-status": "^1.1.0",
     "jsonfile": "^4.0.0",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.10",
     "morgan": "^1.9.0",
-    "object-assign-deep": "^0.3.1",
+    "object-assign-deep": "^0.4.0",
     "passport": "^0.4.0",
-    "pm2": "^2.10.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "pm2": "^2.10.4",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
     "reflect-metadata": "^0.1.12",
     "require-relative": "^0.8.7",
-    "winston": "^2.4.0",
-    "ws": "^4.1.0"
+    "winston": "^2.4.2",
+    "ws": "^5.2.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "sinon": "^4.4.2"
+    "sinon": "^5.0.7"
   }
 }

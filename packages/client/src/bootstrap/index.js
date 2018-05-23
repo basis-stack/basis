@@ -1,5 +1,3 @@
-import React from 'react';
-
 import moduleLoader from './moduleLoader';
 import appWrapper from './appWrapper';
 import mount from './mount';

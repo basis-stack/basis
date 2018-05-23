@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { the, when, should, withScenario } from './../../testing';
+import { the, when, should, withScenario } from './../../testing/src';
 
 import Config, { __RewireAPI__ as ConfigAPI } from './../src/core/config';
 

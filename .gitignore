@@ -16,6 +16,7 @@ coverage
 
 # Temporary build artefacts
 dist
+**/dist
 temp
 publish
 .DS_Store

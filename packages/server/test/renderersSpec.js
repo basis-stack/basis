@@ -2,7 +2,7 @@ import * as sinon from 'sinon';
 
 import { the, should, when,
          createStubObject, getStubResponse,
-         assertWasCalled, assertParameter } from './../../testing';
+         assertWasCalled, assertParameter } from './../../testing/src';
 
 import renderView, { __RewireAPI__ as RenderersAPI } from './../src/core/renderers';
 

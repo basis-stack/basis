@@ -1,9 +1,7 @@
-import babel from 'gulp-babel';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
 import path from 'path';
 import jsonfile from 'jsonfile';
-import ts from 'gulp-typescript';
 import rename from 'gulp-rename';
 
 import constants from './constants';
@@ -20,11 +18,16 @@ export default (config, srcPath, destPath, renameOp) => {
   if (checkPath(tsConfigFile)) {
 
     const tsConfig = jsonfile.readFileSync(path.join(runtimeDir, tsConfigFile));
+    // eslint-disable-next-line global-require, import/no-unresolved
+    const ts = require('gulp-typescript');
 
     compiler = gulp.src([`${srcPath}${constants.globs.ts}`, `${srcPath}${constants.globs.tsx}`, constants.globs.notNodeModules, constants.globs.notTests])
                    .pipe(ts(tsConfig.compilerOptions));
 
   } else if (checkPath('.babelrc')) {
+
+    // eslint-disable-next-line global-require, import/no-unresolved
+    const babel = require('gulp-babel');
 
     compiler = gulp.src([`${srcPath}${constants.globs.js}`, `${srcPath}${constants.globs.jsx}`, constants.globs.notNodeModules, constants.globs.notTests])
                    .pipe(babel());

@@ -1,1 +1,2 @@
-export * from './src/modules';
+// eslint-disable-next-line global-require, import/no-unresolved
+module.exports = require('./dist/modules');

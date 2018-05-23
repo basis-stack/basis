@@ -4,7 +4,7 @@ import * as sinon from 'sinon';
 import _ from 'lodash';
 
 import { the, should, when,
-         assertInstance, assertWasCalled } from './../../testing';
+         assertInstance, assertWasCalled } from './../../testing/src';
 
 import { Controller, Middleware, Get, Head, Post, Put, Delete, Options, __RewireAPI__ as DecoratorsAPI } from './../src/core/decorators';
 

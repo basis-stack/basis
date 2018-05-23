@@ -4,7 +4,7 @@ import * as sinon from 'sinon';
 import constants from './../src/core/constants';
 import { the, should, when,
          createStubObject, getStubContainer, getStubLogger,
-         assertCall } from './../../testing';
+         assertCall } from './../../testing/src';
 
 import getModules, { __RewireAPI__ as ModuleLoaderAPI } from './../src/core/moduleLoader';
 

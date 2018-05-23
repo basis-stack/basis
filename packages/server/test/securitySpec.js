@@ -1,7 +1,7 @@
 import * as sinon from 'sinon';
 
 import { the, should, when,
-         getStubApp, assertWasCalled } from './../../testing';
+         getStubApp, assertWasCalled } from './../../testing/src';
 
 import initialiseSecurity, { __RewireAPI__ as SecurityAPI } from './../src/middleware/security';
 

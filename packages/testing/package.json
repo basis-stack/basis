@@ -1,14 +1,14 @@
 {
   "name": "basis-testing",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A set of unit testing utilities (centered on mocha/sinon/chai) to help with testing the Basis stack.",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "echo \"No tests\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/warebrained/basis.git"
+    "url": "git+https://github.com/basis-stack/basis.git"
   },
   "keywords": [
     "es6",
@@ -20,9 +20,9 @@
   "author": "Justin Ware <wareisjustin@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/warebrained/basis/issues"
+    "url": "https://github.com/basis-stack/basis/issues"
   },
-  "homepage": "https://github.com/warebrained/basis#readme",
+  "homepage": "https://github.com/basis-stack/basis#readme",
   "dependencies": {
     "chai": "^4.1.2",
     "lodash": "^4.17.4"

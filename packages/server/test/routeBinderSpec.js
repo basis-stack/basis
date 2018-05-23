@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 
 import { the, should, when,
-         getStubRouter, assertParameter } from './../../testing';
+         getStubRouter, assertParameter } from './../../testing/src';
 
 import { Controller, Get, Post } from './../src/core/decorators';
 import bindRoutes from './../src/middleware/routeBinder';

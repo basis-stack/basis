@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import assignDeep from 'object-assign-deep';
 
-import { the, when, withScenario, should } from './../../testing';
+import { the, when, withScenario, should } from './../../testing/src';
 
 import getWinston from './../src/core/winstonProvider';
 

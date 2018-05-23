@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 
 import { the, should, when,
-         createStubObject, assertParameter } from './../../testing';
+         createStubObject, assertParameter } from './../../testing/src';
 
 import Logger, { __RewireAPI__ as LoggerApi } from './../src/core/logger';
 

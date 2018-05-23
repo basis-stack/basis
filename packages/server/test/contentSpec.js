@@ -3,7 +3,7 @@ import path from 'path';
 
 import { the, should, when,
          createStubObject, getStubApp,
-         assertWasCalled, assertCall } from './../../testing';
+         assertWasCalled, assertCall } from './../../testing/src';
 
 import initContent, { __RewireAPI__ as ContentAPI } from './../src/middleware/content';
 

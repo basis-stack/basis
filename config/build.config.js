@@ -13,8 +13,9 @@ export default {
 
   // Build options
   options: {
-    logFileNames: false,
-    uniqueArtifactName: true
+    logFileNames: true,
+    uniqueArtifactName: true,
+    lint: false
   },
 
   // Custom assets

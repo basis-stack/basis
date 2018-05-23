@@ -3,7 +3,7 @@ import * as sinon from 'sinon';
 
 import { the, should, when,
          getStubContainer,
-         assertWasCalled, assertParameter, assertCalledBefore } from './../../testing';
+         assertWasCalled, assertParameter, assertCalledBefore } from './../../testing/src';
 
 import constants from './../src/core/constants';
 import createServer, { __RewireAPI__ as CreateServerAPI } from './../src/bin/httpServer';

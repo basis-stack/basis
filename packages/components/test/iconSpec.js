@@ -4,7 +4,7 @@ import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import chaiEnzyme from 'chai-enzyme';
 
-import { the, when, should, withScenario } from './../../testing';
+import { the, when, should, withScenario } from './../../testing/src';
 // import { packageName } from './constants';
 
 import Icon from './../src/icon';

@@ -5,6 +5,7 @@ import jsonfile from 'jsonfile';
 import merge from 'merge-stream';
 import path from 'path';
 import Rx from 'rxjs/Rx';
+import rename from 'gulp-rename';
 
 import { logFileWrite, runtimeDir } from './utilities';
 import constants from './constants';
@@ -18,11 +19,11 @@ const logMessage = (message, success = false) => {
   console.log(`${logMessagePrefix}${success ? 'Success:'.green : 'Info:'.cyan} ${message}`);
 };
 
-const doPublish = (config, packageDetails) => (
+const doPublish = packageDetails => (
 
   new Promise((resolve, reject) => {
 
-    exec(`cd ${config.paths.build}/packages/${packageDetails.dir} && npm publish`)
+    exec(`cd packages/${packageDetails.dir} && npm publish`)
       .then((result) => {
 
         resolve({
@@ -33,8 +34,8 @@ const doPublish = (config, packageDetails) => (
       })
       .catch((err) => {
 
-        // TODO: Add check for Artifactory error message also: cannot modify pre-existing version'
-        if (err.message.includes('code E403') && err.message.includes('cannot publish over the previously published')) {
+        if (err.message.includes('code E403') && (err.message.includes('cannot publish over the previously published') ||
+                                                  err.message.includes('cannot modify pre-existing version'))) {
 
           resolve({
 
@@ -111,56 +112,57 @@ export default ({ hasPackages, config, lint }) => {
                        };
                      });
 
-  return [{
-
-    // TODO: Add linting as dep only if specified (as per server)
-    // if (lint) {
-
-    //   compilePackages.dependencies = [constants.taskKeys.lintPackages];
-    // }
+  const compilePackages = {
 
     /* Compile nested basis packages */
     key: constants.taskKeys.compilePackages,
-    dependencies: [constants.taskKeys.lintPackages],
     func: () => {
 
-      const destDir = `${config.paths.build}/packages`;
+      const sourceDir = 'packages/**/src';
+      const destDir = './packages';
+      const renameOp = (p) => { p.dirname = p.dirname.replace('src', 'dist'); };
 
-      const sourceStream = compile(config, './packages', destDir);
+      const sourceStream = compile(config, sourceDir, destDir, renameOp);
 
-      const sassStream = gulp.src([`./packages${constants.globs.sass}`, constants.globs.notNodeModules])
-                            .pipe(gulp.dest(destDir))
-                            .pipe(logFileWrite(config));
+      const sassStream = gulp.src([`${sourceDir}${constants.globs.sass}`, constants.globs.notNodeModules])
+                             .pipe(rename(renameOp))
+                             .pipe(gulp.dest(destDir))
+                             .pipe(logFileWrite(config));
 
-      const packageJsonStream = gulp.src([`./packages${constants.globs.packageJson}`, constants.globs.notNodeModules])
-                                    .pipe(gulp.dest(destDir))
-                                    .pipe(logFileWrite(config));
-
-      return merge(sourceStream, sassStream, packageJsonStream);
+      return merge(sourceStream, sassStream);
     }
-  }, {
+  };
 
-    /* Publish compiled packages to npm registry */
-    key: constants.taskKeys.publishPackages,
-    func: (cb) => {
+  if (lint) {
 
-      runCmdForPackages(packages, p => doPublish(config, p), cb);
+    compilePackages.dependencies = [constants.taskKeys.lintPackages];
+  }
+
+  return [
+    compilePackages, {
+
+      /* Publish compiled packages to npm registry */
+      key: constants.taskKeys.publishPackages,
+      func: (cb) => {
+
+        runCmdForPackages(packages, p => doPublish(p), cb);
+      }
+    }, {
+
+      /* Link sub packages */
+      key: constants.taskKeys.linkPackages,
+      func: (cb) => {
+
+        runCmdForPackages(packages, p => linkPackages(config, p), cb);
+      }
+    }, {
+
+      /* Unlink sub packages */
+      key: constants.taskKeys.unlinkPackages,
+      func: (cb) => {
+
+        runCmdForPackages(packages, p => linkPackages(config, p, false), cb);
+      }
     }
-  }, {
-
-    /* Link sub packages */
-    key: constants.taskKeys.linkPackages,
-    func: (cb) => {
-
-      runCmdForPackages(packages, p => linkPackages(config, p), cb);
-    }
-  }, {
-
-    /* Unlink sub packages */
-    key: constants.taskKeys.unlinkPackages,
-    func: (cb) => {
-
-      runCmdForPackages(packages, p => linkPackages(config, p, false), cb);
-    }
-  }];
+  ];
 };

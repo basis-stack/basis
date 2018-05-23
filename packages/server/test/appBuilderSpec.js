@@ -4,7 +4,7 @@ import path from 'path';
 
 import { the, when, should,
          getStubApp, getStubContainer,
-         assertWasCalled, assertParameter, assertInstance } from './../../testing';
+         assertWasCalled, assertParameter, assertInstance } from './../../testing/src';
 
 import AppBuilder, { __RewireAPI__ as AppBuilderAPI } from './../src/middleware/appBuilder';
 

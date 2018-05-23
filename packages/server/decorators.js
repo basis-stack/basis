@@ -1,1 +1,2 @@
-export * from './src/core/decorators';
+// eslint-disable-next-line global-require, import/no-unresolved
+module.exports = require('./dist/core/decorators');

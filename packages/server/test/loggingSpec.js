@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 
 import { the, when, withScenario, should,
-         getStubApp } from './../../testing';
+         getStubApp } from './../../testing/src';
 
 import initialiseRequestLogger, { __RewireAPI__ as LoggingAPI } from './../src/middleware/logging';
 

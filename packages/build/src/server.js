@@ -32,7 +32,7 @@ export default ({ config, hasServer, envSettings, lint }) => {
          $mdc-theme-secondary: ${getColour(theme.secondary)};
          $mdc-theme-background: ${getColour(theme.background)};
 
-         @import 'basis-assets/server/styles/vendors';`;
+         @import 'basis-assets/dist/server/styles/vendors';`;
 
       return file(themeFileName, themeFileContent, { src: true })
               .pipe(gulp.dest(config.paths.temp))
@@ -47,7 +47,7 @@ export default ({ config, hasServer, envSettings, lint }) => {
     dependencies: [constants.taskKeys.createServerTheme],
     func: () => {
 
-      const basisAssetsPath = './node_modules/basis-assets/server/styles';
+      const basisAssetsPath = './node_modules/basis-assets/dist/server/styles';
       const dest = `${getStaticDir(config)}/styles`;
       const vendorFileName = hasServer ? 'server-vendor' : 'vendor';
 

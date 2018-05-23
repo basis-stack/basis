@@ -42,6 +42,7 @@ export const Controller = rootPath => (
     };
   }
 );
+
 export const Middleware = (...middleware) => middlewareDecorator(middleware);
 
 export const Get = (path = defaultPath) => httpMethodDecorator('get', path);
