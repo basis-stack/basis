@@ -4,6 +4,7 @@ export default {
 
     // Clean
     clean: 'clean',
+    cleanPackages: 'clean:packages',
     prepareBuild: 'prepare:build',
     finalise: 'finalise',
 

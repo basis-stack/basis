@@ -1,8 +1,31 @@
 import del from 'del';
 import fs from 'fs-extra';
+import path from 'path';
 
-import { logMessage } from './utilities';
+import { logMessage, runtimeDir } from './utilities';
 import constants from './constants';
+
+const packagesPath = 'packages';
+const deletePaths = (logFileNames, paths, completePrefix = 'Deleted  ') => (
+
+  del(paths).then((dpa) => {
+
+    if (logFileNames) {
+
+      const pathsText = dpa.length === 0 ? 'NONE' : dpa.join('\n                    ');
+      logMessage(completePrefix, pathsText);
+    }
+  })
+);
+
+export const cleanPackages = (config, cb) => {
+
+  const pathsToNuke = fs.readdirSync(path.join(runtimeDir, packagesPath))
+                        .map(p => `./${packagesPath}/${p}/dist`);
+
+  deletePaths(config.options.logFileNames, pathsToNuke)
+    .then(cb);
+};
 
 export default ({ config }) => [{
 
@@ -10,23 +33,10 @@ export default ({ config }) => [{
   key: constants.taskKeys.clean,
   func: (cb) => {
 
-    const pathsToNuke = [
-      config.paths.build,
-      config.paths.publish,
-      config.paths.temp,
-      './deploy'
-    ];
+    const pathsToNuke = [config.paths.build, config.paths.publish, config.paths.temp, './deploy'];
 
-    del(pathsToNuke).then((paths) => {
-
-      if (config.options.logFileNames) {
-
-        const pathsText = paths.length === 0 ? 'NONE' : paths.join('\n                    ');
-        logMessage('Deleted  ', pathsText);
-      }
-
-      cb();
-    });
+    deletePaths(config.options.logFileNames, pathsToNuke)
+      .then(cb);
   }
 }, {
 
@@ -49,17 +59,7 @@ export default ({ config }) => [{
   key: constants.taskKeys.finalise,
   func: (cb) => {
 
-    const pathsToNuke = [config.paths.temp];
-
-    del(pathsToNuke).then((paths) => {
-
-      if (config.options.logFileNames) {
-
-        const pathsText = paths.length === 0 ? 'NONE' : paths.join('\n                    ');
-        logMessage('Cleaned   ', pathsText);
-      }
-
-      cb();
-    });
+    deletePaths(config.options.logFileNames, [config.paths.temp], 'Cleaned   ')
+      .then(cb);
   }
 }];

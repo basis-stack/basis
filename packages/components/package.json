@@ -1,6 +1,6 @@
 {
   "name": "basis-components",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "A set of React components used throughout the Basis stack",
   "main": "./dist/index.js",
   "scripts": {
@@ -25,8 +25,8 @@
     "react-mdc-web": "^0.17.0",
     "basis-assets": "^0.0.8",
     "classnames": "^2.2.5",
-    "http-status": "^1.1.0",
-    "react": "^16.3.2",
+    "http-status": "^1.1.1",
+    "react": "^16.4.0",
     "wordwrap": "^1.0.0"
   },
   "devDependencies": {
