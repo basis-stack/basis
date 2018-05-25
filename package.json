@@ -5,7 +5,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/warebrained/basis.git"
+    "url": "https://github.com/basis-stack/basis.git"
   },
   "keywords": [
     "Node",
@@ -16,9 +16,9 @@
   "author": "Justin Ware",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/warebrained/basis/issues"
+    "url": "https://github.com/basis-stack/basis/issues"
   },
-  "homepage": "https://github.com/warebrained/basis",
+  "homepage": "https://github.com/basis-stack/basis",
   "scripts": {
     "build": "eslint config/*.js gulpfile.babel.js && gulp",
     "start": "node dist/bin/start-basis",
