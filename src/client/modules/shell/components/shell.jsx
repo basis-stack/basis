@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import MuiTypography from 'material-ui/Typography';
-import MuiDrawer from 'material-ui/Drawer';
+import MuiTypography from '@material-ui/core/Typography';
+import MuiDrawer from '@material-ui/core/Drawer';
 
 import { AppBar, Section } from './../../../components';
 import { fetchConfig, toggleDrawer } from './../actions';

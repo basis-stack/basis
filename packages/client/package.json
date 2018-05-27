@@ -1,6 +1,6 @@
 {
   "name": "basis-client",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "The core client-side (SPA) framework, UI libaries integration and UI building blocks for the Basis stack",
   "main": "./dist/index.js",
   "scripts": {
@@ -25,8 +25,8 @@
   },
   "homepage": "https://github.com/basis-stack/basis#readme",
   "dependencies": {
+    "@material-ui/core": "^1.1.0",
     "history": "^4.7.2",
-    "material-ui": "^1.0.0-beta.32",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-redux": "^5.0.7",

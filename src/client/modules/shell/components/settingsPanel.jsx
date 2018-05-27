@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import MuiButton from 'material-ui/Button';
-import MuiTypography from 'material-ui/Typography';
-import MuiDivider from 'material-ui/Divider';
+import { withStyles } from '@material-ui/core/styles';
+import MuiButton from '@material-ui/core/Button';
+import MuiTypography from '@material-ui/core/Typography';
+import MuiDivider from '@material-ui/core/Divider';
 
 const styles = (theme) => {
 

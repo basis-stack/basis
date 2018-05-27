@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'basis-components';
-import { withStyles } from 'material-ui/styles';
-import MuiAppBar from 'material-ui/AppBar';
-import MuiToolbar from 'material-ui/Toolbar';
-import MuiTypography from 'material-ui/Typography';
-import MuiIconButton from 'material-ui/IconButton';
+import { withStyles } from '@material-ui/core/styles';
+import MuiAppBar from '@material-ui/core/AppBar';
+import MuiToolbar from '@material-ui/core/Toolbar';
+import MuiTypography from '@material-ui/core/Typography';
+import MuiIconButton from '@material-ui/core/IconButton';
 
 const styles = theme => ({
 
