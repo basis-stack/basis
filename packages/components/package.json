@@ -1,6 +1,6 @@
 {
   "name": "basis-components",
-  "version": "0.0.12",
+  "version": "0.0.14",
   "description": "A set of React components used throughout the Basis stack",
   "main": "./dist/index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   "homepage": "https://github.com/basis-stack/basis#readme",
   "dependencies": {
     "react-mdc-web": "^0.17.0",
-    "basis-assets": "^0.0.8",
+    "basis-assets": "^0.0.9",
     "classnames": "^2.2.5",
     "http-status": "^1.1.1",
     "react": "^16.4.0",

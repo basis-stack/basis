@@ -352,6 +352,10 @@
   version "0.28.0"
   resolved "https://registry.yarnpkg.com/@material/theme/-/theme-0.28.0.tgz#dedd6807fcadf9f33fc16c7f4f2a608d4ee51c46"
 
+"@material/theme@^0.35.0":
+  version "0.35.0"
+  resolved "https://registry.yarnpkg.com/@material/theme/-/theme-0.35.0.tgz#a2c76f60b82a53d399b769ef91ec52e83ad3c3bd"
+
 "@material/theme@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@material/theme/-/theme-0.4.0.tgz#0aef1a0279b65c15990584fb8b8eca095c734641"
@@ -378,13 +382,17 @@
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@material/typography/-/typography-0.3.0.tgz#f828c2d3215bfd66c58072709b4260c64125390a"
 
+"@material/typography@^0.35.0":
+  version "0.35.0"
+  resolved "https://registry.yarnpkg.com/@material/typography/-/typography-0.35.0.tgz#23ad7eb7c9789e69c7c3fa54df8fc311cd7fc4b1"
+
 "@sinonjs/formatio@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@sinonjs/formatio/-/formatio-2.0.0.tgz#84db7e9eb5531df18a8c5e0bfb6e449e55e654b2"
   dependencies:
     samsam "1.3.0"
 
-"@types/jss@^9.5.3":
+"@types/jss@^9.3.0", "@types/jss@^9.5.3":
   version "9.5.3"
   resolved "https://registry.yarnpkg.com/@types/jss/-/jss-9.5.3.tgz#0c106de3fe0b324cd4173fac7dab26c12cda624e"
   dependencies:
@@ -392,8 +400,8 @@
     indefinite-observable "^1.0.1"
 
 "@types/node@*":
-  version "10.1.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.1.2.tgz#1b928a0baa408fc8ae3ac012cc81375addc147c6"
+  version "10.1.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.1.3.tgz#5c16980936c4e3c83ce64e8ed71fb37bd7aea135"
 
 "@types/react-transition-group@^2.0.8":
   version "2.0.9"
@@ -1540,6 +1548,65 @@ basic-auth@~2.0.0:
   dependencies:
     safe-buffer "5.1.1"
 
+basis-assets@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/basis-assets/-/basis-assets-0.0.8.tgz#fe1c0583d202de3069788641c5e561c666083dea"
+  dependencies:
+    "@material/theme" "^0.28.0"
+    "@material/typography" "^0.28.0"
+    flexboxgrid "^6.3.1"
+    font-awesome "^4.7.0"
+    material-colors "^1.2.5"
+    material-design-icons-iconfont "^3.0.3"
+    roboto-fontface "^0.8.0"
+
+basis-build@^0.0.28:
+  version "0.0.28"
+  resolved "https://registry.yarnpkg.com/basis-build/-/basis-build-0.0.28.tgz#134f5d5cd60058665ef76842be482a91b1330819"
+  dependencies:
+    basis-assets "^0.0.8"
+    child-process-promise "^2.2.1"
+    colors "^1.3.0"
+    del "^3.0.0"
+    fs-extra "^6.0.1"
+    gulp "^3.9.1"
+    gulp-changed "^3.2.0"
+    gulp-chmod "^2.0.0"
+    gulp-clean-css "^3.9.4"
+    gulp-ext-replace "^0.3.0"
+    gulp-file "^0.4.0"
+    gulp-gzip "^1.4.2"
+    gulp-if "^2.0.2"
+    gulp-install "^1.1.0"
+    gulp-print "^5.0.0"
+    gulp-rename "^1.2.3"
+    gulp-replace "^1.0.0"
+    gulp-sass "^4.0.1"
+    gulp-shell "^0.6.5"
+    gulp-tar "^2.1.0"
+    gulp-util "^3.0.8"
+    jsonfile "^4.0.0"
+    lodash "^4.17.10"
+    merge-stream "^1.0.1"
+    require-relative "^0.8.7"
+    run-sequence "^2.2.1"
+    rxjs "^5.5.11"
+
+basis-client@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/basis-client/-/basis-client-0.0.12.tgz#38a5b49fedf1014e70113f0a3b4b801dbf354786"
+  dependencies:
+    history "^4.7.2"
+    material-ui "^1.0.0-beta.32"
+    react "^16.4.0"
+    react-dom "^16.4.0"
+    react-redux "^5.0.7"
+    react-router-dom "^4.2.2"
+    react-router-redux "^5.0.0-alpha.6"
+    redux "^4.0.0"
+    redux-logger "^3.0.6"
+    redux-thunk "^2.2.0"
+
 basis-components@^0.0.11:
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/basis-components/-/basis-components-0.0.11.tgz#0923018137883cd76feb5ebf5bc088357671f1e3"
@@ -1550,6 +1617,43 @@ basis-components@^0.0.11:
     react "^16.2.0"
     react-mdc-web "^0.17.0"
     wordwrap "^1.0.0"
+
+basis-components@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/basis-components/-/basis-components-0.0.12.tgz#98ecd3660d6169bb24b3558f526f9e312a0d4082"
+  dependencies:
+    basis-assets "^0.0.8"
+    classnames "^2.2.5"
+    http-status "^1.1.1"
+    react "^16.4.0"
+    react-mdc-web "^0.17.0"
+    wordwrap "^1.0.0"
+
+basis-server@^0.0.24:
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/basis-server/-/basis-server-0.0.24.tgz#1c31d31240ecb654f203c214faf9f9ea3ccfa738"
+  dependencies:
+    basis-components "^0.0.11"
+    body-parser "^1.18.3"
+    classnames "^2.2.5"
+    compression "^1.7.2"
+    cookie-parser "^1.4.3"
+    ejs "^2.6.1"
+    express "^4.16.3"
+    helmet "^3.12.1"
+    http-status "^1.1.1"
+    jsonfile "^4.0.0"
+    lodash "^4.17.10"
+    morgan "^1.9.0"
+    object-assign-deep "^0.4.0"
+    passport "^0.4.0"
+    pm2 "^2.10.4"
+    react "^16.4.0"
+    react-dom "^16.4.0"
+    reflect-metadata "^0.1.12"
+    require-relative "^0.8.7"
+    winston "^2.4.2"
+    ws "^5.2.0"
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.1"
@@ -5355,6 +5459,39 @@ material-design-icons-iconfont@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/material-design-icons-iconfont/-/material-design-icons-iconfont-3.0.3.tgz#154a1084047d4e27237fa7f5a37e1075ceea6df2"
 
+material-ui@^1.0.0-beta.32:
+  version "1.0.0-beta.47"
+  resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-1.0.0-beta.47.tgz#5deb97dc3e694299992d3c3cacb44051f8bc2166"
+  dependencies:
+    "@babel/runtime" "^7.0.0-beta.42"
+    "@types/jss" "^9.3.0"
+    "@types/react-transition-group" "^2.0.8"
+    brcast "^3.0.1"
+    classnames "^2.2.5"
+    deepmerge "^2.0.1"
+    dom-helpers "^3.2.1"
+    hoist-non-react-statics "^2.5.0"
+    jss "^9.3.3"
+    jss-camel-case "^6.0.0"
+    jss-default-unit "^8.0.2"
+    jss-global "^3.0.0"
+    jss-nested "^6.0.1"
+    jss-props-sort "^6.0.0"
+    jss-vendor-prefixer "^7.0.0"
+    keycode "^2.1.9"
+    lodash "^4.2.0"
+    normalize-scroll-left "^0.1.2"
+    prop-types "^15.6.0"
+    react-event-listener "^0.5.1"
+    react-jss "^8.1.0"
+    react-lifecycles-compat "^3.0.0"
+    react-popper "^0.10.0"
+    react-scrollbar-size "^2.0.2"
+    react-transition-group "^2.2.1"
+    recompose "^0.26.0 || ^0.27.0"
+    scroll "^2.0.3"
+    warning "^3.0.0"
+
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
   resolved "https://registry.yarnpkg.com/math-expression-evaluator/-/math-expression-evaluator-1.2.17.tgz#de819fdbcd84dccd8fae59c6aeb79615b9d266ac"
@@ -6894,7 +7031,7 @@ react-dom@^16.4.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-event-listener@^0.5.9:
+react-event-listener@^0.5.1, react-event-listener@^0.5.9:
   version "0.5.9"
   resolved "https://registry.yarnpkg.com/react-event-listener/-/react-event-listener-0.5.9.tgz#c64e84f77156a682614835bdc1bc7ba00912df97"
   dependencies:
@@ -6917,7 +7054,7 @@ react-jss@^8.1.0, react-jss@^8.4.0:
     prop-types "^15.6.0"
     theming "^1.3.0"
 
-react-lifecycles-compat@^3.0.2:
+react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.2:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
@@ -6986,6 +7123,15 @@ react-router@^4.2.0:
     path-to-regexp "^1.7.0"
     prop-types "^15.5.4"
     warning "^3.0.0"
+
+react-scrollbar-size@^2.0.2:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-scrollbar-size/-/react-scrollbar-size-2.1.0.tgz#105e797135cab92b1f9e16f00071db7f29f80754"
+  dependencies:
+    babel-runtime "^6.26.0"
+    prop-types "^15.6.0"
+    react-event-listener "^0.5.1"
+    stifle "^1.0.2"
 
 react-test-renderer@^16.0.0-0, react-test-renderer@^16.4.0:
   version "16.4.0"
@@ -7373,6 +7519,10 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
 roboto-fontface@^0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/roboto-fontface/-/roboto-fontface-0.8.0.tgz#031a83c8f79932801a57d83bf743f37250163499"
+
+roboto-fontface@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/roboto-fontface/-/roboto-fontface-0.9.0.tgz#4829eeffc0502f09b88c7f3980fa3b304eda4c49"
 
 rst-selector-parser@^2.2.3:
   version "2.2.3"
@@ -7803,6 +7953,10 @@ stdout-stream@^1.4.0:
   resolved "https://registry.yarnpkg.com/stdout-stream/-/stdout-stream-1.4.0.tgz#a2c7c8587e54d9427ea9edb3ac3f2cd522df378b"
   dependencies:
     readable-stream "^2.0.1"
+
+stifle@^1.0.2:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/stifle/-/stifle-1.0.4.tgz#8b3bcdf52419b0a9c79e35adadce50123c1d8e99"
 
 stream-browserify@^2.0.1:
   version "2.0.1"
