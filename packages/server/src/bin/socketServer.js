@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 
-import constants from './../core/constants';
+import constants from '../core/constants';
 
 const onSocketError = (logger, error) => {
 

@@ -3,9 +3,9 @@ import * as sinon from 'sinon';
 
 import { the, should, when,
          createStubObject, getStubApp,
-         assertCall } from './../../testing/src';
+         assertCall } from '../../testing/src';
 
-import initialiseDataParsers, { __RewireAPI__ as DataParsersAPI } from './../src/middleware/dataParsers';
+import initialiseDataParsers, { __RewireAPI__ as DataParsersAPI } from '../src/middleware/dataParsers';
 
 the('dataParsers middleware initialiser', () => {
 

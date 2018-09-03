@@ -3,33 +3,37 @@ import { connect } from 'react-redux';
 import MuiTypography from '@material-ui/core/Typography';
 import MuiDrawer from '@material-ui/core/Drawer';
 
-import { AppBar, Section } from './../../../components';
-import { fetchConfig, toggleDrawer } from './../actions';
+import { AppBar, Section } from '../../../components';
+import { fetchConfig, toggleDrawer } from '../actions';
 import SettingsPanel from './settingsPanel';
 
 class Shell extends React.Component {
 
   componentDidMount() {
 
-    if (this.props.config === undefined) {
+    const { config, onFetchConfig } = this.props;
 
-      this.props.onFetchConfig();
+    if (config === undefined) {
+
+      onFetchConfig();
     }
   }
 
   render() {
 
+    const { onToggleDrawer, layout } = this.props;
+
     return (
 
       <div>
         <AppBar onLeftIconClick={() => { console.log('Left icon click'); }}
-                onSettingsClick={this.props.onToggleDrawer}
+                onSettingsClick={onToggleDrawer}
                 onLogoutClick={() => { console.log('Logout'); }} />
         <MuiDrawer anchor="right"
-                   open={this.props.layout.drawerOpen}
-                   onClose={this.props.onToggleDrawer}>
-          <SettingsPanel onCancel={this.props.onToggleDrawer}
-                         onSave={(data) => { console.log(data); this.props.onToggleDrawer(); }} />
+                   open={layout.drawerOpen}
+                   onClose={onToggleDrawer}>
+          <SettingsPanel onCancel={onToggleDrawer}
+                         onSave={(data) => { console.log(data); onToggleDrawer(); }} />
         </MuiDrawer>
         <Section>
           <MuiTypography variant="display3" gutterBottom>

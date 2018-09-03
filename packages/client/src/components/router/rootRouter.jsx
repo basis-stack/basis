@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import routeTypes from './../../constants/routeTypes';
+import routeTypes from '../../constants/routeTypes';
 
 export default ({ routes }) => {
 

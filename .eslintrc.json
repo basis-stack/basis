@@ -1,3 +1,7 @@
 {
-  "extends": "basis-stack"
+  "extends": "basis-stack",
+  "rules": {
+    "operator-linebreak": [2, "after"],
+    "import/named": ["__RewireAPI__"]
+  }
 }

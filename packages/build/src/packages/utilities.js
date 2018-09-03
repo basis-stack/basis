@@ -3,7 +3,7 @@ import fs from 'fs';
 import jsonfile from 'jsonfile';
 import path from 'path';
 
-import { runtimeDir } from './../utilities';
+import { runtimeDir } from '../utilities';
 
 const logMessagePrefix = '         + ';
 

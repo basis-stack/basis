@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import bindRoutes from './../middleware/routeBinder';
+import bindRoutes from '../middleware/routeBinder';
 
 const defaultPath = '';
 

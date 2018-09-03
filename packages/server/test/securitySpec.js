@@ -1,9 +1,9 @@
 import * as sinon from 'sinon';
 
 import { the, should, when,
-         getStubApp, assertWasCalled } from './../../testing/src';
+         getStubApp, assertWasCalled } from '../../testing/src';
 
-import initialiseSecurity, { __RewireAPI__ as SecurityAPI } from './../src/middleware/security';
+import initialiseSecurity, { __RewireAPI__ as SecurityAPI } from '../src/middleware/security';
 
 the('security middleware initialiser', () => {
 

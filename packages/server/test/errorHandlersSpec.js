@@ -4,9 +4,9 @@ import HTTPStatus from 'http-status';
 
 import { the, when, withScenario, should,
          createStubObject, getStubResponse, getStubApp,
-         assertWasCalled, assertParameter } from './../../testing/src';
+         assertWasCalled, assertParameter } from '../../testing/src';
 
-import initialiseErrorHandlers, { __RewireAPI__ as ErrorHandlersAPI } from './../src/middleware/errorHandlers';
+import initialiseErrorHandlers, { __RewireAPI__ as ErrorHandlersAPI } from '../src/middleware/errorHandlers';
 
 the('errorHandlers middleware', () => {
 

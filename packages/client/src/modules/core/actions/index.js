@@ -1,6 +1,6 @@
 import { push } from 'react-router-redux';
 
-import * as actionTypes from './../constants/actionTypes';
+import * as actionTypes from '../constants/actionTypes';
 
 export default {
   changeTheme: theme => ({ type: actionTypes.CHANGE_THEME, theme }),

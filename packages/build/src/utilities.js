@@ -16,9 +16,9 @@ export const getStaticDir = config => (
     `${config.paths.build}/public`
 );
 
-export const logMessage = (action, context, theConsole = console) => {
+export const logMessage = (action, actionContext, theConsole = console) => {
 
-  theConsole.log(`${logMessagePrefix}${action}${context.magenta}`);
+  theConsole.log(`${logMessagePrefix}${action}${actionContext.magenta}`);
 };
 
 export const logFileWrite = (config) => {

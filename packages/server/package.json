@@ -1,6 +1,6 @@
 {
   "name": "basis-server",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "The core framework, middleware and runtime components for the Basis web server",
   "main": "./dist/index.js",
   "scripts": {
@@ -25,28 +25,28 @@
   "dependencies": {
     "basis-components": "^0.0.14",
     "body-parser": "^1.18.3",
-    "classnames": "^2.2.5",
-    "compression": "^1.7.2",
+    "classnames": "^2.2.6",
+    "compression": "^1.7.3",
     "cookie-parser": "^1.4.3",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
-    "helmet": "^3.12.1",
-    "http-status": "^1.1.1",
+    "helmet": "^3.13.0",
+    "http-status": "^1.2.0",
     "jsonfile": "^4.0.0",
     "lodash": "^4.17.10",
     "morgan": "^1.9.0",
     "object-assign-deep": "^0.4.0",
     "passport": "^0.4.0",
-    "pm2": "^2.10.4",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
+    "pm2": "^3.0.4",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "reflect-metadata": "^0.1.12",
     "require-relative": "^0.8.7",
-    "winston": "^2.4.2",
-    "ws": "^5.2.0"
+    "winston": "^2.4.4",
+    "ws": "^6.0.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "sinon": "^5.0.8"
+    "sinon": "^6.1.5"
   }
 }

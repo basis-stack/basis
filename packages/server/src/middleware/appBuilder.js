@@ -1,6 +1,6 @@
 import path from 'path';
 
-import { getRootPath } from './../core/utilities';
+import { getRootPath } from '../core/utilities';
 
 // Middleware
 import initialiseAuthentication from './authentication';

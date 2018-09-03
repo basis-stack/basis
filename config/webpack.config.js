@@ -17,20 +17,11 @@ export default {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
-      },
-
-      /* css */
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
       }
     ]
   },
 
   resolve: {
-    extensions: [' ', '.js', '.jsx', '.css']
+    extensions: [' ', '.js', '.jsx']
   }
 };

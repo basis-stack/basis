@@ -1,9 +1,9 @@
 import http from 'http';
 
-import constants from './../core/constants';
+import constants from '../core/constants';
 import { onListening, onError } from './handlers';
-import { terminate } from './../core/utilities';
-import createApp from './../app';
+import { terminate } from '../core/utilities';
+import createApp from '../app';
 
 export default (container, routes) => {
 

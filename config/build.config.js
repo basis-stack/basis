@@ -13,9 +13,10 @@ export default {
 
   // Build options
   options: {
-    logFileNames: false,
+    logFileNames: true,
     uniqueArtifactName: true,
-    lint: true
+    lint: true,
+    runtimeDependenciesToExclude: ['blabla']
   },
 
   // Custom assets

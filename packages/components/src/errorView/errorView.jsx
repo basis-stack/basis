@@ -3,16 +3,16 @@ import HTTPStatus from 'http-status';
 import wordwrap from 'wordwrap';
 import { Caption, Display1, Subheading1 } from 'react-mdc-web/lib';
 
-import Icon from './../icon';
-import material from './../materialContainer';
+import Icon from '../icon';
+import material from '../materialContainer';
 
-const ErrorView = (props) => {
+const ErrorView = ({ status, statusText, message, error }) => {
 
   const wrap = wordwrap(100);
-  const iconName = props.status === HTTPStatus.NOT_FOUND ? 'sentiment_dissatisfied' : 'error_outline';
-  const stackTrace = props.error.stack !== undefined ? (
+  const iconName = status === HTTPStatus.NOT_FOUND ? 'sentiment_dissatisfied' : 'error_outline';
+  const stackTrace = error.stack !== undefined ? (
     <Caption component="pre" className="mdc-theme--text-secondary-on-background">
-      { wrap(props.error.stack) }
+      { wrap(error.stack) }
     </Caption>) : null;
 
   return (
@@ -23,7 +23,11 @@ const ErrorView = (props) => {
         </div>
         <div className="col-lg-6">
           <Display1 component="h1" className="mdc-theme--text-primary-on-background">
-            { props.status }. <small className="mdc-theme--text-secondary-on-background">{ props.statusText }</small>
+            { status }
+            .
+            <small className="mdc-theme--text-secondary-on-background">
+              { statusText }
+            </small>
           </Display1>
         </div>
         <div className="col-lg-3">&nbsp;</div>
@@ -31,7 +35,7 @@ const ErrorView = (props) => {
       <div className="row">
         <div className="col-lg-offset-3 col-lg-6">
           <Subheading1 component="h2" className="mdc-theme--text-primary-on-background">
-            { props.message }
+            { message }
           </Subheading1>
           { stackTrace }
         </div>

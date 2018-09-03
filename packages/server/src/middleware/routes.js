@@ -1,6 +1,6 @@
 import express from 'express';
 
-import constants from './../core/constants';
+import constants from '../core/constants';
 
 export default (app, container, routes) => {
 

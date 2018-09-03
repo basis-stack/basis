@@ -2,10 +2,10 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 
 import { the, should, when,
-         getStubRouter, assertParameter } from './../../testing/src';
+         getStubRouter, assertParameter } from '../../testing/src';
 
-import { Controller, Get, Post } from './../src/core/decorators';
-import bindRoutes from './../src/middleware/routeBinder';
+import { Controller, Get, Post } from '../src/core/decorators';
+import bindRoutes from '../src/middleware/routeBinder';
 
 const stubMiddleware1 = {};
 const stubMiddleware2 = {};

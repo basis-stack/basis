@@ -1,4 +1,4 @@
-import constants from './../core/constants';
+import constants from '../core/constants';
 
 export const onListening = (config, logger) => {
 

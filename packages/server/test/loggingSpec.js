@@ -2,9 +2,9 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 
 import { the, when, withScenario, should,
-         getStubApp } from './../../testing/src';
+         getStubApp } from '../../testing/src';
 
-import initialiseRequestLogger, { __RewireAPI__ as LoggingAPI } from './../src/middleware/logging';
+import initialiseRequestLogger, { __RewireAPI__ as LoggingAPI } from '../src/middleware/logging';
 
 the('logging middleware initialiser', () => {
 

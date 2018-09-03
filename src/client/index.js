@@ -2,7 +2,7 @@ import React from 'react';
 import { initialise } from 'basis-client';
 import { core } from 'basis-client/modules';
 
-import theme from './../../config/theme';
+import theme from '../../config/theme';
 import shell from './modules/shell';
 import App from './app';
 

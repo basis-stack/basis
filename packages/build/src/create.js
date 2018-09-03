@@ -65,7 +65,7 @@ export default ({ hasServer, hasClient, envSettings, config, packageJson }) => {
       delete outputPackageJson.private;
       delete outputPackageJson.workspaces;
 
-      const depsToNuke = [
+      let depsToNuke = [
         'basis-client',
         'basis-components',
         'basis-testing',
@@ -79,10 +79,16 @@ export default ({ hasServer, hasClient, envSettings, config, packageJson }) => {
         'redux',
         'redux-logger',
         'redux-thunk',
-        'material-ui',
+        '@material-ui/core',
+        '@material-ui/icons',
         'prop-types',
         'react-jss'
       ];
+
+      if (config.options.runtimeDependenciesToExclude !== undefined && config.options.runtimeDependenciesToExclude.length > 0) {
+
+        depsToNuke = depsToNuke.concat(config.options.runtimeDependenciesToExclude);
+      }
 
       depsToNuke.forEach((d) => {
 

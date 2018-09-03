@@ -1,5 +1,3 @@
-import util from 'gulp-util';
-
 import constants from './constants';
 
 export default ({ hasClient, webpackConfig, config, lint }) => {
@@ -20,9 +18,31 @@ export default ({ hasClient, webpackConfig, config, lint }) => {
 
       webpack(webpackConfig, (err, stats) => {
 
+        // Fatal webpack errors
         if (err) {
-          throw new util.PluginError(constants.taskKeys.bundleClient, err);
+
+          if (err.details) {
+
+            console.error(err.details);
+          }
+
+          cb(err);
         }
+
+        const info = stats.toJson();
+
+        // Compilation errors
+        if (stats.hasErrors()) {
+
+          console.error(info.errors);
+          cb(new Error('Webpack compilation error(s)'));
+        }
+
+        // Compilation warnings
+        // if (stats.hasWarnings()) {
+
+        //   console.warn(info.warnings);
+        // }
 
         if (config.options.logFileNames) {
 
@@ -36,7 +56,7 @@ export default ({ hasClient, webpackConfig, config, lint }) => {
             version: false
           });
 
-          util.log(`[${constants.taskKeys.bundleClient}] Completed\n ${ouptut}`);
+          console.log(ouptut);
         }
 
         cb();

@@ -2,28 +2,37 @@ import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
-const getMuiTheme = (themeConfig) => {
+const convertToMuiTheme = basisTheme => ({
 
-  // TODO: Need to check if themeConfig is actually MUI theme config, and if so just use it
+  palette: {
 
-  const overrides = themeConfig !== undefined && themeConfig.appBar !== undefined ? {
+    // TODO: Do we need to set 'main' here or can we set primary / secondary directly
+    primary: { main: basisTheme.primary },
+    secondary: { main: basisTheme.secondary }
+  },
+
+  overrides: {
     MuiAppBar: {
       colorPrimary: {
-        backgroundColor: themeConfig.appBar
+        backgroundColor: basisTheme.appBar
       }
     }
-  } : {};
+  }
+});
 
-  return themeConfig === undefined ?
-    createMuiTheme() :
-    createMuiTheme({
+const getMuiTheme = (themeConfig) => {
 
-      palette: {
-        primary: { main: themeConfig.primary },
-        secondary: { main: themeConfig.secondary }
-      },
-      overrides
-    });
+  if (themeConfig === undefined) {
+
+    return createMuiTheme();
+  }
+
+  if ((themeConfig.palette !== undefined) || (themeConfig.overrides !== undefined)) {
+
+    return createMuiTheme(themeConfig);
+  }
+
+  return createMuiTheme(convertToMuiTheme(themeConfig));
 };
 
 const ThemeProvider = ({ muiTheme, children }) => (

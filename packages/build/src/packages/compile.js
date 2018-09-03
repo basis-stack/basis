@@ -2,9 +2,9 @@ import gulp from 'gulp';
 import merge from 'merge-stream';
 import rename from 'gulp-rename';
 
-import compile from './../getCompiler';
-import constants from './../constants';
-import { logFileWrite } from './../utilities';
+import compile from '../getCompiler';
+import constants from '../constants';
+import { logFileWrite } from '../utilities';
 import { packagesPath } from './utilities';
 
 export default (config) => {

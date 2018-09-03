@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 
-import { the, should } from './../../testing/src';
-import { main } from './../src';
-import { Get } from './../decorators';
+import { the, should } from '../../testing/src';
+import { main } from '../src';
+import { Get } from '../decorators';
 
 the('server package', () => {
 

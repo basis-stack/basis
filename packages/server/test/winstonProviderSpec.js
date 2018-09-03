@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import assignDeep from 'object-assign-deep';
 
-import { the, when, withScenario, should } from './../../testing/src';
+import { the, when, withScenario, should } from '../../testing/src';
 
-import getWinston from './../src/core/winstonProvider';
+import getWinston from '../src/core/winstonProvider';
 
 const assertInstance = (result) => {
 

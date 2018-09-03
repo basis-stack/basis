@@ -3,9 +3,9 @@ import * as sinon from 'sinon';
 import path from 'path';
 
 import { the, should, when, withScenario,
-         createStubObject } from './../../testing/src';
+         createStubObject } from '../../testing/src';
 
-import { getRootPath, terminate, dynamicImport, getEnvVariable, __RewireAPI__ as UtilitiesAPI } from './../src/core/utilities';
+import { getRootPath, terminate, dynamicImport, getEnvVariable, __RewireAPI__ as UtilitiesAPI } from '../src/core/utilities';
 
 the('server utilities module', () => {
 

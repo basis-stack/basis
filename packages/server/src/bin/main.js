@@ -1,5 +1,5 @@
-import getContainer from './../core/container';
-import getModules from './../core/moduleLoader';
+import getContainer from '../core/container';
+import getModules from '../core/moduleLoader';
 import startHttpServer from './httpServer';
 import startSocketServer from './socketServer';
 

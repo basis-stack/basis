@@ -2,9 +2,9 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 
 import { the, should, when, withScenario,
-         assertWasCalled, assertParameter } from './../../testing/src';
+         assertWasCalled, assertParameter } from '../../testing/src';
 
-import main, { __RewireAPI__ as MainAPI } from './../src/bin/main';
+import main, { __RewireAPI__ as MainAPI } from '../src/bin/main';
 
 the('main (startup) module', () => {
 

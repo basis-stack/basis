@@ -1,6 +1,6 @@
 {
   "name": "basis-testing",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A set of unit testing utilities (centered on mocha/sinon/chai) to help with testing the Basis stack.",
   "main": "./dist/index.js",
   "scripts": {
@@ -25,6 +25,6 @@
   "homepage": "https://github.com/basis-stack/basis#readme",
   "dependencies": {
     "chai": "^4.1.2",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.10"
   }
 }

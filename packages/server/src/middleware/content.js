@@ -2,7 +2,7 @@ import compression from 'compression';
 import express from 'express';
 import path from 'path';
 
-import { getRootPath } from './../core/utilities';
+import { getRootPath } from '../core/utilities';
 
 export default (app) => {
 

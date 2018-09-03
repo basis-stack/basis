@@ -3,9 +3,10 @@ import cors from 'cors';
 
 import { Controller, Get, Middleware } from 'basis-server/decorators';
 
+export default
 @Controller('/')
 @Middleware(cors())
-export default class HomeController {
+class HomeController {
 
   constructor(container) {
 

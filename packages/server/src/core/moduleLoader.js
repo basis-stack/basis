@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
-import constants from './../core/constants';
-import { dynamicImport, getRootPath } from './../core/utilities';
+import constants from './constants';
+import { dynamicImport, getRootPath } from './utilities';
 
 const getModule = (key, logger) => {
 

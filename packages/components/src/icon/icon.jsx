@@ -1,19 +1,15 @@
 import React from 'react';
 import classNames from 'classnames';
 
-export default (props) => {
+export default ({ value, size = 24, inverse = false, inactive = false }) => {
 
-  const fontAwesome = props.value.startsWith('fa-');
-  const size = props.size || 24;
-  const inverse = props.inverse !== undefined;
-  const inactive = props.inactive !== undefined;
-  const content = !fontAwesome ? props.value : null;
-  const baseCssClass = fontAwesome ? `fa ${props.value}` : 'material-icons';
-
+  const fontAwesome = value.startsWith('fa-');
+  const content = !fontAwesome ? value : null;
+  const baseCssClass = fontAwesome ? `fa ${value}` : 'material-icons';
   const classes = classNames(baseCssClass,
                              `md-${size}`,
                              inverse ? 'md-light' : 'md-dark',
                              inactive ? 'md-inactive' : '');
 
-  return <i className={classes} data-icon={props.value}>{ content }</i>;
+  return <i className={classes} data-icon={value}>{ content }</i>;
 };
