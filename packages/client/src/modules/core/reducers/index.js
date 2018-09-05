@@ -3,7 +3,8 @@ import * as actionTypes from '../constants/actionTypes';
 const getInitialState = theme => ({
 
   config: undefined,
-  theme
+  theme,
+  isBusy: false
 });
 
 export default theme => (state = getInitialState(theme), action) => {
@@ -23,6 +24,14 @@ export default theme => (state = getInitialState(theme), action) => {
       return {
         ...state,
         theme: action.theme
+      };
+    }
+
+    case actionTypes.TOGGLE_BUSY: {
+
+      return {
+        ...state,
+        isBusy: !state.isBusy
       };
     }
 
