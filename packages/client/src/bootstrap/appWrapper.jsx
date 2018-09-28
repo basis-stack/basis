@@ -3,17 +3,17 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-import { routerMiddleware, ConnectedRouter } from 'react-router-redux';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
+import { connectRouter, routerMiddleware, ConnectedRouter } from 'connected-react-router';
 
 import rootReducer from './rootReducer';
 import ThemeProvider from './themeProvider';
 
 export default (app, moduleData) => {
 
-  const history = createHistory();
+  const history = createBrowserHistory();
   const navigateMiddleware = routerMiddleware(history);
-  const store = createStore(rootReducer(moduleData.reducers),
+  const store = createStore(connectRouter(history)(rootReducer(moduleData.reducers)),
                             applyMiddleware(navigateMiddleware, thunk, logger));
 
   return (

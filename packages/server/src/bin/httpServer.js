@@ -2,7 +2,7 @@ import http from 'http';
 
 import constants from '../core/constants';
 import { onListening, onError } from './handlers';
-import { terminate } from '../core/utilities';
+import { dynamicImport, terminate } from '../core/utilities';
 import createApp from '../app';
 
 export default (container, routes) => {
@@ -20,7 +20,16 @@ export default (container, routes) => {
   //  response.end();
   // });
 
-  const app = createApp(container, routes);
+  let app;
+  try {
+
+    app = dynamicImport('./app').default;
+  } catch (err) {
+
+    logger.info(`${constants.text.logging.startupPrefix} INIT: No custom app defined at /app or unable to load. Reverting to factory basis app.`);
+    app = createApp(container, routes);
+  }
+
   const server = http.createServer(app);
 
   server.listen(config.server.webServerPort);
