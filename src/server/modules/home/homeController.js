@@ -1,7 +1,8 @@
 import assignDeep from 'object-assign-deep';
 import cors from 'cors';
 
-import { Controller, Get, Middleware } from 'basis-server/decorators';
+import { Api, Controller, Get, Middleware } from 'basis-server/decorators';
+import { TestScheduler } from 'rxjs';
 
 export default
 @Controller('/')
@@ -14,16 +15,25 @@ class HomeController {
   }
 
   @Get()
-  root(req, res) {
+  root({ res }) {
 
     res.render('app', { title: 'Basis' });
   }
 
   @Get('config')
-  getClientConfig(req, res) {
+  getClientConfig() {
 
-    const clientConfig = assignDeep({}, this._config.shared, this._config.client);
+    //const clientConfig = assignDeep({}, this._config.shared, this._config.client);
 
-    res.send(clientConfig);
+    return { ...this._config.shared, ...this._config.client };
+  }
+
+  @Get('test')
+  test() {
+    
+    return new Promise((resolve, reject) => {
+
+      resolve('Timmy');
+    });
   }
 }

@@ -28,7 +28,7 @@
     "coverage": "cross-env BABEL_ENV=test nyc mocha packages/**/*Spec.js test/**/*Spec.js",
     "publish-coverage": "nyc report --reporter=text-lcov | coveralls",
     "prepare:packages": "eslint gulpfile.prepare.js && gulp compile:packages --gulpfile gulpfile.prepare.js --require babel-register",
-    "link:packages": "npm run prepare:packages && gulp link:packages",
+    "link:packages": "yarn prepare:packages && gulp link:packages",
     "unlink:packages": "gulp unlink:packages",
     "publish:packages": "gulp publish:packages"
   },
@@ -38,6 +38,7 @@
     "basis-client": "^0.0.17",
     "basis-components": "^0.0.14",
     "basis-server": "^0.0.26",
+    "connected-react-router": "^4.5.0",
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "object-assign-deep": "^0.4.0",

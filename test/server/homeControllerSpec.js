@@ -1,69 +1,69 @@
-import 'reflect-metadata';
-import { expect } from 'chai';
-import * as sinon from 'sinon';
+// import 'reflect-metadata';
+// import { expect } from 'chai';
+// import * as sinon from 'sinon';
 
-import { the, should, when,
-         getStubResponse, getStubContainer,
-         assertParameter } from 'basis-testing';
+// import { the, should, when,
+//          getStubResponse, getStubContainer,
+//          assertParameter } from 'basis-testing';
 
-import HomeController from './../../src/server/modules/home/homeController';
+// import HomeController from './../../src/server/modules/home/homeController';
 
-the('HomeController', () => {
+// the('HomeController', () => {
 
-  const stubConfig = {
-    shared: { env: 'SomeEnv' },
-    client: { someProb: 'Some Value' }
-  };
-  const stubContainer = getStubContainer(stubConfig, undefined);
+//   const stubConfig = {
+//     shared: { env: 'SomeEnv' },
+//     client: { someProb: 'Some Value' }
+//   };
+//   const stubContainer = getStubContainer(stubConfig, undefined);
 
-  const controller = new HomeController(stubContainer);
+//   const controller = new HomeController(stubContainer);
 
-  should('define a GET handler for the root (\'/\') path', () => {
+//   should('define a GET handler for the root (\'/\') path', () => {
 
-    const methodName = 'root';
-    const path = Reflect.getMetadata('http:path', controller, methodName);
-    const method = Reflect.getMetadata('http:method', controller, methodName);
+//     const methodName = 'root';
+//     const path = Reflect.getMetadata('http:path', controller, methodName);
+//     const method = Reflect.getMetadata('http:method', controller, methodName);
 
-    expect(path).to.equal('');
-    expect(method).to.equal('get');
-  });
+//     expect(path).to.equal('');
+//     expect(method).to.equal('get');
+//   });
 
-  should('define a GET handler for the \'/config\' path', () => {
+//   should('define a GET handler for the \'/config\' path', () => {
 
-    const methodName = 'getClientConfig';
-    const path = Reflect.getMetadata('http:path', controller, methodName);
-    const method = Reflect.getMetadata('http:method', controller, methodName);
+//     const methodName = 'getClientConfig';
+//     const path = Reflect.getMetadata('http:path', controller, methodName);
+//     const method = Reflect.getMetadata('http:method', controller, methodName);
 
-    expect(path).to.equal('config');
-    expect(method).to.equal('get');
-  });
+//     expect(path).to.equal('config');
+//     expect(method).to.equal('get');
+//   });
 
-  when('route path hit', () => {
+//   when('route path hit', () => {
 
-    const stubResponse = getStubResponse();
-    const stubResponseRender = sinon.spy(stubResponse, 'render');
+//     const stubResponse = getStubResponse();
+//     const stubResponseRender = sinon.spy(stubResponse, 'render');
 
-    controller.root(undefined, stubResponse, undefined);
+//     controller.root(undefined, stubResponse, undefined);
 
-    should('render the app (SPA) view', () => {
+//     should('render the app (SPA) view', () => {
 
-      assertParameter(stubResponseRender, 0, 'app');
-      assertParameter(stubResponseRender, 1, { title: 'Basis' }, true);
-    });
-  });
+//       assertParameter(stubResponseRender, 0, 'app');
+//       assertParameter(stubResponseRender, 1, { title: 'Basis' }, true);
+//     });
+//   });
 
-  when('config path hit', () => {
+//   when('config path hit', () => {
 
-    const stubResponse = getStubResponse();
-    const stubResponseSend = sinon.spy(stubResponse, 'send');
+//     const stubResponse = getStubResponse();
+//     const stubResponseSend = sinon.spy(stubResponse, 'send');
 
-    controller.getClientConfig(undefined, stubResponse, undefined);
+//     controller.getClientConfig(undefined, stubResponse, undefined);
 
-    should('send combined client config json', () => {
+//     should('send combined client config json', () => {
 
-      const expectedJson = { env: 'SomeEnv', someProb: 'Some Value' };
+//       const expectedJson = { env: 'SomeEnv', someProb: 'Some Value' };
 
-      assertParameter(stubResponseSend, 0, expectedJson, true);
-    });
-  });
-});
+//       assertParameter(stubResponseSend, 0, expectedJson, true);
+//     });
+//   });
+// });

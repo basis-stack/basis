@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import handler from './handler';
 
 export default (controllerClass, controllerInstance, router) => {
 
@@ -15,16 +16,16 @@ export default (controllerClass, controllerInstance, router) => {
       Reflect.getMetadata('http:middleware', controllerInstance, name) : [];
     const httpMethod = Reflect.getMetadata('http:method', controllerInstance, name);
     const route = `${baseRoute}/${specificPath}`.replace('//', '/');
-    const handler = controllerInstance[name].bind(controllerInstance);
+    const action = controllerInstance[name].bind(controllerInstance);
 
     // TODO: Test this branch !!
     if (baseMiddleware.length > 0 || specificMiddleware.length > 0) {
 
       const middleware = baseMiddleware.concat(specificMiddleware);
-      router[httpMethod](route, ...middleware, handler);
+      router[httpMethod](route, ...middleware, handler(action));
     } else {
 
-      router[httpMethod](route, handler);
+      router[httpMethod](route, handler(action));
     }
   });
 };
