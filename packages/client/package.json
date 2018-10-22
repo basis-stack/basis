@@ -1,6 +1,6 @@
 {
   "name": "basis-client",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "The core client-side (SPA) framework, UI libaries integration and UI building blocks for the Basis stack",
   "main": "./dist/index.js",
   "scripts": {

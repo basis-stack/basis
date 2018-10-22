@@ -1,12 +1,11 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import path from 'path';
+import proxyquire from 'proxyquire';
 
 import { the, when, should,
          getStubApp, getStubContainer,
          assertWasCalled, assertParameter, assertInstance } from '../../testing/src';
-
-import AppBuilder, { __RewireAPI__ as AppBuilderAPI } from '../src/middleware/appBuilder';
 
 the('appBuilder', () => {
 
@@ -24,32 +23,27 @@ the('appBuilder', () => {
   const stubInitialiseAuthentication = sinon.stub().returns(stubPassport);
   const stubGetRootPath = sinon.stub().returns('somepath');
 
+  let AppBuilder;
   let builder;
 
   before(() => {
 
-    AppBuilderAPI.__Rewire__('initialiseContent', stubInitialiseContent);
-    AppBuilderAPI.__Rewire__('initialiseDataParsers', stubInitialiseDataParsers);
-    AppBuilderAPI.__Rewire__('initialiseErrorHandlers', stubInitialiseErrorHandlers);
-    AppBuilderAPI.__Rewire__('initialiseRequestLogger', stubInitialiseRequestLogger);
-    AppBuilderAPI.__Rewire__('initialiseRoutes', stubInitialiseRoutes);
-    AppBuilderAPI.__Rewire__('initialiseSecurity', stubInitialiseSecurity);
-    AppBuilderAPI.__Rewire__('initialiseAuthentication', stubInitialiseAuthentication);
-    AppBuilderAPI.__Rewire__('getRootPath', stubGetRootPath);
+    proxyquire.noCallThru()
 
+    const mocks = {
+    
+      './content': stubInitialiseContent,
+      './dataParsers': stubInitialiseDataParsers,
+      './errorHandlers': stubInitialiseErrorHandlers,
+      './logging': stubInitialiseRequestLogger,
+      './routes': stubInitialiseRoutes,
+      './security': stubInitialiseSecurity,
+      './authentication': stubInitialiseAuthentication,
+      '../core/utilities': { getRootPath: stubGetRootPath }
+    };
+
+    AppBuilder = proxyquire('../src/middleware/appBuilder', mocks).default;
     builder = AppBuilder.create(stubContainer, stubApp);
-  });
-
-  after(() => {
-
-    AppBuilderAPI.__ResetDependency__('initialiseContent');
-    AppBuilderAPI.__ResetDependency__('initialiseDataParsers');
-    AppBuilderAPI.__ResetDependency__('initialiseErrorHandlers');
-    AppBuilderAPI.__ResetDependency__('initialiseRequestLogger');
-    AppBuilderAPI.__ResetDependency__('initialiseRoutes');
-    AppBuilderAPI.__ResetDependency__('initialiseSecurity');
-    AppBuilderAPI.__ResetDependency__('initialiseAuthentication');
-    AppBuilderAPI.__ResetDependency__('getRootPath');
   });
 
   when('created', () => {

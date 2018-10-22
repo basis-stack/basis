@@ -1,15 +1,17 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import HTTPStatus from 'http-status';
+import proxyquire from 'proxyquire';
 
 import { the, when, withScenario, should,
          createStubObject, getStubResponse, getStubApp,
          assertWasCalled, assertParameter } from '../../testing/src';
 
-import initialiseErrorHandlers, { __RewireAPI__ as ErrorHandlersAPI } from '../src/middleware/errorHandlers';
+// import initialiseErrorHandlers, { __RewireAPI__ as ErrorHandlersAPI } from '../src/middleware/errorHandlers';
 
 the('errorHandlers middleware', () => {
 
+  let initialiseErrorHandlers;
   const stubConfig = { shared: { env: 'local' } };
   const stubLogger = createStubObject('error');
   const stubErrorView = {};
@@ -30,15 +32,27 @@ the('errorHandlers middleware', () => {
 
   before(() => {
 
-    ErrorHandlersAPI.__Rewire__('ErrorView', stubErrorView);
-    ErrorHandlersAPI.__Rewire__('renderView', stubRenderView);
+    proxyquire.noCallThru();
+    
+    const mocks = {
+      
+      '../core/renderers': stubRenderView,
+      'basis-components': { ErrorView: stubErrorView }
+    };
+
+    initialiseErrorHandlers = proxyquire('../src/middleware/errorHandlers', mocks).default;
+    
+    console.log(initialiseErrorHandlers);
+  
+    // ErrorHandlersAPI.__Rewire__('ErrorView', stubErrorView);
+    // ErrorHandlersAPI.__Rewire__('renderView', stubRenderView);
   });
 
-  after(() => {
+  // after(() => {
 
-    ErrorHandlersAPI.__ResetDependency__('ErrorView');
-    ErrorHandlersAPI.__ResetDependency__('renderView');
-  });
+  //   ErrorHandlersAPI.__ResetDependency__('ErrorView');
+  //   ErrorHandlersAPI.__ResetDependency__('renderView');
+  // });
 
   when('invoked with a valid app instance', () => {
 

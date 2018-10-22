@@ -1,14 +1,14 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import proxyquire from 'proxyquire';
 
 import { the, should, when,
          createStubObject,
          assertWasCalled, assertParameter, assertCalledBefore } from '../../testing/src';
 
-import createApp, { __RewireAPI__ as CreateAppAPI } from '../src/app';
-
 the('app', () => {
 
+  let createApp;
   const stubExpressInstance = { stubExpress: true };
   const stubExpress = sinon.stub().returns(stubExpressInstance);
   const stubContainer = { stubContainer: true };
@@ -31,14 +31,15 @@ the('app', () => {
 
   before(() => {
 
-    CreateAppAPI.__Rewire__('express', stubExpress);
-    CreateAppAPI.__Rewire__('AppBuilder', stubAppBuilderClass);
-  });
-
-  after(() => {
-
-    CreateAppAPI.__ResetDependency__('express');
-    CreateAppAPI.__ResetDependency__('AppBuilder');
+    proxyquire.noCallThru();
+    
+    const mocks = {
+      
+      'express': stubExpress,
+      '../middleware/appBuilder': stubAppBuilderClass
+    };
+    
+    createApp = proxyquire('../src/app', mocks).default;
   });
 
   when('created', () => {

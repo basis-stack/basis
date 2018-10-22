@@ -1,14 +1,14 @@
 import * as sinon from 'sinon';
 import path from 'path';
+import proxyquire from 'proxyquire';
 
 import { the, should, when,
          createStubObject, getStubApp,
          assertWasCalled, assertCall } from '../../testing/src';
 
-import initContent, { __RewireAPI__ as ContentAPI } from '../src/middleware/content';
-
 the('content middleware initialiser', () => {
 
+  let initContent;
   const stubCompressionResult = {};
   const stubCompression = sinon.stub().returns(stubCompressionResult);
   const stubExpress = createStubObject('static');
@@ -20,18 +20,17 @@ the('content middleware initialiser', () => {
 
   before(() => {
 
-    ContentAPI.__Rewire__('compression', stubCompression);
-    ContentAPI.__Rewire__('express', stubExpress);
-    ContentAPI.__Rewire__('getRootPath', stubGetRootPath);
+    proxyquire.noCallThru();
+    
+    const mocks = {
+      
+      'compression': stubCompression,
+      'express': stubExpress,
+      '../core/utilities': { getRootPath: stubGetRootPath }
+    };
+    
+    initContent = proxyquire('../src/middleware/content', mocks).default;
   });
-
-  after(() => {
-
-    ContentAPI.__ResetDependency__('compression');
-    ContentAPI.__ResetDependency__('express');
-    ContentAPI.__ResetDependency__('getRootPath');
-  });
-
 
   when('invoked with valid app instance', () => {
 
