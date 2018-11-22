@@ -1,6 +1,6 @@
 {
   "name": "basis-build",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "description": "Build chain utilities and tasks for the Basis stack",
   "main": "./dist/index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/basis-stack/basis#readme",
   "dependencies": {
-    "basis-assets": "^0.0.9",
+    "basis-assets": "^0.0.10",
     "child-process-promise": "^2.2.1",
     "colors": "^1.3.2",
     "del": "^3.0.0",

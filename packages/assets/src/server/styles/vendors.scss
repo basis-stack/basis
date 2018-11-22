@@ -2,7 +2,7 @@
 
 // Fonts
 @import 'roboto-fontface/css/roboto/sass/roboto-fontface';
-@import 'material-design-icons-iconfont/dist/material-design-icons.scss';
+@import 'material-design-icons-iconfont/src/material-design-icons';
 @import 'font-awesome/scss/font-awesome';
 
 // Icons
@@ -15,4 +15,4 @@
 @import '@material/theme/mdc-theme';
 
 // Layout
-@import 'flexboxgrid/css/flexboxgrid.min';
+// @import 'flexboxgrid/css/flexboxgrid.min';
