@@ -15,7 +15,7 @@ export default {
   options: {
     logFileNames: false,
     uniqueArtifactName: true,
-    lint: false,
+    lint: true,
     runtimeDependenciesToExclude: ['blabla']
   },
 
