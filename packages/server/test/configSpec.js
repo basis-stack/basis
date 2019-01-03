@@ -31,15 +31,15 @@ the('Config class', () => {
 
       proxyquire.noCallThru();
       sinon.stub(stubJsonfile, 'readFileSync').returns(stubSettingsJson);
-      
+
       const mocks = {
-        
+
         './utilities': { getEnvVariable: stubGetEnvVariable, getRootPath: sinon.stub() },
-        'jsonfile': stubJsonfile
+        jsonfile: stubJsonfile
       };
-      
+
       Config = proxyquire('../src/core/config', mocks).default;
-      
+
       // ConfigAPI.__Rewire__('getEnvVariable', stubGetEnvVariable);
       // ConfigAPI.__Rewire__('jsonfile', stubJsonfile);
     });

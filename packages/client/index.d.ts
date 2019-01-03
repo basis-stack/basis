@@ -17,7 +17,7 @@ interface IClientModule {
 declare module 'basis-client' {
 
   // TODO: Declare a type (React Component / React Element) for app
-  export function initialise(modules: Array<IClientModuleConfig>, app: any): void;
+  export function initialise(modules: Array<IClientModuleConfig>, app: any, themeConfig?: any): void;
   export const routeTypes: {
     page: string,
     shellHub: string

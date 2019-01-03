@@ -28,10 +28,10 @@ the('appBuilder', () => {
 
   before(() => {
 
-    proxyquire.noCallThru()
+    proxyquire.noCallThru();
 
     const mocks = {
-    
+
       './content': stubInitialiseContent,
       './dataParsers': stubInitialiseDataParsers,
       './errorHandlers': stubInitialiseErrorHandlers,

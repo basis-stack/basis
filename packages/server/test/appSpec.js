@@ -32,13 +32,13 @@ the('app', () => {
   before(() => {
 
     proxyquire.noCallThru();
-    
+
     const mocks = {
-      
-      'express': stubExpress,
+
+      express: stubExpress,
       '../middleware/appBuilder': stubAppBuilderClass
     };
-    
+
     createApp = proxyquire('../src/app', mocks).default;
   });
 

@@ -9,7 +9,7 @@ import { routerMiddleware, ConnectedRouter } from 'connected-react-router';
 import createRootReducer from './rootReducer';
 import ThemeProvider from './themeProvider';
 
-export default (app, moduleData) => {
+export default (app, moduleData, themeConfig) => {
 
   const history = createBrowserHistory();
   const navigateMiddleware = routerMiddleware(history);
@@ -18,8 +18,8 @@ export default (app, moduleData) => {
 
   return (
     <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <ThemeProvider>
+      <ConnectedRouter history={history}>     
+        <ThemeProvider themeConfig={themeConfig}>
           {/*
             TODO: Should we pass anything else down to the App ? History ?
                   Not sure on this, passing history down could encourage navigation & path checking outside of Redux state.
