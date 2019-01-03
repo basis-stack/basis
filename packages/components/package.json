@@ -1,6 +1,6 @@
 {
   "name": "basis-components",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "A set of React components used throughout the Basis stack",
   "main": "./dist/index.js",
   "scripts": {
@@ -23,16 +23,16 @@
   "homepage": "https://github.com/basis-stack/basis#readme",
   "dependencies": {
     "react-mdc-web": "^0.17.0",
-    "basis-assets": "^0.0.9",
+    "basis-assets": "^0.0.10",
     "classnames": "^2.2.6",
-    "http-status": "^1.2.0",
-    "react": "^16.4.2",
+    "http-status": "^1.3.1",
+    "react": "^16.6.3",
     "wordwrap": "^1.0.0"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
+    "chai": "^4.2.0",
     "chai-enzyme": "^1.0.0-beta.1",
-    "enzyme": "^3.5.0",
-    "enzyme-adapter-react-16": "^1.3.1"
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.7.0"
   }
 }

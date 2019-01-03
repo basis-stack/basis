@@ -13,7 +13,8 @@ const ErrorView = ({ status, statusText, message, error }) => {
   const stackTrace = error.stack !== undefined ? (
     <Caption component="pre" className="mdc-theme--text-secondary-on-background">
       { wrap(error.stack) }
-    </Caption>) : null;
+    </Caption>
+  ) : null;
 
   return (
     <div className="basis-error-container">

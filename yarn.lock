@@ -104,7 +104,7 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@material-ui/core@^3.0.3", "@material-ui/core@^3.8.1":
+"@material-ui/core@^3.5.1", "@material-ui/core@^3.8.1":
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-3.8.1.tgz#ee8697732afd1856504044646c20a33ca1c6fab5"
   integrity sha512-YhVanMT+DBaw8te6WbpU+RGm/wPYwT2FXlz0JGEexSOReDK3zVuyQJ7mTyDEE+HZQH6p1s6CTXXIH4CoivpogQ==
@@ -1922,50 +1922,18 @@ basic-auth@~2.0.0:
   dependencies:
     safe-buffer "5.1.2"
 
-basis-assets@^0.0.10:
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/basis-assets/-/basis-assets-0.0.10.tgz#0b5cf7aab2f683d2c1ebb0a9f480dc896dfc61dd"
-  integrity sha512-ewRUKWDry1VwZlQBrjdJdSvrnqMyLKpeLWMCcqAm49eKWtUWKUUtAznD/wZSYE0JaYKwqCIBHzTMiT0C1U+dmA==
+basis-assets@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/basis-assets/-/basis-assets-0.0.9.tgz#08e5da6e521c68e3d29779082ba39c096bede104"
+  integrity sha512-GxOyxsOzVmEJjus6ThHQpEI9CwnjlH1aCPTsI22pF6W0u05yXHp8sRgy6ROPcVrEPqIZtozMr+DO0202cNUV7A==
   dependencies:
-    "@material/theme" "^0.41.0"
-    "@material/typography" "^0.41.0"
+    "@material/theme" "^0.35.0"
+    "@material/typography" "^0.35.0"
     flexboxgrid "^6.3.1"
     font-awesome "^4.7.0"
-    material-colors "^1.2.6"
-    material-design-icons-iconfont "^4.0.2"
-    roboto-fontface "^0.10.0"
-
-basis-build@^0.0.32:
-  version "0.0.32"
-  resolved "https://registry.yarnpkg.com/basis-build/-/basis-build-0.0.32.tgz#d8369c37264ea88f62cb4d5e16dd8f94dad1d74a"
-  integrity sha512-soxizWj9ql4kWCO8+2Tk8da6S0+WSgj7PZ95lozvTX8nlCQpv+FU1mohZRlmcJWSSNPxiVBse58WRXdKxHeM8w==
-  dependencies:
-    basis-assets "^0.0.10"
-    child-process-promise "^2.2.1"
-    colors "^1.3.2"
-    del "^3.0.0"
-    fs-extra "^7.0.0"
-    gulp "^3.9.1"
-    gulp-changed "^3.2.0"
-    gulp-chmod "^2.0.0"
-    gulp-clean-css "^3.10.0"
-    gulp-ext-replace "^0.3.0"
-    gulp-file "^0.4.0"
-    gulp-gzip "^1.4.2"
-    gulp-if "^2.0.2"
-    gulp-install "^1.1.0"
-    gulp-print "^5.0.0"
-    gulp-rename "^1.4.0"
-    gulp-replace "^1.0.0"
-    gulp-sass "^4.0.1"
-    gulp-shell "^0.6.5"
-    gulp-tar "^2.1.0"
-    jsonfile "^4.0.0"
-    lodash "^4.17.10"
-    merge-stream "^1.0.1"
-    require-relative "^0.8.7"
-    run-sequence "^2.2.1"
-    rxjs "^5.5.11"
+    material-colors "^1.2.5"
+    material-design-icons-iconfont "^3.0.3"
+    roboto-fontface "^0.9.0"
 
 basis-client@^0.0.23:
   version "0.0.23"
@@ -1982,44 +1950,17 @@ basis-client@^0.0.23:
     redux-logger "^3.0.6"
     redux-thunk "^2.3.0"
 
-basis-components@^0.0.15:
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/basis-components/-/basis-components-0.0.15.tgz#83567eb805e31be4978c571286d87c2d028b443a"
-  integrity sha512-2iVA+B//KmcsI69eBpLWKP+67dPbPktbZq0TBwzQyafHLBaWr7ULHIL+2R4B0165lGBOiIdk82b2ihq3Z6Dijw==
+basis-components@^0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/basis-components/-/basis-components-0.0.14.tgz#d2d0ff9752482ca049075db118b5b29618242582"
+  integrity sha512-FXhDQmY6whpFpTHjUc+vpS/uYYgOFo0IWmei6oFuIrDH43UKIAUEBYEIaVjMcdfdt3IKKLl2YxhLRcTLScNa6w==
   dependencies:
-    basis-assets "^0.0.10"
-    classnames "^2.2.6"
-    http-status "^1.3.1"
-    react "^16.6.3"
+    basis-assets "^0.0.9"
+    classnames "^2.2.5"
+    http-status "^1.1.1"
+    react "^16.4.0"
     react-mdc-web "^0.17.0"
     wordwrap "^1.0.0"
-
-basis-server@^0.0.29:
-  version "0.0.29"
-  resolved "https://registry.yarnpkg.com/basis-server/-/basis-server-0.0.29.tgz#76789ac49bf82f84b2c13be3e86a755d1422f3c9"
-  integrity sha512-Zb+svnPtCMppt2xQfsc/HMJr+Od5yQu+gXkLwPSfg73zuYeF6Uazfw12rlrnW6rlVTdh4iOQyDGlOWsc3b7oKA==
-  dependencies:
-    basis-components "^0.0.14"
-    body-parser "^1.18.3"
-    classnames "^2.2.6"
-    compression "^1.7.3"
-    cookie-parser "^1.4.3"
-    ejs "^2.6.1"
-    express "^4.16.4"
-    helmet "^3.15.0"
-    http-status "^1.3.1"
-    jsonfile "^4.0.0"
-    lodash "^4.17.11"
-    morgan "^1.9.1"
-    object-assign-deep "^0.4.0"
-    passport "^0.4.0"
-    pm2 "^3.2.2"
-    react "^16.6.3"
-    react-dom "^16.6.3"
-    reflect-metadata "^0.1.12"
-    require-relative "^0.8.7"
-    winston "^2.4.4"
-    ws "^6.1.2"
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
@@ -2829,15 +2770,6 @@ configstore@^3.0.0:
     unique-string "^1.0.0"
     write-file-atomic "^2.0.0"
     xdg-basedir "^3.0.0"
-
-connected-react-router@^4.4.1:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/connected-react-router/-/connected-react-router-4.5.0.tgz#b6f021cc284a244fbee70e16e5ff0f2a4613e3d3"
-  integrity sha512-SBBmAZrtmw4y7Rkl2PCct8lN/DuCftl7QSAFLgFyjjuYkeJKAzAvQjzNNNE4R3j2+6a4TUiv8qselxQ4+6H5eA==
-  dependencies:
-    immutable "^3.8.1"
-    redux-seamless-immutable "^0.4.0"
-    seamless-immutable "^7.1.3"
 
 connected-react-router@^5.0.1:
   version "5.0.1"
@@ -3663,7 +3595,7 @@ entities@^1.1.1, entities@~1.1.1:
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.2.tgz#bdfa735299664dfafd34529ed4f8522a275fea56"
   integrity sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==
 
-enzyme-adapter-react-16@^1.3.1, enzyme-adapter-react-16@^1.7.1:
+enzyme-adapter-react-16@^1.7.0, enzyme-adapter-react-16@^1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.7.1.tgz#c37c4cb0fd75e88a063154a7a88096474914496a"
   integrity sha512-OQXKgfHWyHN3sFu2nKj3mhgRcqIPIJX6aOzq5AHVFES4R9Dw/vCBZFMPyaG81g2AZ5DogVh39P3MMNUbqNLTcw==
@@ -3686,7 +3618,7 @@ enzyme-adapter-utils@^1.9.0:
     prop-types "^15.6.2"
     semver "^5.6.0"
 
-enzyme@^3.5.0, enzyme@^3.8.0:
+enzyme@^3.7.0, enzyme@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-3.8.0.tgz#646d2d5d0798cb98fdec39afcee8a53237b47ad5"
   integrity sha512-bfsWo5nHyZm1O1vnIsbwdfhU989jk+squU9NKvB+Puwo5j6/Wg9pN5CO0YJelm98Dao3NPjkDZk+vvgwpMwYxw==
@@ -4095,7 +4027,7 @@ expect-ct@0.1.1:
   resolved "https://registry.yarnpkg.com/expect-ct/-/expect-ct-0.1.1.tgz#de84476a2dbcb85000d5903737e9bc8a5ba7b897"
   integrity sha512-ngXzTfoRGG7fYens3/RMb6yYoVLvLMfmsSllP/mZPxNHgFq41TmPSLF/nLY7fwoclI2vElvAmILFWGUYqdjfCg==
 
-express@^4.16.3, express@^4.16.4:
+express@^4.16.4:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.4.tgz#fddef61926109e24c515ea97fd2f1bdbf62df12e"
   integrity sha512-j12Uuyb4FMrd/qQAm6uCHAkPtO8FDTRJZBDd5D2KOL2eLaz1yUNdUB/NOIyq0iU4q4cFarsUCrnFDPBcnksuOg==
@@ -4665,7 +4597,7 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-get-caller-file@^1.0.1, get-caller-file@^1.0.2:
+get-caller-file@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.3.tgz#f978fa4c90d1dfe7ff2d6beda2a515e713bdcf4a"
   integrity sha512-3t6rVToeoZfYSGd8YoLFR2DJkiQrIiUrGcjvFX2mDw3bn6k2OtwHN0TNCLbBO+w8qTvimhDkv+LSscbJY1vE6w==
@@ -5285,7 +5217,7 @@ helmet-csp@2.7.1:
     dasherize "2.0.0"
     platform "1.3.5"
 
-helmet@^3.13.0, helmet@^3.15.0:
+helmet@^3.15.0:
   version "3.15.0"
   resolved "https://registry.yarnpkg.com/helmet/-/helmet-3.15.0.tgz#fe0bb80e05d9eec589e3cbecaf5384409a3a64c9"
   integrity sha512-j9JjtAnWJj09lqe/PEICrhuDaX30TeokXJ9tW6ZPhVH0+LMoihDeJ58CdWeTGzM66p6EiIODmgAaWfdeIWI4Gg==
@@ -5437,7 +5369,7 @@ http-signature@~1.2.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
-http-status@^1.2.0, http-status@^1.3.1:
+http-status@^1.1.1, http-status@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/http-status/-/http-status-1.3.1.tgz#340a500e778a3091d18fda026df80f104a02dde7"
   integrity sha512-PcI9NUm6EUOhHlaxYABCqDQQWS7IgoBZ/PmPkhuzj+oR01ffjv3EJfKnnWJZcUhILtUh6/NdJi1Zs/mIr6v8DA==
@@ -7048,14 +6980,6 @@ mocha@^5.2.0:
     mkdirp "0.5.1"
     supports-color "5.4.0"
 
-mock-require@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/mock-require/-/mock-require-3.0.2.tgz#7ce759b559e3b194be5f20a5b1cece0eb363f53d"
-  integrity sha512-aD/Y1ZFHqw5pHg3HVQ50dLbfaAAcytS6sqLuhP51Dk3TSPdFb2VkSAa3mjrHifLIlGAtwQHJHINafAyqAne7vA==
-  dependencies:
-    get-caller-file "^1.0.2"
-    normalize-path "^2.1.1"
-
 module-not-found-error@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/module-not-found-error/-/module-not-found-error-1.0.1.tgz#cf8b4ff4f29640674d6cdd02b0e3bc523c2bbdc0"
@@ -7078,7 +7002,7 @@ moo@^0.4.3:
   resolved "https://registry.yarnpkg.com/moo/-/moo-0.4.3.tgz#3f847a26f31cf625a956a87f2b10fbc013bfd10e"
   integrity sha512-gFD2xGCl8YFgGHsqJ9NKRVdwlioeW3mI1iqfLNYQOv0+6JRwG58Zk9DIGQgyIaffSYaO1xsKnMaYzzNr1KyIAw==
 
-morgan@^1.9.0, morgan@^1.9.1:
+morgan@^1.9.1:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.9.1.tgz#0a8d16734a1d9afbc824b99df87e738e58e2da59"
   integrity sha512-HQStPIV4y3afTiCYVxirakhlCfGkI161c76kKFca7Fk1JusM//Qeo1ej2XaMniiNeaZklMVrh3vTtIzpzwbpmA==
@@ -8340,7 +8264,7 @@ pm2-multimeter@^0.1.2:
   dependencies:
     charm "~0.1.1"
 
-pm2@^3.0.4, pm2@^3.2.2:
+pm2@^3.2.2:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/pm2/-/pm2-3.2.4.tgz#fb9c0ed402e04ce8f6d6e1ae935a765aa0e95c89"
   integrity sha512-UlMsa8Tbdq5B9LJWW+sEZ1xpQv/lP7pkXKpyT2jyvIWOy+IzO60MGsLvkNEmPdyzgwi/S1qQK/FM/4DCCAu37w==
@@ -8669,7 +8593,7 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dom@^16.4.2, react-dom@^16.5.0, react-dom@^16.6.3:
+react-dom@^16.6.3:
   version "16.7.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.7.0.tgz#a17b2a7ca89ee7390bc1ed5eb81783c7461748b8"
   integrity sha512-D0Ufv1ExCAmF38P2Uh1lwpminZFRXEINJe53zRAbm4KPwSyd6DY/uDoS0Blj9jvPpn1+wivKpZYc8aAAN/nAkg==
@@ -8718,7 +8642,7 @@ react-mdc-web@^0.17.0:
     material-components-web "^0.26.0"
     prop-types "^15.5.10"
 
-react-redux@^5.0.7, react-redux@^5.1.1:
+react-redux@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.1.1.tgz#88e368682c7fa80e34e055cd7ac56f5936b0f52f"
   integrity sha512-LE7Ned+cv5qe7tMV5BPYkGQ5Lpg8gzgItK07c67yHvJ8t0iaD9kPFPAli/mYkiyJYrs2pJgExR2ZgsGqlrOApg==
@@ -8755,11 +8679,6 @@ react-router-dom@^4.3.1:
     react-router "^4.3.1"
     warning "^4.0.1"
 
-react-router-redux@^4.0.0:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/react-router-redux/-/react-router-redux-4.0.8.tgz#227403596b5151e182377dab835b5d45f0f8054e"
-  integrity sha1-InQDWWtRUeGCN32rg1tdRfD4BU4=
-
 react-router@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-4.3.1.tgz#aada4aef14c809cb2e686b05cee4742234506c4e"
@@ -8793,7 +8712,7 @@ react-transition-group@^2.2.1:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react@^16.4.2, react@^16.5.0, react@^16.6.3, react@^16.7.0:
+react@^16.4.0, react@^16.6.3, react@^16.7.0:
   version "16.7.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.7.0.tgz#b674ec396b0a5715873b350446f7ea0802ab6381"
   integrity sha512-StCz3QY8lxTb5cl2HJxjwLFOXPIFQp+p+hxQfc8WE0QiLfCtIlKj8/+5tjjKm8uSTlAW+fCPaavGFS06V9Ar3A==
@@ -9033,20 +8952,12 @@ redux-logger@^3.0.6:
   dependencies:
     deep-diff "^0.3.5"
 
-redux-seamless-immutable@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/redux-seamless-immutable/-/redux-seamless-immutable-0.4.0.tgz#b50f8680ecc5ef04021551267f78fa1ffd3cf985"
-  integrity sha512-/oS3fhrize9D3RSHemgJxVllohybRrad5IjccotFy8Ni4IKAPTtX1mqszpiCIl12+7v0dNqBpq6ES6R236AliQ==
-  dependencies:
-    react-router-redux "^4.0.0"
-    seamless-immutable "^7.1.2"
-
 redux-thunk@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
   integrity sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
 
-redux@^4.0.0, redux@^4.0.1:
+redux@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.1.tgz#436cae6cc40fbe4727689d7c8fae44808f1bfef5"
   integrity sha512-R7bAtSkk7nY6O/OYMVR9RiBI+XghjF9rlbl5806HJbQph0LJVHZrU5oaO4q70eUKiqMRqm4y07KLTlMZ2BlVmg==
@@ -9473,7 +9384,7 @@ scss-tokenizer@^0.2.3:
     js-base64 "^2.1.8"
     source-map "^0.4.2"
 
-seamless-immutable@^7.1.2, seamless-immutable@^7.1.3:
+seamless-immutable@^7.1.3:
   version "7.1.4"
   resolved "https://registry.yarnpkg.com/seamless-immutable/-/seamless-immutable-7.1.4.tgz#6e9536def083ddc4dea0207d722e0e80d0f372f8"
   integrity sha512-XiUO1QP4ki4E2PHegiGAlu6r82o5A+6tRh7IkGGTVg/h+UoeX4nFBeCGPOhb4CYjvkqsfm/TUtvOMYC1xmV30A==
@@ -9636,7 +9547,7 @@ signal-exit@3.0.2, signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
-sinon@^6.1.5, sinon@^6.3.1:
+sinon@^6.1.5:
   version "6.3.5"
   resolved "https://registry.yarnpkg.com/sinon/-/sinon-6.3.5.tgz#0f6d6a5b4ebaad1f6e8e019395542d1d02c144a0"
   integrity sha512-xgoZ2gKjyVRcF08RrIQc+srnSyY1JDJtxu3Nsz07j1ffjgXoY6uPLf/qja6nDBZgzYYEovVkFryw2+KiZz11xQ==
@@ -9651,7 +9562,7 @@ sinon@^6.1.5, sinon@^6.3.1:
     supports-color "^5.5.0"
     type-detect "^4.0.8"
 
-sinon@^7.2.2:
+sinon@^7.1.1, sinon@^7.2.2:
   version "7.2.2"
   resolved "https://registry.yarnpkg.com/sinon/-/sinon-7.2.2.tgz#388ecabd42fa93c592bfc71d35a70894d5a0ca07"
   integrity sha512-WLagdMHiEsrRmee3jr6IIDntOF4kbI6N2pfbi8wkv50qaUQcBglkzkjtoOEbeJ2vf1EsrHhLI+5Ny8//WHdMoA==

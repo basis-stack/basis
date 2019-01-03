@@ -1,10 +1,7 @@
-import assignDeep from 'object-assign-deep';
 import cors from 'cors';
 
-import { Api, Controller, Get, Middleware } from 'basis-server/decorators';
-import { TestScheduler } from 'rxjs';
+import { Controller, Get, Middleware } from 'basis-server/decorators';
 
-export default
 @Controller('/')
 @Middleware(cors())
 class HomeController {
@@ -23,17 +20,8 @@ class HomeController {
   @Get('config')
   getClientConfig() {
 
-    //const clientConfig = assignDeep({}, this._config.shared, this._config.client);
-
     return { ...this._config.shared, ...this._config.client };
   }
-
-  @Get('test')
-  test() {
-    
-    return new Promise((resolve, reject) => {
-
-      resolve('Timmy');
-    });
-  }
 }
+
+export default HomeController;
