@@ -7,9 +7,9 @@ import shell from './modules/shell';
 import App from './app';
 
 const modules = [
-  core.initialise(theme),
+  core.initialise(),
   shell.initialise()
 ];
 const app = <App />;
 
-initialise(modules, app);
+initialise(modules, app, theme);

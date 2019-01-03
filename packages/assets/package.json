@@ -1,6 +1,6 @@
 {
   "name": "basis-assets",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Vendor SCSS / CSS dependencies and server assets for the Basis stack",
   "main": "./dist/index.js",
   "scripts": {
@@ -23,11 +23,11 @@
   "homepage": "https://github.com/basis-stack/basis#readme",
   "dependencies": {
     "@material/theme": "^0.41.0",
-    "@material/typography": "^0.41.0",
+    "@material/typography": "^0.42.0",
     "flexboxgrid": "^6.3.1",
     "font-awesome": "^4.7.0",
     "material-colors": "^1.2.6",
-    "material-design-icons-iconfont": "^4.0.2",
+    "material-design-icons-iconfont": "^4.0.3",
     "roboto-fontface": "^0.10.0"
   }
 }

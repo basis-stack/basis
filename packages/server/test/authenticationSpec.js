@@ -1,14 +1,14 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import proxyquire from 'proxyquire';
 
 import { the, should, when,
          createStubObject, getStubApp,
          assertCall, assertWasCalled } from '../../testing/src';
 
-import initAuthentication, { __RewireAPI__ as AuthenticationAPI } from '../src/middleware/authentication';
-
 the('authentication middleware initialiser', () => {
 
+  let initAuthentication;
   const stubPassport = createStubObject(['use', 'initialize', 'session']);
   const stubContainer = {
     ...createStubObject('resolve'),
@@ -27,14 +27,15 @@ the('authentication middleware initialiser', () => {
 
   before(() => {
 
-    AuthenticationAPI.__Rewire__('passport', stubPassport);
+    proxyquire.noCallThru();
+
+    const mocks = {
+
+      passport: stubPassport
+    };
+
+    initAuthentication = proxyquire('../src/middleware/authentication', mocks).default;
   });
-
-  after(() => {
-
-    AuthenticationAPI.__ResetDependency__('passport');
-  });
-
 
   when('invoked with valid app instance', () => {
 

@@ -1,12 +1,11 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import proxyquire from 'proxyquire';
 
 import constants from '../src/core/constants';
 import { the, should, when,
          createStubObject, getStubContainer, getStubLogger,
          assertCall } from '../../testing/src';
-
-import getModules, { __RewireAPI__ as ModuleLoaderAPI } from '../src/core/moduleLoader';
 
 the('moduleLoader', () => {
 
@@ -23,6 +22,8 @@ the('moduleLoader', () => {
   const stubModule2 = { default: {} };
   const stubDynamicImport = sinon.stub();
 
+  let getModules;
+
   before(() => {
 
     stubDynamicImport.withArgs('./modules/moduleA').returns(stubModule1);
@@ -31,16 +32,13 @@ the('moduleLoader', () => {
 
     sinon.stub(stubFs, 'readdirSync').returns(['moduleA', 'moduleB', 'moduleC']);
 
-    ModuleLoaderAPI.__Rewire__('fs', stubFs);
-    ModuleLoaderAPI.__Rewire__('dynamicImport', stubDynamicImport);
-    ModuleLoaderAPI.__Rewire__('getRootPath', stubGetRootPath);
-  });
+    const mocks = {
 
-  after(() => {
+      fs: stubFs,
+      './utilities': { dynamicImport: stubDynamicImport, getRootPath: stubGetRootPath }
+    };
 
-    ModuleLoaderAPI.__ResetDependency__('fs');
-    ModuleLoaderAPI.__ResetDependency__('dynamicImport');
-    ModuleLoaderAPI.__ResetDependency__('getRootPath');
+    getModules = proxyquire('../src/core/moduleLoader', mocks).default;
   });
 
   when('invoked with a valid container', () => {

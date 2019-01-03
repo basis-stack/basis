@@ -1,9 +1,8 @@
 import * as sinon from 'sinon';
+import proxyquire from 'proxyquire';
 
 import { the, should, when,
          createStubObject, assertParameter } from 'basis-testing';
-
-import homeIndex, { __RewireAPI__ as HomeIndexAPI } from './../../src/server/modules/home';
 
 the('home index', () => {
 
@@ -11,14 +10,18 @@ the('home index', () => {
   const stubRouter = {};
   const stubContainer = {};
 
+  let homeIndex;
+
   before(() => {
 
-    HomeIndexAPI.__Rewire__('HomeController', stubHomeControllerClass);
-  });
+    proxyquire.noCallThru();
 
-  after(() => {
+    const mocks = {
 
-    HomeIndexAPI.__ResetDependency__('HomeController');
+      './homeController': stubHomeControllerClass
+    };
+
+    homeIndex = proxyquire('./../../src/server/modules/home', mocks).default;
   });
 
   when('initRoutes invoked with a router instance', () => {

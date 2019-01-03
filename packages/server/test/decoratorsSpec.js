@@ -2,11 +2,12 @@ import 'reflect-metadata';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import _ from 'lodash';
+import proxyquire from 'proxyquire';
 
 import { the, should, when,
          assertInstance, assertWasCalled } from '../../testing/src';
 
-import { Controller, Middleware, Get, Head, Post, Put, Delete, Options, __RewireAPI__ as DecoratorsAPI } from '../src/core/decorators';
+import { Middleware, Get, Head, Post, Put, Delete, Options } from '../src/core/decorators';
 
 class StubTargetClass {
 
@@ -97,16 +98,19 @@ the('Controller decorator', () => {
   const stubBindRoutes = sinon.spy();
   const path = '/some-root-path';
 
+  let Controller;
+
   before(() => {
 
-    DecoratorsAPI.__Rewire__('bindRoutes', stubBindRoutes);
+    proxyquire.noCallThru();
 
+    const mocks = {
+
+      '../middleware/routeBinder': stubBindRoutes
+    };
+
+    Controller = proxyquire('../src/core/decorators', mocks).Controller;
     Controller(path)(StubTargetClass);
-  });
-
-  after(() => {
-
-    DecoratorsAPI.__ResetDependency__('bindRoutes');
   });
 
   should('attach rootPath metadata to the target class', () => {

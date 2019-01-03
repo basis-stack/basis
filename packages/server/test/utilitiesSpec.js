@@ -1,11 +1,12 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import path from 'path';
+import proxyquire from 'proxyquire';
 
 import { the, should, when, withScenario,
          createStubObject } from '../../testing/src';
 
-import { getRootPath, terminate, dynamicImport, getEnvVariable, __RewireAPI__ as UtilitiesAPI } from '../src/core/utilities';
+import { terminate, getEnvVariable, dynamicImport } from '../src/core/utilities';
 
 the('server utilities module', () => {
 
@@ -13,16 +14,23 @@ the('server utilities module', () => {
 
     const stubFs = createStubObject('readdirSync');
     let stubCwd;
+    let getRootPath;
 
     before(() => {
 
-      UtilitiesAPI.__Rewire__('fs', stubFs);
+      proxyquire.noCallThru();
+
+      const mocks = {
+
+        fs: stubFs
+      };
+
       stubCwd = sinon.stub(process, 'cwd').returns('some-runtime-path');
+      getRootPath = proxyquire('../src/core/utilities', mocks).getRootPath;
     });
 
     after(() => {
 
-      UtilitiesAPI.__ResetDependency__('fs');
       stubCwd.restore();
     });
 

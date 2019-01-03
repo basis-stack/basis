@@ -1,14 +1,14 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import proxyquire from 'proxyquire';
 
 import { the, when, should, withScenario } from '../../testing/src';
-
-import Config, { __RewireAPI__ as ConfigAPI } from '../src/core/config';
 
 the('Config class', () => {
 
   when('created (from settings file)', () => {
 
+    let Config;
     const stubGetEnvVariable = sinon.stub();
     const stubJsonfile = { readFileSync: () => {} };
     const settingsFilePath = 'SomeFilePath';
@@ -27,16 +27,16 @@ the('Config class', () => {
 
     before(() => {
 
+      proxyquire.noCallThru();
       sinon.stub(stubJsonfile, 'readFileSync').returns(stubSettingsJson);
 
-      ConfigAPI.__Rewire__('getEnvVariable', stubGetEnvVariable);
-      ConfigAPI.__Rewire__('jsonfile', stubJsonfile);
-    });
+      const mocks = {
 
-    after(() => {
+        './utilities': { getEnvVariable: stubGetEnvVariable, getRootPath: sinon.stub().returns('') },
+        jsonfile: stubJsonfile
+      };
 
-      ConfigAPI.__ResetDependency__('getEnvVariable');
-      ConfigAPI.__ResetDependency__('jsonfile');
+      Config = proxyquire('../src/core/config', mocks).default;
     });
 
     withScenario('no specified NODE_ENV', () => {

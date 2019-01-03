@@ -1,10 +1,9 @@
 import * as sinon from 'sinon';
+import proxyquire from 'proxyquire';
 
 import { the, should, when,
          createStubObject, getStubResponse,
          assertWasCalled, assertParameter } from '../../testing/src';
-
-import renderView, { __RewireAPI__ as RenderersAPI } from '../src/core/renderers';
 
 the('renderers', () => {
 
@@ -17,16 +16,20 @@ the('renderers', () => {
 
   sinon.stub(stubReact, 'createElement').returns(stubElement);
 
+  let renderView;
+
   before(() => {
 
-    RenderersAPI.__Rewire__('React', stubReact);
-    RenderersAPI.__Rewire__('renderToStaticMarkup', stubRenderToStaticMarkup);
-  });
+    proxyquire.noCallThru();
 
-  after(() => {
+    const mocks = {
 
-    RenderersAPI.__ResetDependency__('React');
-    RenderersAPI.__ResetDependency__('renderToStaticMarkup');
+      react: stubReact,
+      'react-dom/server': { renderToStaticMarkup: stubRenderToStaticMarkup }
+    };
+
+    renderView = proxyquire('../src/core/renderers', mocks).default;
+
   });
 
   when('renderView called with valid React component', () => {

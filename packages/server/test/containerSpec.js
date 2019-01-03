@@ -1,9 +1,10 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import proxyquire from 'proxyquire';
 
 import { the, when, withScenario, should } from '../../testing/src';
 
-import getContainer, { __RewireAPI__ as ContainerAPI } from '../src/core/container';
+// import getContainer, { __RewireAPI__ as ContainerAPI } from '../src/core/container';
 
 the('container', () => {
 
@@ -22,24 +23,34 @@ the('container', () => {
   sinon.stub(stubConfigClass, 'createFromSettingsFile').returns(stubConfig);
   sinon.stub(stubLoggerClass, 'createFromConfig').returns(stubLogger);
 
-
+  let getContainer;
   let container;
 
   before(() => {
 
-    ContainerAPI.__Rewire__('Config', stubConfigClass);
-    ContainerAPI.__Rewire__('Logger', stubLoggerClass);
-    ContainerAPI.__Rewire__('dynamicImport', stubDynamicImport);
+    proxyquire.noCallThru();
 
+    const mocks = {
+
+      './config': stubConfigClass,
+      './logger': stubLoggerClass,
+      './utilities': { dynamicImport: stubDynamicImport, getRootPath: sinon.stub().returns('') }
+    };
+
+    // ContainerAPI.__Rewire__('Config', stubConfigClass);
+    // ContainerAPI.__Rewire__('Logger', stubLoggerClass);
+    // ContainerAPI.__Rewire__('dynamicImport', stubDynamicImport);
+
+    getContainer = proxyquire('../src/core/container', mocks).default;
     container = getContainer();
   });
 
-  after(() => {
+  // after(() => {
 
-    ContainerAPI.__ResetDependency__('Config');
-    ContainerAPI.__ResetDependency__('Logger');
-    ContainerAPI.__ResetDependency__('dynamicImport');
-  });
+  //   ContainerAPI.__ResetDependency__('Config');
+  //   ContainerAPI.__ResetDependency__('Logger');
+  //   ContainerAPI.__ResetDependency__('dynamicImport');
+  // });
 
   const reset = () => {
 

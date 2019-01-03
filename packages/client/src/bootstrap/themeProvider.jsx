@@ -1,6 +1,6 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 const convertToMuiTheme = (basisTheme) => {
 
@@ -35,7 +35,10 @@ const getMuiTheme = (themeConfig) => {
     return createMuiTheme();
   }
 
-  if ((themeConfig.palette !== undefined) || (themeConfig.overrides !== undefined)) {
+  if ((themeConfig.palette !== undefined) ||
+      (themeConfig.overrides !== undefined) ||
+      (themeConfig.typography !== undefined) ||
+      (themeConfig.spacing !== undefined)) {
 
     return createMuiTheme(themeConfig);
   }
@@ -43,17 +46,22 @@ const getMuiTheme = (themeConfig) => {
   return createMuiTheme(convertToMuiTheme(themeConfig));
 };
 
-const ThemeProvider = ({ muiTheme, children }) => (
+const ThemeProvider = ({ themeConfig, children }) => (
 
-  <MuiThemeProvider theme={muiTheme}>
+  <MuiThemeProvider theme={getMuiTheme(themeConfig)}>
     { children }
   </MuiThemeProvider>
 );
 
-const mapDispatchToProps = dispatch => ({});
-const mapStateToProps = state => ({
+export default ThemeProvider;
 
-  muiTheme: getMuiTheme(state.core.theme)
-});
+// TODO: Temporarily disabled sourcing the theme from redux state due to a performance issue
+//       with re-rendering the entire tree unnecessarily. Need to think how better to do this.
 
-export default connect(mapStateToProps, mapDispatchToProps)(ThemeProvider);
+// const mapDispatchToProps = dispatch => ({});
+// const mapStateToProps = state => ({
+
+//   muiTheme: getMuiTheme(state.core.theme)
+// });
+
+// export default connect(mapStateToProps, mapDispatchToProps)(ThemeProvider);
