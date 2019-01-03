@@ -31,7 +31,7 @@ the('authentication middleware initialiser', () => {
 
     const mocks = {
 
-      'passport': stubPassport
+      passport: stubPassport
     };
 
     initAuthentication = proxyquire('../src/middleware/authentication', mocks).default;

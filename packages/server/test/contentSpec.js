@@ -21,14 +21,14 @@ the('content middleware initialiser', () => {
   before(() => {
 
     proxyquire.noCallThru();
-    
+
     const mocks = {
-      
-      'compression': stubCompression,
-      'express': stubExpress,
+
+      compression: stubCompression,
+      express: stubExpress,
       '../core/utilities': { getRootPath: stubGetRootPath }
     };
-    
+
     initContent = proxyquire('../src/middleware/content', mocks).default;
   });
 

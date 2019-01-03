@@ -1,9 +1,8 @@
 import * as sinon from 'sinon';
+import proxyquire from 'proxyquire';
 
 import { the, should, when,
          getStubApp, assertWasCalled } from '../../testing/src';
-
-import initialiseSecurity, { __RewireAPI__ as SecurityAPI } from '../src/middleware/security';
 
 the('security middleware initialiser', () => {
 
@@ -12,16 +11,19 @@ the('security middleware initialiser', () => {
   const stubApp = getStubApp();
   const stubAppUse = sinon.spy(stubApp, 'use');
 
+  let initialiseSecurity;
+
   before(() => {
 
-    SecurityAPI.__Rewire__('helmet', stubHelmet);
+    proxyquire.noCallThru();
+
+    const mocks = {
+
+      helmet: stubHelmet
+    };
+
+    initialiseSecurity = proxyquire('../src/middleware/security', mocks).default;
   });
-
-  after(() => {
-
-    SecurityAPI.__ResetDependency__('helmet');
-  });
-
 
   when('invoked with valid app instance', () => {
 

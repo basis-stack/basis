@@ -4,8 +4,6 @@ import proxyquire from 'proxyquire';
 
 import { the, when, should, withScenario } from '../../testing/src';
 
-// import Config, { __RewireAPI__ as ConfigAPI } from '../src/core/config';
-
 the('Config class', () => {
 
   when('created (from settings file)', () => {
@@ -34,21 +32,12 @@ the('Config class', () => {
 
       const mocks = {
 
-        './utilities': { getEnvVariable: stubGetEnvVariable, getRootPath: sinon.stub() },
+        './utilities': { getEnvVariable: stubGetEnvVariable, getRootPath: sinon.stub().returns('') },
         jsonfile: stubJsonfile
       };
 
       Config = proxyquire('../src/core/config', mocks).default;
-
-      // ConfigAPI.__Rewire__('getEnvVariable', stubGetEnvVariable);
-      // ConfigAPI.__Rewire__('jsonfile', stubJsonfile);
     });
-
-    // after(() => {
-
-    //   ConfigAPI.__ResetDependency__('getEnvVariable');
-    //   ConfigAPI.__ResetDependency__('jsonfile');
-    // });
 
     withScenario('no specified NODE_ENV', () => {
 

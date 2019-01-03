@@ -7,15 +7,14 @@ import { the, when, withScenario, should,
          createStubObject, getStubResponse, getStubApp,
          assertWasCalled, assertParameter } from '../../testing/src';
 
-// import initialiseErrorHandlers, { __RewireAPI__ as ErrorHandlersAPI } from '../src/middleware/errorHandlers';
-
 the('errorHandlers middleware', () => {
 
-  let initialiseErrorHandlers;
   const stubConfig = { shared: { env: 'local' } };
   const stubLogger = createStubObject('error');
   const stubErrorView = {};
   const stubRenderView = sinon.spy();
+
+  let initialiseErrorHandlers;
 
   const initialiseAndGetHandlers = (config = stubConfig) => {
 
@@ -33,30 +32,24 @@ the('errorHandlers middleware', () => {
   before(() => {
 
     proxyquire.noCallThru();
-    
+
     const mocks = {
-      
+
       '../core/renderers': stubRenderView,
       'basis-components': { ErrorView: stubErrorView }
     };
 
     initialiseErrorHandlers = proxyquire('../src/middleware/errorHandlers', mocks).default;
-    
-    console.log(initialiseErrorHandlers);
-  
-    // ErrorHandlersAPI.__Rewire__('ErrorView', stubErrorView);
-    // ErrorHandlersAPI.__Rewire__('renderView', stubRenderView);
   });
-
-  // after(() => {
-
-  //   ErrorHandlersAPI.__ResetDependency__('ErrorView');
-  //   ErrorHandlersAPI.__ResetDependency__('renderView');
-  // });
 
   when('invoked with a valid app instance', () => {
 
-    const result = initialiseAndGetHandlers();
+    let result;
+
+    before(() => {
+
+      result = initialiseAndGetHandlers();
+    });
 
     should('wire up a \'wildcard\' handler for not-found routes', () => {
 
@@ -72,10 +65,13 @@ the('errorHandlers middleware', () => {
   when('not-found handled', () => {
 
     const stubNextCallback = sinon.spy();
+    let result;
 
-    initialiseAndGetHandlers().notFoundHandler({}, {}, stubNextCallback);
+    before(() => {
 
-    const result = stubNextCallback.args[0][0];
+      initialiseAndGetHandlers().notFoundHandler({}, {}, stubNextCallback);
+      result = stubNextCallback.args[0][0];
+    });
 
     should('set error status to 404', () => {
 

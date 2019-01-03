@@ -18,7 +18,7 @@ export default (app, moduleData, themeConfig) => {
 
   return (
     <Provider store={store}>
-      <ConnectedRouter history={history}>     
+      <ConnectedRouter history={history}>
         <ThemeProvider themeConfig={themeConfig}>
           {/*
             TODO: Should we pass anything else down to the App ? History ?

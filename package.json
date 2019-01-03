@@ -38,7 +38,6 @@
     "basis-client": "^0.0.23",
     "basis-components": "^0.0.15",
     "basis-server": "^0.0.29",
-    "connected-react-router": "^6.1.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "object-assign-deep": "^0.4.0",
@@ -46,7 +45,8 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-jss": "^8.6.1",
-    "react-redux": "^6.0.0",
+    "react-redux": "^v5.1.1",
+    "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "redux-thunk": "^2.3.0"
   },

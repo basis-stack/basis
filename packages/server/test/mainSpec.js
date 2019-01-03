@@ -1,10 +1,9 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import proxyquire from 'proxyquire';
 
 import { the, should, when, withScenario,
          assertWasCalled, assertParameter } from '../../testing/src';
-
-import main, { __RewireAPI__ as MainAPI } from '../src/bin/main';
 
 the('main (startup) module', () => {
 
@@ -24,20 +23,21 @@ the('main (startup) module', () => {
   }];
   const stubGetModules = sinon.stub().returns(stubModules);
 
+  let main;
+
   before(() => {
 
-    MainAPI.__Rewire__('getContainer', stubGetContainer);
-    MainAPI.__Rewire__('getModules', stubGetModules);
-    MainAPI.__Rewire__('startHttpServer', stubStartHttpServer);
-    MainAPI.__Rewire__('startSocketServer', stubStartSocketServer);
-  });
+    proxyquire.noCallThru();
 
-  after(() => {
+    const mocks = {
 
-    MainAPI.__ResetDependency__('getContainer');
-    MainAPI.__ResetDependency__('getModules');
-    MainAPI.__ResetDependency__('startHttpServer');
-    MainAPI.__ResetDependency__('startSocketServer');
+      '../core/container': stubGetContainer,
+      '../core/moduleLoader': stubGetModules,
+      './httpServer': stubStartHttpServer,
+      './socketServer': stubStartSocketServer
+    };
+
+    main = proxyquire('../src/bin/main', mocks).default;
   });
 
   when('executed', () => {

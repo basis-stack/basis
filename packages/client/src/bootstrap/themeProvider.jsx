@@ -47,7 +47,7 @@ const getMuiTheme = (themeConfig) => {
 };
 
 const ThemeProvider = ({ themeConfig, children }) => (
-  
+
   <MuiThemeProvider theme={getMuiTheme(themeConfig)}>
     { children }
   </MuiThemeProvider>

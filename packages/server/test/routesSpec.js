@@ -1,10 +1,11 @@
 import * as sinon from 'sinon';
+import proxyquire from 'proxyquire';
 
 import { the, should, when,
          createStubObject, getStubApp, getStubContainer, getStubLogger,
          assertCall, assertWasCalled, assertParameter } from '../../testing/src';
 
-import initRoutes, { __RewireAPI__ as RoutesIndexAPI } from '../src/middleware/routes';
+// import initRoutes, { __RewireAPI__ as RoutesIndexAPI } from '../src/middleware/routes';
 
 the('routes middleware', () => {
 
@@ -17,15 +18,26 @@ the('routes middleware', () => {
   const stubRoutes = [stubRouteA, stubRouteB];
   const stubContainer = getStubContainer({}, stubLogger);
 
+  let initRoutes;
+
   before(() => {
 
-    RoutesIndexAPI.__Rewire__('express', stubExpress);
+    proxyquire.noCallThru();
+
+    const mocks = {
+
+      express: stubExpress
+    };
+
+    initRoutes = proxyquire('../src/middleware/routes', mocks).default;
+
+    // RoutesIndexAPI.__Rewire__('express', stubExpress);
   });
 
-  after(() => {
+  // after(() => {
 
-    RoutesIndexAPI.__ResetDependency__('express');
-  });
+  //   RoutesIndexAPI.__ResetDependency__('express');
+  // });
 
   when('invoked with a valid app instance & valid routes', () => {
 

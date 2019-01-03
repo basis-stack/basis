@@ -1,6 +1,6 @@
 {
   "name": "basis-assets",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Vendor SCSS / CSS dependencies and server assets for the Basis stack",
   "main": "./dist/index.js",
   "scripts": {

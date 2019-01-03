@@ -21,11 +21,11 @@ the('dataParsers middleware initialiser', () => {
   before(() => {
 
     const mocks = {
-      
+
       'body-parser': stubBodyParser,
-      'cookie-parser': () => stubCookieParser 
+      'cookie-parser': () => stubCookieParser
     };
-    
+
     initialiseDataParsers = proxyquire('../src/middleware/dataParsers', mocks).default;
   });
 

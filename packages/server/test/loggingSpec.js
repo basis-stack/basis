@@ -1,10 +1,9 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import proxyquire from 'proxyquire';
 
 import { the, when, withScenario, should,
          getStubApp } from '../../testing/src';
-
-import initialiseRequestLogger, { __RewireAPI__ as LoggingAPI } from '../src/middleware/logging';
 
 the('logging middleware initialiser', () => {
 
@@ -12,16 +11,21 @@ the('logging middleware initialiser', () => {
   const stubMorganResult = { dummyMorgan: true };
   const stubLogStream = {};
 
+  let initialiseRequestLogger;
+
   before(() => {
 
     stubMorgan = sinon.stub();
     stubMorgan.returns(stubMorganResult);
-    LoggingAPI.__Rewire__('morgan', stubMorgan);
-  });
 
-  after(() => {
+    proxyquire.noCallThru();
 
-    LoggingAPI.__ResetDependency__('morgan');
+    const mocks = {
+
+      morgan: stubMorgan
+    };
+
+    initialiseRequestLogger = proxyquire('../src/middleware/logging', mocks).default;
   });
 
   const assertResult = (result, expectedResult) => {

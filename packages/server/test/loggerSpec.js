@@ -1,29 +1,30 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import proxyquire from 'proxyquire';
 
 import { the, should, when,
          createStubObject, assertParameter } from '../../testing/src';
 
-import Logger, { __RewireAPI__ as LoggerApi } from '../src/core/logger';
-
 the('logger', () => {
 
-  let inputConfig;
   const stubConfig = {};
   const stubWinston = createStubObject(['info', 'error', 'warn']);
   const stubGetWinston = sinon.stub().returns(stubWinston);
 
+  let Logger;
   let logger;
 
   before(() => {
 
-    LoggerApi.__Rewire__('getWinston', stubGetWinston);
+    proxyquire.noCallThru();
+
+    const mocks = {
+
+      './winstonProvider': stubGetWinston
+    };
+
+    Logger = proxyquire('../src/core/logger', mocks).default;
     logger = Logger.createFromConfig(stubConfig);
-  });
-
-  after(() => {
-
-    LoggerApi.__ResetDependency__('getWinston');
   });
 
   when('instantiated', () => {
