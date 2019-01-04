@@ -1,6 +1,6 @@
 {
   "name": "basis-server",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "description": "The core framework, middleware and runtime components for the Basis web server",
   "main": "./dist/index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/basis-stack/basis#readme",
   "dependencies": {
-    "basis-components": "^0.0.14",
+    "basis-components": "^0.0.16",
     "body-parser": "^1.18.3",
     "classnames": "^2.2.6",
     "compression": "^1.7.3",
@@ -37,9 +37,7 @@
     "morgan": "^1.9.1",
     "object-assign-deep": "^0.4.0",
     "passport": "^0.4.0",
-    "pm2": "^3.2.2",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
+    "pm2": "^3.2.4",
     "reflect-metadata": "^0.1.12",
     "require-relative": "^0.8.7",
     "winston": "^2.4.4",
@@ -47,7 +45,11 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "sinon": "^7.1.1",
+    "sinon": "^7.2.2",
     "proxyquire": "^2.1.0"
+  },
+  "peerDependencies": {
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
   }
 }
