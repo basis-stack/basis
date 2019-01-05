@@ -24,7 +24,7 @@ export default (config, srcPath, destPath, renameOp) => {
     compiler = gulp.src([`${srcPath}${constants.globs.ts}`, `${srcPath}${constants.globs.tsx}`, constants.globs.notNodeModules, constants.globs.notTests])
                    .pipe(ts(tsConfig.compilerOptions));
 
-  } else if (checkPath('.babelrc')) {
+  } else if (checkPath('.babelrc') || checkPath('babel.config.js')) {
 
     // eslint-disable-next-line global-require, import/no-unresolved
     const babel = require('gulp-babel');
