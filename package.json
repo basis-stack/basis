@@ -35,7 +35,7 @@
   "dependencies": {
     "@material-ui/core": "^3.8.1",
     "axios": "^0.18.0",
-    "basis-client": "^0.0.24",
+    "basis-client": "^0.0.25",
     "basis-components": "^0.0.16",
     "basis-server": "^0.0.30",
     "connected-react-router": "^6.1.0",
@@ -60,7 +60,7 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "babel-plugin-istanbul": "^5.1.0",
-    "basis-build": "^0.0.34",
+    "basis-build": "^0.0.35",
     "basis-testing": "^0.0.6",
     "chai": "^4.2.0",
     "chai-enzyme": "^1.0.0-beta.1",

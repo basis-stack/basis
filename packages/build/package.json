@@ -1,6 +1,6 @@
 {
   "name": "basis-build",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "Build chain utilities and tasks for the Basis stack",
   "main": "./dist/index.js",
   "scripts": {
@@ -49,7 +49,7 @@
     "rxjs": "^5.5.11"
   },
   "peerDependencies": {
-    "gulp-babel": "^7.0.0",
+    "gulp-babel": "^8.0.0",
     "gulp-eslint": "^5.0.0",
     "gulp-tslint": "^8.1.3",
     "gulp-typescript": "^4.0.2",
