@@ -17,7 +17,7 @@
     "packages/build/**"
   ],
   "require": [
-    "babel-register"
+    "@babel/register"
   ],
   "all": true,
   "sourceMap": false,
