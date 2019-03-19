@@ -2,6 +2,7 @@ import 'colors';
 import gulp from 'gulp';
 import path from 'path';
 import assetConfig from 'basis-assets';
+import jsonfile from 'jsonfile';
 
 import assetTasks from './assets';
 import buildTasks from './build';
@@ -15,14 +16,17 @@ import publishTasks from './publish';
 import constants from './constants';
 import getEnvSettings from './settings';
 import { runtimeDir, checkPath } from './utilities';
+import { getDefaultBuildConfig, getDefaultWebpackConfig } from './config';
 
 export { logFileWrite, sassOptions } from './utilities';
 
-export const initialiseTasks = (config, packageJson, webpackConfig) => {
+export const initialiseTasks = (options = {}, webpackConfig = getDefaultWebpackConfig()) => {
 
-  // TODO: Add validate config step here (and throw error if anything missing)
-
+  const packageJson = jsonfile.readFileSync(path.join(runtimeDir, 'package.json'));
+  const config = getDefaultBuildConfig();
   const hasServer = checkPath('src/server');
+
+  config.options = { ...config.options, ...options };
 
   const context = {
     config: { ...config, ...assetConfig },

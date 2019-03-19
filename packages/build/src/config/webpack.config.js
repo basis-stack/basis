@@ -1,12 +1,14 @@
 import path from 'path';
 
+import { runtimeDir } from '../utilities';
+
 export default {
 
   entry: './src/client/index.js',
 
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, '../dist/public')
+    path: path.resolve(runtimeDir, 'dist/public')
   },
 
   module: {

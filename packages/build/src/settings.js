@@ -5,6 +5,8 @@ import relative from 'require-relative';
 
 export default (configDir) => {
 
+  // If no config dir, then just default settings.local
+
   const outputPrefix = '[settings]';
   const allSettings = {};
   const knownEnvironments = fs.readdirSync(configDir)

@@ -6,8 +6,9 @@ import compile from '../getCompiler';
 import constants from '../constants';
 import { logFileWrite } from '../utilities';
 import { packagesPath } from './utilities';
+import { getDefaultBuildConfig } from '../config';
 
-export default (config) => {
+export default (config = getDefaultBuildConfig()) => {
 
   const sourceDir = `${packagesPath}/**/src`;
   const destDir = `./${packagesPath}`;
