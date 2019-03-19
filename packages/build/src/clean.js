@@ -4,6 +4,7 @@ import path from 'path';
 
 import { logMessage, runtimeDir } from './utilities';
 import constants from './constants';
+import { getDefaultBuildConfig } from './config';
 
 const packagesPath = 'packages';
 const deletePaths = (logFileNames, paths, completePrefix = 'Deleted  ') => (
@@ -18,7 +19,7 @@ const deletePaths = (logFileNames, paths, completePrefix = 'Deleted  ') => (
   })
 );
 
-export const cleanPackages = (config, cb) => {
+export const cleanPackages = (config = getDefaultBuildConfig(), cb) => {
 
   const pathsToNuke = fs.readdirSync(path.join(runtimeDir, packagesPath))
                         .map(p => `./${packagesPath}/${p}/dist`);
