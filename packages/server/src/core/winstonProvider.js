@@ -13,7 +13,7 @@ function getWinstonOptions(config) {
 
   const options = { transports: [] };
 
-  if (config.shared.env === 'local') {
+  if (config.shared.env === 'local' || config.shared.env === 'default') {
     options.transports.push(new (winston.transports.Console)());
   } else {
     options.transports.push(new (winston.transports.File)({ filename: getLogFilePath(config) }));

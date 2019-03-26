@@ -3,30 +3,41 @@ import 'colors';
 import fs from 'fs';
 import relative from 'require-relative';
 
-export default (configDir) => {
+import defaultSettings from './config/settings.default';
 
-  // If no config dir, then just default settings.local
+export default (configDir) => {
 
   const outputPrefix = '[settings]';
   const allSettings = {};
-  const knownEnvironments = fs.readdirSync(configDir)
-                              .filter(item => item.includes('settings') && !item.includes('gulp.config.js'))
-                              .map(envFile => envFile.split('.')[1]);
 
-  knownEnvironments.forEach((env) => {
+  if (fs.existsSync(configDir)) {
 
-    try {
+    const knownEnvironments = fs.readdirSync(configDir)
+                                .filter(item => item.includes('settings.'))
+                                .map(envFile => envFile.split('.')[1]);
 
-      const envSetting = relative(`./settings.${env}.js`, configDir);
-      allSettings[env] = Object.assign(envSetting.default);
+    knownEnvironments.forEach((env) => {
 
-    } catch (e) {
+      try {
 
-      console.log(`${outputPrefix.yellow} ${'INVALID_ENV'.red}: Unable to import environment settings for '${env}'. Error: ${e.message}`);
-    }
-  });
+        const envSetting = relative(`./settings.${env}.js`, configDir);
+        allSettings[env] = { ...envSetting.default };
 
-  console.log(`${outputPrefix.yellow} Loaded environment settings for: ${knownEnvironments.join(', ').green}`);
+      } catch (e) {
+
+        console.log(`${outputPrefix.yellow} ${'INVALID_ENV'.red}: Unable to import environment settings for '${env}'. Error: ${e.message}`);
+      }
+    });
+  }
+
+  if (allSettings.default === undefined) {
+
+    allSettings.default = { ...defaultSettings };
+
+    // TODO: Log warning !!
+  }
+
+  console.log(`${outputPrefix.yellow} Loaded environment settings for: ${Object.keys(allSettings).join(', ').green}`);
 
   return allSettings;
 };

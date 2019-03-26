@@ -1,5 +1,27 @@
 import constants from './constants';
 
+const handleFatalError = (err, cb) => {
+
+  if (err) {
+
+    if (err.details) {
+
+      console.error(err.details);
+    }
+
+    cb(err);
+  }
+};
+
+const handleCompilationErrors = (stats, info, cb) => {
+
+  if (stats.hasErrors()) {
+
+    console.error(info.errors);
+    cb(new Error('Webpack compilation error(s)'));
+  }
+};
+
 export default ({ hasClient, webpackConfig, config, lint }) => {
 
   if (!hasClient) {
@@ -15,34 +37,15 @@ export default ({ hasClient, webpackConfig, config, lint }) => {
 
       // eslint-disable-next-line global-require, import/no-unresolved
       const webpack = require('webpack');
-
       webpack(webpackConfig, (err, stats) => {
 
         // Fatal webpack errors
-        if (err) {
-
-          if (err.details) {
-
-            console.error(err.details);
-          }
-
-          cb(err);
-        }
+        handleFatalError(err, cb);
 
         const info = stats.toJson();
 
         // Compilation errors
-        if (stats.hasErrors()) {
-
-          console.error(info.errors);
-          cb(new Error('Webpack compilation error(s)'));
-        }
-
-        // Compilation warnings
-        // if (stats.hasWarnings()) {
-
-        //   console.warn(info.warnings);
-        // }
+        handleCompilationErrors(stats, info, cb);
 
         if (config.options.logFileNames) {
 

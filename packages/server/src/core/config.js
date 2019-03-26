@@ -21,7 +21,7 @@ export default class Config {
 
   static createFromSettingsFile(filePath) {
 
-    const defaultEnv = 'local';
+    const defaultEnv = 'default';
     const runtimeEnv = getEnvVariable(constants.env.variables.node, defaultEnv);
     const allSettings = jsonfile.readFileSync(filePath);
     const version = Config.getAppVersion();
