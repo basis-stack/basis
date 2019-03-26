@@ -16,10 +16,6 @@ the('Config class', () => {
       default: {
         someDefaultSetting: 'someDefaultValue'
       },
-      local: {
-        foo: 'FooValue',
-        bar: 'BarValue'
-      },
       someEnv: {
         bla: 'BlaBlaValue'
       }
@@ -60,15 +56,9 @@ the('Config class', () => {
         expect(result.someDefaultSetting).to.equal('someDefaultValue');
       });
 
-      should('include local env settings', () => {
-
-        expect(result.foo).to.equal(stubSettingsJson.local.foo);
-        expect(result.bar).to.equal(stubSettingsJson.local.bar);
-      });
-
       should('include env name', () => {
 
-        expect(result.shared.env).to.equal('local');
+        expect(result.shared.env).to.equal('default');
       });
     });
 
