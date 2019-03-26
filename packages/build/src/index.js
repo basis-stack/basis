@@ -12,7 +12,7 @@ import createTasks from './create';
 import lintTasks from './lint';
 import packagesTasks from './packages';
 import serverTasks from './server';
-import publishTasks from './publish';
+// import publishTasks from './publish';
 import constants from './constants';
 import getEnvSettings from './settings';
 import { runtimeDir, checkPath } from './utilities';
@@ -20,15 +20,12 @@ import { getDefaultBuildConfig, getDefaultWebpackConfig } from './config';
 
 export { logFileWrite, sassOptions } from './utilities';
 
-export const initialiseTasks = (options = {}, webpackConfig = getDefaultWebpackConfig()) => {
+const getContext = (config, webpackConfig) => {
 
-  const packageJson = jsonfile.readFileSync(path.join(runtimeDir, 'package.json'));
-  const config = getDefaultBuildConfig();
   const hasServer = checkPath('src/server');
+  const packageJson = jsonfile.readFileSync(path.join(runtimeDir, 'package.json'));
 
-  config.options = { ...config.options, ...options };
-
-  const context = {
+  return {
     config: { ...config, ...assetConfig },
     runtimeDir,
     envSettings: hasServer ? getEnvSettings(path.join(runtimeDir, 'config')) : undefined,
@@ -39,11 +36,23 @@ export const initialiseTasks = (options = {}, webpackConfig = getDefaultWebpackC
     hasClient: checkPath('src/client'),
     lint: config.options.lint !== undefined ? config.options.lint : true
   };
+};
 
-  const taskSources = [assetTasks, buildTasks, cleanTasks, clientTasks, createTasks, lintTasks, packagesTasks, serverTasks, publishTasks];
+export const initialiseTasks = (options = {}, webpackConfig = getDefaultWebpackConfig()) => {
+
+  const config = getDefaultBuildConfig();
+  config.options = { ...config.options, ...options };
+
+  const context = getContext(config, webpackConfig);
+  const taskSources = [
+    assetTasks, buildTasks, cleanTasks, clientTasks,
+    createTasks, lintTasks, packagesTasks, serverTasks /* publishTasks */
+  ];
+
   const allTasks = taskSources.map(ts => ts(context))
                               .reduce((acc, cur) => acc.concat(cur), []);
 
+  // TODO: Revise this for Gulp 4
   allTasks.forEach((t) => {
 
     switch (true) {

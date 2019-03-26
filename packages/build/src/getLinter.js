@@ -3,6 +3,12 @@ import gulp from 'gulp';
 import constants from './constants';
 import { checkPath } from './utilities';
 
+const runLint = (sources, lintOP) => (
+
+  gulp.src(sources.concat([constants.globs.notDist]))
+      .pipe(lintOP)
+);
+
 export default (srcPath) => {
 
   let linter;
@@ -15,20 +21,20 @@ export default (srcPath) => {
 
     // eslint-disable-next-line global-require, import/no-unresolved
     const eslint = require('gulp-eslint');
+    const lintOp = eslint();
 
-    linter = gulp.src([`${srcPath}${constants.globs.js}`, `${srcPath}${constants.globs.jsx}`, constants.globs.notDist])
-                 .pipe(eslint())
-                 .pipe(eslint.format())
-                 .pipe(eslint.failOnError());
+    linter = runLint([`${srcPath}${constants.globs.js}`, `${srcPath}${constants.globs.jsx}`], lintOp)
+               .pipe(eslint.format())
+               .pipe(eslint.failOnError());
 
   } else if (checkPath('tslint.json')) {
 
     // eslint-disable-next-line global-require, import/no-unresolved
     const tslint = require('gulp-tslint');
+    const lintOp = tslint({ formatter: 'prose' });
 
-    linter = gulp.src([`${srcPath}${constants.globs.ts}`, `${srcPath}${constants.globs.tsx}`, constants.globs.notDist])
-                 .pipe(tslint({ formatter: 'prose' }))
-                 .pipe(tslint.report());
+    linter = runLint([`${srcPath}${constants.globs.ts}`, `${srcPath}${constants.globs.tsx}`], lintOp)
+               .pipe(tslint.report());
 
   } else throw new Error('No valid lint config found');
 

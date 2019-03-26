@@ -14,7 +14,7 @@ import compile from './getCompiler';
 
 const themeFileName = 'server-theme.scss';
 
-export default ({ config, hasServer, envSettings, lint }) => {
+export default ({ config, hasServer, envSettings, lint, packageJson }) => {
 
   const createServerTheme = {
 
@@ -94,7 +94,7 @@ export default ({ config, hasServer, envSettings, lint }) => {
     key: constants.taskKeys.compileServer,
     func: () => {
 
-      const startupDestFileName = `start-${envSettings.default.shared.appName}`;
+      const startupDestFileName = `start-${packageJson.name}`;
       const startupDestDir = `${config.paths.build}/bin/`;
       const mainSrc = 'require(\'basis-server\').main();';
 

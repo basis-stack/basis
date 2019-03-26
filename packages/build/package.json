@@ -1,6 +1,6 @@
 {
   "name": "basis-build",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "description": "Build chain utilities and tasks for the Basis stack",
   "main": "./dist/index.js",
   "scripts": {

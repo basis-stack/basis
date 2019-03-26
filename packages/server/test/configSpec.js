@@ -45,7 +45,7 @@ the('Config class', () => {
 
       before(() => {
 
-        stubGetEnvVariable.returns('local');
+        stubGetEnvVariable.returns('default');
 
         result = Config.createFromSettingsFile(settingsFilePath);
       });
