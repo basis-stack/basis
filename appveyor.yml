@@ -12,7 +12,7 @@ install:
 test_script:
   - node --version
   - npm --version
-  - yarn --versions
+  - yarn --version
   - npm run link:packages
   - npm run build
   - npm run coverage
