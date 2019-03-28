@@ -7,11 +7,12 @@ platform:
 
 install:
   - ps: Install-Product node $env:nodejs_version
-  - npm install
+  - yarn
 
 test_script:
   - node --version
   - npm --version
+  - yarn --versions
   - npm run link:packages
   - npm run build
   - npm run coverage
