@@ -4,19 +4,11 @@ import path from 'path';
 import assetConfig from 'basis-assets';
 import jsonfile from 'jsonfile';
 
-import assetTasks from './assets';
-import buildTasks from './build';
-import cleanTasks from './clean';
-import clientTasks from './client';
-import createTasks from './create';
-import lintTasks from './lint';
-import packagesTasks from './packages';
-import serverTasks from './server';
-// import publishTasks from './publish';
-import constants from './constants';
+import constants from './tasks/constants';
 import getEnvSettings from './settings';
 import { runtimeDir, checkPath } from './utilities';
 import { getDefaultBuildConfig, getDefaultWebpackConfig } from './config';
+import taskSources from './tasks';
 
 export { logFileWrite, sassOptions } from './utilities';
 
@@ -44,11 +36,6 @@ export const initialiseTasks = (options = {}, webpackConfig = getDefaultWebpackC
   config.options = { ...config.options, ...options };
 
   const context = getContext(config, webpackConfig);
-  const taskSources = [
-    assetTasks, buildTasks, cleanTasks, clientTasks,
-    createTasks, lintTasks, packagesTasks, serverTasks /* publishTasks */
-  ];
-
   const allTasks = taskSources.map(ts => ts(context))
                               .reduce((acc, cur) => acc.concat(cur), []);
 

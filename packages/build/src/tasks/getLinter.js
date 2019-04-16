@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 
 import constants from './constants';
-import { checkPath } from './utilities';
+import { checkPath } from './../utilities';
 
 const runLint = (sources, lintOP) => (
 

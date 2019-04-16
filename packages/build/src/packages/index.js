@@ -1,6 +1,6 @@
 import Rx from 'rxjs/Rx';
 
-import constants from '../constants';
+import constants from '../tasks/constants';
 import publish from './publish';
 import link from './link';
 import { logMessage, getPackages } from './utilities';

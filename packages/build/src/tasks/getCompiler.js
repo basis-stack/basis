@@ -5,7 +5,7 @@ import jsonfile from 'jsonfile';
 import rename from 'gulp-rename';
 
 import constants from './constants';
-import { checkPath, logFileWrite, runtimeDir } from './utilities';
+import { checkPath, logFileWrite, runtimeDir } from './../utilities';
 
 const compile = (sources, compileOp) => (
 

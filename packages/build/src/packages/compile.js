@@ -2,8 +2,8 @@ import gulp from 'gulp';
 import merge from 'merge-stream';
 import rename from 'gulp-rename';
 
-import compile from '../getCompiler';
-import constants from '../constants';
+import compile from '../tasks/getCompiler';
+import constants from '../tasks/constants';
 import { logFileWrite } from '../utilities';
 import { packagesPath } from './utilities';
 import { getDefaultBuildConfig } from '../config';
