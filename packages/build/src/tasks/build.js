@@ -1,5 +1,3 @@
-import runSequence from 'run-sequence';
-
 import constants from './constants';
 
 const keys = constants.taskKeys;
@@ -39,18 +37,12 @@ export default ({ hasServer, hasClient, hasPackages }) => {
 
     /* Full clean and rebuild everything */
     key: keys.buildFull,
-    func: (cb) => {
-
-      runSequence(keys.clean, keys.buildAll, keys.finalise, cb);
-    }
+    sequence: [keys.clean, keys.buildAll, keys.finalise]
   }, {
 
     /* Incremental build of everything */
     key: keys.buildIncremental,
-    func: (cb) => {
-
-      runSequence(keys.buildAll, cb);
-    }
+    sequence: [keys.buildAll]
   }, {
 
     /* Build only static assets (for public folder) */

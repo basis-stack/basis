@@ -28,6 +28,7 @@ export default {
     linkPackages: 'link:packages',
     unlinkPackages: 'unlink:packages',
     compilePackages: 'compile:packages',
+    preparePackages: 'prepare:packages',
     publishPackages: 'publish:packages',
 
     // Server

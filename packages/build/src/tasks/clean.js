@@ -2,9 +2,9 @@ import del from 'del';
 import fs from 'fs-extra';
 import path from 'path';
 
-import { logMessage, runtimeDir } from './../utilities';
+import { logMessage, runtimeDir } from '../utilities';
 import constants from './constants';
-import { getDefaultBuildConfig } from './../config';
+import { getDefaultBuildConfig } from '../config';
 
 const packagesPath = 'packages';
 const deletePaths = (logFileNames, paths, completePrefix = 'Deleted  ') => (
