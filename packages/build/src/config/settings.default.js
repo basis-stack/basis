@@ -1,11 +1,7 @@
 export default {
 
   // Shared settings across client & server
-  shared: {
-
-    // DERIVE FROM package.json
-    // appName: 'basis'
-  },
+  shared: {},
 
   // Server specific settings
   server: {
@@ -13,9 +9,5 @@ export default {
   },
 
   // Client specific settings
-  client: {
-
-    // DERIVE FROM package.json
-    // appDisplayName: 'Basis'
-  }
+  client: {}
 };

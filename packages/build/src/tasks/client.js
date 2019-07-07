@@ -35,6 +35,8 @@ export default ({ hasClient, webpackConfig, config, lint }) => {
     key: constants.taskKeys.bundleClient,
     func: (cb) => {
 
+      // NOTE: Dynamically import webpack as it is a peer dependency
+      // TODO: Put try / catch around this (with friendly message) in case is missing !!
       // eslint-disable-next-line global-require, import/no-unresolved
       const webpack = require('webpack');
       webpack(webpackConfig, (err, stats) => {

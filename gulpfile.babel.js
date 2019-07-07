@@ -1,8 +1,8 @@
-import gulp from 'gulp';
+import { series, task } from 'gulp';
 import { initialiseTasks } from 'basis-build';
 
-const options = { logFileNames: false };
-const tasks = initialiseTasks(options);
+const options = { logFileNames: true };
+initialiseTasks(options);
 
 // Default gulp task
-gulp.task('default', [tasks.buildFull]);
+task('default', series(['build:full']));

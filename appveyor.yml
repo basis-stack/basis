@@ -13,8 +13,8 @@ test_script:
   - node --version
   - npm --version
   - yarn --version
-  - npm run link:packages
-  - npm run build
-  - npm run coverage
+  - yarn link:packages
+  - yarn build
+  - yarn coverage
 
 build: off
