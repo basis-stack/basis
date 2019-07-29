@@ -8,7 +8,7 @@ import replace from 'gulp-replace';
 import sass from 'gulp-sass';
 import cleanCSS from 'gulp-clean-css';
 
-import { getStaticDir, logFileWrite, sassOptions } from './utilities';
+import { getStaticDir, logFileWrite, sassOptions } from '../utilities';
 import constants from './constants';
 import compile from './getCompiler';
 

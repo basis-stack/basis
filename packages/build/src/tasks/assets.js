@@ -2,7 +2,7 @@ import changed from 'gulp-changed';
 import gulp from 'gulp';
 import _ from 'lodash';
 
-import { getStaticDir, logFileWrite } from './utilities';
+import { getStaticDir, logFileWrite } from '../utilities';
 import constants from './constants';
 
 export default ({ hasClient, config }) => [{

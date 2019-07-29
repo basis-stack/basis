@@ -1,4 +1,4 @@
-import { writeJson } from './utilities';
+import { writeJson } from '../utilities';
 import constants from './constants';
 
 export default ({ hasServer, hasClient, envSettings, config, packageJson }) => {

@@ -9,7 +9,7 @@ const defaultPaths = {
   publish: './publish',
   server: './src/server',
 
-  // TODO: Depricate all theme / MDC stuff !!
+  // TODO: Depricate all theme / MDC stuff (hence this temp dir not needed) !!
   temp: './temp'
 };
 

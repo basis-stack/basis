@@ -1,10 +1,12 @@
 import Rx from 'rxjs/Rx';
 
-import constants from '../constants';
+import constants from '../tasks/constants';
 import publish from './publish';
 import link from './link';
 import { logMessage, getPackages } from './utilities';
 import compilePackagesFunc from './compile';
+
+const allPackages = getPackages();
 
 const runCmdForPackages = (packages, cmdOp, cb) => {
 
@@ -22,6 +24,11 @@ const runCmdForPackages = (packages, cmdOp, cb) => {
     });
 };
 
+export const linkPackages = (cb) => {
+
+  runCmdForPackages(allPackages, p => link(p), cb);
+};
+
 export default ({ hasPackages, config, lint }) => {
 
   if (!hasPackages) {
@@ -29,7 +36,6 @@ export default ({ hasPackages, config, lint }) => {
     return [];
   }
 
-  const packages = getPackages();
   const compilePackages = {
 
     /* Compile nested basis packages */
@@ -49,23 +55,20 @@ export default ({ hasPackages, config, lint }) => {
       key: constants.taskKeys.publishPackages,
       func: (cb) => {
 
-        runCmdForPackages(packages, p => publish(p), cb);
+        runCmdForPackages(allPackages, p => publish(p), cb);
       }
     }, {
 
       /* Link sub packages */
       key: constants.taskKeys.linkPackages,
-      func: (cb) => {
-
-        runCmdForPackages(packages, p => link(config, p), cb);
-      }
+      func: linkPackages
     }, {
 
       /* Unlink sub packages */
       key: constants.taskKeys.unlinkPackages,
       func: (cb) => {
 
-        runCmdForPackages(packages, p => link(config, p, false), cb);
+        runCmdForPackages(allPackages, p => link(p, false), cb);
       }
     }
   ];

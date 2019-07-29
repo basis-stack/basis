@@ -1,22 +1,14 @@
 import 'colors';
-import gulp from 'gulp';
 import path from 'path';
 import assetConfig from 'basis-assets';
 import jsonfile from 'jsonfile';
+import _ from 'lodash';
 
-import assetTasks from './assets';
-import buildTasks from './build';
-import cleanTasks from './clean';
-import clientTasks from './client';
-import createTasks from './create';
-import lintTasks from './lint';
-import packagesTasks from './packages';
-import serverTasks from './server';
-// import publishTasks from './publish';
-import constants from './constants';
 import getEnvSettings from './settings';
 import { runtimeDir, checkPath } from './utilities';
 import { getDefaultBuildConfig, getDefaultWebpackConfig } from './config';
+import taskSources from './tasks';
+import mapToGulp from './tasks/mapToGulp';
 
 export { logFileWrite, sassOptions } from './utilities';
 
@@ -44,38 +36,10 @@ export const initialiseTasks = (options = {}, webpackConfig = getDefaultWebpackC
   config.options = { ...config.options, ...options };
 
   const context = getContext(config, webpackConfig);
-  const taskSources = [
-    assetTasks, buildTasks, cleanTasks, clientTasks,
-    createTasks, lintTasks, packagesTasks, serverTasks /* publishTasks */
-  ];
-
   const allTasks = taskSources.map(ts => ts(context))
                               .reduce((acc, cur) => acc.concat(cur), []);
 
-  // TODO: Revise this for Gulp 4
-  allTasks.forEach((t) => {
+  mapToGulp(allTasks);
 
-    switch (true) {
-
-      case t.dependencies === undefined: {
-
-        gulp.task(t.key, t.func);
-        break;
-      }
-
-      case t.func === undefined: {
-
-        gulp.task(t.key, t.dependencies);
-        break;
-      }
-
-      default: {
-
-        gulp.task(t.key, t.dependencies, t.func);
-        break;
-      }
-    }
-  });
-
-  return constants.taskKeys;
+  return allTasks.map(t => t.key);
 };
