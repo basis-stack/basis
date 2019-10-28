@@ -14,17 +14,17 @@ const runCmdForPackages = (packages, cmdOp, cb) => {
     .from(packages.map(cmdOp))
     .mergeAll()
     .toArray()
-    .subscribe((results) => {
+    .subscribe(results => {
 
-      results.forEach((r) => { logMessage(r.message, r.success); });
+      results.forEach(r => { logMessage(r.message, r.success); });
       cb();
-    }, (err) => {
+    }, err => {
 
       cb(err);
     });
 };
 
-export const linkPackages = (cb) => {
+export const linkPackages = cb => {
 
   runCmdForPackages(allPackages, p => link(p), cb);
 };
@@ -53,7 +53,7 @@ export default ({ hasPackages, config, lint }) => {
 
       /* Publish compiled packages to npm registry */
       key: constants.taskKeys.publishPackages,
-      func: (cb) => {
+      func: cb => {
 
         runCmdForPackages(allPackages, p => publish(p), cb);
       }
@@ -66,7 +66,7 @@ export default ({ hasPackages, config, lint }) => {
 
       /* Unlink sub packages */
       key: constants.taskKeys.unlinkPackages,
-      func: (cb) => {
+      func: cb => {
 
         runCmdForPackages(allPackages, p => link(p, false), cb);
       }

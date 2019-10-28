@@ -33,7 +33,7 @@ class Shell extends React.Component {
                    open={layout.drawerOpen}
                    onClose={onToggleDrawer}>
           <SettingsPanel onCancel={onToggleDrawer}
-                         onSave={(data) => { console.log(data); onToggleDrawer(); }} />
+                         onSave={data => { console.log(data); onToggleDrawer(); }} />
         </MuiDrawer>
         <Section>
           <MuiTypography variant="display3" gutterBottom>

@@ -9,7 +9,7 @@ export default (controllerClass, controllerInstance, router) => {
   const methods = Object.getOwnPropertyNames(controllerClass.prototype)
                         .filter(m => m !== 'constructor' && Reflect.hasMetadata('http:path', controllerInstance, m));
 
-  methods.forEach((name) => {
+  methods.forEach(name => {
 
     const specificPath = Reflect.getMetadata('http:path', controllerInstance, name);
     const specificMiddleware = Reflect.hasMetadata('http:middleware', controllerInstance, name) ?

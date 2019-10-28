@@ -7,7 +7,7 @@ export default (app, container, routes) => {
   const logger = container.resolve(container.instanceKeys.logger);
   const router = express.Router();
 
-  routes.forEach((r) => {
+  routes.forEach(r => {
 
     // TODO: Should each route (module) get its own (isolated) Router instance ?
     // i.e.: express.Router() & app.use(router) within the loop ?

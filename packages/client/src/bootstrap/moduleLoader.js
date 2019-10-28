@@ -1,9 +1,9 @@
-export default (modules) => {
+export default modules => {
 
   const reducers = {};
 
   modules.filter(m => m.reducers !== undefined)
-         .forEach((m) => {
+         .forEach(m => {
 
            reducers[m.key] = m.reducers;
          });

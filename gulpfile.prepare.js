@@ -7,7 +7,7 @@ import { linkPackages } from './packages/build/src/packages';
 
 const keys = constants.taskKeys;
 
-task(keys.cleanPackages, (cb) => { cleanPackages(undefined, cb); });
+task(keys.cleanPackages, cb => { cleanPackages(undefined, cb); });
 task(keys.compilePackages, () => compilePackages(undefined));
 task(keys.preparePackages, series(keys.cleanPackages, keys.compilePackages));
 task(keys.linkPackages, linkPackages);

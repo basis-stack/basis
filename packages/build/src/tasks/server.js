@@ -15,7 +15,7 @@ import compile from './getCompiler';
 const getSassServerStream = (config, hasServer) => ({
 
   /* SASS Server */
-  key: constants.taskKeys.sassServer, 
+  key: constants.taskKeys.sassServer,
   func: () => {
 
     const dest = `${getStaticDir(config)}/styles`;

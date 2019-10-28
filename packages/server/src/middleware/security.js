@@ -1,6 +1,6 @@
 import helmet from 'helmet';
 
-export default (app) => {
+export default app => {
 
   app.use(helmet());
 };

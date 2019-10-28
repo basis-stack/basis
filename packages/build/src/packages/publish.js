@@ -5,7 +5,7 @@ export default packageDetails => (
   new Promise((resolve, reject) => {
 
     exec(`cd ${packagesPath}/${packageDetails.dir} && npm publish`)
-      .then((result) => {
+      .then(result => {
 
         resolve({
 
@@ -13,7 +13,7 @@ export default packageDetails => (
           message: `Published package ${result.stdout.replace('\n', '').replace('+ ', '').green}`
         });
       })
-      .catch((err) => {
+      .catch(err => {
 
         if (err.message.includes('code E403') && (err.message.includes('cannot publish over the previously published') ||
                                                   err.message.includes('cannot modify pre-existing version'))) {

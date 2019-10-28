@@ -20,7 +20,7 @@ export default (packageDetails, link = true) => {
           message
         });
       })
-      .catch((err) => {
+      .catch(err => {
 
         reject(err);
       });

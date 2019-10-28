@@ -15,7 +15,7 @@ export default class Logger {
   get logStream() {
 
     return {
-      write: (message) => {
+      write: message => {
         this.info(`[REQUEST] ${message.replace('\n', '')}`);
       }
     };

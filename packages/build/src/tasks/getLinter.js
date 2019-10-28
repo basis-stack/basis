@@ -9,7 +9,7 @@ const runLint = (sources, lintOP) => (
       .pipe(lintOP)
 );
 
-export default (srcPath) => {
+export default srcPath => {
 
   let linter;
 

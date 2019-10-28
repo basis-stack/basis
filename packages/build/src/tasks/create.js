@@ -13,12 +13,12 @@ export default ({ hasServer, hasClient, envSettings, config, packageJson }) => {
     /* Prepare Environment settings file */
     key: constants.taskKeys.createEnvSettings,
     dependencies: [constants.taskKeys.prepareBuild],
-    func: (cb) => {
+    func: cb => {
 
       const outputSettings = Object.assign(envSettings);
 
       Object.keys(envSettings)
-            .forEach((env) => {
+            .forEach(env => {
 
               if (outputSettings[env].server !== undefined) {
 
@@ -47,7 +47,7 @@ export default ({ hasServer, hasClient, envSettings, config, packageJson }) => {
     /* Prepare package.json for the server / runtime */
     key: constants.taskKeys.createPackageJson,
     dependencies: [constants.taskKeys.prepareBuild],
-    func: (cb) => {
+    func: cb => {
 
       const outputPackageJson = { ...packageJson };
       const keysToNuke = [
@@ -55,7 +55,7 @@ export default ({ hasServer, hasClient, envSettings, config, packageJson }) => {
         'keywords', 'repository', 'description', 'private', 'workspaces'
       ];
 
-      keysToNuke.forEach((ktn) => { delete outputPackageJson[ktn]; });
+      keysToNuke.forEach(ktn => { delete outputPackageJson[ktn]; });
 
       let depsToNuke = [
         'basis-client', 'basis-components', 'basis-testing', 'history',
@@ -69,7 +69,7 @@ export default ({ hasServer, hasClient, envSettings, config, packageJson }) => {
         depsToNuke = depsToNuke.concat(config.options.runtimeDependenciesToExclude);
       }
 
-      depsToNuke.forEach((d) => { delete outputPackageJson.dependencies[d]; });
+      depsToNuke.forEach(d => { delete outputPackageJson.dependencies[d]; });
 
       // TODO: Add 'scripts' section with tweaked 'start', 'dev', 'production' scripts (for build dir)
 

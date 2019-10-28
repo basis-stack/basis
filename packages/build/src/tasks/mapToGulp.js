@@ -1,8 +1,8 @@
 import { parallel, series, task } from 'gulp';
 
-export default (tasks) => {
+export default tasks => {
 
-  tasks.forEach((t) => {
+  tasks.forEach(t => {
 
     switch (true) {
 
