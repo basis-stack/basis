@@ -29,7 +29,7 @@ const middlewareDecorator = middleware => (
 
 export const Controller = rootPath => (
 
-  (target) => {
+  target => {
 
     Reflect.defineMetadata('http:rootPath', rootPath, target);
 

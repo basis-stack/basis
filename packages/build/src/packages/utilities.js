@@ -18,7 +18,7 @@ export const logMessage = (message, success = false) => {
 export const getPackages = () => (
 
   fs.readdirSync(path.join(runtimeDir, packagesPath))
-    .map((p) => {
+    .map(p => {
 
       const packageJson = jsonfile.readFileSync(path.join(runtimeDir, `${packagesPath}/${p}/package.json`));
 

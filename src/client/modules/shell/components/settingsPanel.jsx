@@ -5,7 +5,7 @@ import MuiButton from '@material-ui/core/Button';
 import MuiTypography from '@material-ui/core/Typography';
 import MuiDivider from '@material-ui/core/Divider';
 
-const styles = (theme) => {
+const styles = theme => {
 
   const padding = theme.spacing.unit * 2;
 

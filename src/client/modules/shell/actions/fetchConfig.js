@@ -5,11 +5,11 @@ import { core } from 'basis-client/modules';
 export default () => dispatch => (
 
   axios.get('/config')
-       .then((res) => {
+       .then(res => {
 
          dispatch(core.actions.initialise(res.data));
        })
-       .catch((err) => {
+       .catch(err => {
 
          throw (err);
        })

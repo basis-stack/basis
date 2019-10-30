@@ -12,7 +12,7 @@ export default (config = getDefaultBuildConfig()) => {
 
   const sourceDir = `${packagesPath}/**/src`;
   const destDir = `./${packagesPath}`;
-  const renameOp = (p) => { p.dirname = p.dirname.replace('src', 'dist'); };
+  const renameOp = p => { p.dirname = p.dirname.replace('src', 'dist'); };
 
   const sourceStream = compile(config, sourceDir, destDir, renameOp);
 

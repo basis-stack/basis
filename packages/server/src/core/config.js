@@ -10,7 +10,7 @@ export default class Config {
   constructor(settings) {
 
     Object.keys(settings)
-          .forEach((prop) => { this[prop] = settings[prop]; });
+          .forEach(prop => { this[prop] = settings[prop]; });
   }
 
   static getAppVersion() {

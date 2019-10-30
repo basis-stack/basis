@@ -1,12 +1,12 @@
 import _ from 'lodash';
 
 // TODO: Add properties in here also
-export const createStubObject = (methods) => {
+export const createStubObject = methods => {
 
   const targetMembers = _.isString(methods) ? [methods] : methods;
   const stubObject = {};
 
-  targetMembers.forEach((m) => { stubObject[m] = () => {}; });
+  targetMembers.forEach(m => { stubObject[m] = () => {}; });
 
   return stubObject;
 };
@@ -17,7 +17,7 @@ export const getStubContainer = (stubConfig, stubLogger) => {
   const loggerKey = 'logger';
 
   return {
-    resolve: (key) => {
+    resolve: key => {
       // TODO: Can this switching be done using sinon alone ? withArgs or similar ?
       if (key === configKey) { return stubConfig; }
       if (key === loggerKey) { return stubLogger; }

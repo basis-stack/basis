@@ -33,7 +33,7 @@ export default (container, routes) => {
   const server = http.createServer(app);
 
   server.listen(config.server.webServerPort);
-  server.on('error', (error) => { onError(config, logger, error, () => { terminate(1); }); });
+  server.on('error', error => { onError(config, logger, error, () => { terminate(1); }); });
   server.on('listening', () => { onListening(config, logger); });
 
   return server;

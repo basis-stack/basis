@@ -27,7 +27,7 @@ const getModule = (key, logger) => {
   return module === undefined ? undefined : { key, ...module };
 };
 
-export default (container) => {
+export default container => {
 
   const logger = container.resolve(container.instanceKeys.logger);
   const modulesPath = 'modules';

@@ -33,7 +33,7 @@ export default ({ hasClient, webpackConfig, config, lint }) => {
 
     /* Bundle client code & assets with Webpack */
     key: constants.taskKeys.bundleClient,
-    func: (cb) => {
+    func: cb => {
 
       // NOTE: Dynamically import webpack as it is a peer dependency
       // TODO: Put try / catch around this (with friendly message) in case is missing !!
