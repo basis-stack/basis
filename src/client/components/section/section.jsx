@@ -12,7 +12,7 @@ const styles = theme => ({
   })
 });
 
-const Section = (props) => {
+const Section = props => {
 
   const { classes, children } = props;
 

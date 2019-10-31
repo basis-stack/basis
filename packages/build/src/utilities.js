@@ -21,7 +21,7 @@ export const logMessage = (action, actionContext, theConsole = console) => {
   theConsole.log(`${logMessagePrefix}${action}${actionContext.magenta}`);
 };
 
-export const logFileWrite = (config) => {
+export const logFileWrite = config => {
 
   const getMessage = filepath => ` Writing ${filepath}`;
 
@@ -35,7 +35,7 @@ export const writeJson = (config, filepath, object, callback) => {
     logMessage('Creating ', filepath);
   }
 
-  jsonfile.writeFile(filepath, object, { spaces: 2 }, (err) => {
+  jsonfile.writeFile(filepath, object, { spaces: 2 }, err => {
 
     if (err) { throw err; }
 

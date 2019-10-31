@@ -18,9 +18,9 @@ export default (container, server, channels) => {
 
   wsServer.on('connection', (ws, req) => {
 
-    ws.on('error', (error) => { onSocketError(logger, error); });
+    ws.on('error', error => { onSocketError(logger, error); });
 
-    channels.forEach((c) => {
+    channels.forEach(c => {
 
       c.init(container, ws, req);
     });

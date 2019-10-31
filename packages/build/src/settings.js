@@ -5,7 +5,7 @@ import relative from 'require-relative';
 
 import defaultSettings from './config/settings.default';
 
-export default (configDir) => {
+export default configDir => {
 
   const outputPrefix = '[settings]';
   const allSettings = {};
@@ -16,7 +16,7 @@ export default (configDir) => {
                                 .filter(item => item.includes('settings.'))
                                 .map(envFile => envFile.split('.')[1]);
 
-    knownEnvironments.forEach((env) => {
+    knownEnvironments.forEach(env => {
 
       try {
 

@@ -5,7 +5,7 @@ import { the, when, withScenario, should } from '../../testing/src';
 
 import getWinston from '../src/core/winstonProvider';
 
-const assertInstance = (result) => {
+const assertInstance = result => {
 
   expect(result).to.not.be.undefined;
   expect(typeof result.info).to.equal('function');

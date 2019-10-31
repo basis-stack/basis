@@ -2,7 +2,7 @@ import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 // import { connect } from 'react-redux';
 
-const convertToMuiTheme = (basisTheme) => {
+const convertToMuiTheme = basisTheme => {
 
   const muiTheme = {
 
@@ -28,7 +28,7 @@ const convertToMuiTheme = (basisTheme) => {
   return muiTheme;
 };
 
-const getMuiTheme = (themeConfig) => {
+const getMuiTheme = themeConfig => {
 
   if (themeConfig === undefined) {
 

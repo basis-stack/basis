@@ -4,7 +4,7 @@ import path from 'path';
 
 import { getRootPath } from '../core/utilities';
 
-export default (app) => {
+export default app => {
 
   // TODO: Add a check for PROD env, and don't use compression if so (as Nginx will more efficiently do in prod envs)
   app.use(compression());

@@ -9,7 +9,9 @@
 }
 
 .material-icons,
-.fa {
+.far,
+.fas,
+.fab {
 
   @include md-size(18);
   @include md-size(24);

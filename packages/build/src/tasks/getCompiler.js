@@ -5,7 +5,7 @@ import jsonfile from 'jsonfile';
 import rename from 'gulp-rename';
 
 import constants from './constants';
-import { checkPath, logFileWrite, runtimeDir } from './utilities';
+import { checkPath, logFileWrite, runtimeDir } from '../utilities';
 
 const compile = (sources, compileOp) => (
 
@@ -15,15 +15,17 @@ const compile = (sources, compileOp) => (
 
 export default (config, srcPath, destPath, renameOp) => {
 
-  // TODO: Should this switch be done using a config switch instead ?
-  //       Convention alone could fail in certain scenarios (like if both files present, etc)
-
   const tsConfigFile = 'tsconfig.json';
   let compiler;
 
+  // TODO: Should this switch be done using a config switch instead ?
+  //       Convention alone could fail in certain scenarios (like if both files present, etc)
   if (checkPath(tsConfigFile)) {
 
     const tsConfig = jsonfile.readFileSync(path.join(runtimeDir, tsConfigFile));
+
+    // NOTE: Dynamically import TypeScript compiler (gulp-typescript) as it is a peer dependency
+    // TODO: Put try / catch around this (with friendly message) in case is missing !!
     // eslint-disable-next-line global-require, import/no-unresolved
     const ts = require('gulp-typescript');
     const compileOp = ts(tsConfig.compilerOptions);
@@ -32,6 +34,8 @@ export default (config, srcPath, destPath, renameOp) => {
 
   } else if (checkPath('.babelrc') || checkPath('babel.config.js')) {
 
+    // NOTE: Dynamically import ES6 compiler (gulp-babel) as it is a peer dependency
+    // TODO: Put try / catch around this (with friendly message) in case is missing !!
     // eslint-disable-next-line global-require, import/no-unresolved
     const babel = require('gulp-babel');
     const compileOp = babel();

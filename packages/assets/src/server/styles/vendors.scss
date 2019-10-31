@@ -3,16 +3,13 @@
 // Fonts
 @import 'roboto-fontface/css/roboto/sass/roboto-fontface';
 @import 'material-design-icons-iconfont/src/material-design-icons';
-@import 'font-awesome/scss/font-awesome';
+@import '@fortawesome/fontawesome-free/scss/fontawesome';
+@import '@fortawesome/fontawesome-free/scss/regular';
+@import '@fortawesome/fontawesome-free/scss/solid';
+@import '@fortawesome/fontawesome-free/scss/brands';
 
 // Icons
 @import '_icons';
-
-// Typography
-@import '@material/typography/mdc-typography';
-
-// Theme
-@import '@material/theme/mdc-theme';
 
 // Layout
 // @import 'flexboxgrid/css/flexboxgrid.min';

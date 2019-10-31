@@ -1,6 +1,6 @@
 import { exec, packagesPath } from './utilities';
 
-export default (config, packageDetails, link = true) => {
+export default (packageDetails, link = true) => {
 
   const cmd = link ?
     `cd ${packagesPath}/${packageDetails.dir} && yarn link && cd ../.. && yarn link ${packageDetails.name}` :
@@ -12,7 +12,7 @@ export default (config, packageDetails, link = true) => {
   return new Promise((resolve, reject) => {
 
     exec(cmd)
-      .then((result) => {
+      .then(() => {
 
         resolve({
 
@@ -20,7 +20,7 @@ export default (config, packageDetails, link = true) => {
           message
         });
       })
-      .catch((err) => {
+      .catch(err => {
 
         reject(err);
       });

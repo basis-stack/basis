@@ -34,7 +34,7 @@ the('logging middleware initialiser', () => {
     expect(result).to.equal(expectedResult);
   };
 
-  const assertFormat = (expectedFormat) => {
+  const assertFormat = expectedFormat => {
 
     expect(stubMorgan.args[0][0]).to.be.equal(expectedFormat);
   };
@@ -44,7 +44,7 @@ the('logging middleware initialiser', () => {
     expect(stubMorgan.args[0][1].stream).to.be.equal(stubLogStream);
   };
 
-  const initialiseAndGetMorgan = (config) => {
+  const initialiseAndGetMorgan = config => {
 
     const stubApp = getStubApp();
     const stubAppUse = sinon.spy(stubApp, 'use');

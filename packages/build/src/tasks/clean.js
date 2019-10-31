@@ -2,14 +2,14 @@ import del from 'del';
 import fs from 'fs-extra';
 import path from 'path';
 
-import { logMessage, runtimeDir } from './utilities';
+import { logMessage, runtimeDir } from '../utilities';
 import constants from './constants';
-import { getDefaultBuildConfig } from './config';
+import { getDefaultBuildConfig } from '../config';
 
 const packagesPath = 'packages';
 const deletePaths = (logFileNames, paths, completePrefix = 'Deleted  ') => (
 
-  del(paths).then((dpa) => {
+  del(paths).then(dpa => {
 
     if (logFileNames) {
 
@@ -32,7 +32,7 @@ export default ({ config }) => [{
 
   /* Clean existing build & package artifacts */
   key: constants.taskKeys.clean,
-  func: (cb) => {
+  func: cb => {
 
     const pathsToNuke = [config.paths.build, config.paths.publish, config.paths.temp, './deploy'];
 
@@ -43,7 +43,7 @@ export default ({ config }) => [{
 
   /* Prepare build directory(s) */
   key: constants.taskKeys.prepareBuild,
-  func: (cb) => {
+  func: cb => {
 
     const pathsToPrepare = [
       config.paths.build,
@@ -51,14 +51,14 @@ export default ({ config }) => [{
       config.paths.temp
     ];
 
-    pathsToPrepare.forEach((p) => { fs.ensureDirSync(p); });
+    pathsToPrepare.forEach(p => { fs.ensureDirSync(p); });
     cb();
   }
 }, {
 
   /* Finalise the build by deleting any temp resources */
   key: constants.taskKeys.finalise,
-  func: (cb) => {
+  func: cb => {
 
     deletePaths(config.options.logFileNames, [config.paths.temp], 'Cleaned   ')
       .then(cb);
