@@ -1,17 +1,14 @@
 import HTTPStatus from 'http-status';
-import { ErrorView } from 'basis-components';
 
-import renderView from '../core/renderers';
-
+// As per https://jsonapi.org/format/#errors
 const getErrorDetail = (config, status, err) => {
 
-  const statusText = HTTPStatus[status];
   const details = {
     status,
-    statusText,
-    title: `Error ${status} (${statusText})`,
-    message: err.message,
-    error: (config.shared.env === 'production' || status === HTTPStatus.NOT_FOUND) ? {} : err
+    title: err.title || `Error ${status} (${HTTPStatus[status]})`,
+    detail: err.message // ,
+    // TODO: How to handle callstack for non-prod envs ??
+    // error: (config.shared.env === 'production' || status === HTTPStatus.NOT_FOUND) ? {} : err
   };
 
   return details;
@@ -35,7 +32,7 @@ const handleServerError = (config, logger, err, req, res) => {
   }
 
   res.status(status);
-  renderView(res, 'index', errorDetail.title, ErrorView, errorDetail);
+  res.send({ errors: [errorDetail] });
 };
 
 export default (app, config, logger) => {
