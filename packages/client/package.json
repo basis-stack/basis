@@ -1,6 +1,6 @@
 {
   "name": "basis-client",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "The core client-side (SPA) framework, UI libaries integration and UI building blocks for the Basis stack",
   "main": "./dist/index.js",
   "scripts": {
@@ -25,21 +25,21 @@
   },
   "homepage": "https://github.com/basis-stack/basis#readme",
   "dependencies": {
-    "history": "^4.7.2",
-    "react-router-dom": "^4.3.1",
-    "redux": "^4.0.1",
+    "history": "^4.10.1",
+    "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "sinon": "^7.2.2"
+    "sinon": "^8.0.2"
   },
   "peerDependencies": {
     "@material-ui/core": "^3.8.1",
-    "connected-react-router": "^6.1.0",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "react-redux": "^v6.0.0"
+    "connected-react-router": "^6.6.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-redux": "^v7.1.3",
+    "react-router": "^5.1.2"
   }
 }
