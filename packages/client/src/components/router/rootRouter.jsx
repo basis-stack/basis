@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router';
 
 import routeTypes from '../../constants/routeTypes';
 
@@ -18,11 +18,13 @@ export default ({ routes }) => {
   };
 
   return (
-    <Switch>
-      { routes.filter(r => r.type === routeTypes.page ||
-                          r.type === routeTypes.shellHub)
-              .map(getRoute) }
-      {/* TODO: Need to add a wildcard / not found route here...and use the ErrorView from basis-components */}
-    </Switch>
+    <>
+      <Switch>
+        { routes.filter(r => r.type === routeTypes.page ||
+                            r.type === routeTypes.shellHub)
+                .map(getRoute) }
+        {/* TODO: Need to add a wildcard / not found route here...and use the ErrorView from basis-components */}
+      </Switch>
+    </>
   );
 };

@@ -1,20 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
-import thunk from 'redux-thunk';
-import { createBrowserHistory } from 'history';
-import { routerMiddleware, ConnectedRouter } from 'connected-react-router';
+import { ConnectedRouter } from 'connected-react-router';
 
-import createRootReducer from './rootReducer';
+import getStore, { history } from './store';
 import ThemeProvider from './themeProvider';
 
 export default (app, moduleData, themeConfig) => {
 
-  const history = createBrowserHistory();
-  const navigateMiddleware = routerMiddleware(history);
-  const store = createStore(createRootReducer(history, moduleData.reducers),
-                            applyMiddleware(navigateMiddleware, thunk, logger));
+  const store = getStore(moduleData.reducers);
 
   return (
     <Provider store={store}>
