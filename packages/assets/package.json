@@ -25,7 +25,6 @@
     "@fortawesome/fontawesome-free": "^5.11.2",
     "flexboxgrid": "^6.3.1",
     "material-colors": "^1.2.6",
-    "material-design-icons-iconfont": "^5.0.1",
     "roboto-fontface": "^0.10.0"
   }
 }

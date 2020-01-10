@@ -33,8 +33,8 @@
     "publish:packages": "gulp publish:packages"
   },
   "dependencies": {
-    "@material-ui/core": "^3.9.2",
-    "axios": "^0.19.0",
+    "@material-ui/core": "^4.8.3",
+    "axios": "^0.19.1",
     "basis-client": "^0.0.26",
     "basis-components": "^0.0.17",
     "basis-server": "^0.0.31",
@@ -45,7 +45,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-jss": "^8.6.1",
+    "react-jss": "^10.0.3",
     "react-redux": "^v7.1.3",
     "react-router": "^5.1.2",
     "redux-thunk": "^2.3.0"
