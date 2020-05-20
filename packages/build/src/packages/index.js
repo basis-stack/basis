@@ -1,4 +1,5 @@
-import Rx from 'rxjs/Rx';
+import { from } from 'rxjs';
+import { mergeAll, toArray } from 'rxjs/operators';
 
 import constants from '../tasks/constants';
 import publish from './publish';
@@ -10,10 +11,9 @@ const allPackages = getPackages();
 
 const runCmdForPackages = (packages, cmdOp, cb) => {
 
-  Rx.Observable
-    .from(packages.map(cmdOp))
-    .mergeAll()
-    .toArray()
+  from(packages.map(cmdOp))
+    .pipe(mergeAll(),
+          toArray())
     .subscribe(results => {
 
       results.forEach(r => { logMessage(r.message, r.success); });
