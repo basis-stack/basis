@@ -1,6 +1,6 @@
 {
   "name": "basis-assets",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Vendor SCSS / CSS dependencies and server assets for the Basis stack",
   "main": "./dist/index.js",
   "scripts": {
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/basis-stack/basis#readme",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.11.2",
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "flexboxgrid": "^6.3.1",
     "material-colors": "^1.2.6",
     "material-design-icons-iconfont": "^5.0.1",
