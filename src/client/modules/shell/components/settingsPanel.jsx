@@ -5,9 +5,9 @@ import MuiButton from '@material-ui/core/Button';
 import MuiTypography from '@material-ui/core/Typography';
 import MuiDivider from '@material-ui/core/Divider';
 
-const styles = theme => {
+const styles = ({ spacing }) => {
 
-  const padding = theme.spacing.unit * 2;
+  const padding = spacing(2);
 
   return {
     root: {
@@ -26,7 +26,7 @@ const styles = theme => {
       flexDirection: 'row',
       justifyContent: 'flex-end',
       '& button': {
-        marginLeft: theme.spacing.unit
+        marginLeft: spacing()
       }
     }
   };
@@ -35,18 +35,18 @@ const styles = theme => {
 const SettingsPanel = ({ classes, onCancel, onSave }) => (
 
   <div className={classes.root}>
-    <MuiTypography variant="headline" component="h2" className={classes.title}>
+    <MuiTypography variant="h6" component="h2" className={classes.title}>
       Settings
     </MuiTypography>
     <MuiDivider />
-    <MuiTypography variant="body1" className={classes.content}>
+    <MuiTypography variant="body2" className={classes.content}>
       This is a sample slideout panel (Drawer) that shows how it can be controlled via Redux
     </MuiTypography>
     <div className={classes.buttons}>
       <MuiButton color="primary" onClick={onCancel}>
         CANCEL
       </MuiButton>
-      <MuiButton variant="raised" color="primary" autoFocus onClick={() => onSave({ settingsData: {} })}>
+      <MuiButton variant="contained" color="primary" autoFocus onClick={() => onSave({ settingsData: {} })}>
         OK
       </MuiButton>
     </div>

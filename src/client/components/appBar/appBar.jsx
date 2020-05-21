@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'basis-components';
+import MenuIcon from '@material-ui/icons/Menu';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+// import { Icon } from 'basis-components';
 import { withStyles } from '@material-ui/core/styles';
 import MuiAppBar from '@material-ui/core/AppBar';
 import MuiToolbar from '@material-ui/core/Toolbar';
@@ -25,7 +28,7 @@ const AppBar = ({ classes, onLeftIconClick, onSettingsClick, onLogoutClick }) =>
 
   const leftIcon = (
     <MuiIconButton {...leftIconButtonProps}>
-      <Icon {...leftIconProps} />
+      <MenuIcon />
     </MuiIconButton>
   );
 
@@ -34,14 +37,14 @@ const AppBar = ({ classes, onLeftIconClick, onSettingsClick, onLogoutClick }) =>
       <MuiAppBar position="static" elevation={0}>
         <MuiToolbar>
           { leftIcon }
-          <MuiTypography variant="title" color="inherit" className={classes.title}>
+          <MuiTypography variant="h6" color="inherit" className={classes.title}>
             Basis
           </MuiTypography>
           <MuiIconButton color="inherit" onClick={onSettingsClick}>
-            <Icon value="settings" inverse />
+            <SettingsIcon />
           </MuiIconButton>
           <MuiIconButton color="inherit" onClick={onLogoutClick}>
-            <Icon value="exit_to_app" inverse />
+            <ExitToAppIcon />
           </MuiIconButton>
         </MuiToolbar>
       </MuiAppBar>

@@ -33,9 +33,10 @@
     "publish:packages": "gulp publish:packages"
   },
   "dependencies": {
-    "@material-ui/core": "^3.9.2",
+    "@material-ui/core": "^4.9.14",
+    "@material-ui/icons": "^4.9.1",
     "axios": "^0.19.2",
-    "basis-client": "^0.0.27",
+    "basis-client": "^0.0.28",
     "basis-components": "^0.0.18",
     "basis-server": "^0.0.32",
     "connected-react-router": "^6.8.0",
@@ -59,7 +60,7 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-istanbul": "^6.0.0",
-    "basis-build": "^0.0.40",
+    "basis-build": "^0.0.41",
     "basis-testing": "^0.0.7",
     "chai": "^4.2.0",
     "chai-enzyme": "^1.0.0-beta.1",

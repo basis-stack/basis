@@ -1,6 +1,6 @@
 {
   "name": "basis-build",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "description": "Build chain utilities and tasks for the Basis stack",
   "main": "./dist/index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/basis-stack/basis#readme",
   "dependencies": {
-    "basis-assets": "^0.0.14",
+    "basis-assets": "^0.0.15",
     "child-process-promise": "^2.2.1",
     "colors": "^1.4.0",
     "del": "^5.1.0",
@@ -47,6 +47,7 @@
     "require-relative": "^0.8.7"
   },
   "peerDependencies": {
+    "babel-loader": "^8.1.0",
     "gulp-babel": "^8.0.0",
     "gulp-eslint": "^6.0.0",
     "gulp-tslint": "^8.1.4",

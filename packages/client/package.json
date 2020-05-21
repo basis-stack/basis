@@ -1,6 +1,6 @@
 {
   "name": "basis-client",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "The core client-side (SPA) framework, UI libaries integration and UI building blocks for the Basis stack",
   "main": "./dist/index.js",
   "scripts": {
@@ -35,7 +35,7 @@
     "sinon": "^9.0.2"
   },
   "peerDependencies": {
-    "@material-ui/core": "^3.8.1",
+    "@material-ui/core": "^4.9.14",
     "connected-react-router": "^6.8.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

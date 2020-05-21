@@ -1,14 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
-const styles = theme => ({
+const styles = ({ spacing, mixins }) => ({
 
-  root: theme.mixins.gutters({
+  root: mixins.gutters({
 
-    margin: theme.spacing.unit * 2,
-    padding: theme.spacing.unit * 2
+    margin: spacing(2),
+    padding: spacing(2)
   })
 });
 
