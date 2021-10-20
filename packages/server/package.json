@@ -1,6 +1,6 @@
 {
   "name": "basis-server",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "The core framework, middleware and runtime components for the Basis web server",
   "main": "./dist/index.js",
   "scripts": {
@@ -39,13 +39,13 @@
     "passport": "^0.4.1",
     "reflect-metadata": "^0.1.13",
     "require-relative": "^0.8.7",
-    "winston": "^2.4.4",
+    "winston": "^3.3.3",
     "ws": "^7.3.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "sinon": "^9.0.2",
-    "proxyquire": "^2.1.3"
+    "proxyquire": "^2.1.3",
+    "sinon": "^9.0.2"
   },
   "peerDependencies": {
     "react": "^16.13.1",
