@@ -1,4 +1,4 @@
-import winston from 'winston';
+import { createLogger, transports, format } from 'winston';
 
 function getLogFilePath(config) {
 
@@ -11,15 +11,18 @@ function getLogFilePath(config) {
 
 function getWinstonOptions(config) {
 
-  const options = { transports: [] };
+  const { Console, File } = transports;
+  const options = { level: 'info', transports: [] };
 
   if (config.shared.env === 'local' || config.shared.env === 'default') {
-    options.transports.push(new (winston.transports.Console)());
+
+    options.transports.push(new Console({ format: format.simple() }));
   } else {
-    options.transports.push(new (winston.transports.File)({ filename: getLogFilePath(config) }));
+
+    options.transports.push(new File({ filename: getLogFilePath(config) }));
   }
 
   return options;
 }
 
-export default config => new (winston.Logger)(getWinstonOptions(config));
+export default config => createLogger(getWinstonOptions(config));

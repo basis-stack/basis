@@ -38,7 +38,7 @@
     "axios": "^0.19.2",
     "basis-client": "^0.0.28",
     "basis-components": "^0.0.18",
-    "basis-server": "^0.0.32",
+    "basis-server": "^0.0.33",
     "connected-react-router": "^6.8.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
