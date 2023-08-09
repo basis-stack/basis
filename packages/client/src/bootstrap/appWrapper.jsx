@@ -5,9 +5,9 @@ import { ConnectedRouter } from 'connected-react-router';
 import getStore, { history } from './store';
 import ThemeProvider from './themeProvider';
 
-export default (app, moduleData, themeConfig) => {
+export default (app, { reducers, routes }, themeConfig) => {
 
-  const store = getStore(moduleData.reducers);
+  const store = getStore(reducers);
 
   return (
     <Provider store={store}>
@@ -18,7 +18,7 @@ export default (app, moduleData, themeConfig) => {
                   Not sure on this, passing history down could encourage navigation & path checking outside of Redux state.
                   This could lead to inconsistentcies in history and state.
           */}
-          { React.cloneElement(app, { routes: moduleData.routes }) }
+          { React.cloneElement(app, { routes }) }
         </ThemeProvider>
       </ConnectedRouter>
     </Provider>

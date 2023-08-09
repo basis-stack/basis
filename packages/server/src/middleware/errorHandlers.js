@@ -1,5 +1,5 @@
 import HTTPStatus from 'http-status';
-import { ErrorView } from 'basis-components';
+// import { ErrorView } from 'basis-components';
 
 import renderView from '../core/renderers';
 
@@ -35,7 +35,7 @@ const handleServerError = (config, logger, err, req, res) => {
   }
 
   res.status(status);
-  renderView(res, 'index', errorDetail.title, ErrorView, errorDetail);
+  // renderView(res, 'index', errorDetail.title, ErrorView, errorDetail);
 };
 
 export default (app, config, logger) => {
